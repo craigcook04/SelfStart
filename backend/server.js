@@ -6,6 +6,14 @@ var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+//middleware for developement only --be sure to delete before release
+app.use(function (request, response, next) {
+response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
+next();
+});
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -43,10 +51,14 @@ router.get('/', function(req, res) {
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
+
+//placeholder route --should be in different file
 router.route('/hello')
     .get(function(req, res) {
         res.send({message: "Hello I worked"});
     })
+    
+    
 // START THE SERVER
 // =============================================================================
 app.listen(port);
