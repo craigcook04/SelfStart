@@ -8,17 +8,18 @@ var cors = require('cors');
 
 //middleware for developement only --be sure to delete before release
 app.use(function (request, response, next) {
-response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
-next();
+    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
+    next();
 });
 
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// the following 2 middleware convert the URL req and res to json format
+app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 var port = 8082;        // set our port
 // var port = 12222;
