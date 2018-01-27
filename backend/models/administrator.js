@@ -7,7 +7,8 @@ var administratorSchema = mongoose.Schema(
         email: String,
         dateHired: Date,
         dateFinished: Date,
-        account: {type: mongoose.Schema.ObjectId, ref: ('UserAccount')}
+        account: {type: mongoose.Schema.ObjectId, ref: ('UserAccount')},
+        forms: [{type: mongoose.Schema.ObjectId, ref: ('Forms')}]
     }
 );
 
