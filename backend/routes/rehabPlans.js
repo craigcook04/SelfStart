@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-var RehabPlans = require('../models/forms');
+var RehabPlans = require('../models/rehabilitationPlans');
 
 router.route('/')
     .post(function (request, response) {
