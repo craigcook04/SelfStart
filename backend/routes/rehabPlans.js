@@ -7,13 +7,13 @@ var RehabPlans = require('../models/forms');
 router.route('/')
     .post(function (request, response) {
         var rehabPlans = new Forms.Model(request.body.rehabPlans);
-        form.save(function (error) {
+        rehabPlans.save(function (error) {
             if (error) response.send(error);
             response.json({rehabPlans: rehabPlans});
         });
     })
     .get(function (request, response) {
-        Forms.Model.find(function (error, forms) {
+        RehabPlans.Model.find(function (error, forms) {
             if (error) response.send(error);
             response.json({rehabPlans: rehabPlans});
         });
@@ -22,7 +22,7 @@ router.route('/')
 //getting a specific rehab plan
 router.route('/:rehabPlans_id')
     .get(function (request, response) {
-        Exercise.Model.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
+        RehabPlans.Model.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
             if (error) {
                response.send({error: error});
             }
@@ -33,7 +33,7 @@ router.route('/:rehabPlans_id')
     })
 
     .put(function (request, response) {
-        Exercise.Model.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
+        RehabPlans.Model.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
             if (error) {
                 response.send({error: error});
             }
@@ -63,7 +63,7 @@ router.route('/:rehabPlans_id')
 
     //deleting a specific rehab plan
     .delete(function (request, response) {
-        Exercise.Model.findByIdAndRemove(request.params.rehabPlans_id,
+        RehabPlans.Model.findByIdAndRemove(request.params.rehabPlans_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({rehabPlans: deleted});

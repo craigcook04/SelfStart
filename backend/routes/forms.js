@@ -22,7 +22,7 @@ router.route('/')
 //fetching a form with a desiginated ID
 router.route('/:form_id')
     .get(function (request, response) {
-        Exercise.Model.findById(request.params.form_id, function (error, form) {
+        Forms.Model.findById(request.params.form_id, function (error, form) {
             if (error) {
                response.send({error: error});
             }
@@ -33,7 +33,7 @@ router.route('/:form_id')
     })
 
     .put(function (request, response) {
-        Exercise.Model.findById(request.params.form_id, function (error, form) {
+        Forms.Model.findById(request.params.form_id, function (error, form) {
             if (error) {
                 response.send({error: error});
             }
@@ -60,7 +60,7 @@ router.route('/:form_id')
 
     //delete a form with a specific ID
     .delete(function (request, response) {
-        Exercise.Model.findByIdAndRemove(request.params.form_id,
+        Forms.Model.findByIdAndRemove(request.params.form_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({form: deleted});
