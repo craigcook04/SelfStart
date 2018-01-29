@@ -46,7 +46,7 @@ router.route('/:form_id')
                 form.assessmentTool = request.body.assessmentTool;
                 form.questions = request.body.questions;
 
-                form.save(function (error) {
+                exercise.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
