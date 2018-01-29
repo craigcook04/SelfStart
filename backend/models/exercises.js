@@ -7,10 +7,10 @@ var exerciseSchema = mongoose.Schema(
         authorName: String,
         actionSteps: String,
         location: String,
-        frequency: int,
-        duration, double,
+        frequency: Number,
+        duration: Number,
         targetDate: Date,
-        multimedia: URL,
+        multimedia: String,
         rehabilitationPlans: {type: mongoose.Schema.ObjectId, ref: ('RehabilitationPlans')}
     }
 );
