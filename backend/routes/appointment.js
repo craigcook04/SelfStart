@@ -8,7 +8,7 @@ var Appointment = require('../models/appointment');
 router.route('/')
 
     .post(function (request, response) {
-        var appointment = new Appointment.Model(request.body.exercise);
+        var appointment = new Appointment.Model(request.body.appointment);
         appointment.save(function (error) {
             if (error) {
                 response.send(error);

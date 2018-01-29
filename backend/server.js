@@ -11,6 +11,7 @@ var forms = require('./routes/forms');
 var patients = require('./routes/patients');
 var rehabPlans = require('./routes/rehabPlans');
 var appointment = require('./routes/appointment');
+var assessmentTest = require('./routes/assessmentTest');
 
 
 //middleware for developement only --be sure to delete before release
@@ -28,11 +29,14 @@ app.use(function (request, response, next) {
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
+
+//Linking all the routes to the file defining the end points
 app.use('/exercises', exercises);
 app.use('/forms', forms );
 app.use('/patients', patients);
 app.use('/rehabPlans', rehabPlans);
 app.use('/appointment', appointment);
+app.use('/assessmentTest', assessmentTest);
 
 var port = 8082;        // set our port
 // DATABASE SETUP
