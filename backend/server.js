@@ -6,12 +6,15 @@ var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+
+//linking variables to the files of the routes
 var exercises = require('./routes/exercises');
 var forms = require('./routes/forms');
 var patients = require('./routes/patients');
 var rehabPlans = require('./routes/rehabPlans');
 var appointment = require('./routes/appointment');
 var assessmentTest = require('./routes/assessmentTest');
+var city = require('./routes/city');
 
 
 //middleware for developement only --be sure to delete before release
@@ -37,6 +40,7 @@ app.use('/patients', patients);
 app.use('/rehabPlans', rehabPlans);
 app.use('/appointment', appointment);
 app.use('/assessmentTest', assessmentTest);
+app.use('/city', city);
 
 var port = 8082;        // set our port
 // DATABASE SETUP
@@ -73,7 +77,7 @@ app.use('/api', router);
 router.route('/hello')
     .get(function(req, res) {
         res.send({message: "Hello I worked"});
-    })
+    });
     
 
     
