@@ -11,7 +11,7 @@ var Patient = require('../models/patient');
 router.route('/')
 
     .post(function (request, response) {
-        var patient = new Patients.Model(request.body.patient);
+        var patient = new Patient.Model(request.body.patient);
         patient.save(function (error) {
             if (error) response.send(error);
             response.json({patient: patient});
@@ -57,7 +57,7 @@ router.route('/:patient_id')
                 patient.phone = request.body.phone;
                 patient.maritalStatus = request.body.maritalStatus;
                 patient.healthCardNumber = request.body.healthCardNumber;
-                patinet.occupation = request.body.occupation;
+                patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
                 patient.account = request.body.account;
                 patient.payment = request.body.payment;

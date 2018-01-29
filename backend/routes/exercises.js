@@ -52,7 +52,7 @@ router.route('/:exercise_id')
                 exercise.location = request.body.location;
                 exercise.frequency = request.body.frequency;
                 exercise.duration = request.body.duration;
-                exercise.targetDate = reuqest.body.targetDate;
+                exercise.targetDate = request.body.targetDate;
                 exercise.multimedia = request.body.multimedia;
                 exercise.rehabilationPlans = request.body.rehabilitationPlans;              
 

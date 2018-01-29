@@ -6,6 +6,12 @@ var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+var exercises = require('./routes/exercises');
+var forms = require('./routes/forms');
+var patients = require('./routes/patients');
+var rehabPlans = require('./routes/rehabPlans');
+
+
 //middleware for developement only --be sure to delete before release
 app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -20,6 +26,11 @@ app.use(function (request, response, next) {
 // the following 2 middleware convert the URL req and res to json format
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+
+app.use('/exercises', exercises);
+app.use('/forms', forms );
+app.use('/exercises', patients);
+app.use('/exercises', rehabPlans);
 
 var port = 8082;        // set our port
 // var port = 12222;
@@ -58,6 +69,8 @@ router.route('/hello')
     .get(function(req, res) {
         res.send({message: "Hello I worked"});
     })
+    
+
     
     
 // START THE SERVER
