@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-var Exercise = require('../models/exercise');
+var Exercise = require('../models/exercises');
 
 router.route('/')
 
