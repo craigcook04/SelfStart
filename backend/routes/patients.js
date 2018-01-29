@@ -1,4 +1,3 @@
-import { read } from 'fs';
 
 //patient route handling
 
