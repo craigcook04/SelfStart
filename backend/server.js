@@ -10,6 +10,7 @@ var exercises = require('./routes/exercises');
 var forms = require('./routes/forms');
 var patients = require('./routes/patients');
 var rehabPlans = require('./routes/rehabPlans');
+var appointment = require('./routes/appointment');
 
 
 //middleware for developement only --be sure to delete before release
@@ -31,13 +32,13 @@ app.use('/exercises', exercises);
 app.use('/forms', forms );
 app.use('/patients', patients);
 app.use('/rehabPlans', rehabPlans);
+app.use('/appointment', appointment);
 
 var port = 8082;        // set our port
-// var port = 12222;
 // DATABASE SETUP
 // =============================================================================
 
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/startUp');
 
 
