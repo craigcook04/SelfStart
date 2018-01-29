@@ -29,8 +29,8 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 app.use('/exercises', exercises);
 app.use('/forms', forms );
-app.use('/exercises', patients);
-app.use('/exercises', rehabPlans);
+app.use('/patients', patients);
+app.use('/rehabPlans', rehabPlans);
 
 var port = 8082;        // set our port
 // var port = 12222;
