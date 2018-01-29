@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+
 var assessmentTestSchema = mongoose.Schema({
     name: String,
     description: String,
@@ -7,5 +8,6 @@ var assessmentTestSchema = mongoose.Schema({
     testResults: [{type: mongoose.Schema.ObjectId, ref: ('TestResult')}],
     rehabilitionPlans: [{type: mongoose.Schema.ObjectId, ref: ('RehabilitionPlans')}]
 });
+
 var AssessmentTest = mongoose.model('assessmentTest', assessmentTestSchema);
 exports.model = AssessmentTest;
