@@ -6,14 +6,14 @@ var RehabPlans = require('../models/rehabilitationPlans');
 
 router.route('/')
     .post(function (request, response) {
-        var rehabPlans = new Forms.Model(request.body.rehabPlans);
+        var rehabPlans = new RehabPlans.Model(request.body.rehabPlans);
         rehabPlans.save(function (error) {
             if (error) response.send(error);
             response.json({rehabPlans: rehabPlans});
         });
     })
     .get(function (request, response) {
-        RehabPlans.Model.find(function (error, forms) {
+        RehabPlans.Model.find(function (error, rehabPlans) {
             if (error) response.send(error);
             response.json({rehabPlans: rehabPlans});
         });
@@ -49,7 +49,7 @@ router.route('/:rehabPlans_id')
                 rehabPlans.exercises = request.body.exercises;
                 rehabPlans.treatments = request.body.treatments;
 
-                exercise.save(function (error) {
+                rehabPlans.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
