@@ -10,7 +10,7 @@ var cors = require('cors');
 //linking variables to the files of the routes
 var exercises = require('./routes/exercises');
 var forms = require('./routes/forms');
-var patients = require('./routes/patients');
+var patients = require('./routes/patient');
 var rehabPlans = require('./routes/rehabPlans');
 var appointment = require('./routes/appointment');
 var assessmentTest = require('./routes/assessmentTest');
@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 //Linking all the routes to the file defining the end points
 app.use('/exercises', exercises);
 app.use('/forms', forms );
-app.use('/patients', patients);
+app.use('/patient', patients);
 app.use('/rehabPlans', rehabPlans);
 app.use('/appointment', appointment);
 app.use('/assessmentTest', assessmentTest);
