@@ -8,10 +8,12 @@ import { PatientService } from '../patient.service'
 })
 export class PatientProfileComponent implements OnInit {
 
+  patients: Object[];
   constructor(private patientService: PatientService) { }
 
   ngOnInit() {
     this.patientService.GetAllPatients().subscribe(data => {
+      this.patients = Object.assign([], data.patients);
       console.log(data);
     })
   }

@@ -1,1 +1,23 @@
 <h2>Patients</h2>
+
+<ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+    <ngb-panel *ngFor="let patient of patients;">
+      <ng-template ngbPanelTitle>
+        <span>{{patient.familyName}}, {{patient.givenName}}</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div>
+        <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
+        <p><b>Patient ID:  </b> {{patient.ID}}</p>
+        <p><b>Email:  </b> {{patient.email}}</p>
+        <p><b>Date of Birth:  </b> {{patient.DOB}}</p>
+        <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
+        <p><b>Phone Number:  </b> {{patient.phone}}</p>
+        <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
+        <p><b>Health Card Number:  </b> {{patient.healthCardNumber}}</p>
+        <p><b>Occupation:  </b> {{patient.occupation}}</p>
+        <!-- <p *ngIf="{{patient.others}}"><b>Others:  </b> {{patient.others}}</p> -->
+        </div>
+      </ng-template>
+    </ngb-panel>
+</ngb-accordion>
