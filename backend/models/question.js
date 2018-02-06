@@ -6,5 +6,5 @@ var questionSchema = mongoose.Schema({
     form: {type: mongoose.Schema.ObjectId, ref: ('Forms')},
     questionType: {type: mongoose.Schema.ObjectId, red: ('QuestionType')}
 });
-var Question = mongoose.model('question', questionSchema);
+var Question = mongoose.model('Question', questionSchema);
 exports.model = Question;

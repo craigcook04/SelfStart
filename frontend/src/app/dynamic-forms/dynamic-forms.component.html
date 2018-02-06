@@ -1,2 +1,23 @@
 <br>
-<p class="text-primary">Forms</p>
+<div class="container">
+    <div class="card">
+      <div class="card-header">
+        Injury Form
+      </div>
+      <div class="card-body mx-auto my-2">
+        <div *ngIf="!showForm">
+          <p class="card-text">This is a form to allow users to describe their injury.</p>
+          <a href="#" class="btn btn-primary mx-auto">Edit Form</a>
+        </div>
+        <div *ngIf="showForm">
+          <p class="card-text">Editable form here</p>
+          
+          
+          
+          
+          
+          <a href="#" class="btn btn-primary">Add Field</a>
+        </div>
+      </div>
+    </div>
+</div>
