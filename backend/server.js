@@ -17,6 +17,7 @@ var assessmentTest = require('./routes/assessmentTest');
 var city = require('./routes/city');
 var administrator = require('./routes/administrator');
 var country = require('./routes/country');
+var gender = require('./routes/gender');
 
 
 //middleware for developement only --be sure to delete before release
@@ -45,6 +46,7 @@ app.use('/assessmentTest', assessmentTest);
 app.use('/city', city);
 app.use('/administrator', administrator);
 app.use('/country', country);
+app.use('/gender', gender);
 
 var port = 8082;        // set our port
 // DATABASE SETUP
