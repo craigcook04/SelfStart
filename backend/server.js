@@ -15,6 +15,8 @@ var rehabPlans = require('./routes/rehabPlans');
 var appointment = require('./routes/appointment');
 var assessmentTest = require('./routes/assessmentTest');
 var city = require('./routes/city');
+var administrator = require('./routes/administrator');
+var country = require('./routes/country');
 
 
 //middleware for developement only --be sure to delete before release
@@ -41,6 +43,8 @@ app.use('/rehabPlans', rehabPlans);
 app.use('/appointment', appointment);
 app.use('/assessmentTest', assessmentTest);
 app.use('/city', city);
+app.use('/administrator', administrator);
+app.use('/country', country);
 
 var port = 8082;        // set our port
 // DATABASE SETUP
