@@ -1,4 +1,4 @@
 backend/data
 node_modules
-frontend/proxy.config.json
+frontend/proxy.conf.json
 backend/rundb
