@@ -3,7 +3,7 @@
 
 var express = require('express');
 var router = express.Router();
-var Payment = require('../models/payment');
+var Payment = require('../models/payments');
 
 router.route('/')
 
