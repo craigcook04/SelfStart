@@ -20,7 +20,9 @@ router.route('/')
     .get(function (request, response) {
         Patient.Model.find(function (error, patients) {
             if (error) response.send(error);
-            response.json({patient: patients});
+            //response.json({patient: patients});
+            console.log("I am in");
+            response.json({response: "Hello im in patient"});
         });
     });
 
