@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var paymentsSchema = mongoose.Schema(
     {
         dayTimeStamp: Date,
-        amount: double,
+        amount: Number,
         note: String,
         patient: {type: mongoose.Schema.ObjectId, ref: ('Patient')}
     }

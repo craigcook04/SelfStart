@@ -18,6 +18,7 @@ var city = require('./routes/city');
 var administrator = require('./routes/administrator');
 var country = require('./routes/country');
 var gender = require('./routes/gender');
+var payment = require('./routes/payment');
 
 
 //middleware for developement only --be sure to delete before release
@@ -47,6 +48,7 @@ app.use('/city', city);
 app.use('/administrator', administrator);
 app.use('/country', country);
 app.use('/gender', gender);
+app.use('/payment', payment)
 
 var port = 8082;        // set our port
 // DATABASE SETUP
