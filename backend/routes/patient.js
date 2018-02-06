@@ -11,7 +11,7 @@ router.route('/')
 
     .post(function (request, response) {
         var patient = new Patient.Model();
-        patient.ID = request.body.patient.ID;
+        patient.ID = request.body.ID;
         patient.familyName = request.body.familyName;
         patient.givenName = request.body.givenName;
         patient.email = request.body.email;
@@ -74,7 +74,7 @@ router.route('/:patient_id')
             else {
 
                 //save updated information of patient
-                patient.ID = request.body.patient.ID;
+                patient.ID = request.body.ID;
                 patient.familyName = request.body.familyName;
                 patient.givenName = request.body.givenName;
                 patient.email = request.body.email;
