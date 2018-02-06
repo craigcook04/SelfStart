@@ -24,6 +24,8 @@ var province = require('./routes/province');
 var question = require('./routes/question');
 var questionType = require('./routes/questionType');
 var recommendation = require('./routes/recommendation');
+var testResult = require('./routes/testResult');
+var userAccount = require('./routes/userAccount');
 
 
 
@@ -58,8 +60,10 @@ app.use('/payments', payment);
 app.use('/physiotherapist', physiotherapist);
 app.use('/province', province);
 app.use('/question', question);
-app.use('/questionType', questionType);
+app.use('/questiontype', questionType);
 app.use('/recommendation', recommendation);
+app.use('/testresult', testResult);
+app.use('/useraccount', userAccount);
 
 
 var port = 8082;        // set our port
