@@ -44,22 +44,24 @@ router.route('/:province_id')
     })
 
     .put(function (request, response) {
-        Gender.Model.findById(request.params.gender_id, function (error, gender) {
+        Province.Model.findById(request.params.province_id, function (error, province) {
             if (error) {
                 response.send({error: error});
             }
             else {
                 
-                //save updated information of gender
-                gender.name = request.body.name;
-                gender.patient = request.body.patient;
+                //save updated information of province
+                province.name = request.body.name;
+                province.country = request.body.country;
+                province.city = request.body.city;
+                province.patient = request.body.patient;
 
-                gender.save(function (error) {
+                province.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({gender: gender});
+                        response.json({province: province});
                     }
                 });
             }
@@ -67,10 +69,10 @@ router.route('/:province_id')
     })
 
     .delete(function (request, response) {
-        Gender.Model.findByIdAndRemove(request.params.gender_id,
+        Province.Model.findByIdAndRemove(request.params.province_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({gender: deleted});
+                    response.json({province: deleted});
                 }
             }
         );

@@ -18,8 +18,10 @@ var city = require('./routes/city');
 var administrator = require('./routes/administrator');
 var country = require('./routes/country');
 var gender = require('./routes/gender');
-var payment = require('./routes/payment');
+var payment = require('./routes/payments');
 var physiotherapist = require('./routes/physiotherapist');
+var province = require('./routes/province');
+
 
 
 //middleware for developement only --be sure to delete before release
@@ -49,8 +51,9 @@ app.use('/city', city);
 app.use('/administrator', administrator);
 app.use('/country', country);
 app.use('/gender', gender);
-app.use('/payment', payment);
+app.use('/payments', payment);
 app.use('/physiotherapist', physiotherapist);
+app.use('/province', province);
 
 
 var port = 8082;        // set our port
@@ -89,8 +92,6 @@ router.route('/hello')
     .get(function(req, res) {
         res.send({message: "Hello I worked"});
     });
-    
-
     
     
 // START THE SERVER
