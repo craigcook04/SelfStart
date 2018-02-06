@@ -13,7 +13,8 @@ import { DynamicFormsComponent } from './dynamic-forms/dynamic-forms.component';
 import { RehabPlansComponent } from './rehab-plans/rehab-plans.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { PatientService } from './patient.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,10 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [PatientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
