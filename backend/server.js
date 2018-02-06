@@ -18,7 +18,7 @@ var city = require('./routes/city');
 var administrator = require('./routes/administrator');
 var country = require('./routes/country');
 var gender = require('./routes/gender');
-var payment = require('./routes/payments');
+var payments = require('./routes/payments');
 var physiotherapist = require('./routes/physiotherapist');
 var province = require('./routes/province');
 var question = require('./routes/question');
@@ -46,24 +46,24 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 
 //Linking all the routes to the file defining the end points
-app.use('/exercises', exercises);
-app.use('/forms', forms );
-app.use('/patient', patients);
-app.use('/rehabPlans', rehabPlans);
-app.use('/appointment', appointment);
-app.use('/assessmentTest', assessmentTest);
-app.use('/city', city);
-app.use('/administrator', administrator);
-app.use('/country', country);
-app.use('/gender', gender);
-app.use('/payments', payment);
-app.use('/physiotherapist', physiotherapist);
-app.use('/province', province);
-app.use('/question', question);
-app.use('/questiontype', questionType);
-app.use('/recommendation', recommendation);
-app.use('/testresult', testResult);
-app.use('/useraccount', userAccount);
+app.use('/api/exercises', exercises);
+app.use('/api/forms', forms );
+app.use('/api/patient', patients);
+app.use('/api/rehabPlans', rehabPlans);
+app.use('/api/appointment', appointment);
+app.use('/api/assessmentTest', assessmentTest);
+app.use('/api/city', city);
+app.use('/api/administrator', administrator);
+app.use('/api/country', country);
+app.use('/api/gender', gender);
+app.use('/api/payments', payments);
+app.use('/api/physiotherapist', physiotherapist);
+app.use('/api/province', province);
+app.use('/api/question', question);
+app.use('/api/questiontype', questionType);
+app.use('/api/recommendation', recommendation);
+app.use('/api/testresult', testResult);
+app.use('/api/useraccount', userAccount);
 
 
 var port = 8082;        // set our port

@@ -70,7 +70,7 @@ router.route('/:questionType_id')
         QuestionType.Model.findByIdAndRemove(request.params.questionType_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({gender: deleted});
+                    response.json({questionType: deleted});
                 }
             }
         );
