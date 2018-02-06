@@ -1,3 +1,6 @@
 .navbar-nav{
     color: black;
 }
+#right-items{
+    float: right;
+}
