@@ -22,7 +22,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content);
+    this.modalService.open(content, {size: "lg"});
   }
 
   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string) {
