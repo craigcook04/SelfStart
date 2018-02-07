@@ -16,4 +16,29 @@ export class PatientService {
     return this.http.get(url);
   }
 
+  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string) : any {
+    //create the body of the request
+    var body = {
+      ID: patientID,
+      familyName: lastName,
+      givenName: firstName,
+      email: email,
+      DOB: DOB,
+      postalCode: postalCode,
+      phone: phoneNumber,
+      maritalStatus: maritalStatus,
+      healthCardNumber: healthCardNumber,
+      occupation: occupation,
+      others: others,
+    }
+    //url that the request is going to be sent too
+    var url = '/api/patient/' + ID;
+    return this.http.put(url, body);
+  }
+
+  DeletePatient(ID: string) {
+    var url = '/api/patient/' + ID;
+    return this.http.delete(url);
+  }
+
 }
