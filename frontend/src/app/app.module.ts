@@ -38,7 +38,6 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    
     HttpClientModule
   ],
   providers: [PatientService],
