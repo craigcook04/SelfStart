@@ -42,6 +42,12 @@ export class PatientProfileComponent implements OnInit {
 
   searchPatients(searchString: string) {
     console.log(searchString);
+    this.patientService.SearchPatient(searchString).subscribe(data => {
+      if(data != []) {
+        var retObj : any = data;
+        this.patients = Object.assign([], retObj.patients);
+      }
+    })
   }
 
   
