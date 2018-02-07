@@ -4,7 +4,7 @@ var questionSchema = mongoose.Schema({
     helpDescription: String,
     order: Number,
     form: {type: mongoose.Schema.ObjectId, ref: ('Forms')},
-    questionType: {type: mongoose.Schema.ObjectId, red: ('QuestionType')}
+    questionType: {type: mongoose.Schema.ObjectId, ref: ('QuestionType')}
 });
 var Question = mongoose.model('Question', questionSchema);
 exports.model = Question;
