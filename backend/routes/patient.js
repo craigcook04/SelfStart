@@ -48,7 +48,7 @@ router.route('/')
             
             response.json({patients: patients});
             
-        });
+        }).sort({familyName: 1, givenName: 1});
     });
 
 //fetching a specific patient
@@ -94,7 +94,7 @@ router.route('/:patient_id')
                 patient.gender = request.body.gender;
                 patient.appointment = request.body.appointment;
 
-
+                console.log(request.body);
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
