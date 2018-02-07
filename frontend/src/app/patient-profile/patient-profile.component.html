@@ -1,23 +1,64 @@
 <h2>Patients</h2>
+<div class="patients">
+  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+      <ngb-panel *ngFor="let patient of patients;">
+        <ng-template ngbPanelTitle>
+          <span>{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <div>
+          <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
+          <p><b>Patient ID:  </b> {{patient.ID}}</p>
+          <p><b>Email:  </b> {{patient.email}}</p>
+          <p><b>Date of Birth:  </b> {{patient.DOB  | date: "fullDate"}}</p>
+          <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
+          <p><b>Phone Number:  </b> {{patient.phone}}</p>
+          <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
+          <p><b>Health Card Number:  </b> {{patient.healthCardNumber}}</p>
+          <p><b>Occupation:  </b> {{patient.occupation}}</p>
+          </div>
 
-<ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
-    <ngb-panel *ngFor="let patient of patients;">
-      <ng-template ngbPanelTitle>
-        <span>{{patient.familyName}}, {{patient.givenName}}</span>
-      </ng-template>
-      <ng-template ngbPanelContent>
-        <div>
-        <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
-        <p><b>Patient ID:  </b> {{patient.ID}}</p>
-        <p><b>Email:  </b> {{patient.email}}</p>
-        <p><b>Date of Birth:  </b> {{patient.DOB}}</p>
-        <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
-        <p><b>Phone Number:  </b> {{patient.phone}}</p>
-        <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
-        <p><b>Health Card Number:  </b> {{patient.healthCardNumber}}</p>
-        <p><b>Occupation:  </b> {{patient.occupation}}</p>
-        <!-- <p *ngIf="{{patient.others}}"><b>Others:  </b> {{patient.others}}</p> -->
-        </div>
-      </ng-template>
-    </ngb-panel>
-</ngb-accordion>
+          <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
+          <ng-template #content let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>His or her info will go here...</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+              </div>
+            </ng-template>
+            
+            <button class="btn btn-lg btn-outline-primary patientbtn" (click)="open(content)">Update</button>
+            <!-- End of First Modal -->
+
+            <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
+            <ng-template #content let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>His or her info will go here...</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                </div>
+              </ng-template>
+              
+              <button class="btn btn-lg btn-outline-primary patientbtn" (click)="open(content)">Update</button>
+              <!-- End of Second Modal -->
+        </ng-template>
+      </ngb-panel>
+  </ngb-accordion>
+</div>
+<br>
+<br>
+<br>
