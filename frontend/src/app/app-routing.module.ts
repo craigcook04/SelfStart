@@ -9,7 +9,11 @@ import {FaqComponent} from './faq/faq.component';
 import {ContactComponent} from './contact/contact.component';
 import {PatientProfileComponent} from './patient-profile/patient-profile.component';
 import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
+<<<<<<< HEAD
 import { RouterLinkActive } from '@angular/router';
+=======
+import {AdminHomeComponent} from './admin-home/admin-home.component';
+>>>>>>> 55c2774fd478c17e7f42b34ec3ae9ab0698f85b7
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -20,7 +24,8 @@ const routes: Routes = [
   {path: 'faq', component: FaqComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'manageforms', component: DynamicFormsComponent},
-  {path: 'patient', component: PatientProfileComponent}
+  {path: 'patient', component: PatientProfileComponent},
+  {path: 'adminhome', component: AdminHomeComponent}
 ];
 
 @NgModule({
