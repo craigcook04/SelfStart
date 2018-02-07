@@ -25,6 +25,11 @@ export class PatientProfileComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  updatePatient(ID ,firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string,maritalStatus: string, healthCardNumber: string, occupation: string) {
+    console.log(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation);
+    console.log("i printed");
+  }
+
   
 
 }

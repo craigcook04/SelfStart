@@ -19,7 +19,7 @@
           </div>
 
           <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
-          <ng-template #content let-c="close" let-d="dismiss">
+          <ng-template #update let-c="close" let-d="dismiss">
               <div class="modal-header">
                 <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
                 <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -27,33 +27,44 @@
                 </button>
               </div>
               <div class="modal-body">
-                <p>His or her info will go here...</p>
+                  <p><b>First Name:  </b><input type="text" value="{{patient.givenName}}" #newFirstName /></p>
+                  <p><b>Last Name:  </b><input type="text" value="{{patient.familyName}}" #newLastName /></p>
+                  <p><b>Patient ID:  </b> {{patient.ID}}</p>
+                  <p><b>Email:  </b> <input type="text" value="{{patient.email}}" #newEmail /></p>
+                  <p><b>Date of Birth:  </b> <input type="text" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate /></p>
+                  <p><b>Postal Code:  </b> <input type="text" value="{{patient.postalCode}}" #newPostalCode /></p>
+                  <p><b>Phone Number:  </b> <input type="text" value="{{patient.phone}}" #newPhoneNumber /></p>
+                  <p><b>Marital Status:  </b> <input type="text" value="{{patient.maritalStatus}}" #newMaritalStatus /></p>
+                  <p><b>Health Card Number:  </b> <input type="text" value="{{patient.healthCardNumber}}" #newHealthCardNumber /></p>
+                  <p><b>Occupation:  </b> <input type="text" value="{{patient.occupation}}" #newOccupation /></p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                <button type="button" class="btn btn-outline-dark" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value); c('Close click')">Confirm</button>
+                <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>                
               </div>
             </ng-template>
             
-            <button class="btn btn-lg btn-outline-primary patientbtn" (click)="open(content)">Update</button>
+            <button class="btn btn-lg btn-outline-primary patientbtn" (click)="open(update)">Update</button>
             <!-- End of First Modal -->
 
             <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
-            <ng-template #content let-c="close" let-d="dismiss">
+            <ng-template #delete let-c="close" let-d="dismiss">
                 <div class="modal-header">
-                  <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
+                  <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
                   <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <p>His or her info will go here...</p>
+                  <p>Are you sure you wish to delete patient <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot be undone. </p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                  <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Delete</button>
+                  <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Do No Delete</button>                  
                 </div>
               </ng-template>
               
-              <button class="btn btn-lg btn-outline-primary patientbtn" (click)="open(content)">Update</button>
+              <button class="btn btn-lg btn-outline-primary patientbtn" (click)="open(delete)">Delete</button>
               <!-- End of Second Modal -->
         </ng-template>
       </ngb-panel>
