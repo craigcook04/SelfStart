@@ -15,7 +15,13 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientService } from './patient.service';
+<<<<<<< HEAD
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+=======
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+
+
+>>>>>>> a76dec920ce40e07cc66f856c7a693e621d55462
 
 @NgModule({
   declarations: [
@@ -29,7 +35,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     DynamicFormsComponent,
     RehabPlansComponent,
     ExercisesComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,
