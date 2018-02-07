@@ -116,5 +116,19 @@ router.route('/:patient_id')
             }
         );
     });
+    
+//search for a specific patient
+router.route('/findpatient/search')
+    .get(function(request, response) {
+        console.log(request.query.q);
+        Patient.Model.find({"givenName": new RegExp(request.params.q)}, function(err, patients) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            console.log(patients);
+            response.json({patients: patients});
+        }).sort({familyName: 1, givenName: 1});
+    });
 
 module.exports = router;
