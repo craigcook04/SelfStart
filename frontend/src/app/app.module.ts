@@ -15,6 +15,7 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientService } from './patient.service';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PatientService } from './patient.service';
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    AngularFontAwesomeModule
   ],
   providers: [PatientService],
   bootstrap: [AppComponent]
