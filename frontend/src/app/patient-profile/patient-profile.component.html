@@ -6,7 +6,7 @@
           <span>{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         </ng-template>
         <ng-template ngbPanelContent>
-          <div>
+          <div class="info">
           <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
           <p><b>Patient ID:  </b> {{patient.ID}}</p>
           <p><b>Email:  </b> {{patient.email}}</p>
@@ -40,7 +40,12 @@
                         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
                       </div>
                     </div>
-                    <!-- Patient ID will go here -->
+                    <div class="form-group row">
+                      <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+                      <div class="col-sm-9">
+                        <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified">
+                      </div>
+                    </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
                       <div class="col-sm-9">
