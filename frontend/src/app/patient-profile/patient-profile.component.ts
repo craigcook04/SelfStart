@@ -40,6 +40,10 @@ export class PatientProfileComponent implements OnInit {
     })
   }
 
+  searchPatients(searchString: string) {
+    console.log(searchString);
+  }
+
   
 
 }

@@ -1,5 +1,16 @@
 .patients {
-    margin: 2.5em;
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+}
+
+.searchbar{
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+    width: 50%;
+}
+
+h2 {
+    margin: 1em;
 }
 
 .patientbtn {
@@ -13,6 +24,7 @@
 
 #custom-search-input{
     padding: 3px;
+    padding-left: 0px;
     border: solid 1px #E4E4E4;
     border-radius: 3px;
     background-color: #fff;
@@ -37,8 +49,10 @@
     border: 0;
     box-shadow: none;
     border-left: solid 1px #ccc;
+    cursor: pointer;
 }
 
-#custom-search-input .glyphicon-search{
+#custom-search-input fa{
     font-size: 16px;
 }
+
