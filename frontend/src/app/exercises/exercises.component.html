@@ -1,3 +1,41 @@
-<p>
-  exercises works!
-</p>
+<h2>Exercises</h2>
+<div class="container">
+  <div class="row">
+        <div class="col-md-6">
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control input-lg" placeholder="Buscar" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+<div class="exercises">
+  <ngb-accordian #acc="ngbAccordian" [closeOthers]="true">
+    <ng-panel *ngFor="let exercise or exercises;">
+      <ng-template ngbPanelTitle>
+        <span> {{ exercise.name }} </span>
+      </ng-template>
+      <ng-template>
+        <div class="info">
+          <p><b> Name:  </b> {{ exercise.name }} </p>
+          <p><b> Description: </b> {{ exercise.descrip }} </p>
+          <p><b> Objectives: </b> {{ exercise.objs }} </p>
+          <p><b> Action Steps: </b> {{ exercise.actSteps }} </p>
+          <p><b> Location: </b> {{ exercise.loc }} </p>
+          <p><b> Frequency: </b> {{ exercise.freq }} </p>
+          <p><b> Duration: </b> {{ exercise.dur }} </p>
+          <!-- figure out how to go about displlaying the following 3 -->
+          <!-- <p><b> Target Date: </b> {{ exercise.targDate }} </p> -->
+          <!-- <p><b> Multimedia: </b> {{ exercise.descrip }} </p> -->
+          <!-- <p><b> Rehabilitation Plans: </b> {{ exercise.rehabPlans }} </p> -->
+        </div>
+      </ng-template>
+    </ng-panel>
+  </ngb-accordian>
+</div>
