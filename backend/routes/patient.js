@@ -10,7 +10,7 @@ var Patient = require('../models/patient');
 router.route('/')
 
     .post(function (request, response) {
-        var patient = new Patient.Model();
+        var patient = new Patient();
         patient.ID = request.body.ID;
         patient.familyName = request.body.familyName;
         patient.givenName = request.body.givenName;
@@ -41,7 +41,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Patient.Model.find(function (error, patients) {
+        Patient.find(function (error, patients) {
             if (error) {
                 response.send(error);
             }
@@ -56,7 +56,7 @@ router.route('/')
 router.route('/:patient_id')
 
     .get(function (request, response) {
-        Patient.Model.findById(request.params.patient_id, function (error, patient) {
+        Patient.findById(request.params.patient_id, function (error, patient) {
             if (error) {
                response.send({error: error});
             }
@@ -67,7 +67,7 @@ router.route('/:patient_id')
     })
 
     .put(function (request, response) {
-        Patient.Model.findById(request.params.patient_id, function (error, patient) {
+        Patient.findById(request.params.patient_id, function (error, patient) {
             if (error) {
                 response.send({error: error});
             }
@@ -108,7 +108,7 @@ router.route('/:patient_id')
     })
 
     .delete(function (request, response) {
-        Patient.Model.findByIdAndRemove(request.params.patient_id,
+        Patient.findByIdAndRemove(request.params.patient_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({patient: deleted});
@@ -121,7 +121,7 @@ router.route('/:patient_id')
 router.route('/findpatient/search')
     .get(function(request, response) {
         console.log(request.query.q);
-        Patient.Model.find({"givenName": new RegExp(request.params.q)}, function(err, patients) {
+        Patient.find({"givenName": new RegExp(request.params.q)}, function(err, patients) {
             if(err) {
                 response.send(err);
                 return;

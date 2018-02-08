@@ -25,22 +25,22 @@ router.route('/')
             //response.json({province: province});
         });
         
-        Country.findById(request.body.country, function(err, country) {
-            if(err) {
-                console.log(err);
-            }
-            console.log(country);
-            country.province.push(province);
-            country.save(function(err){
-                if(err) {
-                    console.log('err');
-                    console.log(err);
-                }
+        // Country.findById(request.body.country, function(err, country) {
+        //     if(err) {
+        //         console.log(err);
+        //     }
+        //     console.log(country);
+        //     country.province.push(province);
+        //     country.save(function(err){
+        //         if(err) {
+        //             console.log('err');
+        //             console.log(err);
+        //         }
                 
-                console.log('done');
-                response.send(country);
-            })
-        })
+        //         console.log('done');
+        //         response.send(country);
+        //     })
+        // })
         
         
         
@@ -68,7 +68,7 @@ router.route('/')
 router.route('/:province_id')
 
     .get(function (request, response) {
-        Province.Model.findById(request.params.province_id, function (error, province) {
+        Province.findById(request.params.province_id, function (error, province) {
             if (error) {
                response.send({error: error});
             }
@@ -79,7 +79,7 @@ router.route('/:province_id')
     })
 
     .put(function (request, response) {
-        Province.Model.findById(request.params.province_id, function (error, province) {
+        Province.findById(request.params.province_id, function (error, province) {
             if (error) {
                 response.send({error: error});
             }

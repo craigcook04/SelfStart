@@ -8,7 +8,10 @@ var Gender = require('../models/gender');
 router.route('/')
 
     .post(function (request, response) {
-        var gender = new Gender.Model(request.body.gender);
+        var gender = new Gender();
+        gender.name = request.body.name;
+        gender.patient = request.body.patient;
+        
         gender.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +22,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Gender.Model.find(function (error, gender) {
+        Gender.find(function (error, gender) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +36,7 @@ router.route('/')
 router.route('/:gender_id')
 
     .get(function (request, response) {
-        Gender.Model.findById(request.params.gender_id, function (error, gender) {
+        Gender.findById(request.params.gender_id, function (error, gender) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +47,7 @@ router.route('/:gender_id')
     })
 
     .put(function (request, response) {
-        Gender.Model.findById(request.params.gender_id, function (error, gender) {
+        Gender.findById(request.params.gender_id, function (error, gender) {
             if (error) {
                 response.send({error: error});
             }
@@ -67,7 +70,7 @@ router.route('/:gender_id')
     })
 
     .delete(function (request, response) {
-        Gender.Model.findByIdAndRemove(request.params.gender_id,
+        Gender.findByIdAndRemove(request.params.gender_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({gender: deleted});
