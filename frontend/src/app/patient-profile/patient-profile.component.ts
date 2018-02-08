@@ -12,6 +12,8 @@ export class PatientProfileComponent implements OnInit {
   closeResult: string;
   patients: Object[];
   countries: Object[];
+  provinces: Object[];
+  cities: Object[];
   constructor(private patientService: PatientService,
               private modalService: NgbModal) { }
 
@@ -27,11 +29,13 @@ export class PatientProfileComponent implements OnInit {
     })
 
     this.patientService.GetProvinces().subscribe(data => {
-      console.log(data);
+      var retObj: any = data;
+      this.provinces = Object.assign([], retObj.province);
     })
 
     this.patientService.GetCities().subscribe(data => {
-      console.log(data);
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.city);
     })
 
   }
@@ -40,10 +44,15 @@ export class PatientProfileComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
 
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string) {
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string) {
   
-    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others).subscribe(data => {
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity).subscribe(data => {
       console.log(data);
+      //reload the list of patients
+      this.patientService.GetAllPatients().subscribe(data => {
+        this.patients = Object.assign([], data.patients);
+        console.log(data);
+      });
     })
 
   }
