@@ -7,12 +7,12 @@
     </button>
 </span>
 </div>
-
+<p *ngIf="showSuccess" class="successMessage">Patient update was successful</p>
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
       <ngb-panel *ngFor="let patient of patients;">
         <ng-template ngbPanelTitle>
-          <span>{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
+          <span (click)="HideMessage()">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         </ng-template>
         <ng-template ngbPanelContent>
           <div class="info">
@@ -139,7 +139,7 @@
                   </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value); c('Close click')">Confirm</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, acc); c('Close click')">Confirm</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
               </div>
             </ng-template>

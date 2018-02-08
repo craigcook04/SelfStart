@@ -10,6 +10,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
+  showSuccess: boolean;
+  showFailure: boolean;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
@@ -44,8 +46,9 @@ export class PatientProfileComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
 
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string) {
-  
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, acc) {
+    acc.activeIds = []; //close all accordian panels
+    this.showSuccess = true;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity).subscribe(data => {
       console.log(data);
       //reload the list of patients
@@ -53,6 +56,15 @@ export class PatientProfileComponent implements OnInit {
         this.patients = Object.assign([], data.patients);
         console.log(data);
       });
+
+      if(data.success) {
+        //the update was successful
+        this.showSuccess = true;
+      }
+      else{
+        //it was not successful
+        this.showFailure = false;
+      }
     })
 
   }
@@ -72,6 +84,11 @@ export class PatientProfileComponent implements OnInit {
         this.patients = Object.assign([], retObj.patients);
       }
     })
+  }
+
+  HideMessage() {
+    this.showSuccess = false;
+    this.showFailure = false;
   }
 
   
