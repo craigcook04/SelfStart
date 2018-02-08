@@ -8,6 +8,7 @@ router.route('/')
 
     .post(function (request, response) {
         var exercise = new Exercise();
+
         exercise.name = request.body.name;
         exercise.description = request.body.description;
         exercise.objectives = request.body.objectives;
@@ -18,10 +19,14 @@ router.route('/')
         exercise.duration = request.body.duration;
         exercise.targetDate = request.body.targetDate;
         exercise.multimedia = request.body.multimedia;
+
         exercise.rehabilationPlans = request.body.rehabilitationPlans; 
         
         exercise.save(function (error) {
-            if (error) response.send(error);
+            if (error) {
+                response.send(error);
+            }
+            
             response.json({exercise: exercise});
         });
     })
@@ -30,7 +35,7 @@ router.route('/')
         Exercise.find(function (error, exercises) {
             if (error) response.send(error);
             response.json({exercise: exercises});
-        });
+        }).sort({name: 1});
     });
 
 //fetching a specific exercise
