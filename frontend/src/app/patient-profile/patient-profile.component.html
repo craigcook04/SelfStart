@@ -25,6 +25,9 @@
           <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
           <p><b>Health Card Number:  </b> {{patient.healthCardNumber}}</p>
           <p><b>Occupation:  </b> {{patient.occupation}}</p>
+          <p><b>Country:  </b> {{patient.country.name}} </p>
+          <p><b>Province:  </b> {{patient.province.name}} </p>
+          <p><b>City:  </b> {{patient.city.name}} </p>      
           </div>
 
           <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
@@ -101,6 +104,15 @@
                       <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+                      <div class="col-sm-9">
+                        <select>
+                          <option value="{{patient.country._id}}">{{patient.country.name}}</option>
+                          <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+                        </select>
                       </div>
                     </div>
                   </form>

@@ -11,6 +11,7 @@ export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
   patients: Object[];
+  countries: Object[];
   constructor(private patientService: PatientService,
               private modalService: NgbModal) { }
 
@@ -18,11 +19,25 @@ export class PatientProfileComponent implements OnInit {
     this.patientService.GetAllPatients().subscribe(data => {
       this.patients = Object.assign([], data.patients);
       console.log(data);
+    });
+
+    this.patientService.GetCountries().subscribe(data => {
+      var retObj: any = data;
+      this.countries = Object.assign([], retObj.country);
     })
+
+    this.patientService.GetProvinces().subscribe(data => {
+      console.log(data);
+    })
+
+    this.patientService.GetCities().subscribe(data => {
+      console.log(data);
+    })
+
   }
 
   open(content) {
-    this.modalService.open(content);
+    this.modalService.open(content, {size: 'lg'});
   }
 
   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string) {

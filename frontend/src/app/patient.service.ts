@@ -46,4 +46,19 @@ export class PatientService {
     return this.http.get(url);
   }
 
+  GetCountries() {
+    var url = '/api/country';
+    return this.http.get(url);
+  }
+
+  GetProvinces() {
+    var url = '/api/province';
+    return this.http.get(url);
+  }
+
+  GetCities() {
+    var url = '/api/city'
+    return this.http.get(url);
+  }
+
 }
