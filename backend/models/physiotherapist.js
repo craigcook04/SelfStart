@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var physiotherapistSchema = mongoose.Schema(
+var physiotherapistSchema = new mongoose.Schema(
     {
         ID: String,
         familyName: String,
@@ -7,10 +7,10 @@ var physiotherapistSchema = mongoose.Schema(
         email: String,
         dateHired: Date,
         dateFinished: Date,
-        account: {type: mongoose.Schema.ObjectId, ref: ('UserAccount')},
-        treatments: [{type: mongoose.Schema.ObjectId, ref: ('Treatments')}]
+        account: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'},
+        treatments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Treatments'}]
     }
 );
 
-var Physiotherapist =  mongoose.model('physiotherapist', physiotherapistSchema);
-exports.Model = Physiotherapist;
+var Physiotherapist =  mongoose.model('Physiotherapist', physiotherapistSchema);
+module.exports = Physiotherapist;

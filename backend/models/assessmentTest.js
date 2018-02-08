@@ -1,13 +1,13 @@
 var mongoose = require("mongoose");
 
-var assessmentTestSchema = mongoose.Schema({
+var assessmentTestSchema = new mongoose.Schema({
     name: String,
     description: String,
     authorName: String,
-    recommendation: [{type: mongoose.Schema.ObjectId, ref: ('Recommendation')}],
-    testResults: [{type: mongoose.Schema.ObjectId, ref: ('TestResult')}],
-    rehabilitionPlans: [{type: mongoose.Schema.ObjectId, ref: ('RehabilitionPlans')}]
+    recommendation: [{type: mongoose.Schema.Types.ObjectId, ref: 'Recommendation'}],
+    testResults: [{type: mongoose.Schema.Types.ObjectId, ref: 'TestResult'}],
+    rehabilitionPlans: [{type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitionPlans'}]
 });
 
-var AssessmentTest = mongoose.model('assessmentTest', assessmentTestSchema);
-exports.model = AssessmentTest;
+var AssessmentTest = mongoose.model('AssessmentTest', assessmentTestSchema);
+module.exports = AssessmentTest;

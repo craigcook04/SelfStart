@@ -8,8 +8,12 @@ var Country = require('../models/country');
 router.route('/')
 
     .post(function (request, response) {
-        var country = new Country.Model(request.body.country);
-        country.save(function (error) {
+        var country = new Country();
+         country.name = request.body.name;
+         country.province = request.body.province;
+         country.patient = request.body.patient;
+        
+         country.save(function (error) {
             if (error) {
                 response.send(error);
             }
@@ -19,12 +23,20 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Country.Model.find(function (error, country) {
-            if (error) {
-                response.send(error);
-            }
+        // Country.Model.find(function (error, country) {
+        //     if (error) {
+        //         response.send(error);
+        //     }
             
-            response.json({country: country});
+        //     response.json({country: country});
+        // });
+        Country.find().populate('province').exec(function(err, countries) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+            }
+            console.log('here');
+            response.send(countries);
         });
     });
 
@@ -33,14 +45,16 @@ router.route('/')
 router.route('/:country_id')
 
     .get(function (request, response) {
-        Country.Model.findById(request.params.country_id, function (error, country) {
-            if (error) {
-               response.send({error: error});
-            }
-            else {
-               response.json({country: country});
-            }
-        });
+        // Country.Model.findById(request.params.country_id, function (error, country) {
+        //     if (error) {
+        //       response.send({error: error});
+        //     }
+        //     else {
+        //       response.json({country: country});
+        //     }
+        // });
+        
+        
     })
 
     .put(function (request, response) {
@@ -69,7 +83,7 @@ router.route('/:country_id')
     })
 
     .delete(function (request, response) {
-        Country.Model.findByIdAndRemove(request.params.country_id,
+        Country.findByIdAndRemove(request.params.country_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({country: deleted});
