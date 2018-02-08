@@ -4,7 +4,7 @@
         <div class="col-md-6">
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="Buscar" />
+                    <input type="text" class="form-control input-lg" placeholder="Find an Exercise.." />
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
@@ -15,27 +15,58 @@
         </div>
   </div>
 </div>
+
 <div class="exercises">
-  <ngb-accordian #acc="ngbAccordian" [closeOthers]="true">
-    <ng-panel *ngFor="let exercise or exercises;">
-      <ng-template ngbPanelTitle>
-        <span> {{ exercise.name }} </span>
-      </ng-template>
-      <ng-template>
+  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+    <ngb-panel *ngFor='let exercise of exercises'>
+        <ng-template ngbPanelTitle >
+          <span> {{ exercise.name }} || {{ exercise.description }} </span>
+        </ng-template>
+      <ng-template ngbPanelContent>
         <div class="info">
-          <p><b> Name:  </b> {{ exercise.name }} </p>
-          <p><b> Description: </b> {{ exercise.descrip }} </p>
-          <p><b> Objectives: </b> {{ exercise.objs }} </p>
-          <p><b> Action Steps: </b> {{ exercise.actSteps }} </p>
-          <p><b> Location: </b> {{ exercise.loc }} </p>
-          <p><b> Frequency: </b> {{ exercise.freq }} </p>
-          <p><b> Duration: </b> {{ exercise.dur }} </p>
-          <!-- figure out how to go about displlaying the following 3 -->
-          <!-- <p><b> Target Date: </b> {{ exercise.targDate }} </p> -->
-          <!-- <p><b> Multimedia: </b> {{ exercise.descrip }} </p> -->
-          <!-- <p><b> Rehabilitation Plans: </b> {{ exercise.rehabPlans }} </p> -->
+          <p><b> Name: </b> {{ exercise.name }} </p>
+          <p><b> Description: </b> {{ exercise.description }} </p>
+          <p><b> Objectives: </b> {{ exercise.objectives }} </p>
+          <p><b> Action Steps: </b> {{ exercise.actionSteps }} </p>
+          <p><b> Location: </b> {{ exercise.location }} </p>
+          <p><b> Frequency: </b> {{ exercise.frequency }} </p>
+          <p><b> Duration: </b> {{ exercise.duration }} </p>
+          <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
+          <p><b> Multimedia: </b> {{ exercise.multimedia }} </p>
+          <p><b> Rehabilitation Plans: </b> {{ exercise.rehabilitationPlans }} </p>
         </div>
+
+        <!-- when physio wants to update an exercise -->
+        <ng-template #update let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title">Update {{exercise.name}}</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                  <div class="form-group row">
+                    <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="inputtName" placeholder="Exercise Name" value="{{ exercise.name }}" #newName>
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise(exercise._id, newName.value ); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
+            </div>
+          </ng-template>
+          
+          <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Update</button>
+          <!-- End of First Modal -->
+
+
+
+
       </ng-template>
-    </ng-panel>
-  </ngb-accordian>
+    </ngb-panel>
+  </ngb-accordion>
 </div>

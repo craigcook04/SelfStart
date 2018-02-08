@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExerciseService } from '../exercise.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -11,14 +12,16 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ExercisesComponent implements OnInit {
 
   exercises: Object [];
+  closeResult: string;
 
   constructor( private exerciseService: ExerciseService, 
                private modalService: NgbModal ) { }
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
-      this.exercises = Object.assign([], data.exercises);
-      console.log(data);
+      // data comes back as exercisE (singular!!!!!)
+      this.exercises = Object.assign([], data.exercise);
+      console.log(this.exercises);
     })
   }
 

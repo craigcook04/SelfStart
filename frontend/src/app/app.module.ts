@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -17,6 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PatientService } from './patient.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { ExerciseService } from './exercise.service';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -38,10 +40,11 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule
   ],
-  providers: [PatientService],
+  providers: [PatientService, ExerciseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
