@@ -1,4 +1,20 @@
 <h2>Patients</h2>
+<!-- <div class="container">
+    <div class="row">
+          <div class="col-md-6">
+              <div id="custom-search-input">
+                  <div class="input-group col-md-12">
+                      <input type="text" class="form-control input-lg" placeholder="Buscar" />
+                      <span class="input-group-btn">
+                          <button class="btn btn-info btn-lg" type="button">
+                              <i class="glyphicon glyphicon-search"></i>
+                          </button>
+                      </span>
+                  </div>
+              </div>
+          </div>
+    </div>
+</div> -->
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
       <ngb-panel *ngFor="let patient of patients;">
@@ -6,7 +22,7 @@
           <span>{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         </ng-template>
         <ng-template ngbPanelContent>
-          <div>
+          <div class="info">
           <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
           <p><b>Patient ID:  </b> {{patient.ID}}</p>
           <p><b>Email:  </b> {{patient.email}}</p>
@@ -27,17 +43,74 @@
                 </button>
               </div>
               <div class="modal-body">
-                  <p><b>First Name:  </b><input type="text" value="{{patient.givenName}}" #newFirstName /></p>
-                  <p><b>Last Name:  </b><input type="text" value="{{patient.familyName}}" #newLastName /></p>
-                  <p><b>Patient ID:  </b> {{patient.ID}}</p>
-                  <p><b>Email:  </b> <input type="text" value="{{patient.email}}" #newEmail /></p>
-                  <p><b>Date of Birth:  </b> <input type="text" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate /></p>
-                  <p><b>Postal Code:  </b> <input type="text" value="{{patient.postalCode}}" #newPostalCode /></p>
-                  <p><b>Phone Number:  </b> <input type="text" value="{{patient.phone}}" #newPhoneNumber /></p>
-                  <p><b>Marital Status:  </b> <input type="text" value="{{patient.maritalStatus}}" #newMaritalStatus /></p>
-                  <p><b>Health Card Number:  </b> <input type="text" value="{{patient.healthCardNumber}}" #newHealthCardNumber /></p>
-                  <p><b>Occupation:  </b> <input type="text" value="{{patient.occupation}}" #newOccupation /></p>
-                  <p><b>Others: </b> <input type="text" value="{{patient.others}}" #newOthers/></p>
+                  <form>
+                    <div class="form-group row">
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+                      <div class="col-sm-9">
+                        <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputDOB" placeholder="DOB" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate >
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" value="{{patient.maritalStatus}}" #newMaritalStatus>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}" #newHealthCardNumber>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" value="{{patient.occupation}}" #newOccupation>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
+                      </div>
+                    </div>
+                  </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value); c('Close click')">Confirm</button>
