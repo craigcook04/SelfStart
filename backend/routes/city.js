@@ -8,7 +8,11 @@ var City = require('../models/city');
 router.route('/')
 
     .post(function (request, response) {
-        var city = new City.Model(request.body.city);
+        var city = new City();
+        city.name = request.body.name;
+        city.province = request.body.province;
+        city.patient = request.body.patient;
+        
         city.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +23,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        City.Model.find(function (error, city) {
+        City.find(function (error, city) {
             if (error) {
                 response.send(error);
             }
@@ -32,7 +36,7 @@ router.route('/')
 router.route('/:city_id')
 
     .get(function (request, response) {
-        City.Model.findById(request.params.city_id, function (error, city) {
+        City.findById(request.params.city_id, function (error, city) {
             if (error) {
                response.send({error: error});
             }
@@ -43,7 +47,7 @@ router.route('/:city_id')
     })
 
     .put(function (request, response) {
-        City.Model.findById(request.params.city_id, function (error, city) {
+        City.findById(request.params.city_id, function (error, city) {
             if (error) {
                 response.send({error: error});
             }
@@ -67,7 +71,7 @@ router.route('/:city_id')
     })
 
     .delete(function (request, response) {
-        City.Model.findByIdAndRemove(request.params.city_id,
+        City.findByIdAndRemove(request.params.city_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({city: deleted});

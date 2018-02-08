@@ -8,7 +8,13 @@ var Question = require('../models/question');
 router.route('/')
 
     .post(function (request, response) {
-        var question = new Question.Model(request.body.question);
+        var question = new Question();
+        question.questionText = request.body.questionText;
+        question.helpDescription = request.body.helpDescription;
+        question.order = request.body.order;
+        question.form = request.body.form;
+        question.questionType = request.body.questionType;
+        
         question.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +25,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Question.Model.find(function (error, question) {
+        Question.find(function (error, question) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +39,7 @@ router.route('/')
 router.route('/:question_id')
 
     .get(function (request, response) {
-        Question.Model.findById(request.params.question_id, function (error, question) {
+        Question.findById(request.params.question_id, function (error, question) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +50,7 @@ router.route('/:question_id')
     })
 
     .put(function (request, response) {
-        Question.Model.findById(request.params.question_id, function (error, question) {
+        Question.findById(request.params.question_id, function (error, question) {
             if (error) {
                 response.send({error: error});
             }
@@ -70,7 +76,7 @@ router.route('/:question_id')
     })
 
     .delete(function (request, response) {
-        Question.Model.findByIdAndRemove(request.params.question_id,
+        Question.findByIdAndRemove(request.params.question_id,
             function (error, deleted) {
                 if (!error) {
                         response.json({question: deleted});

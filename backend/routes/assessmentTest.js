@@ -8,7 +8,14 @@ var AssessmentTest = require('../models/assessmentTest');
 router.route('/')
 
     .post(function (request, response) {
-        var assessmentTest = new AssessmentTest.Model(request.body.assessmentTest);
+        var assessmentTest = new AssessmentTest();
+        assessmentTest.name = request.body.name;
+        assessmentTest.description = request.body.description;
+        assessmentTest.authorName = request.body.authorName;
+        assessmentTest.recommendation = request.body.recommendation;
+        assessmentTest.testResults = request.body.testResults;
+        assessmentTest.rehabilitionPlans = request.body.rehabilationPlans;
+        
         assessmentTest.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +26,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        AssessmentTest.Model.find(function (error, assessmentTest) {
+        AssessmentTest.find(function (error, assessmentTest) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +40,7 @@ router.route('/')
 router.route('/:assessment_id')
 
     .get(function (request, response) {
-        AssessmentTest.Model.findById(request.params.assessment_id, function (error, assessmentTest) {
+        AssessmentTest.findById(request.params.assessment_id, function (error, assessmentTest) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +51,7 @@ router.route('/:assessment_id')
     })
 
     .put(function (request, response) {
-        AssessmentTest.Model.findById(request.params.assessment_id, function (error, assessmentTest) {
+        AssessmentTest.findById(request.params.assessment_id, function (error, assessmentTest) {
             if (error) {
                 response.send({error: error});
             }
@@ -71,7 +78,7 @@ router.route('/:assessment_id')
     })
 
     .delete(function (request, response) {
-        AssessmentTest.Model.findByIdAndRemove(request.params.assessment_id,
+        AssessmentTest.findByIdAndRemove(request.params.assessment_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({assessmentTest: deleted});

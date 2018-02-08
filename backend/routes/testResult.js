@@ -8,7 +8,10 @@ var TestResult = require('../models/testResult');
 router.route('/')
 
     .post(function (request, response) {
-        var testResult = new TestResult.Model(request.body.testResult);
+        var testResult = new TestResult();
+        testResult.question = request.body.question;
+        testResult.answer = request.body.answer;
+        
         testResult.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +22,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        TestResult.Model.find(function (error, testResult) {
+        TestResult.find(function (error, testResult) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +36,7 @@ router.route('/')
 router.route('/:testResult_id')
 
     .get(function (request, response) {
-        TestResult.Model.findById(request.params.testResult_id, function (error, testResult) {
+        TestResult.findById(request.params.testResult_id, function (error, testResult) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +47,7 @@ router.route('/:testResult_id')
     })
 
     .put(function (request, response) {
-        TestResult.Model.findById(request.params.testResult_id, function (error, testResult) {
+        TestResult.findById(request.params.testResult_id, function (error, testResult) {
             if (error) {
                 response.send({error: error});
             }
@@ -67,7 +70,7 @@ router.route('/:testResult_id')
     })
 
     .delete(function (request, response) {
-        TestResult.Model.findByIdAndRemove(request.params.testResult_id,
+        TestResult.findByIdAndRemove(request.params.testResult_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({testResult: deleted});
