@@ -1,11 +1,11 @@
 var mongoose = require("mongoose");
-var formsSchema = mongoose.Schema({
+var formsSchema = new mongoose.Schema({
     ID: String,
     name: String,
     description: String,
-    assessmentTool: {type: mongoose.Schema.ObjectId, ref: ('AssessmentTests')},
-    questions: [{type: mongoose.Schema.ObjectId, ref: ('Question')}],
+    assessmentTool: {type: mongoose.Schema.Types.ObjectId, ref: 'AssessmentTests'},
+    questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}],
 
 });
-var Forms = mongoose.model('forms', formsSchema);
-exports.model = Forms;
+var Forms = mongoose.model('Forms', formsSchema);
+module.exports = Forms;

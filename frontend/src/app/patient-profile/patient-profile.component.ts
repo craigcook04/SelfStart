@@ -22,7 +22,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {size: "lg"});
+    this.modalService.open(content);
   }
 
   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string) {
@@ -37,6 +37,16 @@ export class PatientProfileComponent implements OnInit {
     
     this.patientService.DeletePatient(ID).subscribe(data => {
       console.log(data);
+    })
+  }
+
+  searchPatients(searchString: string) {
+    console.log(searchString);
+    this.patientService.SearchPatient(searchString).subscribe(data => {
+      if(data != []) {
+        var retObj : any = data;
+        this.patients = Object.assign([], retObj.patients);
+      }
     })
   }
 
