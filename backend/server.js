@@ -95,13 +95,6 @@ router.get('/', function(req, res) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
-
-
-//placeholder route --should be in different file
-router.route('/hello')
-    .get(function(req, res) {
-        res.send({message: "Hello I worked"});
-    });
     
     
 // START THE SERVER

@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var appointmentSchema = mongoose.Schema(
+var appointmentSchema = new mongoose.Schema(
     {
         date: Date,
         reason: String,
         other: String,
-        patient: {type: mongoose.Schema.ObjectId, ref: ('Patient')}
+        patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
     }
 );
 
-var Appointment = mongoose.model('appointment', appointmentSchema);
-exports.Model = Appointment;
+var Appointment = mongoose.model('Appointment', appointmentSchema);
+module.exports = Appointment;

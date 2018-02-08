@@ -41,4 +41,9 @@ export class PatientService {
     return this.http.delete(url);
   }
 
+  SearchPatient(searchString: string) {
+    var url = '/api/patient/findpatient/search?q=' + searchString;
+    return this.http.get(url);
+  }
+
 }

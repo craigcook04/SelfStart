@@ -8,7 +8,12 @@ var Payment = require('../models/payments');
 router.route('/')
 
     .post(function (request, response) {
-        var payment = new Payment.Model(request.body.payment);
+        var payment = new Payment();
+        payment.dayTimeStamp = request.body.dayTimeStamp;
+        payment.amount = request.body.amount;
+        payment.note = request.body.note;
+        payment.patient = request.body.patient;
+        
         payment.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +24,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Payment.Model.find(function (error, payment) {
+        Payment.find(function (error, payment) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +38,7 @@ router.route('/')
 router.route('/:payment_id')
 
     .get(function (request, response) {
-        Payment.Model.findById(request.params.payment_id, function (error, payment) {
+        Payment.findById(request.params.payment_id, function (error, payment) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +49,7 @@ router.route('/:payment_id')
     })
 
     .put(function (request, response) {
-        Payment.Model.findById(request.params.payment_id, function (error, payment) {
+        Payment.findById(request.params.payment_id, function (error, payment) {
             if (error) {
                 response.send({error: error});
             }
@@ -69,7 +74,7 @@ router.route('/:payment_id')
     })
 
     .delete(function (request, response) {
-        Payment.Model.findByIdAndRemove(request.params.payment_id,
+        Payment.findByIdAndRemove(request.params.payment_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({payment: deleted});

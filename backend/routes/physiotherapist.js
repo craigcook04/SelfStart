@@ -8,7 +8,16 @@ var Physiotherapist = require('../models/physiotherapist');
 router.route('/')
 
     .post(function (request, response) {
-        var physiotherapist = new Physiotherapist.Model(request.body.physiotherapist);
+        var physiotherapist = new Physiotherapist();
+        physiotherapist.ID = request.body.ID;
+        physiotherapist.familyName = request.body.familyName;
+        physiotherapist.givenName = request.body.givenName;
+        physiotherapist.email = request.body.email;
+        physiotherapist.dateHired = request.body.dateHired;
+        physiotherapist.dateFinished = request.body.dateFinished;
+        physiotherapist.account = request.body.account;
+        physiotherapist.treatments = request.body.treatments;
+        
         physiotherapist.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +28,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Physiotherapist.Model.find(function (error, physiotherapist) {
+        Physiotherapist.find(function (error, physiotherapist) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +42,7 @@ router.route('/')
 router.route('/:physiotherapist_id')
 
     .get(function (request, response) {
-        Physiotherapist.Model.findById(request.params.physiotherapist_id, function (error, physiotherapist) {
+        Physiotherapist.findById(request.params.physiotherapist_id, function (error, physiotherapist) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +53,7 @@ router.route('/:physiotherapist_id')
     })
 
     .put(function (request, response) {
-        Physiotherapist.Model.findById(request.params.physiotherapist_id, function (error, physiotherapist) {
+        Physiotherapist.findById(request.params.physiotherapist_id, function (error, physiotherapist) {
             if (error) {
                 response.send({error: error});
             }
@@ -73,7 +82,7 @@ router.route('/:physiotherapist_id')
     })
 
     .delete(function (request, response) {
-        Physiotherapist.Model.findByIdAndRemove(request.params.physiotherapist_id,
+        Physiotherapist.findByIdAndRemove(request.params.physiotherapist_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({physiotherapist: deleted});

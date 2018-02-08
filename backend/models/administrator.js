@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var administratorSchema = mongoose.Schema(
+var administratorSchema = new mongoose.Schema(
     {
         ID: String,
         familyName: String,
@@ -7,10 +7,10 @@ var administratorSchema = mongoose.Schema(
         email: String,
         dateHired: Date,
         dateFinished: Date,
-        account: {type: mongoose.Schema.ObjectId, ref: ('UserAccount')},
-        forms: [{type: mongoose.Schema.ObjectId, ref: ('Forms')}]
+        account: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'},
+        forms: [{type: mongoose.Schema.Types.ObjectId, ref: 'Forms'}]
     }
 );
 
-var Administrator = mongoose.model('administrator', administratorSchema);
-exports.Model = Administrator;
+var Administrator = mongoose.model('Administrator', administratorSchema);
+module.exports = Administrator;

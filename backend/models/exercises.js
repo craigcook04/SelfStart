@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var exerciseSchema = mongoose.Schema(
+var exerciseSchema = new mongoose.Schema(
     {
         name: String,
         description: String,
@@ -11,9 +11,9 @@ var exerciseSchema = mongoose.Schema(
         duration: Number,
         targetDate: Date,
         multimedia: String,
-        rehabilitationPlans: {type: mongoose.Schema.ObjectId, ref: ('RehabilitationPlans')}
+        rehabilitationPlans: {type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitationPlans'}
     }
 );
 
-var Exercise = mongoose.model('exercise', exerciseSchema);
-exports.Model = Exercise;
+var Exercise = mongoose.model('Exercise', exerciseSchema);
+module.exports = Exercise;

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-var genderSchema = mongoose.Schema(
+var genderSchema = new mongoose.Schema(
     {
         name: String,
-        patient: [{type: mongoose.Schema.ObjectId, ref: ('Patient')}]
+        patient: [{type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}]
     }
 );
 
-var Gender = mongoose.model('gender', genderSchema);
-exports.Model = Gender;
+var Gender = mongoose.model('Gender', genderSchema);
+module.exports = Gender;

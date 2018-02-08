@@ -8,7 +8,7 @@ var QuestionType = require('../models/questionType');
 router.route('/')
 
     .post(function (request, response) {
-        var questionType = new QuestionType.Model(request.body.questionType);
+        var questionType = new QuestionType();
         questionType.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +19,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        QuestionType.Model.find(function (error, questionType) {
+        QuestionType.find(function (error, questionType) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +33,7 @@ router.route('/')
 router.route('/:questionType_id')
 
     .get(function (request, response) {
-        QuestionType.Model.findById(request.params.questionType_id, function (error, questionType) {
+        QuestionType.findById(request.params.questionType_id, function (error, questionType) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +44,7 @@ router.route('/:questionType_id')
     })
 
     .put(function (request, response) {
-        QuestionType.Model.findById(request.params.questionType_id, function (error, questionType) {
+        QuestionType.findById(request.params.questionType_id, function (error, questionType) {
             if (error) {
                 response.send({error: error});
             }
@@ -67,7 +67,7 @@ router.route('/:questionType_id')
     })
 
     .delete(function (request, response) {
-        QuestionType.Model.findByIdAndRemove(request.params.questionType_id,
+        QuestionType.findByIdAndRemove(request.params.questionType_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({questionType: deleted});
