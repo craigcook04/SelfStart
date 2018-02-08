@@ -16,11 +16,11 @@ export class ExerciseService {
   }
 
   DeleteExercise(id: string) {
-    var url = '/api/exercises' + id;
+    var url = '/api/exercises/' + id;
     return this.httpClient.delete(url);
   }
 
-  UpdateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string, rehabPlans: any) : any {
+  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string, rehabPlans: any) : any {
     // body of the exercise request
     var body ={
       name: exName,
@@ -36,7 +36,7 @@ export class ExerciseService {
       rehabilitationPlans: rehabPlans
     }
 
-    var url = '/api/exercises' + id;
+    var url = '/api/exercises/' + id;
     return this.httpClient.put(url, body);
   }
 }
