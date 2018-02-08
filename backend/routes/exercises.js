@@ -1,4 +1,4 @@
-//exercise route handling
+//EXERCISE ROUTE HANDLING
 
 var express = require('express');
 var router = express.Router();
@@ -7,7 +7,8 @@ var Exercise = require('../models/exercises');
 router.route('/')
 
     .post(function (request, response) {
-        var exercise = new Exercise.Model();
+        var exercise = new Exercise();
+
         exercise.name = request.body.name;
         exercise.description = request.body.description;
         exercise.objectives = request.body.objectives;
@@ -18,7 +19,8 @@ router.route('/')
         exercise.duration = request.body.duration;
         exercise.targetDate = request.body.targetDate;
         exercise.multimedia = request.body.multimedia;
-        exercise.rehabilitationPlans = request.body.rehabilationPlans;
+
+        exercise.rehabilationPlans = request.body.rehabilitationPlans; 
         
         exercise.save(function (error) {
             if (error) {
@@ -30,7 +32,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Exercise.Model.find(function (error, exercises) {
+        Exercise.find(function (error, exercises) {
             if (error) response.send(error);
             response.json({exercise: exercises});
         }).sort({name: 1});
@@ -41,7 +43,7 @@ router.route('/')
 router.route('/:exercise_id')
 
     .get(function (request, response) {
-        Exercise.Model.findById(request.params.exercise_id, function (error, exercise) {
+        Exercise.findById(request.params.exercise_id, function (error, exercise) {
             if (error) {
                response.send({error: error});
             }
@@ -52,7 +54,7 @@ router.route('/:exercise_id')
     })
 
     .put(function (request, response) {
-        Exercise.Model.findById(request.params.exercise_id, function (error, exercise) {
+        Exercise.findById(request.params.exercise_id, function (error, exercise) {
             if (error) {
                 response.send({error: error});
             }
@@ -84,7 +86,7 @@ router.route('/:exercise_id')
     })
 
     .delete(function (request, response) {
-        Exercise.Model.findByIdAndRemove(request.params.exercise_id,
+        Exercise.findByIdAndRemove(request.params.exercise_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({exercise: deleted});

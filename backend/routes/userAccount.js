@@ -8,7 +8,13 @@ var UserAccount = require('../models/userAccount');
 router.route('/')
 
     .post(function (request, response) {
-        var userAccount = new UserAccount.Model(request.body.userAccount);
+        var userAccount = new UserAccount();
+        userAccount.userAccountName = request.body.userAccountName;
+        userAccount.encryptedPassword = request.body.encryptedPassword;
+        userAccount.adminUser = request.body.adminUser;
+        userAccount.physioUser = request.body.physioUser;
+        userAccount.patientUser = request.body.patientUser;
+        
         userAccount.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +25,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        UserAccount.Model.find(function (error, userAccount) {
+        UserAccount.find(function (error, userAccount) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +39,7 @@ router.route('/')
 router.route('/:userAccount_id')
 
     .get(function (request, response) {
-        UserAccount.Model.findById(request.params.gender_id, function (error, userAccount) {
+        UserAccount.findById(request.params.gender_id, function (error, userAccount) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +50,7 @@ router.route('/:userAccount_id')
     })
 
     .put(function (request, response) {
-        UserAccount.Model.findById(request.params.userAccount_id, function (error, userAccount) {
+        UserAccount.findById(request.params.userAccount_id, function (error, userAccount) {
             if (error) {
                 response.send({error: error});
             }
@@ -70,7 +76,7 @@ router.route('/:userAccount_id')
     })
 
     .delete(function (request, response) {
-        UserAccount.Model.findByIdAndRemove(request.params.userAccount_id,
+        UserAccount.findByIdAndRemove(request.params.userAccount_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({userAccount: deleted});

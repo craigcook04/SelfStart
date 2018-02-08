@@ -8,7 +8,12 @@ var Appointment = require('../models/appointment');
 router.route('/')
 
     .post(function (request, response) {
-        var appointment = new Appointment.Model(request.body.appointment);
+        var appointment = new Appointment();
+        appointment.date = request.body.date;
+        appointment.reason = request.body.reason;
+        appointment.other = request.body.other;
+        appointment.patient = request.body.patient;
+        
         appointment.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +24,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Appointment.Model.find(function (error, appointment) {
+        Appointment.find(function (error, appointment) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +38,7 @@ router.route('/')
 router.route('/:appointment_id')
 
     .get(function (request, response) {
-        Appointment.Model.findById(request.params.appointment_id, function (error, appointment) {
+        Appointment.findById(request.params.appointment_id, function (error, appointment) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +49,7 @@ router.route('/:appointment_id')
     })
 
     .put(function (request, response) {
-        Appointment.Model.findById(request.params.appointment_id, function (error, appointment) {
+        Appointment.findById(request.params.appointment_id, function (error, appointment) {
             if (error) {
                 response.send({error: error});
             }
@@ -69,7 +74,7 @@ router.route('/:appointment_id')
     })
 
     .delete(function (request, response) {
-        Appointment.Model.findByIdAndRemove(request.params.appointment_id,
+        Appointment.findByIdAndRemove(request.params.appointment_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({appointment: deleted});
