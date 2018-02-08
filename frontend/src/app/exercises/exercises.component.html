@@ -1,5 +1,5 @@
 <h2>Exercises</h2>
-<div class="container">
+<!-- <div class="container">
   <div class="row">
         <div class="col-md-6">
             <div id="custom-search-input">
@@ -14,7 +14,7 @@
             </div>
         </div>
   </div>
-</div>
+</div> -->
 
 <div class="exercises">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
@@ -49,24 +49,132 @@
                   <div class="form-group row">
                     <label for="inputName" class="col-sm-3 col-form-label">Name</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="inputtName" placeholder="Exercise Name" value="{{ exercise.name }}" #newName>
+                      <input type="text" class="form-control" id="inputName" placeholder="Exercise Name" value="{{ exercise.name }}" #newName>
                     </div>
                   </div>
                 </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputDescrip" class="col-sm-3 col-form-label">Description</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputDescrip" placeholder="Description" value="{{ exercise.description }}" #newDescrip>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputObj" class="col-sm-3 col-form-label">Objectives</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputObj" placeholder="Description" value="{{ exercise.objectives }}" #newObj>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputActSteps" class="col-sm-3 col-form-label">Action Steps</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputDescrip" placeholder="Description" value="{{ exercise.actionSteps }}" #newActSteps>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputLoc" class="col-sm-3 col-form-label">Location</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputLoc" placeholder="Location" value="{{ exercise.location }}" #newLoc>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputFreq" class="col-sm-3 col-form-label">Frequency</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" value="{{ exercise.frequency }}" #newFreq>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputDur" class="col-sm-3 col-form-label">Duration</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputDur" placeholder="Duration" value="{{ exercise.duration }}" #newDur>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputDate" class="col-sm-3 col-form-label">Target Date</label>
+                      <div class="col-sm-9">
+                        <!-- <input type="text" class="form-control" id="inputDate" placeholder="Date" value="{{ exercise.targetDate }}" #newDate> -->
+                        <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date"></md-datepicker>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputMedia" placeholder="Media" value="{{ exercise.multimedia }}" #newMedia>
+                      </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group row">
+                      <label for="inputRehabPlan" class="col-sm-3 col-form-label">Rehabilitation Plans</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputRehabPlan" placeholder="Select Plans" value="{{ exercise.rehabilitationPlans }}" #newRehabPlans>
+                      </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise(exercise._id, newName.value ); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise(exercise._id, newName.value , newDescrip.value, newObj.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, newDate.value, newMedia.value, newRehabPlans.value); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
-          </ng-template>
-          
-          <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Update</button>
+          </ng-template> 
+
+          <button class="btn btn-primary btn-sm exercisebtn" (click)="open(update)">Update</button>
           <!-- End of First Modal -->
 
+          <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
+          <ng-template #delete let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete {{ exercise.name}}</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you wish to delete patient <b>{{exercise.name}}</b>. This action is cannot be undone. </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary btn-med" (click)="deleteExercise(exercise._id); c('Close click')">Delete</button>
+              <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do No Delete</button>                  
+            </div>
+          </ng-template>
+          <!-- End of First Modal -->
 
-
-
+          <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
+          <ng-template #delete let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <h4 class="modal-title">Delete {{ exercise.name }}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you wish to delete exercise <b>{{ exercise. name }}</b>. This action is cannot be undone. </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-med" (click)="deleteExercise(exercise._id); c('Close click')">Delete</button>
+                <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Keep Exercise</button>                  
+              </div>
+            </ng-template>
+            
+            <button class="btn btn-primary btn-sm exercisebtn" (click)="open(delete)">Delete</button>
+            <!-- End of Second Modal -->
       </ng-template>
+
     </ngb-panel>
   </ngb-accordion>
 </div>
