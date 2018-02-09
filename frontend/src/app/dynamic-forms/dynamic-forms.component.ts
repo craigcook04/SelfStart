@@ -9,15 +9,15 @@ export class DynamicFormsComponent implements OnInit {
   
   showForm: boolean;
   
-  
-  
-  
-  
 
   constructor() { }
 
   ngOnInit() {
     this.showForm = false;
+  }
+  
+  createNewQuestion(){
+    
   }
 
 }
