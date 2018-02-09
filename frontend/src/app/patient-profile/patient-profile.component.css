@@ -9,6 +9,17 @@
     width: 50%;
 }
 
+.successMessage {
+    margin-left: 2.5em;
+    color: green;
+    font-size: 16px;
+}
+.successMessage {
+    margin-left: 2.5em;
+    color: red;
+    font-size: 16px;
+}
+
 h2 {
     margin: 1em;
 }
@@ -54,5 +65,22 @@ h2 {
 
 #custom-search-input fa{
     font-size: 16px;
+}
+
+.mydropdown {
+    display: block;
+    height: 40px;
+    width: 100%;
+    padding: .5rem, .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-color: #ffffff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 5px;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+
 }
 
