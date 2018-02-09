@@ -17,7 +17,7 @@
           <span (click)="HideMessage(); GetProvinces(patient.country._id); GetCities(patient.province._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         </ng-template>
         <ng-template ngbPanelContent>
-          <div class="info">
+          <div class = "info">
           <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
           <p><b>Patient ID:  </b> {{patient.ID}}</p>
           <p><b>Email:  </b> {{patient.email}}</p>
@@ -139,6 +139,7 @@
                       </div>
                     </div>
                   </form>
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, acc); c('Close click')">Confirm</button>

@@ -15,6 +15,7 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientService } from './patient.service';
+import {RehabPlansService} from './rehab-plans.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ExerciseService } from './exercise.service';
@@ -46,7 +47,7 @@ import { FileUploadModule } from 'ng2-file-upload'
     AngularFontAwesomeModule,
     FileUploadModule
   ],
-  providers: [PatientService, ExerciseService],
+  providers: [PatientService, RehabPlansService,ExerciseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

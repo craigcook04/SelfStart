@@ -1,3 +1,28 @@
-<p>
-  rehab-plans works!
-</p>
+<br><br>
+
+<h2>Rehab Plans</h2>
+
+<div class ="plans">
+    <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
+        <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
+            <ng-template ngbPanelTitle>
+                <span (click) = "getExercises(rehabPlan._id);"><b>{{rehabPlan.name}}</b></span>               
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
+                    <ngb-panel *ngFor = "let exercise1 of exercise;">
+                   
+                        <ng-template  ngbPanelTitle>
+                            <p style = "margin-left: 20px">{{exercise1.name}}</p>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div style = "margin-left: 40px">
+                                <p style = "margin-left: 40px"><b>description</b>{{exercise1.description}}</p>
+                            </div>
+                       </ng-template>
+                    
+                
+        
+    
+    <!--</ngb-accordion>-->
+
