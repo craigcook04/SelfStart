@@ -1,12 +1,12 @@
 <h2>Rehabilitation Plans</h2>
 <br>
 <div>
-    <input #search type="text">
-    <button>Search</button>
+    <input #search class="searchbar" type="text">
+    <button (click)="searchPlans(search.value)">Search</button>
 </div>
 <br>
-<button class="btn btn-primary btn-med">Create New Plan</button>
-<button class="btn btn-primary btn-med" (click)="goBack()">Back</button>
+<button class="create btn btn-primary btn-med">Create New Plan</button>
+<button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>
 <div class ="plans">
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">

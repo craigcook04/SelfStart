@@ -12,6 +12,10 @@ export class RehabPlansComponent implements OnInit {
 
   ngOnInit() {
   }
+  
+  searchPlans(){
+    
+  }
 
   goBack(){
     this.router.navigate(['../adminhome']);
