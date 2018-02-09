@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 export class AppComponent {
   title = 'app';
   constructor(private router: Router) { }
+  
+  goHome(){
+    this.router.navigate(['home']);
+  }
   
 }

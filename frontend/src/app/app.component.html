@@ -1,42 +1,37 @@
-
-<nav class="navbar navbar-toggleable-md navbar-blue bg-faded" style="background-color: #e3f2fd;">
-  <img src = '../assets/images/logo.png' width = '100' height = '50'>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" 
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">
-        
-    </a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="howitworks">How it Works</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="services">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="faq">FAQ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact">Contact</a>
-        </li>
-        <li class="nav-item" id='right-items'>
-          <a class="nav-link" href="#">Login</a>
-        </li>
-        <li class="nav-item" id='right-items'>
-          <a class="nav-link" href="#">Book an Appointment!</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded navcolor" >
+  <button class="navbar-toggler navbar-toggler-right" id="navbutton" (click)="isNavbarCollapsed = !isNavbarCollapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="home"><img src='../assets/images/logo.png' width='100' height='50'></a>
+  <div class="collapse navbar-collapse navbar-inverse" [ngbCollapse]="isNavbarCollapsed" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['home']">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['about']">About</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['howitworks']">How it Works</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['services']">Services</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['faq']">FAQ</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['contact']">Contact</a>
+      </li>
+      <li class="nav-item" id='right-items' [routerLinkActive]="['active']">
+        <a class="nav-link" href="#">Login</a>
+      </li>
+      <li class="nav-item" id='right-items' [routerLinkActive]="['active']">
+        <a class="nav-link" href="#">Book an Appointment!</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 
 <router-outlet></router-outlet>
