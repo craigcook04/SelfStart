@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Country = require('../models/country');
+var Province = require('../models/province');
 
 router.route('/')
 
@@ -84,5 +85,18 @@ router.route('/:country_id')
             }
         );
     });
+    
+router.route('/getprovinces/:country_id')
+    .get(function(request, response) {
+        Province.find({country: request.params.country_id}, function(err, provinces) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({province: provinces});
+        }).sort({name: 1});
+    });
+    
 
 module.exports = router;
