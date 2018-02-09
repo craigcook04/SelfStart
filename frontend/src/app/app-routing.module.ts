@@ -11,6 +11,7 @@ import {PatientProfileComponent} from './patient-profile/patient-profile.compone
 import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
 import { RouterLinkActive } from '@angular/router';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
+import { ExercisesComponent } from './exercises/exercises.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'manageforms', component: DynamicFormsComponent},
   {path: 'patient', component: PatientProfileComponent},
-  {path: 'adminhome', component: AdminHomeComponent}
+  {path: 'adminhome', component: AdminHomeComponent},
+  {path: 'exercises', component: ExercisesComponent}
 ];
 
 @NgModule({
