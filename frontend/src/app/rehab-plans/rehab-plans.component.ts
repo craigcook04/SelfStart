@@ -18,12 +18,13 @@ export class RehabPlansComponent implements OnInit {
     });
     
   }
+  
   getExercises(ID: string){
-    var retObj: any
+    
     this.rehabPlansService.getExercises(ID).subscribe(data => {
       console.log(data);
-      retObj = data;
-      this.exercise = retObj.exercises;
+      var retObj: any = data;
+      this.exercise = Object.assign([], retObj.exercise);
      
     });
      
