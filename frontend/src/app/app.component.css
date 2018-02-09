@@ -5,9 +5,17 @@
     float: right;
 }
 .navcolor {
-    background-color: #587381;
+    background-color: indigo;
 }
 
 #navbutton {
     margin-top: 10px;
 }
+
+.navbar-nav > li >a{
+    color:white;
+}
+
+
+
+

@@ -1,9 +1,9 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded navcolor" >
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded navcolor" >
   <button class="navbar-toggler navbar-toggler-right" id="navbutton" (click)="isNavbarCollapsed = !isNavbarCollapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="home"><img src='../assets/images/logo.png' width='100' height='50'></a>
-  <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed" id="navbarNav">
+  <div class="collapse navbar-collapse navbar-inverse" [ngbCollapse]="isNavbarCollapsed" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" [routerLink]="['home']">Home <span class="sr-only">(current)</span></a>
