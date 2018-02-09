@@ -41,7 +41,6 @@
                 </button>
               </div>
               <div class="modal-body">
-<<<<<<<<< saved version
                   <form>
                     <div class="form-group row">
                       <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
@@ -140,19 +139,7 @@
                       </div>
                     </div>
                   </form>
-=========
-                  <p><b>First Name:  </b><input type="text" value="{{patient.givenName}}" #newFirstName /></p>
-                  <p><b>Last Name:  </b><input type="text" value="{{patient.familyName}}" #newLastName /></p>
-                  <p><b>Patient ID:  </b> {{patient.ID}}</p>
-                  <p><b>Email:  </b> <input type="text" value="{{patient.email}}" #newEmail /></p>
-                  <p><b>Date of Birth:  </b> <input type="text" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate /></p>
-                  <p><b>Postal Code:  </b> <input type="text" value="{{patient.postalCode}}" #newPostalCode /></p>
-                  <p><b>Phone Number:  </b> <input type="text" value="{{patient.phone}}" #newPhoneNumber /></p>
-                  <p><b>Marital Status:  </b> <input type="text" value="{{patient.maritalStatus}}" #newMaritalStatus /></p>
-                  <p><b>Health Card Number:  </b> <input type="text" value="{{patient.healthCardNumber}}" #newHealthCardNumber /></p>
-                  <p><b>Occupation:  </b> <input type="text" value="{{patient.occupation}}" #newOccupation /></p>
-                  <p><b>Others: </b> <input type="text" value="{{patient.others}}" #newOthers/></p>
->>>>>>>>> local version
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, acc); c('Close click')">Confirm</button>
