@@ -41,14 +41,18 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Patient.find(function (error, patients) {
+        
+        Patient.find()
+        .sort({familyName: 1, givenName: 1})
+        .populate('province').populate('city').populate('country')
+        .exec(function(error, patients) {
             if (error) {
                 response.send(error);
             }
             
             response.json({patients: patients});
             
-        }).sort({familyName: 1, givenName: 1});
+        });
     });
 
 //fetching a specific patient
@@ -100,7 +104,7 @@ router.route('/:patient_id')
                         response.send({error: error});
                     }
                     else {
-                        response.json({patient: patient});
+                        response.json({success: true, patient: patient});
                     }
                 });
             }
@@ -111,7 +115,7 @@ router.route('/:patient_id')
         Patient.findByIdAndRemove(request.params.patient_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({patient: deleted});
+                    response.json({success: true, patient: deleted});
                 }
             }
         );
@@ -120,15 +124,18 @@ router.route('/:patient_id')
 //search for a specific patient
 router.route('/findpatient/search')
     .get(function(request, response) {
-        console.log(request.query.q);
-        Patient.find({"givenName": new RegExp(request.params.q)}, function(err, patients) {
-            if(err) {
-                response.send(err);
-                return;
+        
+        Patient.find({"familyName": request.query.q})
+        .sort({familyName: 1, givenName: 1})
+        .populate('province').populate('city').populate('country')
+        .exec(function(error, patients) {
+            if (error) {
+                response.send(error);
             }
-            console.log(patients);
+            
             response.json({patients: patients});
-        }).sort({familyName: 1, givenName: 1});
+            
+        });
     });
 
 module.exports = router;
