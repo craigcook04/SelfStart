@@ -9,6 +9,7 @@ import {FaqComponent} from './faq/faq.component';
 import {ContactComponent} from './contact/contact.component';
 import {PatientProfileComponent} from './patient-profile/patient-profile.component';
 import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
+import { RouterLinkActive } from '@angular/router';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 

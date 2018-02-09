@@ -15,7 +15,9 @@ router.route('/')
         form.questions = request.body.questions;
         
         form.save(function (error) {
-            if (error) response.send(error);
+            if (error){
+                response.send(error);
+            } 
             response.json({form: form});
         });
     })
