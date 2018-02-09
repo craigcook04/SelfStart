@@ -18,6 +18,9 @@ import { PatientService } from './patient.service';
 import {RehabPlansService} from './rehab-plans.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { ExerciseService } from './exercise.service';
+import { FormsModule } from '@angular/forms';
+import { FileUploadModule } from 'ng2-file-upload'
 
 
 @NgModule({
@@ -39,10 +42,16 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    FormsModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    FileUploadModule
   ],
+<<<<<<< HEAD
   providers: [PatientService, RehabPlansService],
+=======
+  providers: [PatientService, ExerciseService],
+>>>>>>> 58fe3c8f6635c61be4c0e0c9e6875f39298a5c8f
   bootstrap: [AppComponent]
 })
 export class AppModule { }
