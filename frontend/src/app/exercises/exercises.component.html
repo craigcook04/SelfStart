@@ -27,13 +27,13 @@
           <p><b> Name: </b> {{ exercise.name }} </p>
           <p><b> Description: </b> {{ exercise.description }} </p>
           <p><b> Objectives: </b> {{ exercise.objectives }} </p>
+          <p><b> Author: </b> {{ exercise.authorName }} </p>
           <p><b> Action Steps: </b> {{ exercise.actionSteps }} </p>
           <p><b> Location: </b> {{ exercise.location }} </p>
           <p><b> Frequency: </b> {{ exercise.frequency }} </p>
           <p><b> Duration: </b> {{ exercise.duration }} </p>
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
           <p><b> Multimedia: </b> {{ exercise.multimedia }} </p>
-          <p><b> Rehabilitation Plans: </b> {{ exercise.rehabilitationPlans }} </p>
         </div>
 
         <!-- when physio wants to update an exercise -->
@@ -69,14 +69,14 @@
                       </div>
                     </div>
                 </form>
-                <!-- <form>
+                <form>
                     <div class="form-group row">
                       <label for="inputAuth" class="col-sm-3 col-form-label">Author Name</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputAuth" placeholder="Author Name" value="{{ exercise.authorName }}" #newAuthName>
                       </div>
                     </div>
-                </form> -->
+                </form>
                 <form>
                     <div class="form-group row">
                       <label for="inputActSteps" class="col-sm-3 col-form-label">Action Steps</label>
@@ -133,17 +133,9 @@
                       </div>
                     </div>
                 </form>
-                <form>
-                    <div class="form-group row">
-                      <label for="inputRehabPlan" class="col-sm-3 col-form-label">Rehabilitation Plans</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputRehabPlan" placeholder="Select Plans" value="{{ exercise.rehabilitationPlans }}" #newRehabPlans>
-                      </div>
-                    </div>
-                </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, newDate.value, newMedia.value, newRehabPlans.value); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, newDate.value, newMedia.value); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 

@@ -20,7 +20,7 @@ export class ExerciseService {
     return this.httpClient.delete(url);
   }
 
-  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string, rehabPlans: any) : any {
+  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string) : any {
     // body of the exercise request
     var body ={
       name: exName,
@@ -32,8 +32,7 @@ export class ExerciseService {
       frequency: freq,
       duration: dur,
       targetDate: targDate,
-      multimedia: media,
-      rehabilitationPlans: rehabPlans
+      multimedia: media
     }
 
     var url = '/api/exercises/' + id;
