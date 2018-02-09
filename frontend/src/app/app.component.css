@@ -4,3 +4,10 @@
 #right-items{
     float: right;
 }
+.navcolor {
+    background-color: #e3f2fd;
+}
+
+#navbutton {
+    margin-top: 10px;
+}
