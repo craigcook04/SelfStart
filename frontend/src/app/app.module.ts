@@ -19,6 +19,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
+import { FileUploadModule } from 'ng2-file-upload'
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FormsModule } from '@angular/forms';
     NgbModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    FileUploadModule
   ],
   providers: [PatientService, ExerciseService],
   bootstrap: [AppComponent]

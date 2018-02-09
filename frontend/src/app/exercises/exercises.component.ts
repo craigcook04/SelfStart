@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ExerciseService } from '../exercise.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { FileUploader } from 'ng2-file-upload';
 
 
 
@@ -13,7 +14,8 @@ import { Router } from '@angular/router';
 })
 export class ExercisesComponent implements OnInit {
 
-  model;
+  //public uploader:FileUploader = new FileUploader({url: URL});
+  public hasAnotherDropZoneOver:boolean = false;
   exercises: Object [];
   closeResult: string;
 
@@ -23,7 +25,7 @@ export class ExercisesComponent implements OnInit {
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
-      // data comes back as exercisE (singular!!!!!)
+      // data comes back as exercise (singular!!!!!)
       this.exercises = Object.assign([], data.exercise);
       console.log(this.exercises);
     })
@@ -51,6 +53,10 @@ export class ExercisesComponent implements OnInit {
     .subscribe(data =>{
       console.log(data);
     })
+  }
+
+  public fileOverAnother(e:any):void {
+    this.hasAnotherDropZoneOver = e;
   }
 
 }

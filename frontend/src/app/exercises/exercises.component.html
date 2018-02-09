@@ -73,8 +73,9 @@
             <div class="form-group row">
                 <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputMedia" placeholder="Multimedia" #multimedia>
-                  </div>
+                    <!-- <input type="text" class="form-control" id="inputMedia" placeholder="Multimedia" #multimedia> -->
+
+                </div>
             </div>
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
@@ -99,15 +100,15 @@
           <p><b> Frequency: </b> {{ exercise.frequency }} </p>
           <p><b> Duration: </b> {{ exercise.duration }} </p>
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
-          <!-- <p><b> Multimedia: </b> {{ exercise.multimedia }} </p> -->
-          <img src="{{ exercise.multimedia }}">
+          <p><b> Multimedia: </b> {{ exercise.multimedia }} </p>
+          <!-- <img src="{{ exercise.multimedia }}"> -->
         </div>
 
         <!-- when physio wants to update an exercise -->
         <ng-template #update let-c="close" let-d="dismiss">
             <div class="modal-header">
               <h4 class="modal-title">Update {{exercise.name}}</h4>
-              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -195,7 +196,15 @@
                     <div class="form-group row">
                       <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="inputMedia" type="file" #newMedia placeholder="Select the files you would like to upload">
+                        <!-- <input class="form-control-file" id="inputMedia" type="file" #newMedia> -->
+                        <div ng2FileDrop
+                          [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+                          (fileOver)="fileOverAnother($event)"
+                          [uploader]="uploader"
+                          class="well my-drop-zone">
+                          <input type="button" value="Drag and Drop Here, or Select Below"class="form-control" id="inputMedia">
+                        </div>
+                        <input type="file" ng2FileSelect [uploader]="uploader" multiple/>
                       </div>
                     </div>
                 </form>
