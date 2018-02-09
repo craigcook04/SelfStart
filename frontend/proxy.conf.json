@@ -1,10 +1,6 @@
 {
     "/api/*": {
-<<<<<<< HEAD
         "target": "https://se3350-ablack65.c9users.io:8082",
-=======
-        "target": "https://loopsolutions-selfstart-mattnorthmore.c9users.io:8082",
->>>>>>> 3b2ba10f3cb29af288d9df2f8fd7317aeee9ca3f
         "secure": false,
         "changeOrigin": true,
         "logLevel": "info"
