@@ -1,23 +1,82 @@
 <h2>Exercises</h2>
-<!-- <div class="container">
-  <div class="row">
-        <div class="col-md-6">
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="Find an Exercise.." />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
-  </div>
-</div> -->
 
 <div class="exercises">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+    <ngb-panel>
+        <ng-template #new let-c="close" ngbPanelTitle>
+          <span><b>Add a New Exercise</b></span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <span>Fill out the following...</span>
+          <br><br>
+            <div class="form-group row">
+              <label for="inputName" class="col-sm-3 col-form-label"><b>Name</b></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputName" placeholder="Exercise Name" #name>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputDescrip" class="col-sm-3 col-form-label"><b>Description</b></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputDescrip" placeholder="Description" #description>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputObjs" class="col-sm-3 col-form-label"><b>Objectives</b></label>
+              <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputObjs" placeholder="Objectives" #objectives>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputAuthName" class="col-sm-3 col-form-label"><b>Author Name</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputAuthName" placeholder="Author Name" #authorName>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputActSteps" class="col-sm-3 col-form-label"><b>Action Steps</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputActSteps" placeholder="Action Steps" #actionSteps>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputLoc" class="col-sm-3 col-form-label"><b>Location</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputLoc" placeholder="Location" #location>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputFreq" class="col-sm-3 col-form-label"><b>Frequency</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" #frequency>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputDur" class="col-sm-3 col-form-label"><b>Duration</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputDur" placeholder="Duration" #duration>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputTargDate" class="col-sm-3 col-form-label"><b>Target Date</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputTargDate" placeholder="Target Date" #targetDate>
+                  </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputMedia" placeholder="Multimedia" #multimedia>
+                  </div>
+            </div>
+            <!-- above is the form for creating a new exercise, below the button to save it -->
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" (click)="newExercise()">Add</button>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
+              </div>            
+        </ng-template>
+    </ngb-panel>
     <ngb-panel *ngFor='let exercise of exercises'>
         <ng-template ngbPanelTitle >
           <span> {{ exercise.name }} || {{ exercise.description }} </span>

@@ -36,7 +36,6 @@ export class ExercisesComponent implements OnInit {
     this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
       console.log(data);
-      this.router.navigate(['/exercises']);
     })
   }
 
