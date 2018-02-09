@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Province = require('../models/province');
 var Country = require('../models/country');
+var City = require('../models/city');
 
 router.route('/')
 
@@ -22,7 +23,7 @@ router.route('/')
                 response.send(error);
             }
             //console.log(province.country);
-            //response.json({province: province});
+            response.json({province: province});
         });
         
         // Country.findById(request.body.country, function(err, country) {
@@ -111,6 +112,18 @@ router.route('/:province_id')
                 }
             }
         );
+    });
+    
+router.route('/getcities/:province_id')
+    .get(function(request, response){
+        City.find({province: request.params.province_id}, function(err, cities) {
+           if(err){
+               response.send(err);
+               return;
+           } 
+           
+           response.send({cities: cities});
+        }).sort({name: 1});
     });
 
 module.exports = router;
