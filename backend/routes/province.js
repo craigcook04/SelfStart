@@ -4,22 +4,58 @@
 var express = require('express');
 var router = express.Router();
 var Province = require('../models/province');
+var Country = require('../models/country');
+var City = require('../models/city');
 
 router.route('/')
 
     .post(function (request, response) {
-        var province = new Province.Model(request.body.province);
+        var province = new Province();
+        province.name = request.body.name;
+        console.log(request.body.country);
+        province.country = request.body.country;
+        province.city = request.body.city;
+        province.patient = request.body.patient;
+        
         province.save(function (error) {
             if (error) {
+                console.log('error');
                 response.send(error);
             }
-            
+            //console.log(province.country);
             response.json({province: province});
         });
+        
+        // Country.findById(request.body.country, function(err, country) {
+        //     if(err) {
+        //         console.log(err);
+        //     }
+        //     console.log(country);
+        //     country.province.push(province);
+        //     country.save(function(err){
+        //         if(err) {
+        //             console.log('err');
+        //             console.log(err);
+        //         }
+                
+        //         console.log('done');
+        //         response.send(country);
+        //     })
+        // })
+        
+        
+        
+        
+        // Province.Model.findById('5a7c84d0dec4fe4a6d6f40e1').populate('country').exec(function(err, province) {
+        //     if(err) {
+        //         response.send(err);
+        //     }
+        // })
+        
     })
 
     .get(function (request, response) {
-        Province.Model.find(function (error, province) {
+        Province.find(function (error, province) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +69,7 @@ router.route('/')
 router.route('/:province_id')
 
     .get(function (request, response) {
-        Province.Model.findById(request.params.province_id, function (error, province) {
+        Province.findById(request.params.province_id, function (error, province) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +80,7 @@ router.route('/:province_id')
     })
 
     .put(function (request, response) {
-        Province.Model.findById(request.params.province_id, function (error, province) {
+        Province.findById(request.params.province_id, function (error, province) {
             if (error) {
                 response.send({error: error});
             }
@@ -69,13 +105,25 @@ router.route('/:province_id')
     })
 
     .delete(function (request, response) {
-        Province.Model.findByIdAndRemove(request.params.province_id,
+        Province.findByIdAndRemove(request.params.province_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({province: deleted});
                 }
             }
         );
+    });
+    
+router.route('/getcities/:province_id')
+    .get(function(request, response){
+        City.find({province: request.params.province_id}, function(err, cities) {
+           if(err){
+               response.send(err);
+               return;
+           } 
+           
+           response.send({cities: cities});
+        }).sort({name: 1});
     });
 
 module.exports = router;

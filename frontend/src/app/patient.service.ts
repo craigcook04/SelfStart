@@ -16,7 +16,7 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string) : any {
+  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string) : any {
     //create the body of the request
     var body = {
       ID: patientID,
@@ -30,6 +30,9 @@ export class PatientService {
       healthCardNumber: healthCardNumber,
       occupation: occupation,
       others: others,
+      country: newCountry,
+      province: newProvince,
+      city: newCity
     }
     //url that the request is going to be sent too
     var url = '/api/patient/' + ID;
@@ -39,6 +42,26 @@ export class PatientService {
   DeletePatient(ID: string) {
     var url = '/api/patient/' + ID;
     return this.http.delete(url);
+  }
+
+  SearchPatient(searchString: string) {
+    var url = '/api/patient/findpatient/search?q=' + searchString;
+    return this.http.get(url);
+  }
+
+  GetCountries() {
+    var url = '/api/country';
+    return this.http.get(url);
+  }
+
+  GetProvinces(countryId: string) {
+    var url = '/api/country/getprovinces/' + countryId;
+    return this.http.get(url);
+  }
+
+  GetCities(provinceId: string) {
+    var url = '/api/province/getcities/' + provinceId;
+    return this.http.get(url);
   }
 
 }

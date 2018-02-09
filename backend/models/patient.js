@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var patientSchema = mongoose.Schema(
+var patientSchema = new mongoose.Schema(
     {
         ID: String,
         familyName: String,
@@ -12,15 +12,15 @@ var patientSchema = mongoose.Schema(
         healthCardNumber: String,
         occupation: String,
         others: String,
-        account: {type: mongoose.Schema.ObjectId, ref: ('UserAccount')},
-        payment: [{type: mongoose.Schema.ObjectId, ref: ('Payments')}],
-        country: {type: mongoose.Schema.ObjectId, ref: ('Country')},
-        province: {type: mongoose.Schema.ObjectId, ref: ('Province')},
-        city: {type: mongoose.Schema.ObjectId, ref: ('City')},
-        gender: {type: mongoose.Schema.ObjectId, ref: ('Gender')},
-        appointment: [{type: mongoose.Schema.ObjectId, ref: ('Appointment')}]
+        account: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'},
+        payment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Payments'}],
+        country: {type: mongoose.Schema.Types.ObjectId, ref: 'Country'},
+        province: {type: mongoose.Schema.Types.ObjectId, ref: 'Province'},
+        city: {type: mongoose.Schema.Types.ObjectId, ref: 'City'},
+        gender: {type: mongoose.Schema.Types.ObjectId, ref: 'Gender'},
+        appointment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Appointment'}]
     }
 );
 
-var Patient =  mongoose.model('patient', patientSchema);
-exports.Model = Patient;
+var Patient =  mongoose.model('Patient', patientSchema);
+module.exports = Patient;

@@ -8,7 +8,12 @@ var Recommendation = require('../models/recommendation');
 router.route('/')
 
     .post(function (request, response) {
-        var recommendation = new Recommendation.Model(request.body.recommendation);
+        var recommendation = new Recommendation();
+        recommendation.timeStamp = request.body.timeStamp;
+        recommendation.decision = request.body.decision;
+        recommendation.test = request.body.test;
+        recommendation.response = request.body.response;
+        
         recommendation.save(function (error) {
             if (error) {
                 response.send(error);
@@ -19,7 +24,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Recommendation.Model.find(function (error, recommendation) {
+        Recommendation.find(function (error, recommendation) {
             if (error) {
                 response.send(error);
             }
@@ -33,7 +38,7 @@ router.route('/')
 router.route('/:recommendation_id')
 
     .get(function (request, response) {
-        Recommendation.Model.findById(request.params.recommendation_id, function (error, recommendation) {
+        Recommendation.findById(request.params.recommendation_id, function (error, recommendation) {
             if (error) {
                response.send({error: error});
             }
@@ -44,7 +49,7 @@ router.route('/:recommendation_id')
     })
 
     .put(function (request, response) {
-        Recommendation.Model.findById(request.params.recommendation_id, function (error, recommendation) {
+        Recommendation.findById(request.params.recommendation_id, function (error, recommendation) {
             if (error) {
                 response.send({error: error});
             }
@@ -69,7 +74,7 @@ router.route('/:recommendation_id')
     })
 
     .delete(function (request, response) {
-        Recommendation.Model.findByIdAndRemove(request.params.recommendation_id,
+        Recommendation.findByIdAndRemove(request.params.recommendation_id,
             function (error, deleted) {
                 if (!error) {
                     response.json({recommendation: deleted});
