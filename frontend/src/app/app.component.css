@@ -4,3 +4,18 @@
 #right-items{
     float: right;
 }
+.navcolor {
+    background-color: indigo;
+}
+
+#navbutton {
+    margin-top: 10px;
+}
+
+.navbar-nav > li >a{
+    color:white;
+}
+
+
+
+
