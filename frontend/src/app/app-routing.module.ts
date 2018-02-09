@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'manageforms', component: DynamicFormsComponent},
   {path: 'patient', component: PatientProfileComponent},
   {path: 'adminhome', component: AdminHomeComponent},
-  {path: 'rehabplans', component: RehabPlansComponent}
+  {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent}
 ];
 
