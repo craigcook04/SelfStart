@@ -15,6 +15,7 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientService } from './patient.service';
+import {RehabPlansService} from './rehab-plans.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 
@@ -41,7 +42,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     HttpClientModule,
     AngularFontAwesomeModule
   ],
-  providers: [PatientService],
+  providers: [PatientService, RehabPlansService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

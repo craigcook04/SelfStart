@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {RehabPlansService} from '../rehab-plans.service'
 @Component({
   selector: 'app-rehab-plans',
   templateUrl: './rehab-plans.component.html',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RehabPlansComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rehabPlansService: RehabPlansService) { }
+  rehabPlans: Object[];
 
   ngOnInit() {
+    this.rehabPlansService.getPlans().subscribe(data => {
+      console.log(data);
+      this.rehabPlans = Object.assign([], data.rehabPlans)
+    });
   }
 
 }

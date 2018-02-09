@@ -1,3 +1,20 @@
-<p>
-  rehab-plans works!
-</p>
+<br><br>
+
+<h2>Rehab Plans</h2>
+
+<div class ="plans">
+    <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
+        <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
+            <ng-template ngbPanelTitle>
+                <span>{{rehabPlan.name}}</span>               
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <div>
+                    <p>rfdsafdsa</p>
+                    <p>hello</p>
+                    <p>wasssup</p>
+                </div>
+        
+    
+    <!--</ngb-accordion>-->
+

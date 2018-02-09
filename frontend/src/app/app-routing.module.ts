@@ -10,6 +10,7 @@ import {ContactComponent} from './contact/contact.component';
 import {PatientProfileComponent} from './patient-profile/patient-profile.component';
 import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
+import {RehabPlansComponent} from './rehab-plans/rehab-plans.component'
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'manageforms', component: DynamicFormsComponent},
   {path: 'patient', component: PatientProfileComponent},
-  {path: 'adminhome', component: AdminHomeComponent}
+  {path: 'adminhome', component: AdminHomeComponent},
+  {path: 'rehabplans', component: RehabPlansComponent}
 ];
 
 @NgModule({
