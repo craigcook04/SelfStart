@@ -6,13 +6,12 @@
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
             <ng-template ngbPanelTitle>
-                <span>{{rehabPlan.name}}</span>               
+                <span (click) = "getExercises(rehabPlan._id);">{{rehabPlan.name}}</span>               
             </ng-template>
             <ng-template ngbPanelContent>
-                <div>
-                    <p>rfdsafdsa</p>
-                    <p>hello</p>
-                    <p>wasssup</p>
+                <div *ngFor = "let exercise1 of exercise;">
+                    <p>{{exercise1.name}}</p>
+                    <p>fdsafdsa</p>
                 </div>
         
     

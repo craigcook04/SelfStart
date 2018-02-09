@@ -14,4 +14,8 @@ export class RehabPlansService {
   getPlans(): any{
       return this.http.get('/api/rehabPlans');
   }
+  getExercises(ID: string):  any{
+    console.log("fdasfdsa");
+    return this.http.get('/api/exercises/rehabPlan/' + ID);
+  }
 }
