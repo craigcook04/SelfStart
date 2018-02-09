@@ -60,7 +60,14 @@
             <div class="form-group row">
                 <label for="inputTargDate" class="col-sm-3 col-form-label"><b>Target Date</b></label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputTargDate" placeholder="Target Date" #targetDate>
+                    <div class="calFormat">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targetDate>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                            <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                          </button>
+                        </div>
+                    </div>
                   </div>
             </div>
             <div class="form-group row">
@@ -72,7 +79,7 @@
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="newExercise()">Add</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, targetDate.value, multimedia.value)">Add</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
               </div>            
         </ng-template>
@@ -92,7 +99,8 @@
           <p><b> Frequency: </b> {{ exercise.frequency }} </p>
           <p><b> Duration: </b> {{ exercise.duration }} </p>
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
-          <p><b> Multimedia: </b> {{ exercise.multimedia }} </p>
+          <!-- <p><b> Multimedia: </b> {{ exercise.multimedia }} </p> -->
+          <img src="{{ exercise.multimedia }}">
         </div>
 
         <!-- when physio wants to update an exercise -->
@@ -172,13 +180,12 @@
                     <div class="form-group row">
                       <label for="inputDate" class="col-sm-3 col-form-label">Target Date</label>
                       <div class="col-sm-9">
-                        <!-- <input type="text" class="form-control" id="inputDate" placeholder="Date" value="{{ exercise.targetDate }}" #newDate> -->
-                        <div class="form-group">
-                            <div>
-                                <div class="input-group input-append date" id="datePicker">
-                                    <input type="text" class="form-control" name="date" placeholder="Target Date" value="{{ exercise.targetDate | slice:0:10 }}"  #newDate/>
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
+                        <div class="calFormat">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targDate>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                              </button>
                             </div>
                         </div>
                       </div>
@@ -188,13 +195,13 @@
                     <div class="form-group row">
                       <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputMedia" placeholder="Media" value="{{ exercise.multimedia }}" #newMedia>
+                        <input class="form-control" id="inputMedia" type="file" #newMedia placeholder="Select the files you would like to upload">
                       </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, newDate.value, newMedia.value); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, newMedia.value); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
@@ -244,40 +251,3 @@
     </ngb-panel>
   </ngb-accordion>
 </div>
-
-
-<!-- js script for calendar actions -->
-<script>
-    $(document).ready(function() {
-        $('#datePicker')
-            .datepicker({
-                format: 'mm/dd/yyyy'
-            })
-            .on('changeDate', function(e) {
-                // Revalidate the date field
-                $('#eventForm').formValidation('revalidateField', 'date');
-            });
-    
-        $('#eventForm').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The date is required'
-                        },
-                        date: {
-                            format: 'MM/DD/YYYY',
-                            message: 'The date is not a valid'
-                        }
-                    }
-                }
-            }
-        });
-    });
-    </script>

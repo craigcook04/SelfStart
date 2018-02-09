@@ -38,4 +38,23 @@ export class ExerciseService {
     var url = '/api/exercises/' + id;
     return this.httpClient.put(url, body);
   }
+
+  AddExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string) : any{
+    var body ={
+      name: exName,
+      description: descrip,
+      objectives: objs,
+      authorName: authName,
+      actionSteps: actSteps,
+      location: loc,
+      frequency: freq,
+      duration: dur,
+      targetDate: targDate,
+      multimedia: media
+    }
+
+    var url = '/api/exercises';
+    return this.httpClient.post(url, body);
+  }
+  
 }

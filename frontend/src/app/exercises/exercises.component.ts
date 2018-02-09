@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ExercisesComponent implements OnInit {
 
+  model;
   exercises: Object [];
   closeResult: string;
 
@@ -41,6 +42,13 @@ export class ExercisesComponent implements OnInit {
 
   deleteExercise(id: string) {
     this.exerciseService.DeleteExercise(id).subscribe(data => {
+      console.log(data);
+    })
+  }
+
+  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string){
+    this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
+    .subscribe(data =>{
       console.log(data);
     })
   }

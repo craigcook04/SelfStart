@@ -42,3 +42,8 @@
 #custom-search-input .glyphicon-search{
     font-size: 16px;
 }
+
+.calFormat{
+    display: flex;
+    flex-direction: row;
+}
