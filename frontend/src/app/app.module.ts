@@ -47,11 +47,7 @@ import { FileUploadModule } from 'ng2-file-upload'
     AngularFontAwesomeModule,
     FileUploadModule
   ],
-<<<<<<< HEAD
-  providers: [PatientService, RehabPlansService],
-=======
-  providers: [PatientService, ExerciseService],
->>>>>>> 58fe3c8f6635c61be4c0e0c9e6875f39298a5c8f
+  providers: [PatientService, RehabPlansService,ExerciseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
