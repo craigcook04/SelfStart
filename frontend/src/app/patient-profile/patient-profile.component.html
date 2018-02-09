@@ -12,7 +12,7 @@
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
       <ngb-panel *ngFor="let patient of patients;">
         <ng-template ngbPanelTitle>
-          <span (click)="HideMessage()">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
+          <span (click)="HideMessage(); GetProvinces(patient.country._id); GetCities(patient.province._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         </ng-template>
         <ng-template ngbPanelContent>
           <div class="info">
@@ -109,7 +109,7 @@
                     <div class="form-group row">
                       <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
                       <div class="col-sm-9">
-                        <select #newCountry class="mydropdown">
+                        <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value)">
                           <option value="{{patient.country._id}}">{{patient.country.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
@@ -119,7 +119,7 @@
                     <div class="form-group row">
                       <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
                       <div class="col-sm-9">
-                        <select #newProvince class="mydropdown">
+                        <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
                           <option value="{{patient.province._id}}">{{patient.province.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>

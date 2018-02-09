@@ -54,13 +54,13 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  GetProvinces() {
-    var url = '/api/province';
+  GetProvinces(countryId: string) {
+    var url = '/api/country/getprovinces/' + countryId;
     return this.http.get(url);
   }
 
-  GetCities() {
-    var url = '/api/city'
+  GetCities(provinceId: string) {
+    var url = '/api/province/getcities/' + provinceId;
     return this.http.get(url);
   }
 

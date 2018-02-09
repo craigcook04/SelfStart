@@ -22,7 +22,6 @@ export class PatientProfileComponent implements OnInit {
   ngOnInit() {
     this.patientService.GetAllPatients().subscribe(data => {
       this.patients = Object.assign([], data.patients);
-      console.log(data);
     });
 
     this.patientService.GetCountries().subscribe(data => {
@@ -30,15 +29,15 @@ export class PatientProfileComponent implements OnInit {
       this.countries = Object.assign([], retObj.country);
     })
 
-    this.patientService.GetProvinces().subscribe(data => {
-      var retObj: any = data;
-      this.provinces = Object.assign([], retObj.province);
-    })
+    // this.patientService.GetProvinces().subscribe(data => {
+    //   var retObj: any = data;
+    //   this.provinces = Object.assign([], retObj.province);
+    // })
 
-    this.patientService.GetCities().subscribe(data => {
-      var retObj: any = data;
-      this.cities = Object.assign([], retObj.city);
-    })
+    // this.patientService.GetCities().subscribe(data => {
+    //   var retObj: any = data;
+    //   this.cities = Object.assign([], retObj.city);
+    // })
 
   }
 
@@ -63,7 +62,7 @@ export class PatientProfileComponent implements OnInit {
       }
       else{
         //it was not successful
-        this.showFailure = false;
+        this.showFailure = true;
       }
     })
 
@@ -77,7 +76,6 @@ export class PatientProfileComponent implements OnInit {
   }
 
   searchPatients(searchString: string) {
-    console.log(searchString);
     this.patientService.SearchPatient(searchString).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
@@ -89,6 +87,57 @@ export class PatientProfileComponent implements OnInit {
   HideMessage() {
     this.showSuccess = false;
     this.showFailure = false;
+  }
+
+  GetProvinces(countryId: string) {
+    console.log(countryId);
+    this.patientService.GetProvinces(countryId).subscribe(data => {
+      var retObj: any = data;
+      this.provinces = Object.assign([], retObj.province);
+      console.log(data);
+    })
+  }
+
+  GetCities(provinceId: string) {
+    console.log(provinceId);
+    this.patientService.GetCities(provinceId).subscribe(data => {
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.cities);
+      console.log(data);
+    })
+  }
+
+  SetProvinceBox(provinceBox, cityBox){
+    // a new country has been selected so remove all entries from the province and city boxes 
+    provinceBox.selectedIndex = -1;
+    cityBox.selectedIndex = -1;
+    while (provinceBox.options.length > 0) {                
+      provinceBox.remove(0);
+    } 
+    while (cityBox.options.length > 0) {                
+      cityBox.remove(0);
+    } 
+  }
+
+  DifferentGetProvince(countryId: string) {
+     //This gets the cities for the first province selected
+     this.patientService.GetProvinces(countryId).subscribe(data => {
+      var retObj: any = data;
+      this.provinces = Object.assign([], retObj.province);
+      console.log(data);
+      this.GetCities(retObj.province[0]._id);
+    })
+  }
+
+  ClearAndGetCities(provinceId: string, cityBox) {
+    while (cityBox.options.length > 0) {                
+      cityBox.remove(0);
+    } 
+
+    this.patientService.GetCities(provinceId).subscribe(data => {
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.cities);
+    })
   }
 
   
