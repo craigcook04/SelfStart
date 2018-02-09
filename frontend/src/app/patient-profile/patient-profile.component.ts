@@ -11,6 +11,7 @@ export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
   showSuccess: boolean;
+  showDeleteSuccess: boolean;
   showFailure: boolean;
   patients: Object[];
   countries: Object[];
@@ -69,9 +70,15 @@ export class PatientProfileComponent implements OnInit {
   }
 
   deletePatient(ID: string) {
-    
     this.patientService.DeletePatient(ID).subscribe(data => {
-      console.log(data);
+      var retObj: any;
+      if(retObj.success){
+        this.showDeleteSuccess = true;
+      }
+      else { 
+        this.showFailure = true;
+      }
+      
     })
   }
 
@@ -85,25 +92,25 @@ export class PatientProfileComponent implements OnInit {
   }
 
   HideMessage() {
+    //hide all messages, if there are any
     this.showSuccess = false;
     this.showFailure = false;
+    this.showDeleteSuccess = false;
   }
 
   GetProvinces(countryId: string) {
-    console.log(countryId);
+    //retrieve all provinces within a certain country
     this.patientService.GetProvinces(countryId).subscribe(data => {
       var retObj: any = data;
       this.provinces = Object.assign([], retObj.province);
-      console.log(data);
     })
   }
 
   GetCities(provinceId: string) {
-    console.log(provinceId);
+    //retrieve all cities within a certain province
     this.patientService.GetCities(provinceId).subscribe(data => {
       var retObj: any = data;
       this.cities = Object.assign([], retObj.cities);
-      console.log(data);
     })
   }
 
@@ -130,6 +137,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   ClearAndGetCities(provinceId: string, cityBox) {
+    //clear the city box and repopulate it with cities within the selected province
     while (cityBox.options.length > 0) {                
       cityBox.remove(0);
     } 

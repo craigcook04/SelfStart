@@ -7,7 +7,9 @@
     </button>
 </span>
 </div>
-<p *ngIf="showSuccess" class="successMessage">Patient update was successful</p>
+<p *ngIf="showSuccess" class="successMessage">Patient was successfully updated</p>
+<p *ngIf="showDeleteSuccess" class="successMessage">Patient was successfully deleted</p>
+<p *ngIf="showFailure" class="failureMessage">Request was unsuccessful</p>
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
       <ngb-panel *ngFor="let patient of patients;">
