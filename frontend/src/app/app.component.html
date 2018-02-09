@@ -5,28 +5,28 @@
   <a class="navbar-brand" href="home"><img src='../assets/images/logo.png' width='100' height='50'></a>
   <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['home']">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="about">About</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['about']">About</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="howitworks">How it Works</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['howitworks']">How it Works</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="services">Services</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['services']">Services</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="faq">FAQ</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['faq']">FAQ</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="contact">Contact</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['contact']">Contact</a>
       </li>
-      <li class="nav-item" id='right-items'>
+      <li class="nav-item" id='right-items' [routerLinkActive]="['active']">
         <a class="nav-link" href="#">Login</a>
       </li>
-      <li class="nav-item" id='right-items'>
+      <li class="nav-item" id='right-items' [routerLinkActive]="['active']">
         <a class="nav-link" href="#">Book an Appointment!</a>
       </li>
     </ul>
