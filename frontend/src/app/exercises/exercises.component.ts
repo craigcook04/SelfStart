@@ -14,8 +14,6 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class ExercisesComponent implements OnInit {
 
-  //public uploader:FileUploader = new FileUploader({url: URL});
-  public hasAnotherDropZoneOver:boolean = false;
   exercises: Object [];
   closeResult: string;
 
@@ -35,7 +33,8 @@ export class ExercisesComponent implements OnInit {
     this.modalService.open(content, {size: "lg"});
   }
 
-  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string) {
+  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any) {
+    console.log(media.item(0));
     this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
       console.log(data);
@@ -48,15 +47,12 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string){
+  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:string){
+    
     this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
       console.log(data);
     })
-  }
-
-  public fileOverAnother(e:any):void {
-    this.hasAnotherDropZoneOver = e;
   }
 
 }
