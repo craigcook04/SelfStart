@@ -1,23 +1,51 @@
-<br>
-<div class="container">
-    <div class="card">
-      <div class="card-header">
-        Injury Form
-      </div>
-      <div class="card-body mx-auto my-2">
-        <div *ngIf="!showForm">
-          <p class="card-text">This is a form to allow users to describe their injury.</p>
-          <a href="#" class="btn btn-primary mx-auto">Edit Form</a>
-        </div>
-        <div *ngIf="showForm">
-          <p class="card-text">Editable form here</p>
-          
-          
-          
-          
-          
-          <a href="#" class="btn btn-primary">Add Field</a>
-        </div>
-      </div>
-    </div>
+<div class="container mt-3">
+  <ngb-accordion [closeOthers]="true" activeIds="static-1">
+    <ngb-panel id="static-1" title="Simple">
+      <ng-template ngbPanelContent>
+        
+        
+        <form>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10">
+                <div class="my-3">
+                  <label for="exampleInputPassword1">Question Goes here</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <div class="my-3">
+                  <label for="exampleInputPassword1">Question Goes here</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-2">
+      <ng-template ngbPanelTitle>
+        <span>&#9733; <b>Fancy</b> title &#9733;</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+        aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+        labore sustainable VHS.
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-3" title="Disabled" [disabled]="true">
+      <ng-template ngbPanelContent>
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+        aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+        labore sustainable VHS.
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
 </div>

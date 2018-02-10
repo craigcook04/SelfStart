@@ -4,12 +4,28 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class DynamicFormsService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
   
-  // createNewQuestion(){
-  //   var body = {}
+  createNewQuestion(formID: string, questionText: string, helpDescription: string, order: number, type: string){
     
-  //   return this.http.post('/api/');
-  // }
+    var body = {
+      questionText: questionText,
+      helpDescription: helpDescription,
+      order: order,
+      form: formID,
+      questionType: type
+    }
+    var url = '/api/question'
+    return this.http.post(url, body);
+    
+  }
+  
+  updateQuestion(){
+    
+  }
+  
+  deleteQuestion(){
+    
+  }
 
 }
