@@ -18,4 +18,5 @@ export class RehabPlansService {
     console.log("fdasfdsa");
     return this.http.get('/api/exercises/rehabPlan/' + ID);
   }
+
 }

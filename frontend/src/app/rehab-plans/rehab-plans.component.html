@@ -1,26 +1,104 @@
 <br><br>
 
 <h2>Rehab Plans</h2>
+<br><br>
 
 <div class ="plans">
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
             <ng-template ngbPanelTitle>
-                <span (click) = "getExercises(rehabPlan._id);"><b>{{rehabPlan.name}}</b></span>               
+                <span (click) = "getExercises(rehabPlan._id);"><b>{{rehabPlan.name}}</b></span>
             </ng-template>
             <ng-template ngbPanelContent>
-                <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
-                    <ngb-panel *ngFor = "let exercise1 of exercise;">
-                   
-                        <ng-template  ngbPanelTitle>
-                            <p style = "margin-left: 20px">{{exercise1.name}}</p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <div style = "margin-left: 40px">
-                                <p style = "margin-left: 40px"><b>description</b>{{exercise1.description}}</p>
-                            </div>
-                       </ng-template>
+                <ngb-panel>
+                        <div class= "info" >
+                            <p><b>Description:</b> {{rehabPlan.description}}</p>
+                            <p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>
+                            <p><b>goal:</b> {{rehabPlan.goal}}</p>
+                            <p><b>Time frame:</b> {{rehabPlan.timeFrameToComplete}}</p>
+                            <p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>
+                            <!--<p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>-->
+                            <!--<button class="btn btn-primary btn-sm patientbtn">Delete</button>-->
+                            <button class="btn btn-primary btn-sm rehabbtn" style = "float: left; margin-top: 10px" (click) = "open(add); loadAllExercises();">add exercise</button>
+                            
+                        </div>
+                        <ng-template #add let-c="close" let-d="dismiss">
+                                        <div class="modal-header" style = "text-align: center;">
+                                          <h4 class="modal-title" >Select All Exercises you wish to add</h4>
+                                          <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <br>
+                                        <div *ngFor = "let allExercise of allExercises">
+                                        <button type="button" class="btn btn-primary btn-sm" style = "margin-left:30px">{{allExercise.name}}</button>
+                                        <br>
+                                        </div>
+                                        <!--<div *ngFor = "let allExercise of allExercises">-->
+                                        <!--    <input #checked type="checkbox" style = "margin-left: 20px"> {{allExercise.name}}<br>-->
+                                        <!--</div>-->
+                                        <div class = "modal-body">
+                                            <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click'); updateExercises(checked)">Confirm</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
+                                            
+                                        </div>
+                                    </ng-template>
+                          
+                </ngb-panel>
                     
+                <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
+                    <ngb-panel style = "margin-left = 100px">
+                        <ng-template  ngbPanelTitle>
+                            
+                            <p style = "margin-left: 20px">Exercises</p>
+                            
+                        </ng-template>
+                        
+                        
+                        <ng-template ngbPanelContent>
+                        
+                            <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
+                                 <ngb-panel *ngFor = "let exercise1 of exercise;">
+                   
+                                    <ng-template  ngbPanelTitle>
+                                        <p style = "margin-left: 40px">{{exercise1.name}}</p>
+                                        
+                                    </ng-template>
+                                    
+                                   
+                                    <ng-template ngbPanelContent>
+                                        <div class = "level3">
+                                            <p style = "margin-left: 80px;"><b> Name: </b> {{ exercise1.name }} </p>
+                                            <p style = "margin-left: 80px;"><b> Description: </b> {{ exercise1.description }} </p>
+                                            <p style = "margin-left: 80px;"><b> Objectives: </b> {{ exercise1.objectives }} </p>
+                                            <p style = "margin-left: 80px;"><b> Author: </b> {{ exercise1.authorName }} </p>
+                                            <p style = "margin-left: 80px;"><b> Action Steps: </b> {{ exercise1.actionSteps }} </p>
+                                            <p style = "margin-left: 80px;"><b> Location: </b> {{ exercise1.location }} </p>
+                                            <p style = "margin-left: 80px;"><b> Frequency: </b> {{ exercise1.frequency }} </p>
+                                            <p style = "margin-left: 80px;"><b> Duration: </b> {{ exercise1.duration }} </p>
+                                            <p style = "margin-left: 80px;"><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise1.targetDate | date:'mediumDate' }}</time> </p>
+                                            <p style = "margin-left: 80px;"><b> Multimedia: </b> {{ exercise1.multimedia }} </p>
+                                            <!-- <img src="{{ exercise.multimedia }}"> -->
+                                            <button class="btn btn-primary btn-sm rehabbtn" (click) = "open(delete)">Remove</button>
+                                        </div>
+                                   </ng-template>
+                            
+                    
+                                    <ng-template #delete let-c="close" let-d="dismiss">
+                                        <div class="modal-header" style = "text-align: center;">
+                                          <h4 class="modal-title" >Are you sure you want to Delete {{exercise1.name}}?</h4>
+                                          <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class = "modal-body">
+                                            <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click')">Confirm</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
+                                            
+                                        </div>
+                                    </ng-template>
+                                    
+                              
                 
         
     
