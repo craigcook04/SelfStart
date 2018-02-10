@@ -23,6 +23,8 @@ export class PatientProfileComponent implements OnInit {
   ngOnInit() {
     this.patientService.GetAllPatients().subscribe(data => {
       this.patients = Object.assign([], data.patients);
+      console.log('hello');
+      console.log(this.patients);
     });
 
     this.patientService.GetCountries().subscribe(data => {
