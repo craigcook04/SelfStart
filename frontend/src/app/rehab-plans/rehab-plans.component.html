@@ -1,6 +1,12 @@
-<br><br>
-
-<h2>Rehab Plans</h2>
+<h2>Rehabilitation Plans</h2>
+<br>
+<div>
+    <input #search class="searchbar" type="text">
+    <button (click)="searchPlans(search.value)">Search</button>
+</div>
+<br>
+<button class="create btn btn-primary btn-med">Create New Plan</button>
+<button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>
 
 <div class ="plans">
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
@@ -9,20 +15,28 @@
                 <span (click) = "getExercises(rehabPlan._id);"><b>{{rehabPlan.name}}</b></span>               
             </ng-template>
             <ng-template ngbPanelContent>
-                <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
-                    <ngb-panel *ngFor = "let exercise1 of exercise;">
-                   
-                        <ng-template  ngbPanelTitle>
-                            <p style = "margin-left: 20px">{{exercise1.name}}</p>
-                        </ng-template>
-                        <ng-template ngbPanelContent>
-                            <div style = "margin-left: 40px">
-                                <p style = "margin-left: 40px"><b>description</b>{{exercise1.description}}</p>
-                            </div>
-                       </ng-template>
-                    
-                
-        
-    
-    <!--</ngb-accordion>-->
-
+                <div>
+                    <p><b>Name:  </b> {{rehabPlan.name}}</p>
+                    <p><b>Description:  </b> {{rehabPlan.description}}</p>
+                    <p><b>Author Name:  </b> {{rehabPlan.authorName}}</p>
+                    <p><b>Time Frame to Complete:  </b> {{rehabPlan.timeFrameToComplete  | date: "fullDate"}}</p>
+                </div>
+                <ng-template ngbPanelContent>
+                    <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
+                        <ngb-panel *ngFor = "let exercise1 of exercise;">
+                            
+                            <ng-template  ngbPanelTitle>
+                                <p style = "margin-left: 20px">{{exercise1.name}}</p>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div style = "margin-left: 40px">
+                                    <p style = "margin-left: 40px"><b>description</b>{{exercise1.description}}</p>
+                                </div>
+                            </ng-template>
+                         </ngb-panel>
+                    </ngb-accordion>
+                </ng-template> 
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+</div>
