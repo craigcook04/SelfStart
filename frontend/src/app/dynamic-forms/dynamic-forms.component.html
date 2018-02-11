@@ -1,6 +1,7 @@
 <h2>Manage Forms</h2>
 
-<button class="btn "
+<button class="btn btn-success" (click)="open(create)">New Form</button>
+
 
 <div class="container mt-3">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
@@ -12,11 +13,10 @@
       </ng-template>
       
       <ng-template ngbPanelContent>
-        <h6>Form ID: {{ form.ID }}</h6>
+        <h6>Form ID: {{ form._id }}</h6>
         <form>
           <div class="container">
-            <button class="btn btn-danger float-right ml-3">DELETE</button>
-            <button class="btn btn-primary float-right">EDIT</button>
+            <button class="btn btn-danger float-right ml-3" (click)="open(yousure)">DELETE</button>
             <div class="row">
               <div class="col-lg-8 col-md-10">
                 <div class="my-3">
@@ -28,9 +28,57 @@
           </div>
         </form>
       </ng-template>
+      
+      <!-- Are you sure modal -->
+      <ng-template let-c="close" let-d="dismiss" #yousure>
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure?</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p> This action cannot be undone </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
+          <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
+        </div>
+      </ng-template>
+      
     </ngb-panel>
     <!-- End of form block -->
     
-    
+    <!-- New form modal -->
+      <ng-template let-c="close" let-d="dismiss" #create>
+        <div class="modal-header">
+          <h4 class="modal-title">Create a new form</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group row">
+                <label for="inputFormName" class="col-sm-3 col-form-label">Form Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputFormName" placeholder="Name" #newFormName>
+                </div>
+                
+              </div>
+              <div class="form-group row">
+                <label for="inputFormDescrip" class="col-sm-3 col-form-label">Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputFormDescrip" placeholder="Description" #newFormDescrip>
+                </div>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm align-left" (click)="createNewForm(newFormName.value, newFormDescrip.value); c('Close click')">Create</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+        </div>
+      </ng-template>
+      
   </ngb-accordion>
 </div>

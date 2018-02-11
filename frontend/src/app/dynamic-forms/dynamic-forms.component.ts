@@ -13,7 +13,9 @@ export class DynamicFormsComponent implements OnInit {
   public isCollapsed = false;
   questions: Object [];
   forms: Object [];
-  trackID = 0;
+  showSuccess: boolean;
+  showDeleteSuccess: boolean;
+  showFailure: boolean;
 
   
   constructor(private dynamicFormsService: DynamicFormsService,
@@ -23,10 +25,36 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit() {
     this.dynamicFormsService.GetAllForms().subscribe(data =>{
       this.forms = Object.assign([], data.form);
-      console.log(this.form);
+      console.log(data);
     })
   }
   
+  deleteForm(ID: string) {
+    this.dynamicFormsService.DeleteForm(ID).subscribe(data => {
+      console.log(data);
+      //update the list to reflect deletion
+      this.dynamicFormsService.GetAllForms().subscribe(data =>{
+      this.forms = Object.assign([], data.form);
+      console.log(data);
+      })
+      
+    })
+  }
   
-
+  createNewForm(name: string, description: string){
+    this.dynamicFormsService.CreateNewForm(name, description).subscribe(data => {
+      console.log(data);
+      
+      //update the list to reflect new form
+      this.dynamicFormsService.GetAllForms().subscribe(data =>{
+      this.forms = Object.assign([], data.form);
+      console.log(data);
+      })
+    })
+  }
+  
+  open(content) {
+    this.modalService.open(content, {size: 'lg'});
+  }
+  
 }

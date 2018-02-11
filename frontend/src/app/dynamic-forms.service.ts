@@ -17,10 +17,9 @@ export class DynamicFormsService {
   }
   
   //Create a form
-  CreateNewForm(id: number, name: string, description: string) {
+  CreateNewForm(name: string, description: string) {
     //request body
     var body = {
-      ID: id,
       name: name,
       description: description
     }
@@ -36,10 +35,9 @@ export class DynamicFormsService {
   }
   
   //Update a form
-  UpdateForm(id: string, newID: string, name: string, description: string){
+  UpdateForm(id: string, name: string, description: string){
     //id is the variable from mongo, newID is a self assigned id to track forms numerically
     var body = {
-      ID: newID,
       name: name,
       description: description
     }
