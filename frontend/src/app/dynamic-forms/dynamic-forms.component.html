@@ -1,9 +1,16 @@
+<h2>Manage Forms</h2>
+
 <div class="container mt-3">
-  <ngb-accordion [closeOthers]="true" activeIds="static-1">
-    <ngb-panel id="static-1" title="Simple">
-      <ng-template ngbPanelContent>
-        
-        
+  <ngb-accordion [closeOthers]="true" #acc="ngbAccordion">
+    <!-- This is the block of code that will be repeated for every form -->
+    <ngb-panel *ngFor='let form of forms'>
+      <ng-template ngbPanelTitle>
+        <span> {{ form.name }} || {{ form.description }} </span>
+        <button class="btn btn-danger float-right ml-3">DELETE</button>
+        <button class="btn btn-primary float-right" data-toggle="collapse">EDIT</button>
+      </ng-template>
+      <ng-template data-parent="#accordion" ngbPanelContent>
+        <h6>Form ID: {{ form.ID }}</h6>
         <form>
           <div class="container">
             <div class="row">
@@ -12,40 +19,14 @@
                   <label for="exampleInputPassword1">Question Goes here</label>
                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <div class="my-3">
-                  <label for="exampleInputPassword1">Question Goes here</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
               </div>
             </div>
           </div>
         </form>
-        
-        
       </ng-template>
     </ngb-panel>
-    <ngb-panel id="static-2">
-      <ng-template ngbPanelTitle>
-        <span>&#9733; <b>Fancy</b> title &#9733;</span>
-      </ng-template>
-      <ng-template ngbPanelContent>
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-        aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-        labore sustainable VHS.
-      </ng-template>
-    </ngb-panel>
-    <ngb-panel id="static-3" title="Disabled" [disabled]="true">
-      <ng-template ngbPanelContent>
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-        aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-        craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-        labore sustainable VHS.
-      </ng-template>
-    </ngb-panel>
+    <!-- End of form block -->
+    
+    
   </ngb-accordion>
 </div>

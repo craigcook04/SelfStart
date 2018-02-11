@@ -1,31 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable()
 export class DynamicFormsService {
 
   constructor(private http: HttpClient) { }
   
-  createNewQuestion(formID: string, questionText: string, helpDescription: string, order: number, type: string){
-    
+  //Get All forms
+  GetAllForms() : any{
+    var url = '/api/forms';
+    return this.http.get(url);
+  }
+  
+  //Create a form
+  CreateNewForm(id: number, name: string, description: string) {
+    //request body
     var body = {
-      questionText: questionText,
-      helpDescription: helpDescription,
-      order: order,
-      form: formID,
-      questionType: type
+      ID: id,
+      name: name,
+      description: description
     }
-    var url = '/api/question'
+    
+    var url = '/api/forms';
     return this.http.post(url, body);
-    
   }
   
-  updateQuestion(){
-    
+  //Delete a form
+  DeleteForm(id: string){
+    var url = '/api/forms/' + id;
+    return this.http.delete(url);
   }
   
-  deleteQuestion(){
+  //Update a form
+  UpdateForm(id: string, newID: string, name: string, description: string){
+    //id is the variable from mongo, newID is a self assigned id to track forms numerically
+    var body = {
+      ID: newID,
+      name: name,
+      description: description
+    }
     
+    var url = '/api/forms' + id;
+    return this.http.put(url, body);
   }
 
 }

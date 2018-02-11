@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicFormsService } from '../dynamic-forms.service';
 import { Router } from '@angular/router';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dynamic-forms',
@@ -9,37 +9,23 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./dynamic-forms.component.css']
 })
 export class DynamicFormsComponent implements OnInit {
-  
-  showForm: boolean;
-  
+
   public isCollapsed = false;
+  questions: Object [];
+  forms: Object [];
+  trackID = 0;
   
-  constructor(private dynamicFormsService: DynamicFormsService) { }
+  constructor(private dynamicFormsService: DynamicFormsService,
+              private modalService: NgbModal,
+              private router: Router) { }
 
   ngOnInit() {
-    this.showForm = false;
+    this.dynamicFormsService.GetAllForms().subscribe(data =>{
+      this.forms = Object.assign([], data.form);
+      console.log(this.form);
+    })
   }
   
-  // createNewQuestion(questionText: string, helpDescription: string, order: number, ){
-  //   this.dynamicFormsService.createNewQuestion().subscribe(data => {
-  //     console.log(data);
-      
-      
-  //   })
-  // }
   
-  // updateQuestion(){
-  //   this.dynamicFormsService.updateQuestion().subscribe(data => {
-  //     console.log(data);
-      
-  //   })
-  // }
-  
-  // deleteQuestion(){
-  //   this.dynamicFormsService.updateQuestion().subscribe(data => {
-  //     console.log(data);
-      
-  //   })
-  // }
 
 }
