@@ -1,18 +1,22 @@
 <h2>Manage Forms</h2>
 
+<button class="btn "
+
 <div class="container mt-3">
-  <ngb-accordion [closeOthers]="true" #acc="ngbAccordion">
+  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
     <!-- This is the block of code that will be repeated for every form -->
     <ngb-panel *ngFor='let form of forms'>
       <ng-template ngbPanelTitle>
-        <span> {{ form.name }} || {{ form.description }} </span>
-        <button class="btn btn-danger float-right ml-3">DELETE</button>
-        <button class="btn btn-primary float-right" data-toggle="collapse">EDIT</button>
+        <span> {{ form.name }} ||</span>
+        <fa class="float-right fa-2x" name="angle-down"></fa>
       </ng-template>
-      <ng-template data-parent="#accordion" ngbPanelContent>
+      
+      <ng-template ngbPanelContent>
         <h6>Form ID: {{ form.ID }}</h6>
         <form>
           <div class="container">
+            <button class="btn btn-danger float-right ml-3">DELETE</button>
+            <button class="btn btn-primary float-right">EDIT</button>
             <div class="row">
               <div class="col-lg-8 col-md-10">
                 <div class="my-3">

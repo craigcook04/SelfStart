@@ -18,4 +18,8 @@ export class RehabPlansService {
     console.log("fdasfdsa");
     return this.http.get('/api/exercises/rehabPlan/' + ID);
   }
+  addExercise(ID: string, exercise: any){
+    console.log(ID)
+    return this.http.put('/api/rehabPlans/' + ID + '/addEx', {exerciseObjects: exercise});
+  }
 }
