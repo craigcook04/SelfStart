@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ExerciseService } from '../exercise.service';
 import {RehabPlansService} from '../rehab-plans.service'
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-rehab-plans',
@@ -10,7 +13,14 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RehabPlansComponent implements OnInit {
 
-  constructor(private rehabPlansService: RehabPlansService, private modalService: NgbModal, private exerciseService: ExerciseService) { }
+
+  constructor(private rehabPlansService: RehabPlansService, 
+  private modalService: NgbModal, 
+  private exerciseService: ExerciseService,
+  private router: Router) { }
+
+  
+  
   rehabPlans: Object[];
   exercise: Object[];
   allExercises: Object[];
@@ -20,21 +30,18 @@ export class RehabPlansComponent implements OnInit {
       console.log(data);
       this.rehabPlans = Object.assign([], data.rehabPlans)
     });
-    
   }
   
   getExercises(ID: string){
-    
     this.rehabPlansService.getExercises(ID).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       this.exercise = Object.assign([], retObj.exercise);
-     
     });
-     
     console.log(this.exercise);
-   
-    
+  }
+  
+  searchPlans(){
   }
   open(content){
     this.modalService.open(content, {size: "lg"});
@@ -51,4 +58,7 @@ export class RehabPlansComponent implements OnInit {
     console.log(this.allExercises);
   }
 
+  goBack(){
+    this.router.navigate(['../adminhome']);
+  }
 }

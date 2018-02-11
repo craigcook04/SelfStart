@@ -27,5 +27,9 @@ export class AdminHomeComponent implements OnInit {
     
   }
   
+  goToRehabPlans(){
+    this.router.navigate(['../rehabplans']);
+  }
+  
 }
 
