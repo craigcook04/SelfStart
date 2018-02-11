@@ -15,6 +15,7 @@ router.route('/')
         rehabPlans.assessmentTests = request.body.assessmentTests;
         rehabPlans.exercises = request.body.exercises;
         rehabPlans.treatments = request.body.treatments;
+        rehabPlans.exerciseObjects = request.body.exerciseObjects;
         
         rehabPlans.save(function (error) {
             if (error) response.send(error);
@@ -57,6 +58,7 @@ router.route('/:rehabPlans_id')
                 rehabPlans.assessmentTests = request.body.assessmentTests;
                 rehabPlans.exercises = request.body.exercises;
                 rehabPlans.treatments = request.body.treatments;
+                rehabPlans.exerciseObjects.push(request.body.exerciseObjects) ;
 
                 rehabPlans.save(function (error) {
                     if (error) {
@@ -81,4 +83,26 @@ router.route('/:rehabPlans_id')
         );
     });
 
+    router.route('/:rehabPlans_id/addEx')
+    
+        .put(function (request, response) {
+        RehabPlans.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
+            if (error) {
+                response.send({error: error});
+            }
+            else {
+                rehabPlans.exerciseObjects.push(request.body.exerciseObjects) ;
+
+                rehabPlans.save(function (error) {
+                    if (error) {
+                        response.send({error: error});
+                    }
+                    else {
+                        response.json({rehabPlans: rehabPlans});
+                    }
+                });
+            }
+        });
+    });
+    
 module.exports = router;

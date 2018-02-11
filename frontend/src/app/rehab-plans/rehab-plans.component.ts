@@ -32,12 +32,15 @@ export class RehabPlansComponent implements OnInit {
     });
   }
   
-  getExercises(ID: string){
-    this.rehabPlansService.getExercises(ID).subscribe(data => {
-      console.log(data);
-      var retObj: any = data;
-      this.exercise = Object.assign([], retObj.exercise);
-    });
+  getExercises(ID: any){
+    console.log(ID);
+    this.exercise = Object.assign([], ID.exerciseObjects);
+    
+    // this.rehabPlansService.getExercises(ID).subscribe(data => {
+    //   console.log(data);
+    //   var retObj: any = data;
+    //   this.exercise = Object.assign([], retObj.exercise);
+    // });
     console.log(this.exercise);
   }
   
@@ -60,5 +63,13 @@ export class RehabPlansComponent implements OnInit {
 
   goBack(){
     this.router.navigate(['../adminhome']);
+  }
+  addExercise( exerciseToBeAdded: any, ID: string){
+    console.log("in comp.");
+    this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
+      var retObj: any = data;
+      console.log(retObj);
+    })
+    window.location.reload();
   }
 }

@@ -8,7 +8,8 @@ var rehabilitationPlansSchema = new mongoose.Schema(
         timeFrameToComplete: Date,
         assessmentTests: [{type: mongoose.Schema.Types.ObjectId, ref: ('AssessmentTests')}],
         exercises: [{type: mongoose.Schema.Types.ObjectId, ref: ('Exercises')}],
-        treatments: [{type: mongoose.Schema.Types.ObjectId, ref: ('Treatments')}]
+        treatments: [{type: mongoose.Schema.Types.ObjectId, ref: ('Treatments')}],
+        exerciseObjects: []
     }
 );
 

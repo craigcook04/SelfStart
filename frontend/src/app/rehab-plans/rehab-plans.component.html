@@ -16,7 +16,7 @@
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
             <ng-template ngbPanelTitle>
-                <span (click) = "getExercises(rehabPlan._id);"><b>{{rehabPlan.name}}</b></span>
+                <span (click) = "getExercises(rehabPlan);"><b>{{rehabPlan.name}}</b></span>
             </ng-template>
             <ng-template ngbPanelContent>
 <!--<<<<<<< HEAD-->
@@ -41,7 +41,7 @@
                                         </div>
                                         <br>
                                         <div *ngFor = "let allExercise of allExercises">
-                                        <button type="button" class="btn btn-primary btn-sm" style = "margin-left:30px">{{allExercise.name}}</button>
+                                        <button type="button" class="btn btn-primary btn-sm" style = "margin-left:30px" (click) = "addExercise(allExercise, rehabPlan._id); c('Close click')">{{allExercise.name}}</button>
                                         <br>
                                         </div>
                                         <!--<div *ngFor = "let allExercise of allExercises">-->
@@ -68,7 +68,7 @@
                         <ng-template ngbPanelContent>
                         
                             <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
-                                 <ngb-panel *ngFor = "let exercise1 of exercise;">
+                                 <ngb-panel *ngFor = "let exercise1 of exercise | slice:1;">
                    
                                     <ng-template  ngbPanelTitle>
                                         <p style = "margin-left: 40px">{{exercise1.name}}</p>
