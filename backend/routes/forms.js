@@ -11,8 +11,10 @@ router.route('/')
         form.ID = request.body.ID;
         form.name = request.body.name;
         form.description = request.body.description;
-        form.assessmentTool = request.body.assessmentTool;
-        form.questions = request.body.questions;
+        form.assessmentTool = null;
+        //request.body.assessmentTool;
+        form.questions = null;
+        //request.body.questions;
         
         form.save(function (error) {
             if (error){
@@ -23,9 +25,11 @@ router.route('/')
     })
     
     .get(function (request, response) {
-        Forms.find(function (error, forms) {
-            if (error) response.send(error);
-            response.json({form: forms});
+        Forms.find(function (error, form) {
+            if (error){
+                 response.send(error);
+            }
+            response.json({form: form});
         });
     });
 
