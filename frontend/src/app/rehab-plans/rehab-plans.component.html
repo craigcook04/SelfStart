@@ -5,7 +5,7 @@
 <br>
 <div>
     <input #search class="searchbar" type="text">
-    <button (click)="searchPlans(search.value)">Search</button>
+    <button class="create btn btn-primary btn-med" (click)="searchPlans(search.value)">Search</button>
 </div>
 <br>
 <button class="create btn btn-primary btn-med">Create New Plan</button>
@@ -92,6 +92,7 @@
                                             <button class="btn btn-primary btn-sm rehabbtn" (click) = "open(delete)">Remove</button>
                                         </div>
                                    </ng-template>
+                                   
                             
                     
                                     <ng-template #delete let-c="close" let-d="dismiss">
