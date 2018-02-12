@@ -57,7 +57,9 @@ export class RehabPlansComponent implements OnInit {
     };
     console.log("hello");
     console.log(body);
-    this.rehabPlansService.CreatePlan(body);
+    this.rehabPlansService.CreatePlan(body).subscribe(data =>{
+      console.log(data);
+    });
   }
   
   open(content){
