@@ -55,6 +55,8 @@ export class RehabPlansComponent implements OnInit {
       goal: goalOfPlan,
       timeFrameToComplete: timeFrame
     };
+    console.log("hello");
+    console.log(body);
     this.rehabPlansService.CreatePlan(body);
   }
   

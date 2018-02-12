@@ -6,6 +6,7 @@ var RehabPlans = require('../models/rehabilitationPlans');
 
 router.route('/')
     .post(function (request, response) {
+        console.log("hey");
         var rehabPlans = new RehabPlans();
         rehabPlans.name = request.body.name;
         rehabPlans.description = request.body.description;
