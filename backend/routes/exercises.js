@@ -20,7 +20,7 @@ router.route('/')
         exercise.targetDate = request.body.targetDate;
         exercise.multimedia = request.body.multimedia;
 
-        exercise.rehabilationPlans = request.body.rehabilitationPlans; 
+        exercise.rehabilitationPlans = request.body.rehabilitationPlans; 
         
         exercise.save(function (error) {
             if (error) {
@@ -71,7 +71,9 @@ router.route('/:exercise_id')
                 exercise.duration = request.body.duration;
                 exercise.targetDate = request.body.targetDate;
                 exercise.multimedia = request.body.multimedia;
-                exercise.rehabilationPlans = request.body.rehabilitationPlans;              
+                exercise.rehabilitationPlans = request.body.rehabilitationPlans;     
+                console.log(request.body.rehabilitationPlans);
+                console.log(exercise);
 
                 exercise.save(function (error) {
                     if (error) {
@@ -95,4 +97,18 @@ router.route('/:exercise_id')
         );
     });
 
+router.route('/rehabPlan/:rehabPlans_id')
+
+    .get(function (request, response) {
+        console.log("work");
+        Exercise.find({"rehabilitationPlans": request.params.rehabPlans_id}, function (error, exercise) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({exercise: exercise});
+            }
+        });
+    });
+    
 module.exports = router;

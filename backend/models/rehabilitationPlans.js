@@ -6,9 +6,10 @@ var rehabilitationPlansSchema = new mongoose.Schema(
         authorName: String,
         goal: String,
         timeFrameToComplete: Date,
-        assessmentTests: {type: mongoose.Schema.Types.ObjectId, ref: 'AssessmentTests'},
-        exercises: {type: mongoose.Schema.Types.ObjectId, ref: 'Exercises'},
-        treatments: {type: mongoose.Schema.Types.ObjectId, ref: 'Treatments'}
+        assessmentTests: [{type: mongoose.Schema.Types.ObjectId, ref: ('AssessmentTests')}],
+        exercises: [{type: mongoose.Schema.Types.ObjectId, ref: ('Exercises')}],
+        treatments: [{type: mongoose.Schema.Types.ObjectId, ref: ('Treatments')}],
+        exerciseObjects: []
     }
 );
 

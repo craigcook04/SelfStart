@@ -1,0 +1,36 @@
+h2 {
+    margin: 1em;
+}
+
+.plans {
+
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+}
+
+.info{
+    margin-left: 40px;
+}
+.rehabbtn {
+    margin-left: 1em;
+    margin-right: 20px;
+    margin-bottom: 1em;
+    float: right;
+}
+.level3{
+    margin-left: 80px;
+}
+
+/*    margin-left: 2em;*/
+/*    margin-right: 2em;*/
+/*}*/
+
+.searchbar{
+    margin-left: 2em;
+    width: 30%;
+}
+
+.create{
+    margin-left: 2em;
+}
+

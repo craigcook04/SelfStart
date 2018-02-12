@@ -11,6 +11,7 @@ import {PatientProfileComponent} from './patient-profile/patient-profile.compone
 import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
 import { RouterLinkActive } from '@angular/router';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
+import {RehabPlansComponent} from './rehab-plans/rehab-plans.component'
 import { ExercisesComponent } from './exercises/exercises.component';
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'manageforms', component: DynamicFormsComponent},
   {path: 'patient', component: PatientProfileComponent},
   {path: 'adminhome', component: AdminHomeComponent},
+  {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent}
 ];
 
