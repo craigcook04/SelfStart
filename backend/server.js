@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 //Linking all the routes to the file defining the end points
 app.use('/api/exercises', exercises);
-app.use('/api/forms', forms );
+app.use('/api/forms', forms);
 app.use('/api/patient', patients);
 app.use('/api/rehabPlans', rehabPlans);
 app.use('/api/appointment', appointment);
