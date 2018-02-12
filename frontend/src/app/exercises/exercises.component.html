@@ -183,7 +183,7 @@
                       <label for="inputDate" class="col-sm-3 col-form-label">Target Date</label>
                       <div class="col-sm-9">
                         <div class="calFormat">
-                          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targDate>
+                          <input class="form-control" placeholder="yyyy-MM-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targDate>
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
                                 <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
@@ -197,8 +197,13 @@
                     <div class="form-group row">
                       <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
                       <div class="col-sm-9">
-                        <label class="btn btn-block btn-file">
-                          Click Here to Select File(s) for Upload&hellip; <input class="form-control" type="file" style="display: none;" multiple #uploadFile>
+                          <!-- <label class="custom-file col-sm-3 col-form-label">
+                              <input type="file" class="custom-file-input" multiple #uploadMedia>
+                              <span class="custom-file-control" ></span>
+                          </label> -->
+                        <label class="btn btn-block btn-file" id="inputMedia">
+                          Click Here to Select File(s) for Upload&hellip; 
+                          <input class="form-control" type="file" style="display: none;" multiple #uploadFile>
                         </label>
                         <script>
                           $(document).on('change', ':file', function() {
@@ -208,14 +213,6 @@
                             input.trigger('fileselect', [numFiles, label]);
                           });
                         </script>
-                        <!-- <div class="input-group">
-                          <label class="input-group-btn">
-                              <span class="btn btn-primary">
-                                  Browse&hellip; <input type="file" style="display: none;" multiple>
-                              </span>
-                          </label>
-                          <input type="text" class="form-control" readonly>
-                        </div> -->
                       </div>
                     </div>
                 </form>
@@ -270,4 +267,5 @@
 
     </ngb-panel>
   </ngb-accordion>
+  
 </div>

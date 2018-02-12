@@ -3,7 +3,7 @@ import { ExerciseService } from '../exercise.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 
@@ -47,7 +47,7 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:string){
+  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any){
     
     this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
