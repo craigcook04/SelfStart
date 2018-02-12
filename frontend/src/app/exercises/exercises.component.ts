@@ -4,6 +4,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { FileUploadModule } from 'ng2-file-upload';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 
 
@@ -19,7 +20,7 @@ export class ExercisesComponent implements OnInit {
 
   constructor( private exerciseService: ExerciseService, 
                private modalService: NgbModal,
-               private router: Router ) { }
+               private router: Router) { }
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
@@ -35,7 +36,7 @@ export class ExercisesComponent implements OnInit {
 
   updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any) {
     console.log(media.item(0));
-    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
+    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, this.uploadFiles( media))
     .subscribe(data =>{
       console.log(data);
     })
@@ -55,4 +56,20 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
+  uploadFiles( uploadFile: any){
+    console.log(uploadFile.files);
+
+    var filereader = new FileReader();
+
+    filereader.readAsDataURL(uploadFile.files[0]);
+
+    var obj = filereader.result;
+
+    console.log("Object:");
+    console.log(obj.name);
+  
+    // this.exerciseService.uploadFile( uploadFile.files ).subscribe(data =>{
+    //   console.log(data);
+    // })
+  }
 }

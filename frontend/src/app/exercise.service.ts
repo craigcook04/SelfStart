@@ -56,5 +56,21 @@ export class ExerciseService {
     var url = '/api/exercises';
     return this.httpClient.post(url, body);
   }
+
+  uploadFile(media: any): any {
+    console.log(media);
+    var filereader = new FileReader();
+
+    filereader.readAsBinaryString(media[0]);
+
+    var obj = filereader.result;
+    
+    console.log("Object:");
+    console.log(obj);
+
+    var url = 'api/image';
+    return;
+    //return this.httpClient.post(url, media[0]);
+  }
   
 }

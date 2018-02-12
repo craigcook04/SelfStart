@@ -81,7 +81,7 @@
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, targetDate.value, multimedia.value)">Add</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, targetDate.value)">Add</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
               </div>            
         </ng-template>
@@ -203,22 +203,22 @@
                           </label> -->
                         <label class="btn btn-block btn-file" id="inputMedia">
                           Click Here to Select File(s) for Upload&hellip; 
-                          <input class="form-control" type="file" style="display: none;" multiple #uploadFile>
+                          <input class="form-control" type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile>
                         </label>
-                        <script>
+                        <!-- <script>
                           $(document).on('change', ':file', function() {
                             var input = $(this),
                                 numFiles = input.get(0).files ? input.get(0).files.length : 1,
                                 label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                             input.trigger('fileselect', [numFiles, label]);
                           });
-                        </script>
+                        </script> -->
                       </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploadFile.files); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
