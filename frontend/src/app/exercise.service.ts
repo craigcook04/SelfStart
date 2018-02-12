@@ -57,16 +57,28 @@ export class ExerciseService {
     return this.httpClient.post(url, body);
   }
 
-  postFile(fileToUpload: File) {
-    console.log('hello');
-    const endpoint = '/api/exercises/image/getimage';
-    const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
-    return this.httpClient.post(endpoint, formData);
-}
+  // postFile(fileToUpload: File) {
+  //   console.log('hello');
+  //   const endpoint = '/api/exercises/image/getimage';
+  //   const formData: FormData = new FormData();
+  //   formData.append('fileKey', fileToUpload, fileToUpload.name);
+  //   return this.httpClient.post(endpoint, formData);
+  // }
 
+  uploadFile(media: any): any {
+    console.log(media);
+    var filereader = new FileReader();
 
+    filereader.readAsDataURL(media[0]);
 
+    var obj = filereader.result;
+    
+    console.log("Object:");
+    console.log(obj.data);
 
+    var url = 'api/image';
+    return;
+    //return this.httpClient.post(url, media[0]);
+  }
   
 }

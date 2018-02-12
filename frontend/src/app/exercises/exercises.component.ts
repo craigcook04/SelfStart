@@ -15,6 +15,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 })
 export class ExercisesComponent implements OnInit {
 
+  obj: Object [];
   exercises: Object [];
   closeResult: string;
 
@@ -56,20 +57,17 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  uploadFiles( uploadFile: any){
-    console.log(uploadFile.files);
+  uploadFiles( media: any ){
 
-    var filereader = new FileReader();
+    var file = media.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+      var contents = reader.result; 
+      console.log('New', contents);
+    }
+    reader.readAsDataURL(file);
 
-    filereader.readAsDataURL(uploadFile.files[0]);
+    console.log("HERE");
 
-    var obj = filereader.result;
-
-    console.log("Object:");
-    console.log(obj.name);
-  
-    // this.exerciseService.uploadFile( uploadFile.files ).subscribe(data =>{
-    //   console.log(data);
-    // })
   }
 }
