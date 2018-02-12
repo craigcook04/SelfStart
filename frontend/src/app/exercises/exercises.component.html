@@ -4,10 +4,10 @@
 <div class="exercises">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
     <ngb-panel>
-        <ng-template #new let-c="close" ngbPanelTitle>
+        <ng-template ngbPanelTitle>
           <span><b>Add a New Exercise</b></span>
         </ng-template>
-        <ng-template ngbPanelContent>
+        <ng-template #new let-c="close" let-d="dismiss" ngbPanelContent>
           <span>Fill out the following...</span>
           <br><br>
             <div class="form-group row">
@@ -75,7 +75,10 @@
                 <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
                 <div class="col-sm-9">
                     <!-- <input type="text" class="form-control" id="inputMedia" placeholder="Multimedia" #multimedia> -->
-
+                    <label class="btn btn-block btn-file" id="inputMedia">
+                        Click Here to Select File(s) for Upload&hellip; 
+                        <input class="form-control" type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile>
+                      </label>
                 </div>
             </div>
             <!-- above is the form for creating a new exercise, below the button to save it -->
@@ -101,7 +104,20 @@
           <p><b> Frequency: </b> {{ exercise.frequency }} </p>
           <p><b> Duration: </b> {{ exercise.duration }} </p>
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
-          <p><b> Multimedia: </b> {{ exercise.multimedia }} </p>
+          <p><b> Multimedia: </b> </p>
+          <br>
+                <ngb-carousel>
+                    <ng-template ngbSlide>
+                      <img src="../assets/images/1.PNG" >
+                      <div class="carousel-caption">
+                      </div>
+                    </ng-template>
+                    <ng-template ngbSlide>
+                      <img src="../assets/images/2.PNG" >
+                      <div class="carousel-caption">
+                      </div>
+                    </ng-template>
+                </ngb-carousel>
           <!-- <img src="{{ exercise.multimedia }}"> -->
         </div>
 
@@ -197,22 +213,10 @@
                     <div class="form-group row">
                       <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
                       <div class="col-sm-9">
-                          <!-- <label class="custom-file col-sm-3 col-form-label">
-                              <input type="file" class="custom-file-input" multiple #uploadMedia>
-                              <span class="custom-file-control" ></span>
-                          </label> -->
                         <label class="btn btn-block btn-file" id="inputMedia">
                           Click Here to Select File(s) for Upload&hellip; 
                           <input class="form-control" type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile>
                         </label>
-                        <!-- <script>
-                          $(document).on('change', ':file', function() {
-                            var input = $(this),
-                                numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                            input.trigger('fileselect', [numFiles, label]);
-                          });
-                        </script> -->
                       </div>
                     </div>
                 </form>
