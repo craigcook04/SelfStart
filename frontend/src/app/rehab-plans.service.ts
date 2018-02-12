@@ -11,8 +11,8 @@ export class RehabPlansService {
 
   constructor(private http: HttpClient) { }
   
-  createPlan(){
-    
+  CreatePlan(body: any){
+    return this.http.post('/api/rehabPlans', body);
   }
   getPlans(): any{
       return this.http.get('/api/rehabPlans');

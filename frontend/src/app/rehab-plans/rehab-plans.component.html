@@ -11,7 +11,7 @@
     </button>
 </span>
 </div>
-<button class="create btn btn-primary btn-med" (click)="form(create)">Create New Plan</button>
+<button class="create btn btn-primary btn-med" (click)="plan(create)">Create New Plan</button>
 <button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>
 <br><br>
 <div class="container mt-3">
@@ -27,7 +27,7 @@
               <div class="form-group row">
                 <label for="name" class="col-sm-3 col-form-label">Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="name" placeholder="Plan Name" #name>
+                  <input type="text" class="form-control" id="name" placeholder="Name" #name>
                 </div>
               </div>
               <div class="form-group row">
@@ -43,15 +43,22 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label for="goal" class="col-sm-3 col-form-label">Goal</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="goal" placeholder="Goal" #goal>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label for="timeFrameToComplete" class="col-sm-3 col-form-label">Time Frame to Complete</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="timeFrameToComplete" placeholder="Date" #timeFrameToComplete>
+                  <input type="text" class="form-control" id="timeFrameToComplete" placeholder="Date (DD-MM-YYYY)" #timeFrameToComplete>
                 </div>
               </div>
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm align-left">Create</button>
+          <button type="button" class="btn btn-secondary btn-sm align-left" (click)="createPlan(name.value, description.value, 
+          authorName.value, goal.value, timeFrameToComplete.value); c('Close click')">Create</button>
           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
         </div>
       </ng-template>

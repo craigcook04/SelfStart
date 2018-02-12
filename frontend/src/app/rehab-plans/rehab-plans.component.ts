@@ -46,10 +46,23 @@ export class RehabPlansComponent implements OnInit {
   
   searchPlans(){
   }
+  
+  createPlan(planName: string, descript: string, author: string, goalOfPlan: string, timeFrame: Date){
+    var body = {
+      name: planName,
+      description: descript,
+      authorName: author,
+      goal: goalOfPlan,
+      timeFrameToComplete: timeFrame
+    };
+    this.rehabPlansService.CreatePlan(body);
+  }
+  
   open(content){
     this.modalService.open(content, {size: "lg"});
   }
-  form(content){
+  
+  plan(content){
     this.modalService.open(content, {size: "lg"});
   }
   
@@ -60,6 +73,7 @@ export class RehabPlansComponent implements OnInit {
       this.allExercises = Object.assign([], retObj.exercise);
     });
   }
+  
   updateExercises(){
     console.log(this.allExercises);
   }
@@ -67,6 +81,7 @@ export class RehabPlansComponent implements OnInit {
   goBack(){
     this.router.navigate(['../adminhome']);
   }
+  
   addExercise( exerciseToBeAdded: any, ID: string){
     console.log("in comp.");
     this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
