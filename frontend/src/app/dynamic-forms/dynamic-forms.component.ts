@@ -115,12 +115,8 @@ export class DynamicFormsComponent implements OnInit {
   updateQuestion(id: string, questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
     this.dynamicFormsService.UpdateQuestion(id, questionText, helpDescription, order, formID, questionType).subscribe(data => {
       console.log(data);
-      this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
-        var retObj: any = data;
-        this.questions = Object.assign([], retObj.question);
+      this.getFormQuestions(formID);
     })
-  })
-    
   }
 
   

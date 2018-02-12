@@ -9,20 +9,22 @@
     <ngb-panel *ngFor='let form of forms'>
       <ng-template ngbPanelTitle>
         <span (click)="getFormQuestions(form._id)">{{ form.name }}<fa class="float-right fa-2x" name="angle-down"></fa></span>
-        
       </ng-template>
       
       <ng-template ngbPanelContent>
         <h6>Form ID: {{ form._id }}</h6>
         <form>
           <div class="container">
-            <button class="btn btn-danger float-right ml-3" (click)="open(yousure); onForm=true;">DELETE FORM</button>
+            <button class="btn btn-danger mx-3" (click)="open(yousure); onForm=true;">DELETE FORM</button>
+            <button *ngIf="!editMode" class="btn btn-primary align-bottom" (click)="switchMode()">EDIT FORM</button>
+            <button *ngIf="editMode" class="btn btn-primary align-bottom" (click)="open(edityousure); switchMode();">SAVE</button>
+            <button *ngIf="editMode" class="btn btn-secondary align-bottom" (click)="switchMode();">CANCEL</button>
             <div *ngFor='let question of questions;  let i = index;' class="form-group row">
               <div class="col-lg-8">
                 <div *ngIf="editMode" class="mt-5">
                   
                   <label  [attr.for]="'ques-' + i">{{ question.questionText }}</label>
-                  <input  [attr.id]="'ques-' + i" type="text" class="form-control" value="{{ question.questionText }}" #qtext>
+                  <input  [attr.id]="'ques-' + i" type="text" class="form-control" placeholder="{{ question.questionText }}" #qtext>
                 </div>
                 <div *ngIf="!editMode" class="mt-5">
                   <h5>{{ question.questionText }}</h5>
@@ -30,54 +32,66 @@
               </div>
               <div class="col-lg-2">
                 <div class="mt-5 mb-0">
-                  <button *ngIf="editMode" class="btn btn-success align-bottom" (click)="switchMode(); updateQuestion(question._id, qtext.value, question.helpDescription, question.order, form._id, question.questionType);"><fa class="fas float-right" name="check"></fa></button>
-                  <button *ngIf="editMode" class="btn btn-danger align-bottom" (click)="switchMode();"><fa class="fas float-right" name="times"></fa></button>
-                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="open(otheryousure);"><fa class="fas float-right" name="times"></fa></button>
-                  <button *ngIf="!editMode" class="btn btn-primary align-bottom" (click)="switchMode()"><fa class="fas float-right" name="edit"></fa></button>
+                  <button *ngIf="editMode" class="btn btn-danger align-bottom" (click)="open(otheryousure);"><fa class="fas float-right" name="times"></fa></button>
                 </div>
               </div>
+              
               <!-- second are you sure modal -->
-      <ng-template let-c="close" let-d="dismiss" #otheryousure>
-        <div class="modal-header">
-          <h4 class="modal-title">Are you sure?</h4>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <p> <b>This action cannot be undone!</b> </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteQuestion(question._id, form._id); c('Close click')">Yes</button>
-          <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
-        </div>
-      </ng-template>
+              <ng-template let-c="close" let-d="dismiss" #otheryousure>
+                <div class="modal-header">
+                  <h4 class="modal-title">Are you sure?</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p> <b>This action cannot be undone!</b> </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-sm align-left" (click)="deleteQuestion(question._id, form._id); c('Close click')">Confirm</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+                </div>
+              </ng-template>
+              
+              <!-- are you sure -- for the edit function -->
+              <ng-template let-c="close" let-d="dismiss" #edityousure>
+                <div class="modal-header">
+                  <h4 class="modal-title">Are you sure?</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p> <b>Are you sure you would like to save?</b> </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-sm align-left" (click)="updateQuestion(question._id, qtext.value, question.helpDescription, question.order, question.form, question.questionType);">Confirm</button>
+                  <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">Cancel</button>              
+                </div>
+              </ng-template>
             </div>
           </div>
         </form>
         <button class="btn btn-success" (click)="open(quest, form._id)">New Question</button>
-      </ng-template>
-      
-      <!-- Are you sure modal -->
-      <ng-template let-c="close" let-d="dismiss" #yousure>
-        <div class="modal-header">
-          <h4 class="modal-title">Are you sure?</h4>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <p> <b>This action cannot be undone!</b> </p>
-        </div>
-        <div class="modal-footer">
+      <!--</ng-template>-->
           
-          <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
-          <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
-        </div>
-      </ng-template>
-      
-      
-      
+          <!-- Are you sure modal -->
+          <ng-template let-c="close" let-d="dismiss" #yousure>
+            <div class="modal-header">
+              <h4 class="modal-title">Are you sure?</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p> <b>This action cannot be undone!</b> </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
+              <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
+            </div>
+          </ng-template>
+        </ng-template>
     </ngb-panel>
     <!-- End of form block -->
     
