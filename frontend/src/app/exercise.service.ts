@@ -56,5 +56,17 @@ export class ExerciseService {
     var url = '/api/exercises';
     return this.httpClient.post(url, body);
   }
+
+  postFile(fileToUpload: File) {
+    console.log('hello');
+    const endpoint = '/api/exercises/image/getimage';
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.httpClient.post(endpoint, formData);
+}
+
+
+
+
   
 }

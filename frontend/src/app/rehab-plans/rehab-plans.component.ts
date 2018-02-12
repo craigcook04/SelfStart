@@ -52,8 +52,30 @@ export class RehabPlansComponent implements OnInit {
         this.rehabPlans = Object.assign([], retObj.rehabPlans);
       }
     });
+    window.location.reload();
   }
+  
+  createPlan(planName: string, descript: string, author: string, goalOfPlan: string, timeFrame: Date){
+    var body = {
+      name: planName,
+      description: descript,
+      authorName: author,
+      goal: goalOfPlan,
+      timeFrameToComplete: timeFrame
+    };
+    console.log("hello");
+    console.log(body);
+    this.rehabPlansService.CreatePlan(body).subscribe(data =>{
+      console.log(data);
+    });
+    window.location.reload();
+  }
+  
   open(content){
+    this.modalService.open(content, {size: "lg"});
+  }
+  
+  plan(content){
     this.modalService.open(content, {size: "lg"});
   }
   
@@ -64,6 +86,7 @@ export class RehabPlansComponent implements OnInit {
       this.allExercises = Object.assign([], retObj.exercise);
     });
   }
+  
   updateExercises(){
     console.log(this.allExercises);
   }
@@ -71,6 +94,7 @@ export class RehabPlansComponent implements OnInit {
   goBack(){
     this.router.navigate(['../adminhome']);
   }
+  
   addExercise( exerciseToBeAdded: any, ID: string){
     console.log("in comp.");
     this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
@@ -92,6 +116,7 @@ export class RehabPlansComponent implements OnInit {
     plan.authorName = newAuthorName;
     plan.goal = newGoalName;
     plan.description = newDescription;
+    plan.timeFrameToComplete = newTimeFrame;
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       

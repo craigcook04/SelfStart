@@ -16,7 +16,7 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string) : any {
+  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) : any {
     //create the body of the request
     var body = {
       ID: patientID,
@@ -24,6 +24,7 @@ export class PatientService {
       givenName: firstName,
       email: email,
       DOB: DOB,
+      gender: newGender,
       postalCode: postalCode,
       phone: phoneNumber,
       maritalStatus: maritalStatus,
@@ -62,6 +63,34 @@ export class PatientService {
   GetCities(provinceId: string) {
     var url = '/api/province/getcities/' + provinceId;
     return this.http.get(url);
+  }
+
+  GetGenders() {
+    var url = '/api/gender';
+    return this.http.get(url);
+  }
+
+  CreatePatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) {
+    var body = {
+      ID: patientID,
+      familyName: lastName,
+      givenName: firstName,
+      email: email,
+      DOB: DOB,
+      gender: newGender,
+      postalCode: postalCode,
+      phone: phoneNumber,
+      maritalStatus: maritalStatus,
+      healthCardNumber: healthCardNumber,
+      occupation: occupation,
+      others: others,
+      country: newCountry,
+      province: newProvince,
+      city: newCity
+    }
+
+    var url = '/api/patient'
+    return this.http.post(url, body);
   }
 
 }

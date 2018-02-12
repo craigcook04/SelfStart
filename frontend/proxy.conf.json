@@ -1,6 +1,10 @@
 {
     "/api/*": {
+<<<<<<< HEAD
         "target": "https://se3350-jterp.c9users.io:8082",
+=======
+        "target": "https://se3350finalproject-sammallabone.c9users.io:8082",
+>>>>>>> 1a2cb31eaaac0774d0f61db4c45ba948808ee65a
         "secure": false,
         "changeOrigin": true,
         "logLevel": "info"

@@ -20,7 +20,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
-import { FileUploadModule } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload'
+import { ImageUploadModule } from "angular2-image-upload";
 import { DynamicFormsService } from './dynamic-forms.service';
 
 
@@ -46,7 +47,8 @@ import { DynamicFormsService } from './dynamic-forms.service';
     FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule,
-    FileUploadModule
+    FileUploadModule,
+    ImageUploadModule.forRoot()
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService],
   bootstrap: [AppComponent]
