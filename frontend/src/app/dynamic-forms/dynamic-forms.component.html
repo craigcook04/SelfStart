@@ -32,10 +32,26 @@
                 <div class="mt-5 mb-0">
                   <button *ngIf="editMode" class="btn btn-success align-bottom" (click)="switchMode(); updateQuestion(question._id, qtext.value, question.helpDescription, question.order, form._id, question.questionType);"><fa class="fas float-right" name="check"></fa></button>
                   <button *ngIf="editMode" class="btn btn-danger align-bottom" (click)="switchMode();"><fa class="fas float-right" name="times"></fa></button>
-                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="deleteQuestion(question._id, form._id); c('Close click')"><fa class="fas float-right" name="times"></fa></button>
+                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="open(otheryousure);"><fa class="fas float-right" name="times"></fa></button>
                   <button *ngIf="!editMode" class="btn btn-primary align-bottom" (click)="switchMode()"><fa class="fas float-right" name="edit"></fa></button>
                 </div>
               </div>
+              <!-- second are you sure modal -->
+      <ng-template let-c="close" let-d="dismiss" #otheryousure>
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure?</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p> <b>This action cannot be undone!</b> </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteQuestion(question._id, form._id); c('Close click')">Yes</button>
+          <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
+        </div>
+      </ng-template>
             </div>
           </div>
         </form>
@@ -54,11 +70,13 @@
             <p> <b>This action cannot be undone!</b> </p>
         </div>
         <div class="modal-footer">
-          <button *ngIf="!onForm" type="button" class="btn btn-danger btn-sm align-left" (click)="deleteQuestion(question._id, form._id); c('Close click')">Yes</button>
-          <button *ngIf="onForm" type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
+          
+          <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
           <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
         </div>
       </ng-template>
+      
+      
       
     </ngb-panel>
     <!-- End of form block -->
@@ -124,16 +142,16 @@
               </div>
               <div class="form-group row">
                 <label class="col-4 col-form-label" for="inlineFormCustomSelect">Type</label>
-                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" #newQuestionType>
+                <select [(ngModel)]="selectedType" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" [ngModelOptions]="{standalone: true}" #newQuestionType>
                   <option>Choose...</option>
-                  <option *ngFor="let type of types" value="{{ type.name }}">{{ type.name }}</option>
+                  <option *ngFor="let type of types" [ngValue]="type.name" #chosenType>{{ type.name }}</option>
                 </select>
               </div>
              
             </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="createQuestion(newQuestionName.value, newQuestionDescrip.value, newQuestionOrder.value, tempFID, newQuestionType.value); c('Close click')">Confirm</button>
+          <button type="button" class="btn btn-success" (click)="createQuestion(newQuestionName.value, newQuestionDescrip.value, newQuestionOrder.value, type); c('Close click')">Confirm</button>
           <button type="button" class="btn btn-danger" (click)="c('Close click')">Cancel</button>         
         </div>
       </ng-template>

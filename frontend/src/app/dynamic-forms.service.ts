@@ -101,6 +101,11 @@ export class DynamicFormsService {
     return this.http.get(url);
   }
   
+  GetTypeID(name: string){
+    var url = '/api/questiontype/type/' + name;
+    return this.http.get(url);
+  }
+  
   
 
 }

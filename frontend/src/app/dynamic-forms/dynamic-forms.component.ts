@@ -20,6 +20,8 @@ export class DynamicFormsComponent implements OnInit {
   editMode: boolean;
   onForm: boolean;
   tempFID: string;
+  tempQID: string;
+  selectedType: string;
 
   
   constructor(private dynamicFormsService: DynamicFormsService,
@@ -74,11 +76,11 @@ export class DynamicFormsComponent implements OnInit {
     this.tempFID = formID;
   }
   
-  createQuestion(questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
-    this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, formID, questionType).subscribe(data => {
+  createQuestion(questionText: string, helpDescription: string, order: Number, questionType: string){
+    this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, this.tempFID, questionType).subscribe(data => {
       console.log(data);
       
-      this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
+      this.dynamicFormsService.GetFormQuestions(this.tempFID).subscribe(data => {
         var retObj: any = data;
         this.questions = Object.assign([], retObj.question);
         console.log(data);
@@ -86,8 +88,6 @@ export class DynamicFormsComponent implements OnInit {
       
     })
   }
-  
- 
   
   createType(name: string, questionID: string){
     this.dynamicFormsService.CreateType(name, questionID).subscribe(data => {
@@ -100,6 +100,14 @@ export class DynamicFormsComponent implements OnInit {
       console.log(data);
       var retObj: any = data;
       this.types = Object.assign([], retObj.questionType);
+    })
+  }
+  
+  getTypeId(name: string){
+    this.dynamicFormsService.GetTypeID(name).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.tempQID = retObj._id;
     })
   }
   
@@ -121,11 +129,12 @@ export class DynamicFormsComponent implements OnInit {
     this.dynamicFormsService.DeleteQuestion(ID).subscribe(data => {
       console.log(data);
       
-      this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
-        var retObj: any = data;
-        this.questions = Object.assign([], retObj.question);
-        console.log(data);
-      })
+      // this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
+      //   var retObj: any = data;
+      //   this.questions = Object.assign([], retObj.question);
+      //   console.log(data);
+      // })
+      this.getFormQuestions(formID);
     })   
   }
   
