@@ -52,6 +52,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   open(content) {
+    console.log(content);
     this.modalService.open(content, {size: 'lg'});
   }
 

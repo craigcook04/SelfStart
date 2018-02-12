@@ -8,7 +8,7 @@
     </button>
 </span>
 </div>
-<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal); FillBoxes()">Add New Client</button>
+<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
 <!-- Beginning of New Client Modal -->
 <ng-template #newmodal let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -40,17 +40,17 @@
           <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPatientEmail>
         </div>
       </div>
-      <!-- <div class="form-group row">
+      <div class="form-group row">
         <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="inputDOB" placeholder="DOB" #newPatientBirthDate>
         </div>
-      </div> -->
-      <div class="form-group row">
+      </div>
+      <!-- <div class="form-group row">
           <label for="inputTargDate" class="col-sm-3 col-form-label">Date of Birth</label>
           <div class="col-sm-9">
               <div class="calFormat">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
+                <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
                       <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
@@ -58,12 +58,14 @@
                   </div>
               </div>
           </div>
-      </div>
+      </div> -->
       <div class="form-group row">
         <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
         <div class="col-sm-9">
           <select #newPatientGender class="mydropdown">
-                  <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+              <option value="badvalue">Please select a gender</option>
+              <option disabled="disabled">----</option>
+              <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
           </select>
         </div>
       </div>
@@ -107,8 +109,10 @@
         <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
         <div class="col-sm-9">
           <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
-                <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-              </select>
+            <option value="badvalue">Please select a country</option>
+            <option disabled="disabled">----</option>    
+            <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+          </select>
         </div>
       </div>
       <div class="form-group row">
@@ -116,7 +120,7 @@
         <div class="col-sm-9">
           <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
                 <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-              </select>
+          </select>
         </div>
       </div>
       <div class="form-group row">
