@@ -11,9 +11,51 @@
     </button>
 </span>
 </div>
-<button class="create btn btn-primary btn-med">Create New Plan</button>
+<button class="create btn btn-primary btn-med" (click)="form(create)">Create New Plan</button>
 <button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>
 <br><br>
+<div class="container mt-3">
+    <ng-template let-c="close" let-d="dismiss" #create>
+        <div class="modal-header">
+          <h4 class="modal-title">Create a new plan</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group row">
+                <label for="name" class="col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name" placeholder="Plan Name" #name>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label">Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="description" placeholder="Description" #description>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="authorName" class="col-sm-3 col-form-label">Author Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="authorName" placeholder="Author Name" #authorName>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="timeFrameToComplete" class="col-sm-3 col-form-label">Time Frame to Complete</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="timeFrameToComplete" placeholder="Date" #timeFrameToComplete>
+                </div>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm align-left">Create</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+        </div>
+      </ng-template>
+</div>
 <div class ="plans">
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">

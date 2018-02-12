@@ -49,6 +49,9 @@ export class RehabPlansComponent implements OnInit {
   open(content){
     this.modalService.open(content, {size: "lg"});
   }
+  form(content){
+    this.modalService.open(content, {size: "lg"});
+  }
   
   loadAllExercises(){
     this.exerciseService.GetAllExercises().subscribe(data =>{
