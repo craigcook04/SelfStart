@@ -20,7 +20,7 @@ export class RehabPlansComponent implements OnInit {
   private router: Router) { }
 
   
-  
+
   rehabPlans: Object[];
   exercise: Object[];
   allExercises: Object[];
@@ -44,7 +44,14 @@ export class RehabPlansComponent implements OnInit {
     console.log(this.exercise);
   }
   
-  searchPlans(){
+  searchPlans(word: string){
+     this.rehabPlansService.SearchPlans(word).subscribe(data => {
+      if(data != []) {
+        var retObj : any = data;
+        console.log(retObj);
+        this.rehabPlans = Object.assign([], retObj.rehabPlans);
+      }
+    });
   }
   open(content){
     this.modalService.open(content, {size: "lg"});
@@ -69,7 +76,36 @@ export class RehabPlansComponent implements OnInit {
     this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
       var retObj: any = data;
       console.log(retObj);
-    })
+    });
     window.location.reload();
+  }
+  removePlan(ID: string){
+    this.rehabPlansService.removePlan(ID).subscribe(data => {
+      console.log(data);
+    });
+    window.location.reload();
+    
+  }
+  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date){
+    console.log("in the function");
+    plan.name = newName;
+    plan.authorName = newAuthorName;
+    plan.goal = newGoalName;
+    this.rehabPlansService.updatePlan(plan).subscribe(data =>{
+      console.log(data);
+      
+    });
+    window.location.reload();
+  }
+  removeExercise(exer: any, plan: any){
+    console.log("in the component")
+    console.log(plan.exerciseObjects.indexOf(exer));
+    plan.exerciseObjects.splice(plan.exerciseObjects.indexOf(exer),1);
+    console.log(plan.exerciseObjects);
+    this.rehabPlansService.updatePlan(plan).subscribe(data =>{
+      console.log(data)
+    });
+    window.location.reload();
+    
   }
 }
