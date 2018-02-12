@@ -19,7 +19,7 @@ export class AdminHomeComponent implements OnInit {
       
   
   gotToPatients(){
-    this.router.navigate(['../patient']);
+    this.router.navigate(['../client']);
   }
   
   goToDynamicForm(){

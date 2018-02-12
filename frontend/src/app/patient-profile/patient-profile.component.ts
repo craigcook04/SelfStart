@@ -11,23 +11,32 @@ export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
   showSuccess: boolean;
+  showCreationSuccess: boolean;
   showDeleteSuccess: boolean;
   showFailure: boolean;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
   cities: Object[];
+  genders: Object[];
   constructor(private patientService: PatientService,
               private modalService: NgbModal) { }
 
   ngOnInit() {
     this.patientService.GetAllPatients().subscribe(data => {
       this.patients = Object.assign([], data.patients);
+      console.log('hello');
+      console.log(this.patients);
     });
 
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
       this.countries = Object.assign([], retObj.country);
+    })
+
+    this.patientService.GetGenders().subscribe(data => {
+      var retObj: any = data;
+      this.genders = Object.assign([], retObj.gender);
     })
 
     // this.patientService.GetProvinces().subscribe(data => {
@@ -46,10 +55,10 @@ export class PatientProfileComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
 
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, acc) {
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, acc) {
     acc.activeIds = []; //close all accordian panels
     this.showSuccess = true;
-    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity).subscribe(data => {
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
       console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
@@ -96,6 +105,7 @@ export class PatientProfileComponent implements OnInit {
     this.showSuccess = false;
     this.showFailure = false;
     this.showDeleteSuccess = false;
+    this.showCreationSuccess = false;
   }
 
   GetProvinces(countryId: string) {
@@ -146,6 +156,42 @@ export class PatientProfileComponent implements OnInit {
       var retObj: any = data;
       this.cities = Object.assign([], retObj.cities);
     })
+  }
+
+  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) {
+    //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
+    this.patientService.CreatePatient(firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
+      var retObj: any = data;
+      if(retObj.success) {
+        this.showCreationSuccess = true;
+      }
+      else{
+        this.showFailure = true;
+      }
+
+      //reload the new patient list
+      this.patientService.GetAllPatients().subscribe(data => {
+        this.patients = Object.assign([], data.patients);
+        console.log(this.patients);
+      });
+    })
+  }
+
+  FillBoxes() {
+    this.patientService.GetCountries().subscribe(data => {
+      var retObj: any = data;
+      this.countries = Object.assign([], retObj.country);
+      var countryID: any = this.countries[0];
+      this.patientService.GetProvinces(countryID._id).subscribe(data => {
+        var retObj: any = data;
+        this.provinces = Object.assign([], retObj.province);
+        console.log(data);
+        this.GetCities(retObj.province[0]._id);
+      })
+    })
+
+
+
   }
 
   

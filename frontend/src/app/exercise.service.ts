@@ -57,20 +57,16 @@ export class ExerciseService {
     return this.httpClient.post(url, body);
   }
 
-  uploadFile(media: any): any {
-    console.log(media);
-    var filereader = new FileReader();
+  postFile(fileToUpload: File) {
+    console.log('hello');
+    const endpoint = '/api/exercises/image/getimage';
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.httpClient.post(endpoint, formData);
+}
 
-    filereader.readAsBinaryString(media[0]);
 
-    var obj = filereader.result;
-    
-    console.log("Object:");
-    console.log(obj);
 
-    var url = 'api/image';
-    return;
-    //return this.httpClient.post(url, media[0]);
-  }
+
   
 }
