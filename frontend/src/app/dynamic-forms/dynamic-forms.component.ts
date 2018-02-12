@@ -13,11 +13,13 @@ export class DynamicFormsComponent implements OnInit {
   public isCollapsed = false;
   questions: Object [];
   forms: Object [];
+  types: Object [];
   showSuccess: boolean;
   showDeleteSuccess: boolean;
   showFailure: boolean;
   editMode: boolean;
   onForm: boolean;
+  tempFID: string;
 
   
   constructor(private dynamicFormsService: DynamicFormsService,
@@ -31,6 +33,7 @@ export class DynamicFormsComponent implements OnInit {
     })
     
     this.editMode = false;
+    this.getTypes();
   }
   
   switchMode(){
@@ -66,13 +69,20 @@ export class DynamicFormsComponent implements OnInit {
     })
   }
   
-  open(content) {
+  open(content, formID: string) {
     this.modalService.open(content, {size: 'lg'});
+    this.tempFID = formID;
   }
   
   createQuestion(questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
     this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, formID, questionType).subscribe(data => {
       console.log(data);
+      
+      this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
+        var retObj: any = data;
+        this.questions = Object.assign([], retObj.question);
+        console.log(data);
+      })
       
     })
   }
@@ -82,6 +92,14 @@ export class DynamicFormsComponent implements OnInit {
   createType(name: string, questionID: string){
     this.dynamicFormsService.CreateType(name, questionID).subscribe(data => {
       console.log(data);
+    })
+  }
+  
+  getTypes(){
+    this.dynamicFormsService.GetTypes().subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.types = Object.assign([], retObj.questionType);
     })
   }
   

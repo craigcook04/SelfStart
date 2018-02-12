@@ -17,25 +17,29 @@
         <form>
           <div class="container">
             <button class="btn btn-danger float-right ml-3" (click)="open(yousure); onForm=true;">DELETE FORM</button>
-            <div *ngFor='let question of questions;  let i = index;' class="row">
-              <div class="col-lg-8 form-group">
-                <div class="mt-5">
-                  <h5 *ngIf="!editMode">{{ question.questionText }}</h5>
-                  <label *ngIf="editMode" [attr.for]="'ques-' + i">{{ question.questionText }}</label>
-                  <input *ngIf="editMode" [attr.id]="'ques-' + i" type="text" class="form-control" value="{{ question.questionText }}" #qtext>
+            <div *ngFor='let question of questions;  let i = index;' class="form-group row">
+              <div class="col-lg-8">
+                <div *ngIf="editMode" class="mt-5">
+                  
+                  <label  [attr.for]="'ques-' + i">{{ question.questionText }}</label>
+                  <input  [attr.id]="'ques-' + i" type="text" class="form-control" value="{{ question.questionText }}" #qtext>
+                </div>
+                <div *ngIf="!editMode" class="mt-5">
+                  <h5>{{ question.questionText }}</h5>
                 </div>
               </div>
-              <div class="col-lg-2 form-group">
+              <div class="col-lg-2">
                 <div class="mt-5 mb-0">
                   <button *ngIf="editMode" class="btn btn-success align-bottom" (click)="switchMode(); updateQuestion(question._id, qtext.value, question.helpDescription, question.order, form._id, question.questionType);"><fa class="fas float-right" name="check"></fa></button>
                   <button *ngIf="editMode" class="btn btn-danger align-bottom" (click)="switchMode();"><fa class="fas float-right" name="times"></fa></button>
-                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="open(yousure); onForm=false;"><fa class="fas float-right" name="times"></fa></button>
+                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="deleteQuestion(question._id, form._id); c('Close click')"><fa class="fas float-right" name="times"></fa></button>
                   <button *ngIf="!editMode" class="btn btn-primary align-bottom" (click)="switchMode()"><fa class="fas float-right" name="edit"></fa></button>
                 </div>
               </div>
             </div>
           </div>
         </form>
+        <button class="btn btn-success" (click)="open(quest, form._id)">New Question</button>
       </ng-template>
       
       <!-- Are you sure modal -->
@@ -87,6 +91,50 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-sm align-left" (click)="createNewForm(newFormName.value, newFormDescrip.value); c('Close click')">Create</button>
           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+        </div>
+      </ng-template>
+      
+      <!-- New Question modal -->
+      <ng-template let-c="close" let-d="dismiss" #quest>
+        <div class="modal-header">
+          <h4 class="modal-title">Create a new Question</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group row">
+                <label for="inputQuestionText" class="col-4 col-form-label">Question Text</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputFormName" placeholder="what would you like to ask?" #newQuestionName>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputQuestionDescrip" class="col-4 col-form-label">Help Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputQuestionDescrip" placeholder="Enter Help Description..." #newQuestionDescrip>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputOrder" class="col-4 col-form-label">Order</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputQuestionOrder" placeholder="Order" #newQuestionOrder>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-4 col-form-label" for="inlineFormCustomSelect">Type</label>
+                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" #newQuestionType>
+                  <option>Choose...</option>
+                  <option *ngFor="let type of types" value="{{ type.name }}">{{ type.name }}</option>
+                </select>
+              </div>
+             
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createQuestion(newQuestionName.value, newQuestionDescrip.value, newQuestionOrder.value, tempFID, newQuestionType.value); c('Close click')">Confirm</button>
+          <button type="button" class="btn btn-danger" (click)="c('Close click')">Cancel</button>         
         </div>
       </ng-template>
       

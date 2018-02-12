@@ -79,23 +79,11 @@ export class DynamicFormsService {
     return this.http.delete(url);
   }
   
-  
-  
-  
-  
   //This works
   GetFormQuestions(formID: string){
     var url = '/api/question/form/' + formID;
     return this.http.get(url);
   }
-  
-  
-  
-  
-  
-  
-  
-  
   
   CreateType(name: string, questionID: string){
     
@@ -106,6 +94,11 @@ export class DynamicFormsService {
     
     var url = '/api/questiontype';
     return this.http.post(url, body);
+  }
+  
+  GetTypes(){
+    var url = '/api/questiontype'
+    return this.http.get(url);
   }
   
   

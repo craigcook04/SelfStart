@@ -77,5 +77,18 @@ router.route('/:questionType_id')
             }
         );
     });
+    
+//get type id from name
+router.route('/type/:typeName')
+    .get(function (request, response) {
+        QuestionType.find({name: request.params.typeName}, function (error, questionType) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({questionType: questionType});
+            }
+        });
+    });
 
 module.exports = router;
