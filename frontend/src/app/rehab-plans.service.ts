@@ -29,4 +29,8 @@ export class RehabPlansService {
     console.log("im in the service");
     return this.http.put('api/rehabPlans/' + plan._id, plan);
   }
+  SearchPlans(word: string){
+    var url = '/api/rehabPlans/findplan/search?q=' + word;
+    return this.http.get(url);
+  }
 }

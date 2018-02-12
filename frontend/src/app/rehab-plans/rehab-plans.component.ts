@@ -44,7 +44,14 @@ export class RehabPlansComponent implements OnInit {
     console.log(this.exercise);
   }
   
-  searchPlans(){
+  searchPlans(word: string){
+     this.rehabPlansService.SearchPlans(word).subscribe(data => {
+      if(data != []) {
+        var retObj : any = data;
+        console.log(retObj);
+        this.rehabPlans = Object.assign([], retObj.rehabPlans);
+      }
+    });
   }
   open(content){
     this.modalService.open(content, {size: "lg"});

@@ -83,7 +83,7 @@ router.route('/:rehabPlans_id')
         );
     });
 
-    router.route('/:rehabPlans_id/addEx')
+router.route('/:rehabPlans_id/addEx')
     
         .put(function (request, response) {
         RehabPlans.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
@@ -102,6 +102,21 @@ router.route('/:rehabPlans_id')
                     }
                 });
             }
+        });
+    });
+    
+router.route('/findplan/search')
+    .get(function(request, response) {
+        
+        RehabPlans.find({"name": request.query.q})
+        .sort({name: 1})
+        .exec(function(error, plans) {
+            if (error) {
+                response.send(error);
+            }
+            
+            response.json({rehabPlans: plans});
+            
         });
     });
     
