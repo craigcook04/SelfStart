@@ -15,12 +15,14 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientService } from './patient.service';
-import {RehabPlansService} from './rehab-plans.service';
+import { RehabPlansService } from './rehab-plans.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload'
+import { ImageUploadModule } from "angular2-image-upload";
+import { DynamicFormsService } from './dynamic-forms.service';
 
 
 @NgModule({
@@ -45,9 +47,10 @@ import { FileUploadModule } from 'ng2-file-upload'
     FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule,
-    FileUploadModule
+    FileUploadModule,
+    ImageUploadModule.forRoot()
   ],
-  providers: [PatientService, RehabPlansService,ExerciseService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
