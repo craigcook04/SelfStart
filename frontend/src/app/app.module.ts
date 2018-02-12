@@ -47,7 +47,7 @@ import { DynamicFormsService } from './dynamic-forms.service';
     FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule,
-    FileUploadModule,
+    FileUploadModule
     // ImageUploadModule.forRoot()
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService],
