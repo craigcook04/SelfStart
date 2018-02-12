@@ -57,4 +57,24 @@ export class DynamicFormsComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
   
+  createQuestion(questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
+    this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, formID, questionType).subscribe(data => {
+      console.log(data);
+      
+    })
+  }
+  
+  deleteQuestion(ID: string, formID: string){
+    this.dynamicFormsService.DeleteQuestion(ID).subscribe(data => {
+      console.log(data);
+      
+      this.dynamicFormsService.GetFormQuestions().subscribe(data => {
+        this.questions = Object.assign([], data.question);
+        console.log(data);
+      })
+    })    
+  }
+  
+  
+  
 }

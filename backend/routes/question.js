@@ -25,7 +25,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Question.find(function (error, question) {
+        Question.find({form: request.query.form}, function (error, question) {
             if (error) {
                 response.send(error);
             }

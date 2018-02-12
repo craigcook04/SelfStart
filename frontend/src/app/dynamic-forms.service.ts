@@ -45,5 +45,38 @@ export class DynamicFormsService {
     var url = '/api/forms' + id;
     return this.http.put(url, body);
   }
+  
+  //Create a question
+  CreateQuestion(questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
+    var body = {
+      questionText: questionText,
+      helpDescription: helpDescription,
+      order: order,
+      form: formID,
+      questionType: questionType
+    }
+    
+    var url = '/api/question';
+    return this.http.post(url, body);
+    
+  }
+  
+  UpdateQuestion(){
+    
+  }
+  
+  DeleteQuestion(id: string){
+    var url = '/api/question/' + id;
+    return this.http.delete(url);
+  }
+  
+  GetFormQuestions(formID: string){
+    let myParams = new URLSearchParams();
+    myParams.append('form', formID);
+    var url = '/api/question';
+    return this.http.get(url);
+  }
+  
+  
 
 }
