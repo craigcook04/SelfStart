@@ -23,7 +23,7 @@ const routes: Routes = [
   {path: 'faq', component: FaqComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'manageforms', component: DynamicFormsComponent},
-  {path: 'patient', component: PatientProfileComponent},
+  {path: 'client', component: PatientProfileComponent},
   {path: 'adminhome', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent}
