@@ -1,16 +1,18 @@
-
-<br><br>
-
 <h2>Rehabilitation Plans</h2>
-<br>
-<div>
+<!--<div>
     <input #search class="searchbar" type="text">
-    <button class="create btn btn-primary btn-med" (click)="searchPlans(search.value)">Search</button>
+    <button class="searchbtn btn btn-primary btn-med" (click)="searchPlans(search.value)">Search</button>
+</div>-->
+<div class="input-group mb-3 searchbar" id="custom-search-input">
+  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
+  <span class="input-group-btn">
+    <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
+      <fa name="search"></fa>
+    </button>
+</span>
 </div>
-<br>
 <button class="create btn btn-primary btn-med">Create New Plan</button>
 <button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>
-
 <br><br>
 <div class ="plans">
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
@@ -19,7 +21,6 @@
                 <span (click) = "getExercises(rehabPlan);"><b>{{rehabPlan.name}}</b></span>
             </ng-template>
             <ng-template ngbPanelContent>
-<!--<<<<<<< HEAD-->
                 <ngb-panel>
                         <div class= "info" >
                             <p><b>Description:</b> {{rehabPlan.description}}</p>
@@ -30,7 +31,6 @@
                             <!--<p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>-->
                             <!--<button class="btn btn-primary btn-sm patientbtn">Delete</button>-->
                             <button class="btn btn-primary btn-sm rehabbtn" style = "float: left; margin-top: 10px" (click) = "open(add); loadAllExercises();">add exercise</button>
-                            
                         </div>
                         <ng-template #add let-c="close" let-d="dismiss">
                                         <div class="modal-header" style = "text-align: center;">
@@ -109,10 +109,6 @@
                                         </div>
                                     </ng-template>
                                     
-                              
-                
-        
-    
     <!--</ngb-accordion>-->
 
 <!--=======-->
@@ -141,4 +137,3 @@
 <!--        </ngb-panel>-->
 <!--    </ngb-accordion>-->
 <!--</div>-->
-<!-->>>>>>> d8fb575f4760c40d1d35901dcb283c00e42fdd5b-->

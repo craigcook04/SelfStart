@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Sam Mallabone, Jak Terpak, Andy Black, Stephanie Perreira, Matt Northmore, Craig Cook",
+  "author": "Sam Mallabone, Jak Terpak, Andy Black, Stephanie Pereira, Matt Northmore, Craig Cook",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
