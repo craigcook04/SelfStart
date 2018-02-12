@@ -1,4 +1,4 @@
-<h2>Patients</h2>
+<h2>Clients</h2>
 <div class="input-group mb-3 searchbar" id="custom-search-input">
   <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
@@ -7,9 +7,128 @@
     </button>
 </span>
 </div>
-<p *ngIf="showSuccess" class="successMessage">Patient was successfully updated</p>
-<p *ngIf="showDeleteSuccess" class="successMessage">Patient was successfully deleted</p>
-<p *ngIf="showFailure" class="failureMessage">Request was unsuccessful</p>
+<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal); FillBoxes()" >Add New Client</button>
+<!-- Beginning of New Client Modal -->
+<ng-template #newmodal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">New Client</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form>
+          <div class="form-group row">
+            <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPatientFirstName>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputLastName" placeholder="Last Name"  #newPatientLastName>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPatientEmail>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputDOB" placeholder="DOB" #newPatientBirthDate >
+            </div>
+          </div>
+          <div class="form-group row">
+              <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <select #newPatientGender class="mydropdown">
+                  <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                </select>
+              </div>
+            </div>
+          <div class="form-group row">
+            <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #newPatientPostalCode>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #newPatientPhoneNumber>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status"  #newPatientMaritalStatus>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" #newPatientHealthCardNumber>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation"  #newPatientOccupation>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputOthers" placeholder="Others" #newPatientOthers>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+            <div class="col-sm-9">
+              <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+                <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
+            <div class="col-sm-9">
+              <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+                <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
+            <div class="col-sm-9">
+              <select #newPatientCity class="mydropdown">
+                <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value); c('Close click')">Confirm</button>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
+    </div> 
+</ng-template>
+<!-- End of New Client Modal -->
+
+<p *ngIf="showCreationSuccess" class="successMessage">Client was successfully created</p>
+<p *ngIf="showSuccess" class="successMessage">Client was successfully updated</p>
+<p *ngIf="showDeleteSuccess" class="successMessage">Client was successfully deleted</p>
+<p *ngIf="showFailure" class="failureMessage">Request was unsuccessful, please try again later</p>
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
       <ngb-panel *ngFor="let patient of patients;">
@@ -22,6 +141,7 @@
           <p><b>Patient ID:  </b> {{patient.ID}}</p>
           <p><b>Email:  </b> {{patient.email}}</p>
           <p><b>Date of Birth:  </b> {{patient.DOB  | date: "fullDate"}}</p>
+          <p><b>Gender:  </b> {{patient.gender.name}}</p>
           <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
           <p><b>Phone Number:  </b> {{patient.phone}}</p>
           <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
@@ -72,6 +192,16 @@
                         <input type="text" class="form-control" id="inputDOB" placeholder="DOB" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate >
                       </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+                        <div class="col-sm-9">
+                          <select #newGender class="mydropdown">
+                            <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
+                            <option disabled="disabled">----</option>
+                            <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                          </select>
+                        </div>
+                      </div>
                     <div class="form-group row">
                       <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
                       <div class="col-sm-9">
@@ -142,7 +272,7 @@
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, acc); c('Close click')">Confirm</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, acc); c('Close click')">Confirm</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
               </div>
             </ng-template>
