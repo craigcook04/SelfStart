@@ -3,20 +3,21 @@ h2 {
 }
 
 .plans {
-
-    margin-left: 2.5em;
-    margin-right: 2.5em;
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 .info{
     margin-left: 40px;
 }
+
 .rehabbtn {
     margin-left: 1em;
     margin-right: 20px;
     margin-bottom: 1em;
     float: right;
 }
+
 .level3{
     margin-left: 80px;
 }
@@ -25,12 +26,61 @@ h2 {
 /*    margin-right: 2em;*/
 /*}*/
 
-.searchbar{
+/*.searchbar{
     margin-left: 2em;
     width: 30%;
 }
 
+.searchbtn{
+     margin-left: 0.5em;
+}*/
+
 .create{
     margin-left: 2em;
+}
+
+.searchbar{
+    margin-left: 2em;
+    margin-right: 2em;
+    width: 50%;
+}
+
+#custom-search-input{
+    padding: 3px;
+    padding-left: 0px;
+    border: solid 1px #E4E4E4;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+    cursor: pointer;
+}
+
+#custom-search-input fa{
+    font-size: 16px;
+}
+
+.calFormat{
+    display: flex;
+    flex-direction: row;
 }
 

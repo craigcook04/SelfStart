@@ -6,6 +6,7 @@ var RehabPlans = require('../models/rehabilitationPlans');
 
 router.route('/')
     .post(function (request, response) {
+        console.log("route");
         var rehabPlans = new RehabPlans();
         rehabPlans.name = request.body.name;
         rehabPlans.description = request.body.description;
@@ -58,7 +59,7 @@ router.route('/:rehabPlans_id')
                 rehabPlans.assessmentTests = request.body.assessmentTests;
                 rehabPlans.exercises = request.body.exercises;
                 rehabPlans.treatments = request.body.treatments;
-                rehabPlans.exerciseObjects.push(request.body.exerciseObjects) ;
+                rehabPlans.exerciseObjects = (request.body.exerciseObjects) ;
 
                 rehabPlans.save(function (error) {
                     if (error) {
@@ -83,7 +84,7 @@ router.route('/:rehabPlans_id')
         );
     });
 
-    router.route('/:rehabPlans_id/addEx')
+router.route('/:rehabPlans_id/addEx')
     
         .put(function (request, response) {
         RehabPlans.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
@@ -102,6 +103,21 @@ router.route('/:rehabPlans_id')
                     }
                 });
             }
+        });
+    });
+    
+router.route('/findplan/search')
+    .get(function(request, response) {
+        
+        RehabPlans.find({"name": request.query.q})
+        .sort({name: 1})
+        .exec(function(error, plans) {
+            if (error) {
+                response.send(error);
+            }
+            
+            response.json({rehabPlans: plans});
+            
         });
     });
     

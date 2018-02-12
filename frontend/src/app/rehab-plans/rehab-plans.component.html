@@ -1,40 +1,165 @@
-
-<br><br>
-
 <h2>Rehabilitation Plans</h2>
-<br>
-<div>
-    <input #search class="searchbar" type="text">
-    <button class="create btn btn-primary btn-med" (click)="searchPlans(search.value)">Search</button>
+<div class="input-group mb-3 searchbar" id="custom-search-input">
+  <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
+  <span class="input-group-btn">
+    <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
+      <fa name="search"></fa>
+    </button>
+</span>
 </div>
 <br>
-<button class="create btn btn-primary btn-med">Create New Plan</button>
-<button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>
+<button class="create btn btn-primary btn-med" (click)="plan(create)">Create New Plan</button>
+<!--<button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>-->
+<div class="container mt-3">
+    <ng-template let-c="close" let-d="dismiss" #create>
+        <div class="modal-header">
+          <h4 class="modal-title">Create a new plan</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group row">
+                <label for="name" class="col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name" placeholder="Name" #name>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label">Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="description" placeholder="Description" #description>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="authorName" class="col-sm-3 col-form-label">Author Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="authorName" placeholder="Author Name" #authorName>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="goal" class="col-sm-3 col-form-label">Goal</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="goal" placeholder="Goal" #goal>
+                </div>
+              </div>
+                <div class="form-group row">
+                  <label for="timeFrameToComplete" class="col-sm-3 col-form-label">Completion Date</label>
+                  <div class="col-sm-9">
+                    <div class="calFormat">
+                      <input class="form-control" placeholder="Date (YYYY-MM-DD)" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #timeFrameToComplete>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                            <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                          </button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm align-left" (click)="createPlan(name.value, description.value, 
+          authorName.value, goal.value, timeFrameToComplete.value); c('Close click')">Confirm</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+        </div>
+      </ng-template>
+</div>
 
-<br><br>
 <div class ="plans">
     <ngb-accordion #acc = "ngbAccordion" [closeOthers] = "true">
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
             <ng-template ngbPanelTitle>
                 <span (click) = "getExercises(rehabPlan);"><b>{{rehabPlan.name}}</b></span>
+                <button type="button" class="btn btn-secondary btn-sm" (click)= "open(deletePlan)" style = "float: right;">Delete</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)= "open(editPlan)" style = "float: right; margin-right:10px;">Edit</button>
             </ng-template>
+            
+             <ng-template #deletePlan let-c="close" let-d="dismiss">
+                    <div class="modal-header" style = "text-align: center;">
+                        <h4 class="modal-title" >Delete plan "{{rehabPlan.name}}"</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class = "modal-body">
+                    <p>Are you sure you want to remove this plan? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-sm align-left" (click)= "c('Close click'); removePlan(rehabPlan._id)">Confirm</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
+                </div>
+            </ng-template>
+           
+           <ng-template #editPlan let-c="close" let-d="dismiss">
+                    <div class="modal-header" style = "text-align: center;">
+                        <h4 class="modal-title" >Edit plan "{{rehabPlan.name}}"</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class = "modal-body">
+                    <form>
+                    <div class = "form-group row">
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Name" value="{{rehabPlan.name}}" #newName>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="description" class="col-sm-3 col-form-label">Description</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="description" placeholder="Description" #description>
+                      </div>
+                    </div>
+                    <div class = "form-group row">
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">Author Name </label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Author Name" value="{{rehabPlan.authorName}}" #newAuthorName>
+                      </div>
+                    </div>
+                    <div class = "form-group row">
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">Goal</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Goal" value="{{rehabPlan.goal}}" #newGoalName>
+                      </div>
+                    </div>
+                    <div class = "form-group row">
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">Completion Date</label>
+                      <div class="col-sm-9">
+                        <div class="calFormat">
+                          <input class="form-control" placeholder="Date (YYYY-MM-DD)" value="{{rehabPlan.timeFrameToComplete}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newTimeFrame>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                              </button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary btn-sm align-left" (click)= "c('Close click'); editThePlan(rehabPlan, newName.value, newAuthorName.value, newGoalName.value, newTimeFrame.value);">Confirm</button>
+                      <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
+                    </div>
+                </div>
+            </ng-template>
+
             <ng-template ngbPanelContent>
-<!--<<<<<<< HEAD-->
                 <ngb-panel>
                         <div class= "info" >
+                          <br>
                             <p><b>Description:</b> {{rehabPlan.description}}</p>
-                            <p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>
-                            <p><b>goal:</b> {{rehabPlan.goal}}</p>
+                            <p><b>Author Name:</b> {{rehabPlan.authorName}}</p>
+                            <p><b>Goal:</b> {{rehabPlan.goal}}</p>
                             <p><b>Time frame:</b> {{rehabPlan.timeFrameToComplete}}</p>
-                            <p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>
-                            <!--<p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>-->
-                            <!--<button class="btn btn-primary btn-sm patientbtn">Delete</button>-->
-                            <button class="btn btn-primary btn-sm rehabbtn" style = "float: left; margin-top: 10px" (click) = "open(add); loadAllExercises();">add exercise</button>
-                            
+                            <br>
+                            <button class="btn btn-primary btn-sm rehabbtn" style = "float: left; margin-top: 10px" (click) = "open(add); loadAllExercises();">Add exercise</button>
                         </div>
                         <ng-template #add let-c="close" let-d="dismiss">
                                         <div class="modal-header" style = "text-align: center;">
-                                          <h4 class="modal-title" >Select All Exercises you wish to add</h4>
+                                          <h4 class="modal-title" >Select exercise you wish to add</h4>
                                           <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                                               <span aria-hidden="true">&times;</span>
                                           </button>
@@ -44,9 +169,6 @@
                                         <button type="button" class="btn btn-primary btn-sm" style = "margin-left:30px" (click) = "addExercise(allExercise, rehabPlan._id); c('Close click')">{{allExercise.name}}</button>
                                         <br>
                                         </div>
-                                        <!--<div *ngFor = "let allExercise of allExercises">-->
-                                        <!--    <input #checked type="checkbox" style = "margin-left: 20px"> {{allExercise.name}}<br>-->
-                                        <!--</div>-->
                                         <div class = "modal-body">
                                             <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click'); updateExercises(checked)">Confirm</button>
                                             <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
@@ -68,7 +190,7 @@
                         <ng-template ngbPanelContent>
                         
                             <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">
-                                 <ngb-panel *ngFor = "let exercise1 of exercise | slice:1;">
+                                 <ngb-panel *ngFor = "let exercise1 of exercise | slice:1">
                    
                                     <ng-template  ngbPanelTitle>
                                         <p style = "margin-left: 40px">{{exercise1.name}}</p>
@@ -89,7 +211,7 @@
                                             <p style = "margin-left: 80px;"><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise1.targetDate | date:'mediumDate' }}</time> </p>
                                             <p style = "margin-left: 80px;"><b> Multimedia: </b> {{ exercise1.multimedia }} </p>
                                             <!-- <img src="{{ exercise.multimedia }}"> -->
-                                            <button class="btn btn-primary btn-sm rehabbtn" (click) = "open(delete)">Remove</button>
+                                            <button class="btn btn-danger btn-sm rehabbtn" (click) = "open(delete)">Remove</button>
                                         </div>
                                    </ng-template>
                                    
@@ -97,48 +219,15 @@
                     
                                     <ng-template #delete let-c="close" let-d="dismiss">
                                         <div class="modal-header" style = "text-align: center;">
-                                          <h4 class="modal-title" >Are you sure you want to Delete {{exercise1.name}}?</h4>
-                                          <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+                                          <h4 class="modal-title" >Are you sure you want to remove {{exercise1.name}}?</h4>
+                                          <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
                                               <span aria-hidden="true">&times;</span>
                                           </button>
                                         </div>
                                         <div class = "modal-body">
-                                            <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click')">Confirm</button>
+                                            <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click'); removeExercise(exercise1, rehabPlan);">Confirm</button>
                                             <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
                                             
                                         </div>
                                     </ng-template>
-                                    
-                              
-                
-        
-    
-    <!--</ngb-accordion>-->
-
-<!--=======-->
-<!--                <div>-->
-<!--                    <p><b>Name:  </b> {{rehabPlan.name}}</p>-->
-<!--                    <p><b>Description:  </b> {{rehabPlan.description}}</p>-->
-<!--                    <p><b>Author Name:  </b> {{rehabPlan.authorName}}</p>-->
-<!--                    <p><b>Time Frame to Complete:  </b> {{rehabPlan.timeFrameToComplete  | date: "fullDate"}}</p>-->
-<!--                </div>-->
-<!--                <ng-template ngbPanelContent>-->
-<!--                    <ngb-accordion #acc = "ngbAccordion"[closeOthers] = "true">-->
-<!--                        <ngb-panel *ngFor = "let exercise1 of exercise;">-->
-                            
-<!--                            <ng-template  ngbPanelTitle>-->
-<!--                                <p style = "margin-left: 20px">{{exercise1.name}}</p>-->
-<!--                            </ng-template>-->
-<!--                            <ng-template ngbPanelContent>-->
-<!--                                <div style = "margin-left: 40px">-->
-<!--                                    <p style = "margin-left: 40px"><b>description</b>{{exercise1.description}}</p>-->
-<!--                                </div>-->
-<!--                            </ng-template>-->
-<!--                         </ngb-panel>-->
-<!--                    </ngb-accordion>-->
-<!--                </ng-template> -->
-<!--            </ng-template>-->
-<!--        </ngb-panel>-->
-<!--    </ngb-accordion>-->
-<!--</div>-->
-<!-->>>>>>> d8fb575f4760c40d1d35901dcb283c00e42fdd5b-->
+                                </ngb-panel>

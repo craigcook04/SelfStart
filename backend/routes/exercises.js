@@ -111,4 +111,12 @@ router.route('/rehabPlan/:rehabPlans_id')
         });
     });
     
+    
+router.route('/image/getimage')
+    .post(function(request, response) {
+        console.log(request);
+        console.log(request.body);
+        response.send('ok');
+    });
+    
 module.exports = router;
