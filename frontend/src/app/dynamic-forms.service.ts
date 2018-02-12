@@ -61,8 +61,17 @@ export class DynamicFormsService {
     
   }
   
-  UpdateQuestion(){
+  UpdateQuestion(id: string, questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
+    var body = {
+      questionText: questionText,
+      helpDescription: helpDescription,
+      order: order,
+      form: formID,
+      questionType: questionType
+    }
     
+    var url = '/api/question/' + id;
+    return this.http.put(url, body);
   }
   
   DeleteQuestion(id: string){

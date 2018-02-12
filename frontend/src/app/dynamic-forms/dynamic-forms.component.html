@@ -16,20 +16,20 @@
         <h6>Form ID: {{ form._id }}</h6>
         <form>
           <div class="container">
-            <button class="btn btn-danger float-right ml-3" (click)="open(yousure)">DELETE</button>
+            <button class="btn btn-danger float-right ml-3" (click)="open(yousure); onForm=true;">DELETE FORM</button>
             <div *ngFor='let question of questions;  let i = index;' class="row">
               <div class="col-lg-8 form-group">
                 <div class="mt-5">
                   <h5 *ngIf="!editMode">{{ question.questionText }}</h5>
                   <label *ngIf="editMode" [attr.for]="'ques-' + i">{{ question.questionText }}</label>
-                  <input *ngIf="editMode" [attr.id]="'ques-' + i" type="text" class="form-control" value="{{ question.questionText }}">
+                  <input *ngIf="editMode" [attr.id]="'ques-' + i" type="text" class="form-control" value="{{ question.questionText }}" #qtext>
                 </div>
               </div>
               <div class="col-lg-2 form-group">
                 <div class="mt-5 mb-0">
-                  <button *ngIf="editMode" class="btn btn-success align-bottom" (click)="switchMode()"><fa class="fas float-right" name="check"></fa></button>
+                  <button *ngIf="editMode" class="btn btn-success align-bottom" (click)="switchMode(); updateQuestion(question._id, qtext.value, question.helpDescription, question.order, form._id, question.questionType);"><fa class="fas float-right" name="check"></fa></button>
                   <button *ngIf="editMode" class="btn btn-danger align-bottom" (click)="switchMode();"><fa class="fas float-right" name="times"></fa></button>
-                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="deleteQuestion(question._id, form._id)"><fa class="fas float-right" name="times"></fa></button>
+                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="open(yousure); onForm=false;"><fa class="fas float-right" name="times"></fa></button>
                   <button *ngIf="!editMode" class="btn btn-primary align-bottom" (click)="switchMode()"><fa class="fas float-right" name="edit"></fa></button>
                 </div>
               </div>
@@ -50,7 +50,8 @@
             <p> <b>This action cannot be undone!</b> </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
+          <button *ngIf="!onForm" type="button" class="btn btn-danger btn-sm align-left" (click)="deleteQuestion(question._id, form._id); c('Close click')">Yes</button>
+          <button *ngIf="onForm" type="button" class="btn btn-danger btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
           <button type="button" class="btn btn-success btn-sm" (click)="c('Close click')">No</button>              
         </div>
       </ng-template>

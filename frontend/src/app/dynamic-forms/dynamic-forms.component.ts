@@ -16,7 +16,8 @@ export class DynamicFormsComponent implements OnInit {
   showSuccess: boolean;
   showDeleteSuccess: boolean;
   showFailure: boolean;
-  editMode: Boolean;
+  editMode: boolean;
+  onForm: boolean;
 
   
   constructor(private dynamicFormsService: DynamicFormsService,
@@ -85,25 +86,30 @@ export class DynamicFormsComponent implements OnInit {
   }
   
   
+  updateQuestion(id: string, questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
+    this.dynamicFormsService.UpdateQuestion(id, questionText, helpDescription, order, formID, questionType).subscribe(data => {
+      console.log(data);
+      this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
+        var retObj: any = data;
+        this.questions = Object.assign([], retObj.question);
+    })
+  })
+    
+  }
+
   
-  
-  
-  
-  
-  
-   deleteQuestion(ID: string, formID: string){
+  //This is working
+  deleteQuestion(ID: string, formID: string){
     this.dynamicFormsService.DeleteQuestion(ID).subscribe(data => {
       console.log(data);
       
       this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
-        this.questions = Object.assign([], data);
+        var retObj: any = data;
+        this.questions = Object.assign([], retObj.question);
         console.log(data);
       })
-    })    
+    })   
   }
-  
-  
-  
   
   //This is working -- dont touch for now
   getFormQuestions(formID: string){
@@ -113,6 +119,7 @@ export class DynamicFormsComponent implements OnInit {
       console.log(data);
     })
   }
+  
   
   
   
