@@ -52,6 +52,7 @@ export class RehabPlansComponent implements OnInit {
         this.rehabPlans = Object.assign([], retObj.rehabPlans);
       }
     });
+    window.location.reload();
   }
   
   createPlan(planName: string, descript: string, author: string, goalOfPlan: string, timeFrame: Date){
@@ -67,6 +68,7 @@ export class RehabPlansComponent implements OnInit {
     this.rehabPlansService.CreatePlan(body).subscribe(data =>{
       console.log(data);
     });
+    window.location.reload();
   }
   
   open(content){

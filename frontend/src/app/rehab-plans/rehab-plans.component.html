@@ -1,16 +1,15 @@
 <h2>Rehabilitation Plans</h2>
-
 <div class="input-group mb-3 searchbar" id="custom-search-input">
-  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
+  <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
     <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
     </button>
 </span>
 </div>
+<br>
 <button class="create btn btn-primary btn-med" (click)="plan(create)">Create New Plan</button>
 <!--<button class="back btn btn-primary btn-med" (click)="goBack()">Back</button>-->
-<br><br>
 <div class="container mt-3">
     <ng-template let-c="close" let-d="dismiss" #create>
         <div class="modal-header">
@@ -46,7 +45,7 @@
                 </div>
               </div>
                 <div class="form-group row">
-                  <label for="timeFrameToComplete" class="col-sm-3 col-form-label">Time Frame to Complete</label>
+                  <label for="timeFrameToComplete" class="col-sm-3 col-form-label">Completion Date</label>
                   <div class="col-sm-9">
                     <div class="calFormat">
                       <input class="form-control" placeholder="Date (YYYY-MM-DD)" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #timeFrameToComplete>
@@ -73,27 +72,29 @@
         <ngb-panel *ngFor="let rehabPlan of rehabPlans;">
             <ng-template ngbPanelTitle>
                 <span (click) = "getExercises(rehabPlan);"><b>{{rehabPlan.name}}</b></span>
-                <button type="button" class="btn btn-danger btn-sm" (click)= "open(deletePlan)" style = "float: right;">Delete Plan</button>
-                <button type="button" class="btn btn-primary btn-sm" (click)= "open(editPlan)" style = "float: right; margin-right:10px;">Edit Plan</button>
+                <button type="button" class="btn btn-secondary btn-sm" (click)= "open(deletePlan)" style = "float: right;">Delete</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)= "open(editPlan)" style = "float: right; margin-right:10px;">Edit</button>
             </ng-template>
             
              <ng-template #deletePlan let-c="close" let-d="dismiss">
                     <div class="modal-header" style = "text-align: center;">
-                        <h4 class="modal-title" >Are you sure you want to remove {{rehabPlan.name}}?</h4>
+                        <h4 class="modal-title" >Delete plan "{{rehabPlan.name}}"</h4>
                     <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class = "modal-body">
-                    <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click'); removePlan(rehabPlan._id)">Confirm</button>
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
-                                            
+                    <p>Are you sure you want to remove this plan? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-sm align-left" (click)= "c('Close click'); removePlan(rehabPlan._id)">Confirm</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
                 </div>
             </ng-template>
            
            <ng-template #editPlan let-c="close" let-d="dismiss">
                     <div class="modal-header" style = "text-align: center;">
-                        <h4 class="modal-title" >Please Make the neccesary changes.</h4>
+                        <h4 class="modal-title" >Edit plan "{{rehabPlan.name}}"</h4>
                     <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,48 +104,62 @@
                     <div class = "form-group row">
                       <label for="inputFirstName" class="col-sm-3 col-form-label">Name</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{rehabPlan.name}}" #newName>
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Name" value="{{rehabPlan.name}}" #newName>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="description" class="col-sm-3 col-form-label">Description</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="description" placeholder="Description" #description>
                       </div>
                     </div>
                     <div class = "form-group row">
-                      <label for="inputFirstName" class="col-sm-3 col-form-label">author Name </label>
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">Author Name </label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{rehabPlan.authorName}}" #newAuthorName>
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Author Name" value="{{rehabPlan.authorName}}" #newAuthorName>
                       </div>
                     </div>
                     <div class = "form-group row">
                       <label for="inputFirstName" class="col-sm-3 col-form-label">Goal</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{rehabPlan.goal}}" #newGoalName>
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Goal" value="{{rehabPlan.goal}}" #newGoalName>
                       </div>
                     </div>
                     <div class = "form-group row">
-                      <label for="inputFirstName" class="col-sm-3 col-form-label">Time Frame </label>
+                      <label for="inputFirstName" class="col-sm-3 col-form-label">Completion Date</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputFirstName" placeholder="MM/DD/YY" value="{{rehabPlan.timeFrameToComplete}}" #newTimeFrame>
+                        <div class="calFormat">
+                          <input class="form-control" placeholder="Date (YYYY-MM-DD)" value="{{rehabPlan.timeFrameToComplete}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newTimeFrame>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                              </button>
+                            </div>
+                        </div>
                       </div>
                     </div>
-                    
-                
                     </form>
-                    <button type="button" class="btn btn-primary btn-sm" (click)= "c('Close click'); editThePlan(rehabPlan, newName.value, newAuthorName.value, newGoalName.value, newTimeFrame.value);">Confirm</button>
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
-                                            
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary btn-sm align-left" (click)= "c('Close click'); editThePlan(rehabPlan, newName.value, newAuthorName.value, newGoalName.value, newTimeFrame.value);">Confirm</button>
+                      <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button> 
+                    </div>
                 </div>
             </ng-template>
-            
+
             <ng-template ngbPanelContent>
                 <ngb-panel>
                         <div class= "info" >
+                          <br>
                             <p><b>Description:</b> {{rehabPlan.description}}</p>
-                            <p><b>AuthorName:</b> {{rehabPlan.authorName}}</p>
-                            <p><b>goal:</b> {{rehabPlan.goal}}</p>
+                            <p><b>Author Name:</b> {{rehabPlan.authorName}}</p>
+                            <p><b>Goal:</b> {{rehabPlan.goal}}</p>
                             <p><b>Time frame:</b> {{rehabPlan.timeFrameToComplete}}</p>
-                            <button class="btn btn-primary btn-sm rehabbtn" style = "float: left; margin-top: 10px" (click) = "open(add); loadAllExercises();">add exercise</button>
+                            <br>
+                            <button class="btn btn-primary btn-sm rehabbtn" style = "float: left; margin-top: 10px" (click) = "open(add); loadAllExercises();">Add exercise</button>
                         </div>
                         <ng-template #add let-c="close" let-d="dismiss">
                                         <div class="modal-header" style = "text-align: center;">
-                                          <h4 class="modal-title" >Select All Exercises you wish to add</h4>
+                                          <h4 class="modal-title" >Select exercise you wish to add</h4>
                                           <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                                               <span aria-hidden="true">&times;</span>
                                           </button>
