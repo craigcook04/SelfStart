@@ -22,4 +22,11 @@ export class RehabPlansService {
     console.log(ID)
     return this.http.put('/api/rehabPlans/' + ID + '/addEx', {exerciseObjects: exercise});
   }
+  removePlan(ID: string){
+    return this.http.delete('/api/rehabPlans/' + ID);
+  }
+  updatePlan(plan: any){
+    console.log("im in the service");
+    return this.http.put('api/rehabPlans/' + plan._id, plan);
+  }
 }

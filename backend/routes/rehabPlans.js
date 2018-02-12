@@ -58,7 +58,7 @@ router.route('/:rehabPlans_id')
                 rehabPlans.assessmentTests = request.body.assessmentTests;
                 rehabPlans.exercises = request.body.exercises;
                 rehabPlans.treatments = request.body.treatments;
-                rehabPlans.exerciseObjects.push(request.body.exerciseObjects) ;
+                rehabPlans.exerciseObjects = (request.body.exerciseObjects) ;
 
                 rehabPlans.save(function (error) {
                     if (error) {
