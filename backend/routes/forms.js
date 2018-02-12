@@ -13,7 +13,7 @@ router.route('/')
         form.description = request.body.description;
         form.assessmentTool = null;
         //request.body.assessmentTool;
-        form.questions = null;
+        form.questions = request.body.questions;
         //request.body.questions;
         
         form.save(function (error) {
@@ -57,7 +57,7 @@ router.route('/:form_id')
                 form.ID = request.body.ID;
                 form.name = request.body.name;
                 form.description = request.body.description;
-                form.assessmentTool = request.body.assessmentTool;
+                form.assessmentTool = null;
                 form.questions = request.body.questions;
 
                 form.save(function (error) {

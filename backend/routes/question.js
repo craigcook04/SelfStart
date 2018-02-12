@@ -84,5 +84,18 @@ router.route('/:question_id')
             }
         );
     });
+    
+router.route('/form/:form_id')
+
+    .get(function (request, response) {
+        Question.find({form: request.params.form_id}, function (error, question) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({question: question});
+            }
+        });
+    });
 
 module.exports = router;

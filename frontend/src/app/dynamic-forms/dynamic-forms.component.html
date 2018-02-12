@@ -8,8 +8,8 @@
     <!-- This is the block of code that will be repeated for every form -->
     <ngb-panel *ngFor='let form of forms'>
       <ng-template ngbPanelTitle>
-        <span> {{ form.name }} ||</span>
-        <fa class="float-right fa-2x" name="angle-down"></fa>
+        <span (click)="getFormQuestions(form._id)">{{ form.name }}<fa class="float-right fa-2x" name="angle-down"></fa></span>
+        
       </ng-template>
       
       <ng-template ngbPanelContent>
@@ -17,11 +17,20 @@
         <form>
           <div class="container">
             <button class="btn btn-danger float-right ml-3" (click)="open(yousure)">DELETE</button>
-            <div class="row">
-              <div class="col-lg-8 col-md-10">
-                <div class="my-3">
-                  <label for="exampleInputPassword1">Question Goes here</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <div *ngFor='let question of questions;  let i = index;' class="row">
+              <div class="col-lg-8 form-group">
+                <div class="mt-5">
+                  <h5 *ngIf="!editMode">{{ question.questionText }}</h5>
+                  <label *ngIf="editMode" [attr.for]="'ques-' + i">{{ question.questionText }}</label>
+                  <input *ngIf="editMode" [attr.id]="'ques-' + i" type="text" class="form-control" value="{{ question.questionText }}">
+                </div>
+              </div>
+              <div class="col-lg-2 form-group">
+                <div class="mt-5 mb-0">
+                  <button *ngIf="editMode" class="btn btn-success align-bottom" (click)="switchMode()"><fa class="fas float-right" name="check"></fa></button>
+                  <button *ngIf="editMode" class="btn btn-danger align-bottom" (click)="switchMode();"><fa class="fas float-right" name="times"></fa></button>
+                  <button *ngIf="!editMode" class="btn btn-danger align-bottom" (click)="deleteQuestion(question._id, form._id)"><fa class="fas float-right" name="times"></fa></button>
+                  <button *ngIf="!editMode" class="btn btn-primary align-bottom" (click)="switchMode()"><fa class="fas float-right" name="edit"></fa></button>
                 </div>
               </div>
             </div>

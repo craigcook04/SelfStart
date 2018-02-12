@@ -9,6 +9,8 @@ router.route('/')
 
     .post(function (request, response) {
         var questionType = new QuestionType();
+        questionType.name = request.body.name;
+        questionType.question = request.body.questionID;
         questionType.save(function (error) {
             if (error) {
                 response.send(error);
