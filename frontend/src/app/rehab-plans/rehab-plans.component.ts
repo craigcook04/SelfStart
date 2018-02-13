@@ -67,8 +67,9 @@ export class RehabPlansComponent implements OnInit {
     console.log(body);
     this.rehabPlansService.CreatePlan(body).subscribe(data =>{
       console.log(data);
+      window.location.reload();
     });
-    window.location.reload();
+   
   }
   
   open(content){
@@ -100,14 +101,16 @@ export class RehabPlansComponent implements OnInit {
     this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
       var retObj: any = data;
       console.log(retObj);
+      window.location.reload();
     });
-    window.location.reload();
+    
   }
   removePlan(ID: string){
     this.rehabPlansService.removePlan(ID).subscribe(data => {
       console.log(data);
+      window.location.reload();
     });
-    window.location.reload();
+    
     
   }
   editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date, newDescription: string){
@@ -119,9 +122,9 @@ export class RehabPlansComponent implements OnInit {
     plan.timeFrameToComplete = newTimeFrame;
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
-      
+      window.location.reload();
     });
-    window.location.reload();
+    
   }
   removeExercise(exer: any, plan: any){
     console.log("in the component")
@@ -130,8 +133,9 @@ export class RehabPlansComponent implements OnInit {
     console.log(plan.exerciseObjects);
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data)
+      window.location.reload();
     });
-    window.location.reload();
+    
     
   }
 }

@@ -71,12 +71,13 @@ export class DynamicFormsComponent implements OnInit {
     })
   }
   
-  open(content, formID: string) {
+  open(content) {
     this.modalService.open(content, {size: 'lg'});
-    this.tempFID = formID;
+    //this.tempFID = formID;
   }
   
   createQuestion(questionText: string, helpDescription: string, order: Number, questionType: string){
+    console.log(questionText, helpDescription, order, this.tempFID, questionType);
     this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, this.tempFID, questionType).subscribe(data => {
       console.log(data);
       

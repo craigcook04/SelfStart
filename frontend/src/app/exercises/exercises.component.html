@@ -1,14 +1,16 @@
 
 <h2>Exercises</h2>
 
+<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Exercise</button>
+
 <div class="exercises">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
-    <ngb-panel>
-        <ng-template ngbPanelTitle>
-          <span><b>Add a New Exercise</b></span>
-        </ng-template>
-        <ng-template #new let-c="close" let-d="dismiss" ngbPanelContent>
-          <span>Fill out the following...</span>
+      <ng-template #newmodal let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">New Exercise</h4>
+          </div>
+          <div class="modal-body">
+            <span>Fill out the following...</span>
           <br><br>
             <div class="form-group row">
               <label for="inputName" class="col-sm-3 col-form-label"><b>Name</b></label>
@@ -84,11 +86,11 @@
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, targetDate.value)">Add</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, targetDate.value); c('Close click') ">Add</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
-              </div>            
+            </div>  
+          </div>
         </ng-template>
-    </ngb-panel>
     <ngb-panel *ngFor='let exercise of exercises'>
         <ng-template ngbPanelTitle >
           <span> {{ exercise.name }} || {{ exercise.description }} </span>

@@ -19,9 +19,6 @@
     <ng-template let-c="close" let-d="dismiss" #create>
         <div class="modal-header">
             <h4 class="modal-title">Create a new plan</h4>
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div class="modal-body">
             <form>
@@ -195,7 +192,7 @@
                 </ngb-panel>
                 <div style = "margin-right:30px;">
                 <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" style="margin-bottom: 40px; margin-right: 50px;">
-                    <ngb-panel style="margin-left = 100px; float: left;">
+                    <ngb-panel style="margin-left: 100px; float: left;">
                         <ng-template ngbPanelTitle>
 
                             <p style="margin-left: 20px">Exercises</p>
@@ -248,4 +245,8 @@
                                     </ng-template>
 
                                 </ngb-panel>
-                            
+<br>
+<br>
+<br>
+<br>
+<br>                          
