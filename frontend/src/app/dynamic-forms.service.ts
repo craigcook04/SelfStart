@@ -45,5 +45,67 @@ export class DynamicFormsService {
     var url = '/api/forms' + id;
     return this.http.put(url, body);
   }
+  
+  //Create a question
+  CreateQuestion(questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
+    var body = {
+      questionText: questionText,
+      helpDescription: helpDescription,
+      order: order,
+      form: formID,
+      questionType: questionType
+    }
+    
+    var url = '/api/question';
+    return this.http.post(url, body);
+    
+  }
+  
+  UpdateQuestion(id: string, questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
+    var body = {
+      questionText: questionText,
+      helpDescription: helpDescription,
+      order: order,
+      form: formID,
+      questionType: questionType
+    }
+    
+    var url = '/api/question/' + id;
+    return this.http.put(url, body);
+  }
+  
+  DeleteQuestion(id: string){
+    var url = '/api/question/' + id;
+    return this.http.delete(url);
+  }
+  
+  //This works
+  GetFormQuestions(formID: string){
+    var url = '/api/question/form/' + formID;
+    return this.http.get(url);
+  }
+  
+  CreateType(name: string, questionID: string){
+    
+    var body = {
+      name: name,
+      question: questionID
+    }
+    
+    var url = '/api/questiontype';
+    return this.http.post(url, body);
+  }
+  
+  GetTypes(){
+    var url = '/api/questiontype'
+    return this.http.get(url);
+  }
+  
+  GetTypeID(name: string){
+    var url = '/api/questiontype/type/' + name;
+    return this.http.get(url);
+  }
+  
+  
 
 }

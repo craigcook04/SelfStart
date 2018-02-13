@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var questionSchema = mongoose.Schema({
+var questionSchema = new mongoose.Schema({
     questionText: String,
     helpDescription: String,
     order: Number,
@@ -9,4 +9,4 @@ var questionSchema = mongoose.Schema({
 });
 
 var Question = mongoose.model('Question', questionSchema);
-exports.model = Question;
+module.exports = Question;
