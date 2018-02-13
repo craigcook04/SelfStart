@@ -3,7 +3,8 @@ import { ExerciseService } from '../exercise.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 
 
@@ -14,14 +15,13 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class ExercisesComponent implements OnInit {
 
-  //public uploader:FileUploader = new FileUploader({url: URL});
-  public hasAnotherDropZoneOver:boolean = false;
+  obj: Object [];
   exercises: Object [];
   closeResult: string;
 
   constructor( private exerciseService: ExerciseService, 
                private modalService: NgbModal,
-               private router: Router ) { }
+               private router: Router) { }
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
@@ -35,8 +35,9 @@ export class ExercisesComponent implements OnInit {
     this.modalService.open(content, {size: "lg"});
   }
 
-  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string) {
-    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
+  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any) {
+    console.log(media.item(0));
+    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, this.uploadFiles( media))
     .subscribe(data =>{
       console.log(data);
     })
@@ -48,15 +49,25 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string){
+  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any){
+    
     this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
       console.log(data);
     })
   }
 
-  public fileOverAnother(e:any):void {
-    this.hasAnotherDropZoneOver = e;
-  }
+  uploadFiles( media: any ){
 
+    var file = media.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+      var contents = reader.result; 
+      console.log('New', contents);
+    }
+    reader.readAsDataURL(file);
+
+    console.log("HERE");
+
+  }
 }

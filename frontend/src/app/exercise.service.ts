@@ -20,7 +20,7 @@ export class ExerciseService {
     return this.httpClient.delete(url);
   }
 
-  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string) : any {
+  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: any) : any {
     // body of the exercise request
     var body ={
       name: exName,
@@ -39,7 +39,7 @@ export class ExerciseService {
     return this.httpClient.put(url, body);
   }
 
-  AddExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: string) : any{
+  AddExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: any) : any{
     var body ={
       name: exName,
       description: descrip,
@@ -57,16 +57,28 @@ export class ExerciseService {
     return this.httpClient.post(url, body);
   }
 
-  postFile(fileToUpload: File) {
-    console.log('hello');
-    const endpoint = '/api/exercises/image/getimage';
-    const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
-    return this.httpClient.post(endpoint, formData);
-}
+  // postFile(fileToUpload: File) {
+  //   console.log('hello');
+  //   const endpoint = '/api/exercises/image/getimage';
+  //   const formData: FormData = new FormData();
+  //   formData.append('fileKey', fileToUpload, fileToUpload.name);
+  //   return this.httpClient.post(endpoint, formData);
+  // }
 
+  uploadFile(media: any): any {
+    console.log(media);
+    var filereader = new FileReader();
 
+    filereader.readAsDataURL(media[0]);
 
+    var obj = filereader.result;
+    
+    console.log("Object:");
+    console.log(obj.data);
 
+    var url = 'api/image';
+    return;
+    //return this.httpClient.post(url, media[0]);
+  }
   
 }

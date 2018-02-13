@@ -110,11 +110,13 @@ export class RehabPlansComponent implements OnInit {
     window.location.reload();
     
   }
-  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date){
+  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date, newDescription: string){
     console.log("in the function");
     plan.name = newName;
     plan.authorName = newAuthorName;
     plan.goal = newGoalName;
+    plan.description = newDescription;
+    plan.timeFrameToComplete = newTimeFrame;
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       
