@@ -73,3 +73,13 @@
      width: 32%;
     /* height:75%; */
   }
+
+.createbtn {
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+h2 {
+    margin-left: 0.5em;
+    margin-top: 1em;
+}

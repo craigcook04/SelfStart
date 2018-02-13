@@ -14,3 +14,14 @@ h2 {
 .createbtn{
     margin: 0 0 2.5em 2.5em;
 }
+
+.formbtns {
+    margin-left: 1em;
+    margin-top: 0.5em;
+}
+
+h4 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+}

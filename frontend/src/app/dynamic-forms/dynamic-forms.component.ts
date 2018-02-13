@@ -76,12 +76,12 @@ export class DynamicFormsComponent implements OnInit {
     //this.tempFID = formID;
   }
   
-  createQuestion(questionText: string, helpDescription: string, order: Number, questionType: string){
-    console.log(questionText, helpDescription, order, this.tempFID, questionType);
-    this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, this.tempFID, questionType).subscribe(data => {
+  createQuestion(questionText: string, helpDescription: string, order: Number, formID: string, qType: string){
+    console.log(questionText, helpDescription, order, formID, qType);
+    this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, formID, qType).subscribe(data => {
       console.log(data);
       
-      this.dynamicFormsService.GetFormQuestions(this.tempFID).subscribe(data => {
+      this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
         var retObj: any = data;
         this.questions = Object.assign([], retObj.question);
         console.log(data);

@@ -42,7 +42,7 @@
       <div class="form-group row">
         <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputDOB" placeholder="DOB" #newPatientBirthDate>
+          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>
         </div>
       </div>
       <!-- <div class="form-group row">
@@ -206,7 +206,7 @@
             <div class="form-group row">
               <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputDOB" placeholder="DOB" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
+                <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
               </div>
             </div>
             <!-- <div class="form-group row">
