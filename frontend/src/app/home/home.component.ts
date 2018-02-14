@@ -15,20 +15,4 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-    console.log('i am in');
-    this.uploadFileToActivity();
-  }
-
-  uploadFileToActivity() {
-    this.exerciseService.postFile(this.fileToUpload).subscribe(data => {
-      // do something, if upload success
-      console.log('hi');
-      console.log(data);
-      }, error => {
-        console.log(error);
-      });
-  }
-
 }

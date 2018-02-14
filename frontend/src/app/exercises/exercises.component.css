@@ -48,18 +48,38 @@
     flex-direction: row;
 }
 
-.modal-header-upload {
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #0480be;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-     border-top-left-radius: 5px;
-     border-top-right-radius: 5px;
- }
+ .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: rgb(16, 114, 226);
+    cursor: inherit;
+    display: block;
+}
 
- .drop-box{
-     cursor: pointer;
- }
+.carousel {
+    align-content: right;
+     width: 32%;
+    /* height:75%; */
+  }
+
+.createbtn {
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+h2 {
+    margin-left: 0.5em;
+    margin-top: 1em;
+}

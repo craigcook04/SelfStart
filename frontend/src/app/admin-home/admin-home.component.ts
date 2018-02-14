@@ -14,9 +14,9 @@ export class AdminHomeComponent implements OnInit {
   
   }
   
-  goToExercises(){}
-    //router.navigate(['../'])
-      
+  goToExercises(){
+    this.router.navigate(['../exercises']);
+  }
   
   gotToPatients(){
     this.router.navigate(['../client']);

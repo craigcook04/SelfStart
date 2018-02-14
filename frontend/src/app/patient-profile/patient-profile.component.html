@@ -1,14 +1,13 @@
 <h2>Clients</h2>
 <div class="input-group mb-3 searchbar" id="custom-search-input">
-  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..."
-    aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
     <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
     </button>
 </span>
 </div>
-<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal); FillBoxes()">Add New Client</button>
+<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
 <!-- Beginning of New Client Modal -->
 <ng-template #newmodal let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -40,17 +39,17 @@
           <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPatientEmail>
         </div>
       </div>
-      <!-- <div class="form-group row">
+      <div class="form-group row">
         <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputDOB" placeholder="DOB" #newPatientBirthDate>
+          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>
         </div>
-      </div> -->
-      <div class="form-group row">
+      </div>
+      <!-- <div class="form-group row">
           <label for="inputTargDate" class="col-sm-3 col-form-label">Date of Birth</label>
           <div class="col-sm-9">
               <div class="calFormat">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
+                <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
                       <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
@@ -58,12 +57,14 @@
                   </div>
               </div>
           </div>
-      </div>
+      </div> -->
       <div class="form-group row">
         <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
         <div class="col-sm-9">
           <select #newPatientGender class="mydropdown">
-                  <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+              <option value="badvalue">Please select a gender</option>
+              <option disabled="disabled">----</option>
+              <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
           </select>
         </div>
       </div>
@@ -107,8 +108,10 @@
         <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
         <div class="col-sm-9">
           <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
-                <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-              </select>
+            <option value="badvalue">Please select a country</option>
+            <option disabled="disabled">----</option>    
+            <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+          </select>
         </div>
       </div>
       <div class="form-group row">
@@ -116,7 +119,7 @@
         <div class="col-sm-9">
           <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
                 <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-              </select>
+          </select>
         </div>
       </div>
       <div class="form-group row">
@@ -139,15 +142,174 @@
 <p *ngIf="showCreationSuccess" class="successMessage">Client was successfully created</p>
 <p *ngIf="showSuccess" class="successMessage">Client was successfully updated</p>
 <p *ngIf="showDeleteSuccess" class="successMessage">Client was successfully deleted</p>
+<!-- <div *ngIf="showDeleteSuccess" class="alert alert-success" role="alert">
+    Client was successfully deleted
+</div> -->
 <p *ngIf="showFailure" class="failureMessage">Request was unsuccessful, please try again later</p>
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
     <ngb-panel *ngFor="let patient of patients;">
       <ng-template ngbPanelTitle>
         <span (click)="HideMessage(); GetProvinces(patient.country._id); GetCities(patient.province._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
-        <button type="button" class="btn btn-danger btn-sm" (click)="open(update)" style="float: right;">Delete Client</button>
-        <button type="button" class="btn btn-primary btn-sm" (click)="open(delete)" style="float: right; margin-right:10px;">Edit Client</button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="open(delete)" style="float: right;">Delete Client</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="open(update)" style="float: right; margin-right:10px;">Edit Client</button>
       </ng-template>
+
+      <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
+      <ng-template #delete let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you wish to delete client <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot
+            be undone. </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id, acc); c('Close click')">Delete</button>
+          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
+        </div>
+      </ng-template>
+      <!-- End of Second Modal -->
+
+      <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
+      <ng-template #update let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group row">
+              <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+              <div class="col-sm-9">
+                <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left"
+                  ngbTooltip="The patient's ID cannot be modified">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+                  <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
+                  <div class="col-sm-9">
+                      <div class="calFormat">
+                        <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                              <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                            </button>
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
+            <div class="form-group row">
+              <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <select #newGender class="mydropdown">
+                            <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
+                            <option disabled="disabled">----</option>
+                            <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" value="{{patient.maritalStatus}}"
+                  #newMaritalStatus>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}"
+                  #newHealthCardNumber>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" value="{{patient.occupation}}" #newOccupation>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+              <div class="col-sm-9">
+                <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value)">
+                          <option value="{{patient.country._id}}">{{patient.country.name}}</option>
+                          <option disabled="disabled">----</option>
+                          <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
+              <div class="col-sm-9">
+                <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
+                          <option value="{{patient.province._id}}">{{patient.province.name}}</option>
+                          <option disabled="disabled">----</option>
+                          <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
+              <div class="col-sm-9">
+                <select #newCity class="mydropdown">
+                          <option value="{{patient.city._id}}">{{patient.city.name}}</option>
+                          <option disabled="disabled">----</option>
+                          <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+                  </select>
+              </div>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, acc); c('Close click')">Confirm</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+        </div>
+      </ng-template>
+      <!-- End of First Modal -->
+
       <ng-template ngbPanelContent>
         <div class="info">
           <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
@@ -165,160 +327,6 @@
           <p><b>City:  </b> {{patient.city.name}} </p>
         </div>
 
-        <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
-        <ng-template #update let-c="close" let-d="dismiss">
-          <div class="modal-header">
-            <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group row">
-                <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
-                <div class="col-sm-9">
-                  <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left"
-                    ngbTooltip="The patient's ID cannot be modified">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputDOB" placeholder="DOB" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
-                </div>
-              </div>
-              <!-- <div class="form-group row">
-                  <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
-                  <div class="col-sm-9">
-                      <div class="calFormat">
-                        <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                              <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                            </button>
-                          </div>
-                      </div>
-                  </div>
-              </div> -->
-              <div class="form-group row">
-                <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
-                <div class="col-sm-9">
-                  <select #newGender class="mydropdown">
-                            <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
-                            <option disabled="disabled">----</option>
-                            <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" value="{{patient.maritalStatus}}"
-                    #newMaritalStatus>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}"
-                    #newHealthCardNumber>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" value="{{patient.occupation}}" #newOccupation>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
-                <div class="col-sm-9">
-                  <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value)">
-                          <option value="{{patient.country._id}}">{{patient.country.name}}</option>
-                          <option disabled="disabled">----</option>
-                          <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
-                <div class="col-sm-9">
-                  <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
-                          <option value="{{patient.province._id}}">{{patient.province.name}}</option>
-                          <option disabled="disabled">----</option>
-                          <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
-                <div class="col-sm-9">
-                  <select #newCity class="mydropdown">
-                          <option value="{{patient.city._id}}">{{patient.city.name}}</option>
-                          <option disabled="disabled">----</option>
-                          <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, acc); c('Close click')">Confirm</button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-          </div>
-        </ng-template>
-        <!-- End of First Modal -->
-
-        <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
-        <ng-template #delete let-c="close" let-d="dismiss">
-          <div class="modal-header">
-            <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
-          </div>
-          <div class="modal-body">
-            <p>Are you sure you wish to delete patient <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is
-              cannot be undone. </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); c('Close click')">Delete</button>
-            <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do No Delete</button>
-          </div>
-        </ng-template>
-        <!-- End of Second Modal -->
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(delete)">Delete</button>
       </ng-template>

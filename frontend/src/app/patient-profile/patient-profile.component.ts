@@ -39,15 +39,7 @@ export class PatientProfileComponent implements OnInit {
       this.genders = Object.assign([], retObj.gender);
     })
 
-    // this.patientService.GetProvinces().subscribe(data => {
-    //   var retObj: any = data;
-    //   this.provinces = Object.assign([], retObj.province);
-    // })
-
-    // this.patientService.GetCities().subscribe(data => {
-    //   var retObj: any = data;
-    //   this.cities = Object.assign([], retObj.city);
-    // })
+ 
 
   }
 
@@ -56,7 +48,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, acc) {
-    acc.activeIds = []; //close all accordian panels
+    
     this.showSuccess = true;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
       console.log(data);
@@ -78,11 +70,19 @@ export class PatientProfileComponent implements OnInit {
 
   }
 
-  deletePatient(ID: string) {
+  deletePatient(ID: string, acc) {
+    console.log(ID);
     this.patientService.DeletePatient(ID).subscribe(data => {
-      var retObj: any;
+      var retObj: any = data;
       if(retObj.success){
         this.showDeleteSuccess = true;
+        this.showSuccess = false;
+        this.showFailure = false;
+        this.showCreationSuccess = false;
+        acc.activeIds = []; //close all accordian panels
+        this.patientService.GetAllPatients().subscribe(data => {
+          this.patients = Object.assign([], data.patients);
+        });
       }
       else { 
         this.showFailure = true;
