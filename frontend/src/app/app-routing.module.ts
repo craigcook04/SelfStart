@@ -13,6 +13,7 @@ import { RouterLinkActive } from '@angular/router';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {RehabPlansComponent} from './rehab-plans/rehab-plans.component';
 import { ExercisesComponent } from './exercises/exercises.component';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path: 'client', component: PatientProfileComponent},
   {path: 'adminhome', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
-  {path: 'exercises', component: ExercisesComponent}
+  {path: 'exercises', component: ExercisesComponent},
+  {path: 'bookappointment', component: BookAppointmentComponent}
 ];
 
 @NgModule({

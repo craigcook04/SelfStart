@@ -22,6 +22,7 @@ import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload'
 import { DynamicFormsService } from './dynamic-forms.service';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { DynamicFormsService } from './dynamic-forms.service';
     RehabPlansComponent,
     ExercisesComponent,
     PatientProfileComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    BookAppointmentComponent
   ],
   imports: [
     BrowserModule,
