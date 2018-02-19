@@ -1,7 +1,6 @@
 <h2>Clients</h2>
 <div class="input-group mb-3 searchbar" id="custom-search-input">
-  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..."
-    aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
     <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
@@ -43,7 +42,7 @@
       <div class="form-group row">
         <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputDOB" placeholder="DOB" #newPatientBirthDate>
+          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>
         </div>
       </div>
       <!-- <div class="form-group row">
@@ -162,12 +161,12 @@
           <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
         </div>
         <div class="modal-body">
-          <p>Are you sure you wish to delete patient <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot
+          <p>Are you sure you wish to delete client <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot
             be undone. </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id, acc); c('Close click')">Delete</button>
-          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do No Delete</button>
+          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
         </div>
       </ng-template>
       <!-- End of Second Modal -->
@@ -207,7 +206,7 @@
             <div class="form-group row">
               <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputDOB" placeholder="DOB" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
+                <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
               </div>
             </div>
             <!-- <div class="form-group row">
