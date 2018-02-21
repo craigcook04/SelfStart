@@ -22,6 +22,9 @@ import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload'
 import { DynamicFormsService } from './dynamic-forms.service';
+import { UserAccountsComponent } from './user-accounts/user-accounts.component';
+import {UserAccountsService} from './user-accounts.service';
+
 
 
 @NgModule({
@@ -37,7 +40,8 @@ import { DynamicFormsService } from './dynamic-forms.service';
     RehabPlansComponent,
     ExercisesComponent,
     PatientProfileComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    UserAccountsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,7 @@ import { DynamicFormsService } from './dynamic-forms.service';
     AngularFontAwesomeModule,
     FileUploadModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, UserAccountsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

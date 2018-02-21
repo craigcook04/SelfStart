@@ -1,0 +1,45 @@
+<br>
+<h2> User Accounts: </h2>
+<br>
+
+<div class ="tab">
+<ngb-tabset>
+  <ngb-tab title="Clients">
+       <ng-template ngbTabContent>
+           <br><br>
+           <div *ngFor = "let client of clients">
+    
+                <button class="accordion"  (click) = "show(client)" >{{client.givenName}}</button>
+                <div *ngIf = "client == activated">
+                    <hr>
+                    <div class="info">
+                      <p><b>Name:  </b> {{client.familyName}}, {{client.givenName}}</p>
+                      <p><b>Patient ID:  </b> {{client.ID}}</p>
+                      <p><b>Email:  </b> {{client.email}}</p>
+                      <p><b>Date of Birth:  </b> {{client.DOB}}</p>
+                      <p><b>Gender:  </b> {{client.gender.name}}</p>
+                      <p><b>Postal Code:  </b> {{client.postalCode}}</p>
+                      <p><b>Phone Number:  </b> {{client.phone}}</p>
+                      <p><b>Marital Status:  </b> {{client.maritalStatus}}</p>
+                      <p><b>Health Card Number:  </b> {{client.healthCardNumber}}</p>
+                      <p><b>Occupation:  </b> {{client.occupation}}</p>
+                      <p><b>Country:  </b> {{client.country.name}} </p>
+                      <p><b>Province:  </b> {{client.province.name}} </p>
+                      <p><b>City:  </b> {{client.city.name}} </p>
+                    </div>
+                </div>
+                <hr>
+    
+            </div>
+        </ng-template>
+  </ngb-tab>
+  
+  <ngb-tab title="Physio Therapists">
+       <ng-template ngbTabContent>
+       
+       </ng-template>
+  </ngb-tab>  
+  
+</ngb-tabset>
+</div>
+

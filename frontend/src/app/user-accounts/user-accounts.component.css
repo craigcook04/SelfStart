@@ -1,0 +1,64 @@
+h2 {
+    margin: 1em;
+}
+
+.tab{
+    width: 80%;
+    margin-left: 60px;
+}
+
+.accordion {
+    background-color: white;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    margin-left: 70px;
+    transition: 0.4s;
+    width: 65%;
+}
+.info {
+    margin-left: 100px;
+    
+    width:65%;
+}
+.active, .accordion:hover {
+    width:65%;
+    background-color: #F0F8FF; 
+    
+   
+}
+hr { 
+    display: block;
+    /*margin-top: 0.5em;*/
+    /*margin-bottom: 0.5em;*/
+    margin-left: 70px;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+    border-top-color: #00FFFF;
+    /*color: blue;*/
+    
+    float: left;
+    width: 65%;
+    
+} 
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    position: absolute;
+    left: 65%;
+    
+    
+}
+
+.active:after {
+    content: "\2212";
+    left: -20px;
+}
