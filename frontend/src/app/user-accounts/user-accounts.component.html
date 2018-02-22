@@ -1,6 +1,16 @@
 <br>
 <h2> User Accounts </h2>
 <br>
+<div class="input-group mb-3 searchbar" id="custom-search-input">
+    <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
+    <span class="input-group-btn">
+
+    <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
+      <fa name="search"></fa>
+    </button>
+</span>
+</div>
+<br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class ="tab">
