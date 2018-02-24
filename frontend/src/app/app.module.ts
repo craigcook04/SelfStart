@@ -24,7 +24,7 @@ import { FileUploadModule } from 'ng2-file-upload'
 import { DynamicFormsService } from './dynamic-forms.service';
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
-
+import { NewClientService } from './new-client.service'
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import { NewClientComponent } from './new-client/new-client.component';
     AngularFontAwesomeModule,
     FileUploadModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService],
   bootstrap: [AppComponent]
 })
 
