@@ -34,9 +34,10 @@ router.route('/')
         patient.save(function (error) {
             if (error) {
                 response.send(error);
+                return;
             }
             
-            response.json({patient: patient});
+            response.json({success: true, patient: patient});
         });
     })
 
@@ -44,7 +45,7 @@ router.route('/')
         
         Patient.find()
         .sort({familyName: 1, givenName: 1})
-        .populate('province').populate('city').populate('country')
+        .populate('province').populate('city').populate('country').populate('gender')
         .exec(function(error, patients) {
             if (error) {
                 response.send(error);
@@ -114,9 +115,14 @@ router.route('/:patient_id')
     .delete(function (request, response) {
         Patient.findByIdAndRemove(request.params.patient_id,
             function (error, deleted) {
-                if (!error) {
-                    response.json({success: true, patient: deleted});
+                if(error) {
+                    console.log(error);
+                    response.send(error);
+                    return;
                 }
+                console.log(deleted);
+                response.json({success: true, patient: deleted});
+                
             }
         );
     });

@@ -26,6 +26,7 @@ var questionType = require('./routes/questionType');
 var recommendation = require('./routes/recommendation');
 var testResult = require('./routes/testResult');
 var userAccount = require('./routes/userAccount');
+var emailRoute = require('./routes/email');
 
 
 
@@ -64,6 +65,8 @@ app.use('/api/questiontype', questionType);
 app.use('/api/recommendation', recommendation);
 app.use('/api/testresult', testResult);
 app.use('/api/useraccount', userAccount);
+app.use('/api/email', emailRoute);
+
 
 
 var port = 8082;        // set our port
