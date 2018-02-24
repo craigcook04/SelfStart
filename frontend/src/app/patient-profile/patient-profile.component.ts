@@ -190,10 +190,10 @@ export class PatientProfileComponent implements OnInit {
       })
     })
 
-
-
   }
 
-  
+  SendEmail() { 
+    console.log("hello");
+  }  
 
 }

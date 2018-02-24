@@ -309,12 +309,40 @@
         </div>
       </ng-template>
       <!-- End of First Modal -->
+ 
+      <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
+      <ng-template #emailModal let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Email {{patient.familyName}}, {{patient.givenName}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">To: </label>
+            <p class="toemail">{{patient.email}}</p>
+          </div>
+          <div class="form-group row">
+            <label for="inputSubject" class="col-sm-3 col-form-label">Subject: </label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputSubject" placeholder="Subject" #emailSubject>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="Emailbody" class="col-form-label tobody">Body: </label>
+            <textarea class="form-control myta" rows="5" id="emailBody" #emailValue> </textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Send</button>
+          <button type="button" class="btn btn-primary btn-med" (click)="SendEmail(patient.email, emailSubject.value, emailBody.value); c('Close click')">Send</button>          
+        </div>
+      </ng-template>
+      <!-- End of Third Modal -->
 
       <ng-template ngbPanelContent>
         <div class="info">
           <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
           <p><b>Patient ID:  </b> {{patient.ID}}</p>
-          <p><b>Email:  </b> {{patient.email}}</p>
+          <p><b>Email:  </b> {{patient.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
           <p><b>Date of Birth:  </b> {{patient.DOB | date: 'yyyy-MM-dd'}}</p>
           <p><b>Gender:  </b> {{patient.gender.name}}</p>
           <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
