@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload'
 import { DynamicFormsService } from './dynamic-forms.service';
 import { EmailService } from './email.service';
+import { NewClientComponent } from './new-client/new-client.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { EmailService } from './email.service';
     RehabPlansComponent,
     ExercisesComponent,
     PatientProfileComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    NewClientComponent
   ],
   imports: [
     BrowserModule,
