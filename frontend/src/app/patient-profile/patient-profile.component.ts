@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../patient.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { EmailService } from '../email.service'
 
 @Component({
   selector: 'app-patient-profile',
@@ -14,13 +15,15 @@ export class PatientProfileComponent implements OnInit {
   showCreationSuccess: boolean;
   showDeleteSuccess: boolean;
   showFailure: boolean;
+  emailSuccess: boolean;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
   cities: Object[];
   genders: Object[];
   constructor(private patientService: PatientService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private emailService: EmailService) { }
 
   ngOnInit() {
     this.patientService.GetAllPatients().subscribe(data => {
@@ -106,6 +109,7 @@ export class PatientProfileComponent implements OnInit {
     this.showFailure = false;
     this.showDeleteSuccess = false;
     this.showCreationSuccess = false;
+    this.emailSuccess = false;
   }
 
   GetProvinces(countryId: string) {
@@ -192,8 +196,17 @@ export class PatientProfileComponent implements OnInit {
 
   }
 
-  SendEmail() { 
-    console.log("hello");
+  SendEmail(toEmail: String, emailSubject: String, emailBody: String) { 
+    this.emailService.SendEmail(toEmail, emailSubject, emailBody).subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        if(retObj.success == true) {
+          this.emailSuccess = true;
+        }
+        else {
+          this.showFailure = false;
+        }
+    })
   }  
 
 }

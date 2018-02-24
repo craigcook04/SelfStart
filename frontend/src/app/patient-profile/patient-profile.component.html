@@ -142,6 +142,7 @@
 <p *ngIf="showCreationSuccess" class="successMessage">Client was successfully created</p>
 <p *ngIf="showSuccess" class="successMessage">Client was successfully updated</p>
 <p *ngIf="showDeleteSuccess" class="successMessage">Client was successfully deleted</p>
+<p *ngIf="emailSuccess" class="successMessage">Email was successfully sent</p>
 <!-- <div *ngIf="showDeleteSuccess" class="alert alert-success" role="alert">
     Client was successfully deleted
 </div> -->
@@ -328,7 +329,7 @@
           </div>
           <div class="form-group row">
             <label for="Emailbody" class="col-form-label tobody">Body: </label>
-            <textarea class="form-control myta" rows="5" id="emailBody" #emailValue> </textarea>
+            <textarea class="form-control myta" rows="5" id="emailBody" #emailBody> </textarea>
           </div>
         </div>
         <div class="modal-footer">
