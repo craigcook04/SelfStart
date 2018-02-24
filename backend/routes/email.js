@@ -8,7 +8,7 @@ var smtpTransport = nodemailer.createTransport({
     auth: {
         user: "loopsolutionsuwo@gmail.com",
         pass: "Selfstart"
-    }
+    } 
 });
 
 
@@ -27,7 +27,7 @@ router.route('/')
                 return;
             }
             console.log(resp);
-            response.send({message: "Sent Mail!"});
+            response.send({success: true, message: "Sent Mail!"});
         });
     });
     
