@@ -24,10 +24,5 @@ var patientSchema = new mongoose.Schema(
     }
 );
 
-//This should work
-patientSchema.methods.generateHash = function(password){
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
-};
-
 var Patient =  mongoose.model('Patient', patientSchema);
 module.exports = Patient;
