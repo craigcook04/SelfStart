@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+
 var patientSchema = new mongoose.Schema(
     {
         ID: String,
@@ -21,6 +23,11 @@ var patientSchema = new mongoose.Schema(
         appointment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Appointment'}]
     }
 );
+
+//This should work
+patientSchema.methods.generateHash = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
+};
 
 var Patient =  mongoose.model('Patient', patientSchema);
 module.exports = Patient;
