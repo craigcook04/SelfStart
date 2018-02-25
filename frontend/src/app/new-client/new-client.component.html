@@ -4,6 +4,24 @@
 <div class="container-fluid inputGroup">
   <form class="inputForm">
     <div class="form-group row">
+      <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputUsername" placeholder="Username" #firstName>
+      </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-2 col-form-label">Password: </label>
+        <div class="col-sm-7">
+              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+        </div>
+    </div>
+    <div class="form-group row">
+          <label for="inputFirstName" class="col-sm-2 col-form-label">RepeatPassword: </label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+          </div>
+    </div>
+    <div class="form-group row">
       <label for="inputFirstName" class="col-sm-2 col-form-label">First Name: </label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
@@ -25,6 +43,16 @@
       <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
+      <div class="col-sm-7">
+        <select #newPatientGender class="mydropdown">
+            <option value="badvalue">Please select a gender</option>
+            <option disabled="disabled">----</option>
+            <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+        </select>
       </div>
     </div>
     <div class="form-group row">
@@ -55,6 +83,32 @@
       <label for="inputOccupation" class="col-sm-2 col-form-label">Occupation</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #occupation>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOthers" class="col-sm-2 col-form-label">Country</label>
+      <div class="col-sm-7">
+        <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+          <option value="badvalue">Please select a country</option>
+          <option disabled="disabled">----</option>    
+          <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOthers" class="col-sm-2 col-form-label">Province</label>
+      <div class="col-sm-7">
+        <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+              <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOthers" class="col-sm-2 col-form-label">City</label>
+      <div class="col-sm-7">
+        <select #newPatientCity class="mydropdown">
+              <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+            </select>
       </div>
     </div>
     <p>DO LATER: Others</p>
