@@ -26,7 +26,11 @@ var questionType = require('./routes/questionType');
 var recommendation = require('./routes/recommendation');
 var testResult = require('./routes/testResult');
 var userAccount = require('./routes/userAccount');
+<<<<<<< HEAD
 var image = require('./routes/image');
+=======
+var emailRoute = require('./routes/email');
+>>>>>>> f66bcacff662d83dc1e18ef060f37b49f464806d
 
 
 
@@ -65,7 +69,12 @@ app.use('/api/questiontype', questionType);
 app.use('/api/recommendation', recommendation);
 app.use('/api/testresult', testResult);
 app.use('/api/useraccount', userAccount);
+<<<<<<< HEAD
 app.use('/api/image', image);
+=======
+app.use('/api/email', emailRoute);
+
+>>>>>>> f66bcacff662d83dc1e18ef060f37b49f464806d
 
 
 var port = 8082;        // set our port

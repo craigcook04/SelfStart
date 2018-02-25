@@ -1,0 +1,42 @@
+.inputForm {
+    width: 75%;
+}
+
+.inputGroup {
+    margin: 2rem;
+}
+
+
+.mydropdown {
+    display: block;
+    height: 40px;
+    width: 100%;
+    padding: .5rem, .75rem;
+    padding-left: .5rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-color: #ffffff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 5px;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+
+}
+
+.toemail {
+    margin: .5rem, .75rem;
+    margin-left: 1rem;
+}
+
+.myta{
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+    margin-right: 1.25rem;
+    
+}
+
+.tobody {
+    margin-left: 1rem;
+}

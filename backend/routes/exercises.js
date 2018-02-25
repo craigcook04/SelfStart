@@ -25,6 +25,7 @@ router.route('/')
         exercise.save(function (error) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({exercise: exercise});
