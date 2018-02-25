@@ -1,0 +1,117 @@
+<h1>Welcome!</h1>
+<h3>Please input the following information so we can properly sign you up</h3>
+
+<div class="container-fluid inputGroup">
+  <form class="inputForm">
+    <div class="form-group row">
+      <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputUsername" placeholder="Username" #firstName>
+      </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-2 col-form-label">Password: </label>
+        <div class="col-sm-7">
+              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+        </div>
+    </div>
+    <div class="form-group row">
+          <label for="inputFirstName" class="col-sm-2 col-form-label">RepeatPassword: </label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+          </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputFirstName" class="col-sm-2 col-form-label">First Name: </label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #lastName>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputEmail" placeholder="Email" #email>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
+      <div class="col-sm-7">
+        <select #newPatientGender class="mydropdown">
+            <option value="badvalue">Please select a gender</option>
+            <option disabled="disabled">----</option>
+            <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPostalCode" class="col-sm-2 col-form-label">Postal Code</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #postalCode>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPhoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #phoneNumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputMaritalStatus" class="col-sm-2 col-form-label">Marital Status</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputLastName" placeholder="Marital Status" #maritalStatus>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputHealthCardNumber" class="col-sm-2 col-form-label">Health Card Number</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputHealthCardNumber" placeholder="Health Card Number" #healthCardNumber>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOccupation" class="col-sm-2 col-form-label">Occupation</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #occupation>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOthers" class="col-sm-2 col-form-label">Country</label>
+      <div class="col-sm-7">
+        <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+          <option value="badvalue">Please select a country</option>
+          <option disabled="disabled">----</option>    
+          <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOthers" class="col-sm-2 col-form-label">Province</label>
+      <div class="col-sm-7">
+        <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+              <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputOthers" class="col-sm-2 col-form-label">City</label>
+      <div class="col-sm-7">
+        <select #newPatientCity class="mydropdown">
+              <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+            </select>
+      </div>
+    </div>
+    <p>DO LATER: Others</p>
+    <button type="button" class="btn btn-primary btn-sm" (click)="createClient(firstName.value, lastName.value, email.value, DOB.value, postalCode.value, phoneNumber.value, maritalStatus.value, healthCardNumber.value, occupation.value, 'none');">Confirm</button>    
+  </form>
+</div>

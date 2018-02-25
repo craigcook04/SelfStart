@@ -3,7 +3,7 @@ var formsSchema = new mongoose.Schema({
     name: String,
     description: String,
     assessmentTool: {type: mongoose.Schema.Types.ObjectId, ref: 'AssessmentTests'},
-    questions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Question'}],
+    questions: [],
 
 });
 var Forms = mongoose.model('Forms', formsSchema);
