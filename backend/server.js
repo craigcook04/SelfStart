@@ -69,12 +69,9 @@ app.use('/api/questiontype', questionType);
 app.use('/api/recommendation', recommendation);
 app.use('/api/testresult', testResult);
 app.use('/api/useraccount', userAccount);
-<<<<<<< HEAD
 app.use('/api/image', image);
-=======
 app.use('/api/email', emailRoute);
 
->>>>>>> f66bcacff662d83dc1e18ef060f37b49f464806d
 
 
 var port = 8082;        // set our port
