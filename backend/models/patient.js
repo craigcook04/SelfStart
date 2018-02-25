@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+
 var patientSchema = new mongoose.Schema(
     {
         ID: String,

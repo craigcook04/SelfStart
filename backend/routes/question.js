@@ -14,10 +14,11 @@ router.route('/')
         question.order = request.body.order;
         question.form = request.body.form;
         question.questionType = request.body.questionType;
-        
+        console.log('hello');
         question.save(function (error) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({question: question});
