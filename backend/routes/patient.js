@@ -31,6 +31,7 @@ router.route('/')
         patient.city = request.body.city;
         patient.gender = request.body.gender;
         patient.appointment = request.body.appointment;
+        patient.verified = false;
         
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
