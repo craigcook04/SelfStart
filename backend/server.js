@@ -26,11 +26,8 @@ var questionType = require('./routes/questionType');
 var recommendation = require('./routes/recommendation');
 var testResult = require('./routes/testResult');
 var userAccount = require('./routes/userAccount');
-<<<<<<< HEAD
 var image = require('./routes/image');
-=======
 var emailRoute = require('./routes/email');
->>>>>>> f66bcacff662d83dc1e18ef060f37b49f464806d
 
 
 
