@@ -20,11 +20,16 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
-import { FileUploadModule } from 'ng2-file-upload'
+import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
+<<<<<<< HEAD
+import { ImageService } from './image.service';
+
+=======
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
+>>>>>>> f66bcacff662d83dc1e18ef060f37b49f464806d
 
 @NgModule({
   declarations: [
@@ -51,7 +56,11 @@ import { NewClientService } from './new-client.service'
     AngularFontAwesomeModule,
     FileUploadModule
   ],
+<<<<<<< HEAD
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, ImageService],
+=======
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService],
+>>>>>>> f66bcacff662d83dc1e18ef060f37b49f464806d
   bootstrap: [AppComponent]
 })
 
