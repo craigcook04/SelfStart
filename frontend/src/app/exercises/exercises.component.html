@@ -74,14 +74,27 @@
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
-                <div class="col-sm-9">
-                    <!-- <input type="text" class="form-control" id="inputMedia" placeholder="Multimedia" #multimedia> -->
-                    <label class="btn btn-block btn-file" id="inputMedia">
-                        Click Here to Select File(s) for Upload&hellip; 
-                        <input class="form-control" type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile>
-                      </label>
-                </div>
+              <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
+              <div class="col-sm-9">
+                <label class="btn btn-block btn-file" id="inputMedia">
+                  Click Here to Select File(s) for Upload&hellip;
+                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" multiple>
+                  <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
+                </label>
+                <td nowrap>
+                  <button type="button" class="btn btn-success btn-s"
+                  (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                  </button>
+                  <button type="button" class="btn btn-danger btn-m col-sm-10"
+                  (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                  </button>
+                  <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                  </tr>
+                </td>
+              </div>
             </div>
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
@@ -93,7 +106,7 @@
         </ng-template>
     <ngb-panel *ngFor='let exercise of exercises'>
         <ng-template ngbPanelTitle >
-          <span> {{ exercise.name }} || {{ exercise.description }} </span>
+          <span (click)="getExerciseImages(exercise.name)"> {{ exercise.name }} || {{ exercise.description }} </span>
         </ng-template>
       <ng-template ngbPanelContent>
         <div class="info">
@@ -216,15 +229,29 @@
                       <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
                       <div class="col-sm-9">
                         <label class="btn btn-block btn-file" id="inputMedia">
-                          Click Here to Select File(s) for Upload&hellip; 
-                          <input class="form-control" type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile>
+                          Click Here to Select File(s) for Upload&hellip;
+                          <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" multiple>
+                          <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
                         </label>
+                        <td nowrap>
+                          <button type="button" class="btn btn-success btn-s"
+                          (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                          </button>
+                          <button type="button" class="btn btn-danger btn-m col-sm-10"
+                          (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                          </button>
+                          <tr *ngFor="let item of uploader.queue">
+                            <td><strong>{{ item?.file?.name }}</strong></td>
+                          </tr>
+                        </td>
                       </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
