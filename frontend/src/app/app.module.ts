@@ -22,14 +22,11 @@ import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
-<<<<<<< HEAD
 import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 
-=======
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
->>>>>>> e99fafc6ac8f6bb4b49b8d435cdeb14632a05f83
 
 @NgModule({
   declarations: [
@@ -45,11 +42,8 @@ import { NewClientService } from './new-client.service'
     ExercisesComponent,
     PatientProfileComponent,
     AdminHomeComponent,
-<<<<<<< HEAD
-    BookAppointmentComponent
-=======
+    BookAppointmentComponent,
     NewClientComponent
->>>>>>> e99fafc6ac8f6bb4b49b8d435cdeb14632a05f83
   ],
   imports: [
     BrowserModule,
