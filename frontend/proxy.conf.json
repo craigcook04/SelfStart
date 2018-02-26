@@ -1,6 +1,10 @@
 {
     "/api/*": {
+<<<<<<< HEAD
         "target": "https://se3350-jterp.c9users.io:8082",
+=======
+        "target": "https://se3350-ablack65.c9users.io:8082",
+>>>>>>> e99fafc6ac8f6bb4b49b8d435cdeb14632a05f83
         "secure": false,
         "changeOrigin": true,
         "logLevel": "info"

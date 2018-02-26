@@ -20,12 +20,15 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
-import { FileUploadModule } from 'ng2-file-upload'
+import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 
 
+import { EmailService } from './email.service';
+import { NewClientComponent } from './new-client/new-client.component';
+import { NewClientService } from './new-client.service'
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import {UserAccountsService} from './user-accounts.service';
     ExercisesComponent,
     PatientProfileComponent,
     AdminHomeComponent,
-    UserAccountsComponent
+    UserAccountsComponent,
+    NewClientComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,8 @@ import {UserAccountsService} from './user-accounts.service';
     AngularFontAwesomeModule,
     FileUploadModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, UserAccountsService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
