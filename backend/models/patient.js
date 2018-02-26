@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+
 var patientSchema = new mongoose.Schema(
     {
         ID: String,
@@ -12,6 +14,7 @@ var patientSchema = new mongoose.Schema(
         healthCardNumber: String,
         occupation: String,
         others: String,
+        verified: Boolean,
         account: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'},
         payment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Payments'}],
         country: {type: mongoose.Schema.Types.ObjectId, ref: 'Country'},

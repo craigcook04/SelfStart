@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 
 var userAccountSchema = mongoose.Schema(
     {
@@ -9,6 +10,11 @@ var userAccountSchema = mongoose.Schema(
         patientUser: {type: mongoose.Schema.Types.ObjectId, red: 'Patient'}
     }
 );
+
+//This should work
+userAccountSchema.methods.generateHash = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(9));
+};
 
 var UserAccount = mongoose.model('UserAccount', userAccountSchema);
 module.exports = UserAccount;
