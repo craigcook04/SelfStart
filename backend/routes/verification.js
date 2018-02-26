@@ -55,11 +55,21 @@ router.route('/:accessCode')
         Temp.find({accessCode: request.params.accessCode}, function(err, temp) {
             if(err){
                 response.send('<h2>Sorry we could not verify your account</h2>');
+                return;
+            }
+            if(temp == null){
+                response.send('<h2>Account already activated </h2>');
+                return;
             }
             //now that the temp has been found, find the user that belongs to the temp
             Patient.findById(temp.userID, function(err, user) {
                 if(err){
                     response.send("<h2>Sorry we could not verify your account</h2>");
+                    return;
+                }
+                if(user == null){
+                    response.send("<h2>Sorry we could not verify your account</h2>");
+                    return;
                 }
                 
                 //set the user to verified
