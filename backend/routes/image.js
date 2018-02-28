@@ -51,24 +51,29 @@ router.route('/:image_exercise')
 router.route('/setid')
 
     .put(function(request, response){
+        console.log(request.body.images);
+        console.log(request.body._id);
+        var images = Image.find({name: {$elemMatch: request.body.images}});
+        console.log(images);
         
-        Image.find({name: { $elemMatch: request.body.images}}, function(error, images){
-            console.log(images);
-            for(var i = 0; i < images.length; i++){
-                images[i].exercise = request.body.exercise_id;
+        // Image.find({name: { $elemMatch: request.body.images}}, function(error, images){
+        //     console.log(images);
+        //     for(var i = 0; i < images.length; i++){
+        //         images[i].exercise = request.body.exercise_id;
                 
-                console.log(images[i].exercise);
+        //         console.log(images[i].exercise);
                 
-                images[i].save(function (error){
-                    if(error){
-                        response.send({error: error});
-                    }
-                    else{
-                        console.log("I worked");
-                    }
-                })
-            }
-        });
+        //         images[i].save(function (error){
+        //             if(error){
+        //                 response.send({error: error});
+        //             }
+        //             else{
+        //                 console.log("I worked");
+        //             }
+        //         })
+        //     }
+        // });
+        
     })
     
 
