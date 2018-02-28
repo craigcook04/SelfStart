@@ -6,7 +6,7 @@ export class NewClientService {
 
   constructor(private http: HttpClient) { }
 
-  CreateClient(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String) {
+  CreateClient(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string) {
     var url = "/api/patient"
     var body = {
       username: username,
@@ -16,12 +16,16 @@ export class NewClientService {
       givenName: firstName,
       email: email,
       DOB: DOB,
+      gender: gender,
       postalCode: postalCode,
       phone: phone,
       maritalStatus: maritalStatus,
       healthCardNumber: healthCardNumber,
       occupation: occupation,
-      others: others
+      others: others,
+      country: country,
+      province: province,
+      city: city
     }
 
     return this.http.post(url, body);

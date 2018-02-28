@@ -40,3 +40,12 @@
 .tobody {
     margin-left: 1rem;
 }
+
+.invalInput {
+    color: red;
+    font-size: 12px;
+}
+
+.smallText {
+    font-size: 12px;
+}

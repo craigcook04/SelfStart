@@ -14,6 +14,12 @@ export class NewClientComponent implements OnInit {
   provinces: Object[];
   cities: Object[];
   genders: Object[];
+  invalidUsername: boolean = false;
+  invalidPassword: boolean = false;
+  invalidFirstname: boolean = false;
+  invalidLastname: boolean = false;
+  invalidGender: boolean = false;
+  invalidDOB: boolean = false;
   constructor(private newClientService: NewClientService,
               private patientService: PatientService) { }
  
@@ -81,25 +87,73 @@ export class NewClientComponent implements OnInit {
     })
   }
 
-  createClient(username: String, password: String, repeatPassword: String, lastName: String, firstName: String, email: String, DOB: String, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String) {
-    // THIS NEEDS TO BE FIXED TO ACCOUNT FOR USERNAME AND PASSWORD
-    if(password != repeatPassword){
+  createClient(username: string, password: String, repeatPassword: String, firstName: string, lastName: string, email: string, DOB: string, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: string, others: String, country: string, province: string, city: string) {
+    var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
+    if(password != repeatPassword || !password || !repeatPassword){
       //error in this case, handle it and let the user know they made a mistake
+      var passwordBox = document.getElementById('inputPassword').style.borderColor = 'red';
+      var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'red';
+      this.invalidPassword = true;
+      console.log('repeat password and password are different');
+      cannotContinue = true;
+    }
+
+    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+  
+    if(badFormat.test(username) || !username) {
+      //username contains an illegal character
+      var usernameBox = document.getElementById('inputUsername').style.borderColor = 'red';
+      this.invalidUsername = true;
+      cannotContinue = true;
+    }
+    
+    if(badFormatWithNumbers.test(firstName) || !firstName) {
+      var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'red';    
+      this.invalidFirstname = true;
+      cannotContinue = true;
+    }
+
+    if(badFormatWithNumbers.test(lastName) || !lastName) {
+      var firstnameBox = document.getElementById('inputLastName').style.borderColor = 'red';    
+      this.invalidLastname = true;
+      cannotContinue = true;
+    }
+
+    if(!DOB) {
+      var DOBBox = document.getElementById('inputDOB').style.borderColor = 'red';
+      this.invalidDOB = false;
+    }
+    // if(emailFormat.test(email)) {
+    //   var emailBox = document.getElementById('inputEmail').style.borderColor = 'red';
+    //   console.log('problem');
+    // }
+
+    //if gender is left as "badvalue" than a selection wasn't chosen
+    if(gender == "badvalue") {
+      var firstnameBox = document.getElementById('inputGender').style.borderColor = 'red';    
+      this.invalidGender = true;
+      cannotContinue = true;
+    }
+
+    //if this if statement is triggered, there are errors in the code
+    if(cannotContinue) {
       return;
     }
 
-    this.newClientService.CreateClient(username, password, firstName, lastName, email, DOB, postalCode, phone, maritalStatus, healthCardNumber, occupation, others).subscribe(data => {
-      console.log(data);
-      var retObj: any = data;
-      if(retObj.success == true) {
-        this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
-          console.log(data);
-        })
-      }
-      else {
-        //the user will be shown an error in the creation problem along the lines of there being a server problem.
-      }
-    })
+  //   this.newClientService.CreateClient(username, password, firstName, lastName, email, DOB, postalCode, phone, maritalStatus, healthCardNumber, occupation, others).subscribe(data => {
+  //     console.log(data);
+  //     var retObj: any = data;
+  //     if(retObj.success == true) {
+  //       this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
+  //         console.log(data);
+  //       })
+  //     }
+  //     else {
+  //       //the user will be shown an error in the creation problem along the lines of there being a server problem.
+  //     }
+  //   })
   }
 
 }

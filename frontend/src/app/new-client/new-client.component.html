@@ -2,67 +2,83 @@
 <h3>Please input the following information so we can properly sign you up</h3>
 
 <div class="container-fluid inputGroup">
-  <form class="inputForm">
+  <form class="inputForm needs-validation" novalidate>
+      <p class="smallText">*Required Fields</p>
     <div class="form-group row">
-      <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
+      <label for="inputUsername" class="col-sm-2 col-form-label">*Username: </label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
-      </div>
+        <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username required>
+        <div class="invalInput" *ngIf="invalidUsername">
+            Please enter a valid username
+        </div>
+      </div> 
     </div>
     <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
+        <label for="inputPassword" class="col-sm-2 col-form-label">*Password: </label>
         <div class="col-sm-7">
-              <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password>
+              <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password required>
         </div>
     </div>
     <div class="form-group row">
-          <label for="inputRepeatPassword" class="col-sm-2 col-form-label">RepeatPassword: </label>
+          <label for="inputRepeatPassword" class="col-sm-2 col-form-label">*Repeat Password: </label>
           <div class="col-sm-7">
-            <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword>
+            <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword required>
+            <div class="invalInput" *ngIf="invalidPassword">
+              Please fix the password fields so that they match
+            </div>
           </div>
     </div>
     <div class="form-group row">
-      <label for="inputFirstName" class="col-sm-2 col-form-label">First Name: </label>
+      <label for="inputFirstName" class="col-sm-2 col-form-label">*First Name: </label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+        <div class="invalInput" *ngIf="invalidFirstname">
+          Please enter a valid Last Name
+        </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
+      <label for="inputLastName" class="col-sm-2 col-form-label">*Last Name</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #lastName>
+        <div class="invalInput" *ngIf="invalidFirstname">
+          Please enter a valid First Name
+        </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+      <label for="inputEmail" class="col-sm-2 col-form-label">*Email</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputEmail" placeholder="Email" #email>
+        <input type="email" class="form-control" id="inputEmail" placeholder="Email" #email>
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
+      <label for="inputDOB" class="col-sm-2 col-form-label">*Date Of Birth</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
+      <label for="inputGender" class="col-sm-2 col-form-label">*Gender</label>
       <div class="col-sm-7">
-        <select #newPatientGender class="mydropdown">
+        <select #newPatientGender class="mydropdown" id="inputGender">
             <option value="badvalue">Please select a gender</option>
             <option disabled="disabled">----</option>
             <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
         </select>
+        <div class="invalInput" *ngIf="invalidGender">
+            Please enter a valid gender
+        </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputPostalCode" class="col-sm-2 col-form-label">Postal Code</label>
+      <label for="inputPostalCode" class="col-sm-2 col-form-label">*Postal Code</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #postalCode>
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputPhoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
+      <label for="inputPhoneNumber" class="col-sm-2 col-form-label">*Phone Number</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #phoneNumber>
       </div>
@@ -86,7 +102,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputOthers" class="col-sm-2 col-form-label">Country</label>
+      <label for="inputOthers" class="col-sm-2 col-form-label">*Country</label>
       <div class="col-sm-7">
         <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
           <option value="badvalue">Please select a country</option>
@@ -96,7 +112,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputOthers" class="col-sm-2 col-form-label">Province</label>
+      <label for="inputOthers" class="col-sm-2 col-form-label">*Province</label>
       <div class="col-sm-7">
         <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
               <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
@@ -104,7 +120,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="inputOthers" class="col-sm-2 col-form-label">City</label>
+      <label for="inputOthers" class="col-sm-2 col-form-label">*City</label>
       <div class="col-sm-7">
         <select #newPatientCity class="mydropdown">
               <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
@@ -112,6 +128,6 @@
       </div>
     </div>
     <p>DO LATER: Others</p>
-    <button type="button" class="btn btn-primary btn-sm" (click)="createClient(username.value, password.value, repeatPassword.value, firstName.value, lastName.value, email.value, DOB.value, postalCode.value, phoneNumber.value, maritalStatus.value, healthCardNumber.value, occupation.value, 'none');">Confirm</button>    
+    <button type="submit" class="btn btn-primary btn-sm" (click)="createClient(username.value, password.value, repeatPassword.value, firstName.value, lastName.value, email.value, DOB.value, newPatientGender.value, postalCode.value, phoneNumber.value, maritalStatus.value, healthCardNumber.value, occupation.value, 'none', newPatientCountry.value, newPatientProvince.value, newPatientCity.value);">Confirm</button>    
   </form>
 </div>
