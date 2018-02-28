@@ -70,7 +70,7 @@
     <div class="form-group row">
       <label for="inputMaritalStatus" class="col-sm-2 col-form-label">Marital Status</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputLastName" placeholder="Marital Status" #maritalStatus>
+        <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" #maritalStatus>
       </div>
     </div>
     <div class="form-group row">
@@ -112,6 +112,6 @@
       </div>
     </div>
     <p>DO LATER: Others</p>
-    <button type="button" class="btn btn-primary btn-sm" (click)="createClient(firstName.value, lastName.value, email.value, DOB.value, postalCode.value, phoneNumber.value, maritalStatus.value, healthCardNumber.value, occupation.value, 'none');">Confirm</button>    
+    <button type="button" class="btn btn-primary btn-sm" (click)="createClient(username.value, password.value, repeatPassword.value, firstName.value, lastName.value, email.value, DOB.value, postalCode.value, phoneNumber.value, maritalStatus.value, healthCardNumber.value, occupation.value, 'none');">Confirm</button>    
   </form>
 </div>

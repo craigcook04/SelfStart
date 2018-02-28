@@ -25,6 +25,7 @@ import { DynamicFormsService } from './dynamic-forms.service';
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
+import { ImageService } from './image.service'
 
 @NgModule({
   declarations: [
@@ -51,7 +52,14 @@ import { NewClientService } from './new-client.service'
     AngularFontAwesomeModule,
     FileUploadModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService],
+  providers: [
+    PatientService, 
+    RehabPlansService, 
+    ExerciseService, 
+    DynamicFormsService,
+    EmailService, 
+    NewClientService, 
+    ImageService],
   bootstrap: [AppComponent]
 })
 

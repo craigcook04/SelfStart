@@ -81,18 +81,25 @@ export class NewClientComponent implements OnInit {
     })
   }
 
-  createClient(lastName: String, firstName: String, email: String, DOB: String, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String) {
+  createClient(username: String, password: String, repeatPassword: String, lastName: String, firstName: String, email: String, DOB: String, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String) {
     // THIS NEEDS TO BE FIXED TO ACCOUNT FOR USERNAME AND PASSWORD
-    // this.newClientService.CreateClient(firstName, lastName, email, DOB, postalCode, phone, maritalStatus, healthCardNumber, occupation, others).subscribe(data => {
-    //   console.log(data);
-    //   var retObj: any = data;
-    //   if(retObj.success == true) {
-    //     //the user will be redirected showing success
-    //   }
-    //   else {
-    //     //the user will be shown an error in the creation problem along the lines of there being a server problem.
-    //   }
-    // })
+    if(password != repeatPassword){
+      //error in this case, handle it and let the user know they made a mistake
+      return;
+    }
+
+    this.newClientService.CreateClient(username, password, firstName, lastName, email, DOB, postalCode, phone, maritalStatus, healthCardNumber, occupation, others).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      if(retObj.success == true) {
+        this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
+          console.log(data);
+        })
+      }
+      else {
+        //the user will be shown an error in the creation problem along the lines of there being a server problem.
+      }
+    })
   }
 
 }
