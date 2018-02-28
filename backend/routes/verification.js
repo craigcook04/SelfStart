@@ -70,7 +70,6 @@ router.route('/:accessCode')
     .get(function(request, response) {
         console.log(request.params.accessCode);
         Temp.findOne({'accessCode': request.params.accessCode}, function(err, temp) {
-            console.log(temp);
             if(err){
                 response.send('<h2>Sorry we could not verify your account</h2>');
                 return;
@@ -79,10 +78,8 @@ router.route('/:accessCode')
                 response.send('<h2>Account already activated </h2>');
                 return;
             }
-            console.log(temp.userID);
             //now that the temp has been found, find the user that belongs to the temp
             Patient.findById(temp.userID, function(err, user) {
-                console.log(user);
                 if(err){
                     response.send("<h2>Sorry we could not verify your account</h2>");
                     return;
@@ -94,6 +91,13 @@ router.route('/:accessCode')
                 
                 //set the user to verified
                 user.verified = true;
+                
+                //save the user
+                user.save(function(err){
+                    if(err){
+                        response.send({message: "couldn't save user"});
+                    }
+                });
                 
                 //delete the temp from the database
                 Temp.findByIdAndRemove(temp._id, function(err, deleted) {
