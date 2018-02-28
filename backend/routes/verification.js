@@ -32,6 +32,12 @@ router.route('/')
         temp.dateCreated = new Date();
         var userAccessCode = makeAccessCode();
         temp.accessCode = userAccessCode;
+        temp.save(function(err) {
+            if(err){
+                response.send({error: "error creating temp account"});
+            }
+        });
+        
         var url = 'https://se3350finalproject-sammallabone.c9users.io:8082/api/temp/' + userAccessCode;
         var emailBody = "<h1>Hey Bro Click This </h1> <p> " + url + "</p>";
         var mailOptions = {
@@ -48,11 +54,23 @@ router.route('/')
             console.log(resp);
             response.send({success: true, message: "Sent Mail!"});
         });
+    })
+    .get(function(request, response) {
+        Temp.find(function(err, temps) {
+            if(err){
+                response.send(err);
+                return;
+            }
+            
+            response.send(temps);
+        });
     });
     
 router.route('/:accessCode')
     .get(function(request, response) {
-        Temp.find({accessCode: request.params.accessCode}, function(err, temp) {
+        console.log(request.params.accessCode);
+        Temp.findOne({'accessCode': request.params.accessCode}, function(err, temp) {
+            console.log(temp);
             if(err){
                 response.send('<h2>Sorry we could not verify your account</h2>');
                 return;
@@ -61,8 +79,10 @@ router.route('/:accessCode')
                 response.send('<h2>Account already activated </h2>');
                 return;
             }
+            console.log(temp.userID);
             //now that the temp has been found, find the user that belongs to the temp
             Patient.findById(temp.userID, function(err, user) {
+                console.log(user);
                 if(err){
                     response.send("<h2>Sorry we could not verify your account</h2>");
                     return;
@@ -83,13 +103,12 @@ router.route('/:accessCode')
                         return;
                     }
                     
-                    response.send({message: "Deleted"});
-                })
+                });
                 
                 
                 response.send('<h1>Congrats you are verified</h1>');
-            })
-        })
+            });
+        });
         
     })
     .delete(function(request, response) {
@@ -102,7 +121,7 @@ router.route('/:accessCode')
                     }
                     
                     response.send({message: "Deleted"});
-                })
-    })
+                });
+    });
     
 module.exports = router;
