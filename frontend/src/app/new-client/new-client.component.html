@@ -56,6 +56,9 @@
       <label for="inputDOB" class="col-sm-2 col-form-label">*Date Of Birth</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
+        <div class="invalInput" *ngIf="invalidDOB">
+            Please enter a valid Date of Birth
+        </div>
       </div>
     </div>
     <div class="form-group row">
@@ -75,12 +78,18 @@
       <label for="inputPostalCode" class="col-sm-2 col-form-label">*Postal Code</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #postalCode>
+        <div class="invalInput" *ngIf="invalidPostalCode">
+            Please enter a valid Postal Code
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputPhoneNumber" class="col-sm-2 col-form-label">*Phone Number</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #phoneNumber>
+        <div class="invalInput" *ngIf="invalidPhoneNumber">
+            Please enter a valid correct Phone Number
+        </div>
       </div>
     </div>
     <div class="form-group row">
@@ -104,17 +113,20 @@
     <div class="form-group row">
       <label for="inputOthers" class="col-sm-2 col-form-label">*Country</label>
       <div class="col-sm-7">
-        <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+        <select #newPatientCountry id="inputCountry" class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
           <option value="badvalue">Please select a country</option>
           <option disabled="disabled">----</option>    
           <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
         </select>
+        <div class="invalInput" *ngIf="invalidPostalCode">
+            Please select a Country, Province and City
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputOthers" class="col-sm-2 col-form-label">*Province</label>
       <div class="col-sm-7">
-        <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+        <select #newPatientProvince id="inputProvince" class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
               <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
         </select>
       </div>
@@ -122,7 +134,7 @@
     <div class="form-group row">
       <label for="inputOthers" class="col-sm-2 col-form-label">*City</label>
       <div class="col-sm-7">
-        <select #newPatientCity class="mydropdown">
+        <select #newPatientCity id="inputCity" class="mydropdown">
               <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
             </select>
       </div>

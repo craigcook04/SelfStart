@@ -20,6 +20,9 @@ export class NewClientComponent implements OnInit {
   invalidLastname: boolean = false;
   invalidGender: boolean = false;
   invalidDOB: boolean = false;
+  invalidPhoneNumber: boolean = false;
+  invalidPostalCode: boolean = false;
+  invalidCountry: boolean = false;
   constructor(private newClientService: NewClientService,
               private patientService: PatientService) { }
  
@@ -87,14 +90,39 @@ export class NewClientComponent implements OnInit {
     })
   }
 
-  createClient(username: string, password: String, repeatPassword: String, firstName: string, lastName: string, email: string, DOB: string, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: string, others: String, country: string, province: string, city: string) {
+  ResetErrorMessages() {
+    //Reset all the error messages. Then new ones will be shown if some still exist
+    var usernameBox = document.getElementById('inputUsername').style.borderColor = 'rgba(0,0,0,.15)';
+    var passwordBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';
+    var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'rgba(0,0,0,.15)';
+    var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'rgba(0,0,0,.15)';  
+    var lastnameBox = document.getElementById('inputLastName').style.borderColor = 'rgba(0,0,0,.15)';  
+    var DOBBox = document.getElementById('inputDOB').style.borderColor = 'rgba(0,0,0,.15)';
+    var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'rgba(0,0,0,.15)';
+    var firstnameBox = document.getElementById('inputGender').style.borderColor = 'rgba(0,0,0,.15)';   
+    var countryBox = document.getElementById('inputCountry').style.borderColor = 'rgba(0,0,0,.15)';    
+    var provinceBox = document.getElementById('inputProvince').style.borderColor = 'rgba(0,0,0,.15)';    
+    var cityBox = document.getElementById('inputCity').style.borderColor = 'rgba(0,0,0,.15)';  
+    this.invalidUsername= false;
+    this.invalidPassword= false;
+    this.invalidFirstname= false;
+    this.invalidLastname= false;
+    this.invalidGender= false;
+    this.invalidDOB= false;
+    this.invalidPhoneNumber = false;
+    this.invalidPostalCode = false;
+    this.invalidCountry = false;  
+    
+  }
+
+  createClient(username: string, password: String, repeatPassword: String, firstName: string, lastName: string, email: string, DOB: string, gender: string, postalCode: String, phone: string, maritalStatus: String, healthCardNumber: String, occupation: string, others: String, country: string, province: string, city: string) {
+    this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
       //error in this case, handle it and let the user know they made a mistake
       var passwordBox = document.getElementById('inputPassword').style.borderColor = 'red';
       var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'red';
       this.invalidPassword = true;
-      console.log('repeat password and password are different');
       cannotContinue = true;
     }
 
@@ -124,16 +152,40 @@ export class NewClientComponent implements OnInit {
     if(!DOB) {
       var DOBBox = document.getElementById('inputDOB').style.borderColor = 'red';
       this.invalidDOB = false;
+      cannotContinue = true;
     }
+
+    if(!postalCode) {
+      var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'red';
+      this.invalidPostalCode = true;
+      cannotContinue = true;
+    }
+
+    
+    // console.log(badPhoneNumber.test(phone));
+    // if(badPhoneNumber.test(phone)){
+    //   var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
+    //   this.invalidPhoneNumber = true;
+    //   cannotContinue = true;
+    // }
     // if(emailFormat.test(email)) {
     //   var emailBox = document.getElementById('inputEmail').style.borderColor = 'red';
     //   console.log('problem');
     // }
 
-    //if gender is left as "badvalue" than a selection wasn't chosen
+    //if gender is "badvalue" than a selection wasn't chosen
     if(gender == "badvalue") {
       var firstnameBox = document.getElementById('inputGender').style.borderColor = 'red';    
       this.invalidGender = true;
+      cannotContinue = true;
+    }
+
+    //if country is "badvalue" than a selection wasn't chosen
+    if(country == "badvalue") {
+      var countryBox = document.getElementById('inputCountry').style.borderColor = 'red';    
+      var provinceBox = document.getElementById('inputProvince').style.borderColor = 'red';    
+      var cityBox = document.getElementById('inputCity').style.borderColor = 'red';    
+      this.invalidCountry = true;
       cannotContinue = true;
     }
 
@@ -142,18 +194,18 @@ export class NewClientComponent implements OnInit {
       return;
     }
 
-  //   this.newClientService.CreateClient(username, password, firstName, lastName, email, DOB, postalCode, phone, maritalStatus, healthCardNumber, occupation, others).subscribe(data => {
-  //     console.log(data);
-  //     var retObj: any = data;
-  //     if(retObj.success == true) {
-  //       this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
-  //         console.log(data);
-  //       })
-  //     }
-  //     else {
-  //       //the user will be shown an error in the creation problem along the lines of there being a server problem.
-  //     }
-  //   })
+    this.newClientService.CreateClient(username, password, firstName, lastName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      if(retObj.success == true) {
+        this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
+          console.log(data);
+        })
+      }
+      else {
+        //the user will be shown an error in the creation problem along the lines of there being a server problem.
+      }
+    })
   }
 
 }
