@@ -22,7 +22,7 @@
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 5px;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-
+    cursor: pointer;
 }
 
 .toemail {
@@ -43,6 +43,10 @@
 
 .invalInput {
     color: red;
+    font-size: 12px;
+}
+
+.hintText {
     font-size: 12px;
 }
 

@@ -151,7 +151,7 @@
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
     <ngb-panel *ngFor="let patient of patients;">
       <ng-template ngbPanelTitle>
-        <span (click)="HideMessage(); GetProvinces(patient.country._id); GetCities(patient.province._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
+        <span (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         <button type="button" class="btn btn-secondary btn-sm" (click)="open(delete)" style="float: right;">Delete Client</button>
         <button type="button" class="btn btn-primary btn-sm" (click)="open(update)" style="float: right; margin-right:10px;">Edit Client</button>
       </ng-template>
@@ -341,19 +341,19 @@
 
       <ng-template ngbPanelContent>
         <div class="info">
-          <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
-          <p><b>Patient ID:  </b> {{patient.ID}}</p>
-          <p><b>Email:  </b> {{patient.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
-          <p><b>Date of Birth:  </b> {{patient.DOB | date: 'yyyy-MM-dd'}}</p>
-          <p><b>Gender:  </b> {{patient.gender.name}}</p>
-          <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
-          <p><b>Phone Number:  </b> {{patient.phone}}</p>
-          <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
-          <p><b>Health Card Number:  </b> {{patient.healthCardNumber}}</p>
-          <p><b>Occupation:  </b> {{patient.occupation}}</p>
-          <p><b>Country:  </b> {{patient.country.name}} </p>
-          <p><b>Province:  </b> {{patient.province.name}} </p>
-          <p><b>City:  </b> {{patient.city.name}} </p>
+          <p><b>Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
+          <p><b>Patient ID:  </b> {{patient?.ID}}</p>
+          <p><b>Email:  </b> {{patient?.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
+          <p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
+          <p><b>Gender:  </b> {{patient?.gender?.name}}</p>
+          <p><b>Postal Code:  </b> {{patient?.postalCode}}</p>
+          <p><b>Phone Number:  </b> {{patient?.phone}}</p>
+          <p><b>Marital Status:  </b> {{patient?.maritalStatus}}</p>
+          <p><b>Health Card Number:  </b> {{patient?.healthCardNumber}}</p>
+          <p><b>Occupation:  </b> {{patient?.occupation}}</p>
+          <p><b>Country:  </b> {{patient?.country?.name}} </p>
+          <p><b>Province:  </b> {{patient?.province?.name}} </p>
+          <p><b>City:  </b> {{patient?.city?.name}} </p>
         </div>
 
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>

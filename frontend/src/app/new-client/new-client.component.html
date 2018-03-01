@@ -11,12 +11,18 @@
         <div class="invalInput" *ngIf="invalidUsername">
             Please enter a valid username
         </div>
+        <div class="hintText" *ngIf="!invalidUsername">
+          Username cannot contain special characters
+        </div>
       </div> 
     </div>
     <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">*Password: </label>
         <div class="col-sm-7">
               <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password required>
+              <div class="hintText" *ngIf="!invalidPassword">
+                Passwords must match.
+              </div>
         </div>
     </div>
     <div class="form-group row">
@@ -50,6 +56,9 @@
       <label for="inputEmail" class="col-sm-2 col-form-label">*Email</label>
       <div class="col-sm-7">
         <input type="email" class="form-control" id="inputEmail" placeholder="Email" #email>
+        <div class="invalInput" *ngIf="invalidEmail">
+          Please enter a valid Date of Birth
+      </div>
       </div>
     </div>
     <div class="form-group row">
@@ -90,6 +99,9 @@
         <div class="invalInput" *ngIf="invalidPhoneNumber">
             Please enter a valid correct Phone Number
         </div>
+        <div class="hintText" *ngIf="!invalidPhoneNumber">
+          Please enter a valid 9 digit phone number
+        </div>
       </div>
     </div>
     <div class="form-group row">
@@ -118,7 +130,7 @@
           <option disabled="disabled">----</option>    
           <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
         </select>
-        <div class="invalInput" *ngIf="invalidPostalCode">
+        <div class="invalInput" *ngIf="invalidCountry">
             Please select a Country, Province and City
         </div>
       </div>

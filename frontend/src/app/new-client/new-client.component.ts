@@ -18,6 +18,7 @@ export class NewClientComponent implements OnInit {
   invalidPassword: boolean = false;
   invalidFirstname: boolean = false;
   invalidLastname: boolean = false;
+  invalidEmail: boolean = false;
   invalidGender: boolean = false;
   invalidDOB: boolean = false;
   invalidPhoneNumber: boolean = false;
@@ -103,6 +104,7 @@ export class NewClientComponent implements OnInit {
     var countryBox = document.getElementById('inputCountry').style.borderColor = 'rgba(0,0,0,.15)';    
     var provinceBox = document.getElementById('inputProvince').style.borderColor = 'rgba(0,0,0,.15)';    
     var cityBox = document.getElementById('inputCity').style.borderColor = 'rgba(0,0,0,.15)';  
+    var emailBox = document.getElementById('inputEmail').style.borderColor = 'rgba(0,0,0,.15)';
     this.invalidUsername= false;
     this.invalidPassword= false;
     this.invalidFirstname= false;
@@ -112,7 +114,7 @@ export class NewClientComponent implements OnInit {
     this.invalidPhoneNumber = false;
     this.invalidPostalCode = false;
     this.invalidCountry = false;  
-    
+    this.invalidEmail = false;
   }
 
   createClient(username: string, password: String, repeatPassword: String, firstName: string, lastName: string, email: string, DOB: string, gender: string, postalCode: String, phone: string, maritalStatus: String, healthCardNumber: String, occupation: string, others: String, country: string, province: string, city: string) {
@@ -129,7 +131,9 @@ export class NewClientComponent implements OnInit {
     var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
     var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
     var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-  
+    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+
     if(badFormat.test(username) || !username) {
       //username contains an illegal character
       var usernameBox = document.getElementById('inputUsername').style.borderColor = 'red';
@@ -162,16 +166,16 @@ export class NewClientComponent implements OnInit {
     }
 
     
-    // console.log(badPhoneNumber.test(phone));
-    // if(badPhoneNumber.test(phone)){
-    //   var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
-    //   this.invalidPhoneNumber = true;
-    //   cannotContinue = true;
-    // }
-    // if(emailFormat.test(email)) {
-    //   var emailBox = document.getElementById('inputEmail').style.borderColor = 'red';
-    //   console.log('problem');
-    // }
+    if(!validPhoneNumber.test(phone)){
+      var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
+      this.invalidPhoneNumber = true;
+      cannotContinue = true;
+    }
+    if(!emailFormat.test(email)) {
+      var emailBox = document.getElementById('inputEmail').style.borderColor = 'red';
+      this.invalidEmail = true;
+      cannotContinue = true;
+    }
 
     //if gender is "badvalue" than a selection wasn't chosen
     if(gender == "badvalue") {
