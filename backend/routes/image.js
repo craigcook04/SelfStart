@@ -32,23 +32,28 @@ router.route('/')
             if (error) response.send(error);
             response.json({exercise: exercises});
         }).sort({name: 1});
-    });
+    })
     
 //make delete to clear up database
+
+    .delete(function (request, response){
+        Image.find().remove().exec();
+        console.log("Deleted?");
+    });
     
     
 router.route('/:image_exercise')
     
     .get(function ( request, response){
-        Image.findById(request.params.image_exercise, function(error, images){
+        Image.find({exercise: request.params.image_exercise}, function(error, images){
             if(error){
                 response.send({error: error});
             }
             else{
                 response.json({images: images});
             }
-        })
-    })
+        });
+    });
     
 router.route('/setid')
 
@@ -59,49 +64,16 @@ router.route('/setid')
                 response.send({error: error});
             }
             else{
-                console.log("start");
-                console.log("I'm the image " + request.body.image);
-                console.log(image);
-                
-                // image.exercise = request.body._id;
-                
-                console.log(image.exercise);
                 
                 image.update({exercise: request.body._id}, function(error, place){
-                    if(error){ console.log("I didn't work")};
+                    if(error){ console.log("I didn't work")}
                     console.log("I worked");
-                })
+                });
                 
-                // image.save(function (error){
-                //     if(error){
-                //         response.send({error: error});
-                //     }
-                    
-                //     response.json({image: image});
-                //     console.log("I worked!");
-                // })
             }
-        })
+        });
         
-        // Image.find({name: { $elemMatch: request.body.images}}, function(error, images){
-        //     console.log(images);
-        //     for(var i = 0; i < images.length; i++){
-        //         images[i].exercise = request.body._id;
-                
-        //         console.log(images[i].exercise);
-                
-        //         images[i].save(function (error){
-        //             if(error){
-        //                 response.send({error: error});
-        //             }
-        //             else{
-        //                 console.log("I worked");
-        //             }
-        //         })
-        //     }
-        // });
-        
-    })
+    });
     
 
 //fetching a specific exercise
