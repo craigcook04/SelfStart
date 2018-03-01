@@ -1,6 +1,4 @@
-.inputForm {
-    width: 75%;
-}
+
 
 .inputGroup {
     margin: 2rem;
@@ -52,4 +50,12 @@
 
 .smallText {
     font-size: 12px;
+}
+
+.stepperbtn {
+    margin-top: 25px;
+}
+
+.instepbtn {
+    margin-top: 15px;
 }
