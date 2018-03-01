@@ -75,6 +75,15 @@ router.route('/setid')
         
     });
     
+router.route('/:image_id')
+
+    .delete(function (request, response){
+        Image.findByIdAndRemove(request.params.image_id, function (error){
+            if(error) {response.send({error: error});}
+            response.json("Images Removed");
+        })
+    });
+    
 
 //fetching a specific exercise
 
