@@ -57,10 +57,13 @@ export class ExercisesComponent implements OnInit {
     this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, fileNames)
     .subscribe(data =>{
       //now link images to exercise
-      this.imageService.sendExerciseID(id, fileNames).subscribe(data =>{
-        console.log(data);
-      })
-      console.log(data);
+      console.log(data.exercise._id);
+
+      fileNames.forEach(element => {
+        this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+          console.log(data);
+        })
+      });
       //window.location.reload();
     })
   }
@@ -77,19 +80,21 @@ export class ExercisesComponent implements OnInit {
     
     this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
-      this.imageService.sendExerciseID(data._id, data.multimedia).subscribe(data =>{
-        console.log("I happened");
-      })
-      console.log(data);
+
+      media.forEach(element => {
+        this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+          console.log(data);
+        })
+      });
       window.location.reload();
     })
   }
 
-  // getExerciseImages( exercise: string ){
-  //   this.imageService.GetExerciseImage(exercise).subscribe(date =>{
-  //     console.log(data);
-  //   })
-  // }
+  getExerciseImages( exercise: string ){
+    this.imageService.GetExerciseImage(exercise).subscribe(data =>{
+      console.log(data);
+    })
+  }
 
 }
 

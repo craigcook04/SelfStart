@@ -106,7 +106,7 @@
         </ng-template>
     <ngb-panel *ngFor='let exercise of exercises'>
         <ng-template ngbPanelTitle >
-          <span (click)="getExerciseImages(exercise.name)"> {{ exercise.name }} || {{ exercise.description }} </span>
+          <span (click)="getExerciseImages(exercise._id)"> {{ exercise.name }} || {{ exercise.description }} </span>
         </ng-template>
       <ng-template ngbPanelContent>
         <div class="info">
