@@ -78,7 +78,7 @@
               <div class="col-sm-9">
                 <label class="btn btn-block btn-file" id="inputMedia">
                   Click Here to Select File(s) for Upload&hellip;
-                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" multiple>
+                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png" multiple>
                   <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
                 </label>
                 <td nowrap>
@@ -121,19 +121,11 @@
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
           <p><b> Multimedia: </b> </p>
           <br>
-                <ngb-carousel>
-                    <ng-template ngbSlide>
-                      <img src="../assets/images/1.PNG" >
-                      <div class="carousel-caption">
-                      </div>
-                    </ng-template>
-                    <ng-template ngbSlide>
-                      <img src="../assets/images/2.PNG" >
-                      <div class="carousel-caption">
-                      </div>
-                    </ng-template>
-                </ngb-carousel>
-          <!-- <img src="{{ exercise.multimedia }}"> -->
+
+          <div *ngFor="let image of images">
+              <img src="data:image/png;base64,{{image.data}}">
+          </div>  
+        
         </div>
 
         <!-- when physio wants to update an exercise -->

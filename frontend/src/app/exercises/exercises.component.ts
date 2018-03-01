@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from '../image.service';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-config';
+import { DomSanitizer } from '@angular/platform-browser';
 
 const URL = '/api/image';
 
@@ -20,7 +21,7 @@ export class ExercisesComponent implements OnInit {
   obj: Object [];
   exercises: Object [];
   closeResult: string;
-  
+  images: any [];
 
   public uploader:FileUploader = new FileUploader({url: URL});
 
@@ -28,7 +29,8 @@ export class ExercisesComponent implements OnInit {
                private modalService: NgbModal,
                private router: Router,
                private imageService: ImageService,
-               private dateConfig: NgbDatepickerConfig) { }
+               private dateConfig: NgbDatepickerConfig,
+               private domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
@@ -90,9 +92,12 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  getExerciseImages( exercise: string ){
+  getExerciseImages( exercise: any ){
+    console.log(exercise);
     this.imageService.GetExerciseImage(exercise).subscribe(data =>{
       console.log(data);
+      this.images = data.images;
+      console.log(this.images[0]);
     })
   }
 
