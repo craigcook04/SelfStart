@@ -68,12 +68,6 @@
     display: block;
 }
 
-.carousel {
-    align-content: right;
-     width: 32%;
-    /* height:75%; */
-  }
-
 .createbtn {
     margin-left: 1em;
     margin-top: 1em;

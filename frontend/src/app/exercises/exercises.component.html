@@ -106,9 +106,9 @@
         </ng-template>
     <ngb-panel *ngFor='let exercise of exercises'>
         <ng-template ngbPanelTitle >
-          <span (click)="getExerciseImages(exercise._id)"> {{ exercise.name }} || {{ exercise.description }} </span>
+          <span (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()"> {{ exercise.name }} || {{ exercise.description }} </span>
         </ng-template>
-      <ng-template ngbPanelContent>
+      <ng-template ngbPanelContent class=".col-sm-4">
         <div class="info">
           <p><b> Name: </b> {{ exercise.name }} </p>
           <p><b> Description: </b> {{ exercise.description }} </p>
@@ -122,9 +122,15 @@
           <p><b> Multimedia: </b> </p>
           <br>
 
-          <div *ngFor="let image of images">
+          <!-- <div *ngFor="let image of images">
               <img src="data:image/png;base64,{{image.data}}">
-          </div>  
+          </div> -->
+
+          <ngb-carousel class=".col-sm-6" #carousel>
+              <ng-template ngbSlide *ngFor="let image of images">
+                <img *ngIf="image" src="data:image/png;base64,{{image.data}}">
+              </ng-template>
+          </ngb-carousel>
         
         </div>
 
@@ -232,9 +238,14 @@
                           </button>
                           <button type="button" class="btn btn-danger btn-m col-sm-10"
                           (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                            <span class="glyphicon glyphicon-trash"></span> Remove Queued Files
                           </button>
-                          <tr *ngFor="let item of uploader.queue">
+                          <br><br><br>
+                          <tr *ngFor="let image of images">Current:
+                              <td><strong>{{ image.name }}</strong></td>
+                              <button type="button" class="btn btn-danger btn-sm" (click)="deleteImage(image._id)" style="float: right; margin-right:10px;">X</button>
+                            </tr>
+                          <tr *ngFor="let item of uploader.queue">Upload:
                             <td><strong>{{ item?.file?.name }}</strong></td>
                           </tr>
                         </td>

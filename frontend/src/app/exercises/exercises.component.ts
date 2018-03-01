@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from '../image.service';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-config';
-import { DomSanitizer } from '@angular/platform-browser';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 
 const URL = '/api/image';
 
@@ -23,14 +23,16 @@ export class ExercisesComponent implements OnInit {
   closeResult: string;
   images: any [];
 
+  @ViewChild('carousel') carousel:NgbCarousel;
+  @ViewChild('dp') dp: any;
+
   public uploader:FileUploader = new FileUploader({url: URL});
 
   constructor( private exerciseService: ExerciseService, 
                private modalService: NgbModal,
                private router: Router,
                private imageService: ImageService,
-               private dateConfig: NgbDatepickerConfig,
-               private domSanitizer: DomSanitizer) { }
+               private dateConfig: NgbDatepickerConfig) { }
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
@@ -38,18 +40,13 @@ export class ExercisesComponent implements OnInit {
       this.exercises = Object.assign([], data.exercise);
       console.log(this.exercises);
     })
-
-    
   }
-
-  @ViewChild('dp') dp: any;
 
   open(content) {
     this.modalService.open(content, {size: "lg"});
   }
 
   updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any) {
-    //this.uploader.uploadAll;
 
     var fileNames = [String]; 
     for(var i =0; i < media.length; i++){
@@ -79,16 +76,16 @@ export class ExercisesComponent implements OnInit {
 
   addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any){
 
-    
     this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
-
-      media.forEach(element => {
-        this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-          console.log(data);
-        })
-      });
-      window.location.reload();
+      this.uploader.onCompleteAll = () => {
+        media.forEach(element => {
+          this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+            console.log(data);
+          })
+        });
+      }
+      // window.location.reload();
     })
   }
 
@@ -98,6 +95,14 @@ export class ExercisesComponent implements OnInit {
       console.log(data);
       this.images = data.images;
       console.log(this.images[0]);
+    })
+  }
+
+  deleteImage( image: any){
+    console.log(image);
+    this.imageService.deleteImage(image).subscribe(data =>{
+      console.log(data);
+      
     })
   }
 

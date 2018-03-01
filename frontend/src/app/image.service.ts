@@ -24,4 +24,9 @@ export class ImageService {
     return this.httpClient.put(url, body);
   }
 
+  deleteImage( image: any ){
+    var url = "/api/image/" + image;
+    return this.httpClient.delete(url);
+  }
+
 }
