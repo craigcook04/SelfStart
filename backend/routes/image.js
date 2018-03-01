@@ -34,6 +34,8 @@ router.route('/')
         }).sort({name: 1});
     });
     
+//make delete to clear up database
+    
     
 router.route('/:image_exercise')
     
@@ -51,15 +53,40 @@ router.route('/:image_exercise')
 router.route('/setid')
 
     .put(function(request, response){
-        console.log(request.body.images);
-        console.log(request.body._id);
-        var images = Image.find({name: {$elemMatch: request.body.images}});
-        console.log(images);
+        
+        Image.findOne({name: request.body.image}, {lean: true}, function(error, image){
+            if(error){
+                response.send({error: error});
+            }
+            else{
+                console.log("start");
+                console.log("I'm the image " + request.body.image);
+                console.log(image);
+                
+                // image.exercise = request.body._id;
+                
+                console.log(image.exercise);
+                
+                image.update({exercise: request.body._id}, function(error, place){
+                    if(error){ console.log("I didn't work")};
+                    console.log("I worked");
+                })
+                
+                // image.save(function (error){
+                //     if(error){
+                //         response.send({error: error});
+                //     }
+                    
+                //     response.json({image: image});
+                //     console.log("I worked!");
+                // })
+            }
+        })
         
         // Image.find({name: { $elemMatch: request.body.images}}, function(error, images){
         //     console.log(images);
         //     for(var i = 0; i < images.length; i++){
-        //         images[i].exercise = request.body.exercise_id;
+        //         images[i].exercise = request.body._id;
                 
         //         console.log(images[i].exercise);
                 
