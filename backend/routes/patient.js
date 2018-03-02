@@ -59,17 +59,31 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        //for account only populate the username
-        Patient.find()
-        .sort({familyName: 1, givenName: 1})
-        .populate('province').populate('city').populate('country').populate('gender').populate('account', 'userAccountName')
-        .exec(function(error, patients) {
-            if (error) {
-                response.send(error);
+        if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            var search = '^' + request.query.q;
+            var regexexp = new RegExp(search, 'i');
+            var query = {givenName: regexexp};
+        }
+        else{
+            query = {};
+        }
+        var options = 
+        {
+            sort: {familyName: 1},
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+            limit: 10,
+            offset: 0
+        };
+        
+        Patient.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
             
-            response.json({patients: patients});
-            
+            response.send(results);
         });
     });
 
@@ -137,7 +151,6 @@ router.route('/:patient_id')
                     response.send(error);
                     return;
                 }
-                console.log(deleted);
                 response.json({success: true, patient: deleted});
                 
             }
