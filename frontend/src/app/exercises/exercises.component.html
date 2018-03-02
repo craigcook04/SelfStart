@@ -78,7 +78,7 @@
               <div class="col-sm-9">
                 <label class="btn btn-block btn-file" id="inputMedia">
                   Click Here to Select File(s) for Upload&hellip;
-                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" multiple>
+                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
                   <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
                 </label>
                 <td nowrap>
@@ -106,9 +106,9 @@
         </ng-template>
     <ngb-panel *ngFor='let exercise of exercises'>
         <ng-template ngbPanelTitle >
-          <span (click)="getExerciseImages(exercise.name)"> {{ exercise.name }} || {{ exercise.description }} </span>
+          <span (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()"> {{ exercise.name }} || {{ exercise.description }} </span>
         </ng-template>
-      <ng-template ngbPanelContent>
+      <ng-template ngbPanelContent class=".col-sm-4">
         <div class="info">
           <p><b> Name: </b> {{ exercise.name }} </p>
           <p><b> Description: </b> {{ exercise.description }} </p>
@@ -121,19 +121,13 @@
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
           <p><b> Multimedia: </b> </p>
           <br>
-                <ngb-carousel>
-                    <ng-template ngbSlide>
-                      <img src="../assets/images/1.PNG" >
-                      <div class="carousel-caption">
-                      </div>
-                    </ng-template>
-                    <ng-template ngbSlide>
-                      <img src="../assets/images/2.PNG" >
-                      <div class="carousel-caption">
-                      </div>
-                    </ng-template>
-                </ngb-carousel>
-          <!-- <img src="{{ exercise.multimedia }}"> -->
+
+          <ngb-carousel class=".col-sm-6" #carousel>
+              <ng-template ngbSlide *ngFor="let image of images">
+                <img *ngIf="image" src="data:image/png;base64,{{image.data}}">
+              </ng-template>
+          </ngb-carousel>
+        
         </div>
 
         <!-- when physio wants to update an exercise -->
@@ -240,9 +234,16 @@
                           </button>
                           <button type="button" class="btn btn-danger btn-m col-sm-10"
                           (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                            <span class="glyphicon glyphicon-trash"></span> Remove Queued Files
                           </button>
-                          <tr *ngFor="let item of uploader.queue">
+                          <br><br><br>
+                          <tr id="removeParent" *ngFor="let image of images">
+                            <div id="removeMe">
+                              <td><strong>{{ image.name }}</strong></td>
+                              <button type="button" class="btn btn-danger btn-sm" (click)="deleteImage(image._id)" style="float: right; margin-right:10px;">X</button>
+                            </div>
+                          </tr>
+                          <tr *ngFor="let item of uploader.queue">Upload:
                             <td><strong>{{ item?.file?.name }}</strong></td>
                           </tr>
                         </td>
@@ -251,7 +252,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
@@ -290,7 +291,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-med" (click)="deleteExercise(exercise._id); c('Close click')">Delete</button>
-                <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Keep Exercise</button>                  
+                <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>                  
               </div>
             </ng-template>
             
