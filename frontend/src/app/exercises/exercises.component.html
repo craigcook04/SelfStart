@@ -1,10 +1,13 @@
 
 <h2>Exercises</h2>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Exercise</button>
 
-<div class="exercises">
-  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+<div>
+  <div>
       <ng-template #newmodal let-c="close" let-d="dismiss">
           <div class="modal-header">
             <h4 class="modal-title">New Exercise</h4>
@@ -104,12 +107,18 @@
             </div>  
           </div>
         </ng-template>
-    <ngb-panel *ngFor='let exercise of exercises'>
-        <ng-template ngbPanelTitle >
-          <span (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()"> {{ exercise.name }} || {{ exercise.description }} </span>
-        </ng-template>
-      <ng-template ngbPanelContent class=".col-sm-4">
+    <br><br>
+    <div *ngFor='let exercise of exercises'>
+
+          <button class="accordion" (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)"> {{ exercise.name }} || {{ exercise.description }} </button>
+      <hr>
+      <br>
+      <div *ngIf="exercise == activated" class=".col-sm-4">
         <div class="info">
+          <br>
+          <button style = "float: right; background-color: white; color: blue; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(update)"><i class="material-icons">mode_edit</i></button>
+          <button style = "float: right; background-color: white; color: red; border:none; margin-top: none; margin-right: 2px " class =  " w3-xlarge" (click) = "open(delete)"><i  class="fa fa-trash"></i></button>
+
           <p><b> Name: </b> {{ exercise.name }} </p>
           <p><b> Description: </b> {{ exercise.description }} </p>
           <p><b> Objectives: </b> {{ exercise.objectives }} </p>
@@ -251,13 +260,14 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
-              <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
+            <div class="modal-footer info">
+              <button type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
+          <hr>
 
-          <button class="btn btn-primary btn-sm exercisebtn" (click)="open(update)">Update</button>
+          <!-- <button class="btn btn-primary btn-sm exercisebtn" (click)="open(update)">Update</button> -->
           <!-- End of First Modal -->
 
           <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
@@ -271,7 +281,8 @@
             <div class="modal-body">
               <p>Are you sure you wish to delete patient <b>{{exercise.name}}</b>. This action is cannot be undone. </p>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer info">
+              <br>
               <button type="button" class="btn btn-primary btn-med" (click)="deleteExercise(exercise._id); c('Close click')">Delete</button>
               <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do No Delete</button>                  
             </div>
@@ -295,11 +306,11 @@
               </div>
             </ng-template>
             
-            <button class="btn btn-primary btn-sm exercisebtn" (click)="open(delete)">Delete</button>
+            <!-- <button class="btn btn-primary btn-sm exercisebtn" (click)="open(delete)">Delete</button> -->
             <!-- End of Second Modal -->
-      </ng-template>
+          </div>
 
-    </ngb-panel>
-  </ngb-accordion>
+    </div>
+  </div>
   
 </div>

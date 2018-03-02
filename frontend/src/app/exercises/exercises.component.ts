@@ -22,7 +22,7 @@ export class ExercisesComponent implements OnInit {
   exercises: Object [];
   closeResult: string;
   images: any [];
-  maxSize: number = 1024;
+  activated: any;
 
   @ViewChild('carousel') carousel:NgbCarousel;
   @ViewChild('dp') dp: any;
@@ -125,6 +125,15 @@ export class ExercisesComponent implements OnInit {
 
       console.log(data);
     })
+  }
+
+  show(exercise: any){
+    if(this.activated == exercise){
+      this.activated = null;
+    }
+    else{
+      this.activated = exercise;
+    }
   }
 
 }
