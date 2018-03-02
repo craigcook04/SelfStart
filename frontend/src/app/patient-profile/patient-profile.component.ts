@@ -11,6 +11,7 @@ import { EmailService } from '../email.service'
 export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
+  offset: number = 0;
   showSuccess: boolean;
   showCreationSuccess: boolean;
   showDeleteSuccess: boolean;
@@ -94,11 +95,11 @@ export class PatientProfileComponent implements OnInit {
     })
   }
 
-  searchPatients(searchString: string) {
-    this.patientService.SearchPatient(searchString).subscribe(data => {
+  searchPatients(searchString: string, searchArea: string) {
+    this.patientService.SearchPatient(searchString, searchArea, this.offset).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
-        this.patients = Object.assign([], retObj.patients);
+        this.patients = Object.assign([], retObj.docs);
       }
     })
   }

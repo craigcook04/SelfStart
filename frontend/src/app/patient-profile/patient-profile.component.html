@@ -1,12 +1,28 @@
 <h2>Clients</h2>
+<div class='blockContainer'>
+<div class='left'>
+  <select #searchArea class="searchdropdown">
+      <option value='givenName'>Search by...</option>
+      <option disabled='disabled'>----</option>
+      <option value="givenName">First Name</option>
+      <option value="familyName">Last Name</option>
+      <option value="email">Email</option>
+      <option value="username">Username</option>
+      <option value="ID">Patient ID</option>    
+  </select>
+</div>
+<div class="right">
 <div class="input-group mb-3 searchbar" id="custom-search-input">
   <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
-    <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value)"  location="top" ngbTooltip="Search">
+    <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, searchArea.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
     </button>
 </span>
 </div>
+</div>
+</div>
+<br> <br> <br> <br> <br>
 <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
 <!-- Beginning of New Client Modal -->
 <ng-template #newmodal let-c="close" let-d="dismiss">
