@@ -11,7 +11,7 @@ export class NewClientService {
     var body = {
       username: username,
       password: password,
-      ID: 5,
+      ID: 0,
       familyName: lastName,
       givenName: firstName,
       email: email,

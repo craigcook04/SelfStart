@@ -78,7 +78,7 @@
               <select #newPatientGender class="mydropdown" id="inputGender">
                   <option value="badvalue">Please select a gender</option>
                   <option disabled="disabled">----</option>
-                  <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                  <option *ngFor="let g of genders" value="{{g?._id}}">{{g?.name}}</option>
               </select>
               <div class="invalInput" *ngIf="invalidGender">
                   Please enter a valid gender
@@ -116,7 +116,7 @@
               <select #newPatientCountry id="inputCountry" class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
                 <option value="badvalue">Please select a country</option>
                 <option disabled="disabled">----</option>    
-                <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+                <option *ngFor="let country of countries" value="{{country?._id}}">{{country?.name}}</option>
               </select>
               <div class="invalInput" *ngIf="invalidCountry">
                   Please select a Country, Province and City
@@ -127,7 +127,7 @@
             <label for="inputOthers" class="col-sm-2 col-form-label">*Province</label>
             <div class="col-sm-7">
               <select #newPatientProvince id="inputProvince" class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
-                    <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+                    <option *ngFor="let province of provinces" value="{{province?._id}}">{{province?.name}}</option>
               </select>
             </div>
           </div>
@@ -135,7 +135,7 @@
             <label for="inputOthers" class="col-sm-2 col-form-label">*City</label>
             <div class="col-sm-7">
               <select #newPatientCity id="inputCity" class="mydropdown">
-                    <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+                    <option *ngFor="let city of cities" value="{{city?._id}}">{{city?.name}}</option>
                   </select>
             </div>
           </div>
