@@ -27,7 +27,7 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit() {
     this.patientService.GetAllPatients().subscribe(data => {
-      this.patients = Object.assign([], data.patients);
+      this.patients = Object.assign([], data.docs);
       console.log('hello');
       console.log(this.patients);
     });
@@ -57,7 +57,7 @@ export class PatientProfileComponent implements OnInit {
       console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
-        this.patients = Object.assign([], data.patients);
+        this.patients = Object.assign([], data.docs);
         console.log(data);
       });
 
@@ -84,7 +84,7 @@ export class PatientProfileComponent implements OnInit {
         this.showCreationSuccess = false;
         acc.activeIds = []; //close all accordian panels
         this.patientService.GetAllPatients().subscribe(data => {
-          this.patients = Object.assign([], data.patients);
+          this.patients = Object.assign([], data.docs);
         });
       }
       else { 
@@ -175,7 +175,7 @@ export class PatientProfileComponent implements OnInit {
 
       //reload the new patient list
       this.patientService.GetAllPatients().subscribe(data => {
-        this.patients = Object.assign([], data.patients);
+        this.patients = Object.assign([], data.docs);
         console.log(this.patients);
       });
     })

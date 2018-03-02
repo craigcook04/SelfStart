@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NewClientService } from '../new-client.service';
 import { PatientService } from '../patient.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-client',
@@ -24,8 +26,11 @@ export class NewClientComponent implements OnInit {
   invalidPhoneNumber: boolean = false;
   invalidPostalCode: boolean = false;
   invalidCountry: boolean = false;
+
   constructor(private newClientService: NewClientService,
-              private patientService: PatientService) { }
+              private patientService: PatientService,
+              private modalService: NgbModal,
+              private router: Router) { }
  
 
   ngOnInit() {
@@ -105,6 +110,7 @@ export class NewClientComponent implements OnInit {
     var provinceBox = document.getElementById('inputProvince').style.borderColor = 'rgba(0,0,0,.15)';    
     var cityBox = document.getElementById('inputCity').style.borderColor = 'rgba(0,0,0,.15)';  
     var emailBox = document.getElementById('inputEmail').style.borderColor = 'rgba(0,0,0,.15)';
+    var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'rgba(0,0,0,.15)';
     this.invalidUsername= false;
     this.invalidPassword= false;
     this.invalidFirstname= false;
@@ -117,7 +123,44 @@ export class NewClientComponent implements OnInit {
     this.invalidEmail = false;
   }
 
-  createClient(username: string, password: String, repeatPassword: String, firstName: string, lastName: string, email: string, DOB: string, gender: string, postalCode: String, phone: string, maritalStatus: String, healthCardNumber: String, occupation: string, others: String, country: string, province: string, city: string) {
+  createClient(makeChanges) {
+    //because of the scoping rules of the md-step, the values of the text boxes need to be retrieved with javascript
+    //need to retrieve all the textboxes and extract their values
+    var username: any = document.getElementById('inputUsername');
+    username = username.value;
+    var password: any = document.getElementById('inputPassword');
+    password = password.value;
+    var repeatPassword: any = document.getElementById('inputRepeatPassword');
+    repeatPassword = repeatPassword.value;
+    var firstName: any = document.getElementById('inputFirstName');  
+    firstName = firstName.value;
+    var lastName: any = document.getElementById('inputLastName');  
+    lastName = lastName.value;
+    var DOB: any = document.getElementById('inputDOB');
+    DOB = DOB.value;
+    var postalCode: any = document.getElementById('inputPostalCode');
+    postalCode = postalCode.value;
+    var gender: any = document.getElementById('inputGender');   
+    gender = gender.value;
+    var country: any = document.getElementById('inputCountry'); 
+    country = country.value;
+    var province: any = document.getElementById('inputProvince');   
+    province = province.value;
+    var city: any = document.getElementById('inputCity'); 
+    city = city.value;
+    var email: any = document.getElementById('inputEmail');
+    email = email.value;
+    var phone: any = document.getElementById('inputPhoneNumber');
+    phone = phone.value;
+    var maritalStatus: any = document.getElementById('inputMaritalStatus');
+    maritalStatus = maritalStatus.value;
+    var occupation: any = document.getElementById('inputOccupation');
+    occupation = occupation.value;
+    var healthCardNumber: any = document.getElementById('inputHealthCardNumber');
+    healthCardNumber = healthCardNumber.value;
+    var others: any = document.getElementById('inputOthers');
+    others = others.value;
+    console.log(healthCardNumber, maritalStatus, occupation);
     this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -195,6 +238,7 @@ export class NewClientComponent implements OnInit {
 
     //if this if statement is triggered, there are errors in the code
     if(cannotContinue) {
+      this.modalService.open(makeChanges, {size: 'lg'});
       return;
     }
 
@@ -204,6 +248,7 @@ export class NewClientComponent implements OnInit {
       if(retObj.success == true) {
         this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
           console.log(data);
+          this.router.navigate(['../home']);
         })
       }
       else {
