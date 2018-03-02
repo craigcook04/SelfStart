@@ -59,21 +59,57 @@ router.route('/')
     })
 
     .get(function (request, response) {
+        
+        //TO DO: SEARCH BY USERNAME
+        // if(request.query.s == 'username') {
+        //     //if the query string isn't null, set the query to search for the query string
+        //     var search = '^' + request.query.q;
+        //     var regexexp = new RegExp(search, 'i');
+        //     var query = {givenName: regexexp};
+        //     UserAccount.find({username: regexexp}, function(err, user) {
+        //         if(err) {
+        //             response.send(err);
+        //             return;
+        //         }
+        //         else if(user == null) {
+        //             response.send({docs: null});
+        //             return;
+        //         }
+        //         else {
+        //             var options = 
+        //             {
+        //                 sort: sort,
+        //                 populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+        //                 limit: 10,
+        //                 offset: Number(request.query.offset)
+        //             };
+                    
+        //             query = { : { $elemMatch:  } }
+                    
+        //         }
+        //     })
+        // }
+        
         if(request.query.q != null || request.query.q != undefined) {
             //if the query string isn't null, set the query to search for the query string
             var search = '^' + request.query.q;
             var regexexp = new RegExp(search, 'i');
-            var query = {givenName: regexexp};
+            var query = {};
+            query[request.query.s] = regexexp;
         }
         else{
             query = {};
         }
+        
+        var myparameter = request.query.s;
+        var sort ={};
+        sort[myparameter] = request.query.sortOrder;
         var options = 
         {
-            sort: {familyName: 1},
+            sort: sort,
             populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
             limit: 10,
-            offset: 0
+            offset: Number(request.query.offset)
         };
         
         Patient.paginate(query, options, function(err, results) {
