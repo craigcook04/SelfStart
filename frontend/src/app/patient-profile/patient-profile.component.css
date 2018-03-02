@@ -7,6 +7,10 @@
     margin: 0 0 2.5em 2.5em;
 }
 
+.emailer {
+    cursor: pointer;
+}
+
 .searchbar{
     margin-left: 2.5em;
     margin-right: 2.5em;
@@ -95,3 +99,18 @@ h2 {
 
 }
 
+.toemail {
+    margin: .5rem, .75rem;
+    margin-left: 1rem;
+}
+
+.myta{
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+    margin-right: 1.25rem;
+    
+}
+
+.tobody {
+    margin-left: 1rem;
+}

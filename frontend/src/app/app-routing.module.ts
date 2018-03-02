@@ -9,10 +9,11 @@ import {FaqComponent} from './faq/faq.component';
 import {ContactComponent} from './contact/contact.component';
 import {PatientProfileComponent} from './patient-profile/patient-profile.component';
 import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
-import { RouterLinkActive } from '@angular/router';
+import {RouterLinkActive} from '@angular/router';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {RehabPlansComponent} from './rehab-plans/rehab-plans.component';
-import { ExercisesComponent } from './exercises/exercises.component';
+import {ExercisesComponent} from './exercises/exercises.component';
+import {NewClientComponent} from './new-client/new-client.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path: 'client', component: PatientProfileComponent},
   {path: 'adminhome', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
-  {path: 'exercises', component: ExercisesComponent}
+  {path: 'exercises', component: ExercisesComponent},
+  {path: 'signup', component: NewClientComponent}
 ];
 
 @NgModule({

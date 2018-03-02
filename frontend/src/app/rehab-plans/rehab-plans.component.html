@@ -1,7 +1,3 @@
-<br>
-<br>
-
-
 <h2>Rehabilitation Plans</h2>
 <div class="input-group mb-3 searchbar" id="custom-search-input">
     <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
@@ -114,7 +110,7 @@
                         <div class="form-group row">
                             <label for="description" class="col-sm-3 col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="description" placeholder="Description" #description>
+                                <input type="text" class="form-control" id="description" placeholder="Description" value="{{rehabPlan.description}}" #description>
                             </div>
                         </div>
                         <div class="form-group row">
