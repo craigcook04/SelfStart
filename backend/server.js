@@ -28,6 +28,7 @@ var testResult = require('./routes/testResult');
 var userAccount = require('./routes/userAccount');
 var image = require('./routes/image');
 var emailRoute = require('./routes/email');
+var verifyRoute = require('./routes/verification');
 
 
 
@@ -68,6 +69,7 @@ app.use('/api/testresult', testResult);
 app.use('/api/useraccount', userAccount);
 app.use('/api/image', image);
 app.use('/api/email', emailRoute);
+app.use('/api/temp', verifyRoute);
 
 
 
