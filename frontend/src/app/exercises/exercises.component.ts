@@ -22,6 +22,7 @@ export class ExercisesComponent implements OnInit {
   exercises: Object [];
   closeResult: string;
   images: any [];
+  maxSize: number = 1024;
 
   @ViewChild('carousel') carousel:NgbCarousel;
   @ViewChild('dp') dp: any;
@@ -58,11 +59,13 @@ export class ExercisesComponent implements OnInit {
       //now link images to exercise
       console.log(data.exercise._id);
 
-      fileNames.forEach(element => {
-        this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-          console.log(data);
-        })
-      });
+      if(fileNames.length > 1){
+        fileNames.forEach(element => {
+          this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+            console.log(data);
+          })
+        });
+      }
       //window.location.reload();
     })
   }
@@ -70,21 +73,34 @@ export class ExercisesComponent implements OnInit {
   deleteExercise(id: string) {
     this.exerciseService.DeleteExercise(id).subscribe(data => {
       console.log(data);
-      window.location.reload();
+      
+      this.exercises.forEach(element => {
+        var obj: any = element;
+        if(obj._id == id){
+          var index = this.exercises.indexOf(element);
+
+          this.exercises.splice(index, 1);
+        }
+      });
     })
   }
 
   addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any){
-
     this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
     .subscribe(data =>{
+      console.log(data);
+
       this.uploader.onCompleteAll = () => {
-        media.forEach(element => {
-          this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-            console.log(data);
-          })
-        });
+
+        if(media.length > 1){
+          media.forEach(element => {
+            this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+              console.log(data);
+            })
+          });
+        }
       }
+      this.exercises.push(data.exercise);
       // window.location.reload();
     })
   }
@@ -93,7 +109,9 @@ export class ExercisesComponent implements OnInit {
     console.log(exercise);
     this.imageService.GetExerciseImage(exercise).subscribe(data =>{
       console.log(data);
-      this.images = data.images;
+      var obj: any;
+      obj = data;
+      this.images = obj.images;
       console.log(this.images[0]);
     })
   }
@@ -101,8 +119,11 @@ export class ExercisesComponent implements OnInit {
   deleteImage( image: any){
     console.log(image);
     this.imageService.deleteImage(image).subscribe(data =>{
-      console.log(data);
       
+      var index = this.images.indexOf(image);
+      this.images.splice(image, 1);
+
+      console.log(data);
     })
   }
 

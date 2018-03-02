@@ -78,7 +78,7 @@
               <div class="col-sm-9">
                 <label class="btn btn-block btn-file" id="inputMedia">
                   Click Here to Select File(s) for Upload&hellip;
-                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png" multiple>
+                  <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
                   <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
                 </label>
                 <td nowrap>
@@ -121,10 +121,6 @@
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
           <p><b> Multimedia: </b> </p>
           <br>
-
-          <!-- <div *ngFor="let image of images">
-              <img src="data:image/png;base64,{{image.data}}">
-          </div> -->
 
           <ngb-carousel class=".col-sm-6" #carousel>
               <ng-template ngbSlide *ngFor="let image of images">
@@ -241,10 +237,12 @@
                             <span class="glyphicon glyphicon-trash"></span> Remove Queued Files
                           </button>
                           <br><br><br>
-                          <tr *ngFor="let image of images">Current:
+                          <tr id="removeParent" *ngFor="let image of images">
+                            <div id="removeMe">
                               <td><strong>{{ image.name }}</strong></td>
                               <button type="button" class="btn btn-danger btn-sm" (click)="deleteImage(image._id)" style="float: right; margin-right:10px;">X</button>
-                            </tr>
+                            </div>
+                          </tr>
                           <tr *ngFor="let item of uploader.queue">Upload:
                             <td><strong>{{ item?.file?.name }}</strong></td>
                           </tr>
@@ -254,7 +252,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
+              <button type="button" class="btn btn-primary btn-sm" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
