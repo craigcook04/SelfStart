@@ -27,7 +27,7 @@ router.route('/')
                 response.send(error);
             }
             
-            response.json({exercise: exercise});
+            response.send({exercise: exercise});
         });
     })
 
