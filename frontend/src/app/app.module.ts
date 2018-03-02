@@ -25,7 +25,7 @@ import { DynamicFormsService } from './dynamic-forms.service';
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
-import { ImageService } from './image.service'
+import { ImageService } from './image.service';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';

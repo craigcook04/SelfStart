@@ -156,7 +156,7 @@
         <button type="button" class="btn btn-primary btn-sm" (click)="open(update)" style="float: right; margin-right:10px;">Edit Client</button>
       </ng-template>
 
-      <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
+      <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
       <ng-template #delete let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
@@ -170,9 +170,9 @@
           <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>          
         </div>
       </ng-template>
-      <!-- End of Second Modal -->
+      <!-- End of First Modal -->
 
-      <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
+      <!-- The Second modal which will be brought up when the physiotherapist wants to update the patient-->
       <ng-template #update let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
@@ -227,7 +227,7 @@
               <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
               <div class="col-sm-9">
                 <select #newGender class="mydropdown">
-                            <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
+                            <option value="{{patient.gender._id}}">{{patient?.gender?.name}}</option>
                             <option disabled="disabled">----</option>
                             <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
                   </select>
@@ -285,7 +285,7 @@
               <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
               <div class="col-sm-9">
                 <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
-                          <option value="{{patient.province._id}}">{{patient.province.name}}</option>
+                          <option value="{{patient.province._id}}">{{patient?.province?.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
                   </select>
@@ -295,7 +295,7 @@
               <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
               <div class="col-sm-9">
                 <select #newCity class="mydropdown">
-                          <option value="{{patient.city._id}}">{{patient.city.name}}</option>
+                          <option value="{{patient.city._id}}">{{patient?.city?.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
                   </select>
@@ -309,7 +309,7 @@
           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
         </div>
       </ng-template>
-      <!-- End of First Modal -->
+      <!-- End of Second Modal -->
  
       <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
       <ng-template #emailModal let-c="close" let-d="dismiss">

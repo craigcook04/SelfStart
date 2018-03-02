@@ -4,7 +4,7 @@
 <div class="container-fluid inputGroup">
   <form class="inputForm needs-validation" novalidate>
       <p class="smallText">*Required Fields</p>
-      <mat-vertical-stepper [linear]="true">
+      <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
         <mat-step label="Username and Password">
           <div class="form-group row">
             <label for="inputUsername" class="col-sm-2 col-form-label">*Username: </label>
@@ -62,8 +62,14 @@
             <div class="col-sm-7">
               <input type="email" class="form-control" id="inputEmail" placeholder="Email" #email>
               <div class="invalInput" *ngIf="invalidEmail">
-                Please enter a valid Date of Birth
+                Please enter a valid Email
             </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
             </div>
           </div>
           <div class="form-group row">
@@ -72,13 +78,15 @@
               <select #newPatientGender class="mydropdown" id="inputGender">
                   <option value="badvalue">Please select a gender</option>
                   <option disabled="disabled">----</option>
-                  <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                  <option *ngFor="let g of genders" value="{{g?._id}}">{{g?.name}}</option>
               </select>
               <div class="invalInput" *ngIf="invalidGender">
                   Please enter a valid gender
               </div>
             </div>
           </div>
+          <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
+          <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step  label="Contact Information">
           <div class="form-group row">
@@ -95,7 +103,7 @@
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #phoneNumber>
               <div class="invalInput" *ngIf="invalidPhoneNumber">
-                  Please enter a valid correct Phone Number
+                  Please enter a valid Phone Number
               </div>
               <div class="hintText" *ngIf="!invalidPhoneNumber">
                 Please enter a valid 9 digit phone number
@@ -108,7 +116,7 @@
               <select #newPatientCountry id="inputCountry" class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
                 <option value="badvalue">Please select a country</option>
                 <option disabled="disabled">----</option>    
-                <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+                <option *ngFor="let country of countries" value="{{country?._id}}">{{country?.name}}</option>
               </select>
               <div class="invalInput" *ngIf="invalidCountry">
                   Please select a Country, Province and City
@@ -119,7 +127,7 @@
             <label for="inputOthers" class="col-sm-2 col-form-label">*Province</label>
             <div class="col-sm-7">
               <select #newPatientProvince id="inputProvince" class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
-                    <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+                    <option *ngFor="let province of provinces" value="{{province?._id}}">{{province?.name}}</option>
               </select>
             </div>
           </div>
@@ -127,10 +135,12 @@
             <label for="inputOthers" class="col-sm-2 col-form-label">*City</label>
             <div class="col-sm-7">
               <select #newPatientCity id="inputCity" class="mydropdown">
-                    <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+                    <option *ngFor="let city of cities" value="{{city?._id}}">{{city?.name}}</option>
                   </select>
             </div>
           </div>
+          <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
+          <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step label="Additional Information">
           <div class="form-group row">
@@ -151,10 +161,29 @@
               <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #occupation>
             </div>
           </div>
+          <div class="form-group row">
+              <label for="inputOthers" class="col-sm-2 col-form-label">Other Notable Info</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="inputOthers" placeholder="Other" #others>
+              </div>
+            </div>
+          <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
+          <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step label="Done">
-          <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="createClient(username.value, password.value, repeatPassword.value, firstName.value, lastName.value, email.value, DOB.value, newPatientGender.value, postalCode.value, phoneNumber.value, maritalStatus.value, healthCardNumber.value, occupation.value, 'none', newPatientCountry.value, newPatientProvince.value, newPatientCity.value);">Confirm</button> 
-          <button class="btn btn-secondary btn-sm stepperbtn"[routerLink]="['home']">Cancel</button>             
+            <ng-template #makeChanges let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title">Error in Required Fields</h4>
+                </div>
+                <div class="modal-body">
+                  <p>There are errors in some of the required fields. Please go through and fix them. </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>        
+                </div>
+            </ng-template>
+            <button class="btn btn-secondary btn-sm stepperbtn" (click)="stepper.reset()">Reset</button> 
+            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="stepper.reset(); createClient(makeChanges)">Confirm</button> 
         </mat-step>
       </mat-vertical-stepper>  
   </form>
