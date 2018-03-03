@@ -31,19 +31,17 @@ import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidena
 
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
-<<<<<<< HEAD
-import { NewClientService } from './new-client.service';
-=======
+
 import { NewClientService } from './new-client.service'
 import { ImageService } from './image.service';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
->>>>>>> 7e94924a50bc7b82fa17412b58c10e6da8c0ce4e
+//import {MatButtonModule} from '@angular/material/button';
+//import {MatIconModule} from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -70,34 +68,19 @@ import {MatIconModule} from '@angular/material/icon';
     HttpClientModule,
     AngularFontAwesomeModule,
     FileUploadModule,
-<<<<<<< HEAD
-    BrowserModule,
     BrowserAnimationsModule,
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
     MatSidenavModule,
-    MatListModule
-  ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService, PhysiotherapistService],
-=======
+    MatListModule,
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
     NoopAnimationsModule,
-    MatButtonModule,
-    MatIconModule
   ],
-  providers: [
-    PatientService, 
-    RehabPlansService, 
-    ExerciseService, 
-    DynamicFormsService,
-    EmailService, 
-    NewClientService, 
-    ImageService],
->>>>>>> 7e94924a50bc7b82fa17412b58c10e6da8c0ce4e
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService],
   bootstrap: [AppComponent]
 })
 

@@ -12,11 +12,7 @@
   },
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-    "@angular/animations": "^5.2.0",
-=======
     "@angular/animations": "^5.2.7",
->>>>>>> 7e94924a50bc7b82fa17412b58c10e6da8c0ce4e
     "@angular/cdk": "^5.2.3",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",

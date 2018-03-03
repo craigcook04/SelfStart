@@ -23,6 +23,10 @@ export class UserAccountsComponent implements OnInit {
   content: boolean;
   activated: any;
   genders: Object[];
+  countries: Object[];
+  provinces: Object[];
+  cities: Object[];
+  //genders: Object[];
   
   ngOnInit() {
     this.content = false;
@@ -40,6 +44,11 @@ export class UserAccountsComponent implements OnInit {
       var retObj: any = data;
       this.therapists = Object.assign([], data.physiotherapist);
     });
+    this.patientService.GetCountries().subscribe(data => {
+      var retObj: any = data;
+      this.countries = Object.assign([], retObj.country);
+    })
+
   }
   show(client: any){
     //this.content = !(this.content);
@@ -111,6 +120,71 @@ export class UserAccountsComponent implements OnInit {
       }
       
     });
+  }
+  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) {
+    //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
+    this.patientService.CreatePatient(firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
+      var retObj: any = data;
+      if(retObj.success) {
+        //this.showCreationSuccess = true;
+      }
+      else{
+       // this.showFailure = true;
+      }
+
+      //reload the new patient list
+      this.patientService.GetAllPatients().subscribe(data => {
+        this.clients = Object.assign([], data.docs);
+        console.log(this.clients);
+      });
+    })
+  }
+    GetProvinces(countryId: string) {
+    //retrieve all provinces within a certain country
+    this.patientService.GetProvinces(countryId).subscribe(data => {
+      var retObj: any = data;
+      this.provinces = Object.assign([], retObj.province);
+    })
+  }
+
+  GetCities(provinceId: string) {
+    //retrieve all cities within a certain province
+    this.patientService.GetCities(provinceId).subscribe(data => {
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.cities);
+    })
+  }
+
+  SetProvinceBox(provinceBox, cityBox){
+    // a new country has been selected so remove all entries from the province and city boxes 
+    provinceBox.selectedIndex = -1;
+    cityBox.selectedIndex = -1;
+    while (provinceBox.options.length > 0) {                
+      provinceBox.remove(0);
+    } 
+    while (cityBox.options.length > 0) {                
+      cityBox.remove(0);
+    } 
+  }
+   DifferentGetProvince(countryId: string) {
+     //This gets the cities for the first province selected
+     this.patientService.GetProvinces(countryId).subscribe(data => {
+      var retObj: any = data;
+      this.provinces = Object.assign([], retObj.province);
+      console.log(data);
+      this.GetCities(retObj.province[0]._id);
+    })
+  }
+  ClearAndGetCities(provinceId: string, cityBox) {
+    //clear the city box and repopulate it with cities within the selected province
+    while (cityBox.options.length > 0) {                
+      cityBox.remove(0);
+    } 
+
+    this.patientService.GetCities(provinceId).subscribe(data => {
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.cities);
+    })
   }
 
 

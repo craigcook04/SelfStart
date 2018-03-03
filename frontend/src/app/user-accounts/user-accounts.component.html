@@ -43,7 +43,7 @@
     <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
     </button>
-</span>
+    </span>
 </div>
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -54,7 +54,7 @@
    
      
       <h1>User Accounts</h1>
-      
+      <br>
   <!--<mat-sidenav-container>-->
   <!--<mat-sidenav>Start</mat-sidenav>-->
   <!--<mat-sidenav position="end">End</mat-sidenav>-->
@@ -66,6 +66,151 @@
   <ngb-tab title="Clients">
        <ng-template ngbTabContent>
            <br>
+           <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
+           
+           <br>
+           <br><br><br>
+<!-- Beginning of New Client Modal -->
+<ng-template #newmodal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">New Client</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPatientFirstName>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPatientLastName>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPatientUserName>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPatientPassword>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPatientEmail>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+          <label for="inputTargDate" class="col-sm-3 col-form-label">Date of Birth</label>
+          <div class="col-sm-9">
+              <div class="calFormat">
+                <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                      <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                    </button>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+      <div class="form-group row">
+        <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+        <div class="col-sm-9">
+          <select #newPatientGender class="mydropdown">
+              <option value="badvalue">Please select a gender</option>
+              <option disabled="disabled">----</option>
+              <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #newPatientPostalCode>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #newPatientPhoneNumber>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" #newPatientMaritalStatus>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" #newPatientHealthCardNumber>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #newPatientOccupation>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputOthers" placeholder="Others" #newPatientOthers>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+        <div class="col-sm-9">
+          <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+            <option value="badvalue">Please select a country</option>
+            <option disabled="disabled">----</option>    
+            <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
+        <div class="col-sm-9">
+          <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+                <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
+        <div class="col-sm-9">
+          <select #newPatientCity class="mydropdown">
+                <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+              </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value); c('Close click')">Confirm</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+  </div>
+</ng-template>
            <div *ngFor = "let patient of clients">
     
                 <button class="accordion"  (click) = "show(patient)" >{{patient.givenName}}</button>
@@ -258,7 +403,7 @@
                       <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" ><i class="material-icons">mode_edit</i></button>
                       <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge"><i  class="fa fa-trash"></i></button>
                       <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
-                      <p><b>Patient ID:  </b> {{x._ID}}</p>
+                      <p><b>Patient ID:  </b> {{x._id}}</p>
                       <p><b>Email:  </b> {{x.email}}</p>
                       <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
                       <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->
