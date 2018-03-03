@@ -110,10 +110,10 @@
     <br><br>
     <div *ngFor='let exercise of exercises'>
 
-          <button class="accordion" (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)"> {{ exercise.name }} || {{ exercise.description }} </button>
+          <button class="accordion left-one" (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)"> <strong>{{ exercise.name }} </strong>|| {{ exercise.description }} </button>
       <hr>
       <br>
-      <div *ngIf="exercise == activated" class=".col-sm-4">
+      <div *ngIf="exercise == activated" class=".col-sm-4 accordion">
         <div class="info">
           <br>
           <button style = "float: right; background-color: white; color: blue; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(update)"><i class="material-icons">mode_edit</i></button>
@@ -131,9 +131,9 @@
           <p><b> Multimedia: </b> </p>
           <br>
 
-          <ngb-carousel class=".col-sm-6" #carousel>
+          <ngb-carousel class=".col-sm-6 carousel" #carousel>
               <ng-template ngbSlide *ngFor="let image of images">
-                <img *ngIf="image" src="data:image/png;base64,{{image.data}}">
+                <img  *ngIf="images.length > 0" src="data:image/png;base64,{{image.data}}">
               </ng-template>
           </ngb-carousel>
         
@@ -217,7 +217,7 @@
                       <label for="inputDate" class="col-sm-3 col-form-label">Target Date</label>
                       <div class="col-sm-9">
                         <div class="calFormat">
-                          <input class="form-control" placeholder="yyyy-MM-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targDate>
+                          <input class="form-control" placeholder="yyyy-MM-dd" name="dp1" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targDate>
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
                                 <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
@@ -265,7 +265,6 @@
               <button type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
-          <hr>
 
           <!-- <button class="btn btn-primary btn-sm exercisebtn" (click)="open(update)">Update</button> -->
           <!-- End of First Modal -->
@@ -305,11 +304,11 @@
                 <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>                  
               </div>
             </ng-template>
+            <hr>
             
             <!-- <button class="btn btn-primary btn-sm exercisebtn" (click)="open(delete)">Delete</button> -->
             <!-- End of Second Modal -->
           </div>
-
     </div>
   </div>
   

@@ -8,6 +8,7 @@ import { ImageService } from '../image.service';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-config';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 
+
 const URL = '/api/image';
 
 @Component({
@@ -25,7 +26,7 @@ export class ExercisesComponent implements OnInit {
   activated: any;
 
   @ViewChild('carousel') carousel:NgbCarousel;
-  @ViewChild('dp') dp: any;
+  @ViewChild('dp1') dp: any;
 
   public uploader:FileUploader = new FileUploader({url: URL});
 
@@ -134,6 +135,8 @@ export class ExercisesComponent implements OnInit {
     else{
       this.activated = exercise;
     }
+
+    // this.dp.navigateTo(exercise.targDate);
   }
 
 }

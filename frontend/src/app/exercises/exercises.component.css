@@ -94,9 +94,9 @@ h2 {
     text-align: left;
     border: none;
     outline: none;
-    margin-left: 70px;
+    margin-left: 15%;
     transition: 0.4s;
-    width: 65%;
+    width: 75%;
  }
  
  hr {
@@ -111,16 +111,28 @@ h2 {
     /*color: blue;*/
     
     float: left;
-    width: 75%;
+    width: 80%;
     
  }
- 
+/*  
  .active, .accordion:hover {
-    width:65%;
+    width:75%;
     background-color: #F0F8FF;
- }
+ } */
 
  .modal-button {
      float: right;
      margin-left: 75%;
+ }
+
+ .left-one{
+     float: left;
+     margin-left: 10%;
+     text-align: left;
+ }
+
+ .carousel {
+    margin: auto;
+    width: 100%;
+    background: cover;
  }
