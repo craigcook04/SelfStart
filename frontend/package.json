@@ -12,7 +12,11 @@
   },
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@angular/animations": "^5.2.0",
+=======
+    "@angular/animations": "^5.2.7",
+>>>>>>> 7e94924a50bc7b82fa17412b58c10e6da8c0ce4e
     "@angular/cdk": "^5.2.3",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
@@ -26,11 +30,10 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "angular-file-upload": "^2.5.0",
     "angular-font-awesome": "^3.1.2",
+    "angular-ui-carousel": "^0.1.10",
     "angular4-datepicker": "^1.0.1",
-    "angular4-files-upload": "^1.0.2",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "ng-file-upload": "^12.2.13",
     "ng-sidebar": "^7.0.1",
     "ng2-file-upload": "^1.3.0",
     "ngx-bootstrap": "^2.0.2",
