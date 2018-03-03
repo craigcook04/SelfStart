@@ -25,10 +25,9 @@ router.route('/')
         exercise.save(function (error) {
             if (error) {
                 response.send(error);
-                return;
             }
             
-            response.json({exercise: exercise});
+            response.send({exercise: exercise});
         });
     })
 
@@ -73,8 +72,6 @@ router.route('/:exercise_id')
                 exercise.targetDate = request.body.targetDate;
                 exercise.multimedia = request.body.multimedia;
                 exercise.rehabilitationPlans = request.body.rehabilitationPlans;
-                
-                console.log(exercise.multimedia);
 
 
                 exercise.save(function (error) {

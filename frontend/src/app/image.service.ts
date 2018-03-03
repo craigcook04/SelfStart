@@ -15,13 +15,18 @@ export class ImageService {
     return this.httpClient.get(url);
   }
 
-  sendExerciseID( exercise_id: any , fileNames: any ) {
+  sendExerciseID( exercise_id: any , fileName: any ) {
     var url = 'api/image/setid';
     var body = {
       _id: exercise_id,
-      images: fileNames
+      image: fileName
     }
     return this.httpClient.put(url, body);
+  }
+
+  deleteImage( image: any ){
+    var url = "/api/image/" + image;
+    return this.httpClient.delete(url);
   }
 
 }

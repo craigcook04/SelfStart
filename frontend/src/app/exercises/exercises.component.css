@@ -68,11 +68,11 @@
     display: block;
 }
 
-.carousel {
-    align-content: right;
-     width: 32%;
-    /* height:75%; */
-  }
+.carousel-inner > .item > img{
+    margin:auto;
+    width: 100%;
+    background: cover;
+}
 
 .createbtn {
     margin-left: 1em;
