@@ -1,8 +1,11 @@
 <h2>Clients</h2>
+<div *ngIf="invalidSearchArea" class="failedSearch">
+    Please enter a search area
+</div>
 <div class='blockContainer'>
 <div class='left'>
-  <select #searchArea class="searchdropdown">
-      <option value='givenName'>Search by...</option>
+  <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError()">
+      <option value='badvalue'>Search by...</option>
       <option disabled='disabled'>----</option>
       <option value="givenName">First Name</option>
       <option value="familyName">Last Name</option>
@@ -11,9 +14,10 @@
       <option value="ID">Patient ID</option>    
   </select>
 </div>
+
 <div class="right">
 <div class="input-group mb-3 searchbar" id="custom-search-input">
-  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
     <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, searchArea.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
@@ -22,9 +26,10 @@
 </div>
 </div>
 </div>
-<br> <br> <br> <br> <br> <br>
-<button class='btn btn-primary btn-sm nextpagebtn'>Next Page</button>
-<button class='btn btn-primary btn-sm prevpagebtn'>Previous Page</button>
+
+<br> <br><br> <br> <br>
+<button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, searchArea.value);">Next Page</button>
+<button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, searchArea.value);">Previous Page</button>
 <button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngTooltip="refresh list" (click)="StandardPatientList()">
     <i class="material-icons">refresh</i>
 </button>

@@ -25,6 +25,12 @@
     font-size: 16px;
 }
 
+.failedSearch {
+    margin-left: 3.5em;
+    color: red;
+    font-size: 12px;
+}
+
 .calFormat{
     display: flex;
     flex-direction: row;
