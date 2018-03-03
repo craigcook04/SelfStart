@@ -11,13 +11,11 @@ import { EmailService } from '../email.service'
 export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
-  offset: number = 0;
   showSuccess: boolean;
   showCreationSuccess: boolean;
   showDeleteSuccess: boolean;
   showFailure: boolean;
   emailSuccess: boolean;
-  invalidSearchArea: boolean;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
@@ -28,8 +26,12 @@ export class PatientProfileComponent implements OnInit {
               private emailService: EmailService) { }
 
   ngOnInit() {
-    
-    this.StandardPatientList();
+    this.patientService.GetAllPatients().subscribe(data => {
+      this.patients = Object.assign([], data.patients);
+      console.log('hello');
+      console.log(this.patients);
+    });
+
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
       this.countries = Object.assign([], retObj.country);
@@ -44,16 +46,6 @@ export class PatientProfileComponent implements OnInit {
 
   }
 
-  StandardPatientList() {
-    var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
-    this.invalidSearchArea = false;
-    this.patientService.GetAllPatients().subscribe(data => {
-      this.patients = Object.assign([], data.docs);
-      console.log('hello');
-      console.log(this.patients);
-    });
-  }
-
   open(content) {
     this.modalService.open(content, {size: 'lg'});
   }
@@ -65,7 +57,7 @@ export class PatientProfileComponent implements OnInit {
       console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
-        this.patients = Object.assign([], data.docs);
+        this.patients = Object.assign([], data.patients);
         console.log(data);
       });
 
@@ -92,12 +84,21 @@ export class PatientProfileComponent implements OnInit {
         this.showCreationSuccess = false;
         acc.activeIds = []; //close all accordian panels
         this.patientService.GetAllPatients().subscribe(data => {
-          this.patients = Object.assign([], data.docs);
+          this.patients = Object.assign([], data.patients);
         });
       }
       else { 
         this.showFailure = true;
       }
+      
+    })
+  }
+
+  searchPatients(searchString: string) {
+    this.patientService.SearchPatient(searchString).subscribe(data => {
+      if(data != []) {
+        var retObj : any = data;
+<<<<<<<<< saved version
       
     })
   }
@@ -113,6 +114,9 @@ export class PatientProfileComponent implements OnInit {
       if(data != []) {
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
+=========
+        this.patients = Object.assign([], retObj.patients);
+>>>>>>>>> local version
       }
     })
   }
@@ -189,7 +193,24 @@ export class PatientProfileComponent implements OnInit {
 
       //reload the new patient list
       this.patientService.GetAllPatients().subscribe(data => {
+<<<<<<<<< saved version
+  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) {
+    //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
+    this.patientService.CreatePatient(firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
+      var retObj: any = data;
+      if(retObj.success) {
+        this.showCreationSuccess = true;
+      }
+      else{
+        this.showFailure = true;
+      }
+
+      //reload the new patient list
+      this.patientService.GetAllPatients().subscribe(data => {
         this.patients = Object.assign([], data.docs);
+=========
+        this.patients = Object.assign([], data.docs);
+>>>>>>>>> local version
         console.log(this.patients);
       });
     })
@@ -209,6 +230,18 @@ export class PatientProfileComponent implements OnInit {
     })
 
   }
+
+  SendEmail(toEmail: String, emailSubject: String, emailBody: String) { 
+    this.emailService.SendEmail(toEmail, emailSubject, emailBody).subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        if(retObj.success == true) {
+          this.emailSuccess = true;
+        }
+        else {
+          this.showFailure = false;
+        }
+    })
 
   SendEmail(toEmail: String, emailSubject: String, emailBody: String) { 
     this.emailService.SendEmail(toEmail, emailSubject, emailBody).subscribe(data => {
