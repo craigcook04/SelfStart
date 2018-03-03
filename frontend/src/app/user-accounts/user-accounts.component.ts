@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../patient.service';
 import { UserAccountsService } from '../user-accounts.service';
 import {RehabPlansService} from '../rehab-plans.service';
+import {PhysiotherapistService} from '../physiotherapist.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,6 +15,7 @@ export class UserAccountsComponent implements OnInit {
   constructor(private patientService: PatientService,
               private userAccountService: UserAccountsService,
               private rehabPlansService: RehabPlansService,
+              private physiotherapistService: PhysiotherapistService,
               private modalService: NgbModal) { }
   
   clients: Object[];
@@ -33,6 +35,11 @@ export class UserAccountsComponent implements OnInit {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     });
+  
+    this.physiotherapistService.getTherapists().subscribe(data =>{
+      var retObj: any = data;
+      this.therapists = Object.assign([], data.physiotherapist);
+    });
   }
   show(client: any){
     //this.content = !(this.content);
@@ -45,6 +52,19 @@ export class UserAccountsComponent implements OnInit {
     console.log(this.activated);
     
   }
+  showPhysio(therapist: any){
+    // this.activated = null;
+    if(this.activated == therapist){
+      this.activated =null;
+    }
+    else{
+      this.activated = therapist;
+    }
+    console.log(this.activated);
+    
+  }
+    
+  
    open(content) {
     this.modalService.open(content, {size: 'lg'});
   }
@@ -90,7 +110,7 @@ export class UserAccountsComponent implements OnInit {
        // this.showFailure = true;
       }
       
-    })
+    });
   }
 
 

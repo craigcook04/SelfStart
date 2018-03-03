@@ -14,7 +14,7 @@ import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {RehabPlansComponent} from './rehab-plans/rehab-plans.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import {UserAccountsComponent} from './user-accounts/user-accounts.component';
-import {ExercisesComponent} from './exercises/exercises.component';
+//import {ExercisesComponent} from './exercises/exercises.component';
 import {NewClientComponent} from './new-client/new-client.component';
 
 const routes: Routes = [

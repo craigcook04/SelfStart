@@ -45,7 +45,8 @@ hr {
     margin-right: auto;
     border-style: inset;
     border-width: 1px;
-    border-top-color: #00FFFF;
+    /*border-top-color: #00FFFF;*/
+    border-color: #00FFFF;
     /*color: blue;*/
     
     float: left;
@@ -63,7 +64,40 @@ hr {
     
     
 }
+ul{ 
+    list-style-type: none; 
+    color: white;
+    
+}
+.example-container {
+  position: absolute;
+  top: 60px;
+ /*bottom: 60px;*/
+  left: 0;
+  right: 0;
+}
 
+
+.example-sidenav-content {
+    margin-top: 400px;
+    display: flex;
+    height: 100%;
+    
+}
+
+.example-sidenav {
+  display: flex;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  width: 200px;
+  margin-top:10px;
+  background: #E0FFFF;
+}
+
+.side-nav-el{
+    margin-top: 20px;
+    
+}
 .active:after {
     content: "\2212";
     left: -20px;

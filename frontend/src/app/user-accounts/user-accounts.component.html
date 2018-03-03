@@ -1,6 +1,41 @@
 <br>
-<h2> User Accounts </h2>
-<br>
+<mat-sidenav-container class="example-container">
+    
+    <mat-sidenav #sidenav mode="side" opened="true" class="example-sidenav">
+        
+        <!--<p style = "color: white; margin-left:10px;">client List</p>-->
+        <!--<br>-->
+        <mat-nav-list>
+          <mat-list-item>
+            <p style = "color:black;">HI THERe</p>
+          </mat-list-item>
+          <mat-list-item><p style = "color:black;">fdsafdsafdsa</p></mat-list-item>
+          <mat-list-item><p style = "color:black;">
+            WOAH
+            </p>
+          </mat-list-item>
+          <mat-list-item><p style = "color:black;">
+            
+            lets do it
+            </p>
+          </mat-list-item>
+        </mat-nav-list>
+        
+       
+        <!--<p style = "color: white;">Exercise library</p>-->
+        
+        <!--<p style = "color: white;">Forms</p>-->
+        
+        <!--<p style = "color: white;">Admin</p>-->
+        
+      
+    </mat-sidenav>
+
+
+
+
+<mat-sidenav-content style = "margin-top: 50px;">
+  
 <div class="input-group mb-3 searchbar" id="custom-search-input">
     <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
     <span class="input-group-btn">
@@ -13,8 +48,21 @@
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  
 <div class ="tab">
+   
+     
+      <h1>User Accounts</h1>
+      
+  <!--<mat-sidenav-container>-->
+  <!--<mat-sidenav>Start</mat-sidenav>-->
+  <!--<mat-sidenav position="end">End</mat-sidenav>-->
+  <!--<section>Main</section>-->
+
 <ngb-tabset>
+   
+   
   <ngb-tab title="Clients">
        <ng-template ngbTabContent>
            <br>
@@ -199,10 +247,42 @@
   
     <ngb-tab title="Physio Therapists">
        <ng-template ngbTabContent>
+         <div *ngFor = "let x of therapists">
+           <br>
+            <button class="accordion"  (click) = "showPhysio(x)" >{{x.givenName}}</button>
+           
+                <div *ngIf = "x == activated">
+                    <hr>
+                     
+                    <div class="info">
+                      <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" ><i class="material-icons">mode_edit</i></button>
+                      <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge"><i  class="fa fa-trash"></i></button>
+                      <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
+                      <p><b>Patient ID:  </b> {{x._ID}}</p>
+                      <p><b>Email:  </b> {{x.email}}</p>
+                      <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
+                      <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->
+                      <!--<p><b>Postal Code:  </b> {{patient.postalCode}}</p>-->
+                      <!--<p><b>Phone Number:  </b> {{patient.phone}}</p>-->
+                      <!--<p><b>Marital Status:  </b> {{client.maritalStatus}}</p>-->
+                      <!--<p><b>Health Card Number:  </b> {{client.healthCardNumber}}</p>-->
+                      <!--<p><b>Occupation:  </b> {{client.occupation}}</p>-->
+                      <!--<p><b>Country:  </b> {{patient.country.name}} </p>-->
+                      <!--<p><b>Province:  </b> {{patient.province.name}} </p>-->
+                      <!--<p><b>City:  </b> {{patient.city.name}} </p>-->
+                    </div>
+                   
+                </div>
+                <hr> 
+           
+         </div>
        
        </ng-template>
     </ngb-tab>  
   
 </ngb-tabset>
+
 </div>
+</mat-sidenav-content>
+</mat-sidenav-container>
 
