@@ -12,7 +12,7 @@ export class PatientService {
   constructor(private http: HttpClient) { }
 
   GetAllPatients() : any{
-    var url = '/api/patient';
+    var url = '/api/patient?s=familyName&sortOrder=1&offset=0';
     return this.http.get(url);
   }
 
@@ -45,8 +45,8 @@ export class PatientService {
     return this.http.delete(url);
   }
 
-  SearchPatient(searchString: string) {
-    var url = '/api/patient/findpatient/search?q=' + searchString;
+  SearchPatient(searchString: string, searchArea: string, offset) {
+    var url = '/api/patient?q=' + searchString + '&s=' + searchArea + '&sortOrder=1&offset=' + offset;
     return this.http.get(url);
   }
 
