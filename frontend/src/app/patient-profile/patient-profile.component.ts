@@ -11,11 +11,13 @@ import { EmailService } from '../email.service'
 export class PatientProfileComponent implements OnInit {
 
   closeResult: string;
+  offset: number = 0;
   showSuccess: boolean;
   showCreationSuccess: boolean;
   showDeleteSuccess: boolean;
   showFailure: boolean;
   emailSuccess: boolean;
+  invalidSearchArea: boolean;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
@@ -26,12 +28,8 @@ export class PatientProfileComponent implements OnInit {
               private emailService: EmailService) { }
 
   ngOnInit() {
-    this.patientService.GetAllPatients().subscribe(data => {
-      this.patients = Object.assign([], data.docs);
-      console.log('hello');
-      console.log(this.patients);
-    });
-
+    
+    this.StandardPatientList();
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
       this.countries = Object.assign([], retObj.country);
@@ -44,6 +42,16 @@ export class PatientProfileComponent implements OnInit {
 
  
 
+  }
+
+  StandardPatientList() {
+    var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
+    this.invalidSearchArea = false;
+    this.patientService.GetAllPatients().subscribe(data => {
+      this.patients = Object.assign([], data.docs);
+      console.log('hello');
+      console.log(this.patients);
+    });
   }
 
   open(content) {
@@ -94,11 +102,17 @@ export class PatientProfileComponent implements OnInit {
     })
   }
 
-  searchPatients(searchString: string) {
-    this.patientService.SearchPatient(searchString).subscribe(data => {
+  searchPatients(searchString: string, searchArea: string) {
+    if(searchArea == 'badvalue') {
+      //user tried to search without choosing a field. Display an error
+      this.invalidSearchArea = true;
+      var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'red';
+      return;
+    }
+    this.patientService.SearchPatient(searchString, searchArea, this.offset).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
-        this.patients = Object.assign([], retObj.patients);
+        this.patients = Object.assign([], retObj.docs);
       }
     })
   }
@@ -207,6 +221,24 @@ export class PatientProfileComponent implements OnInit {
           this.showFailure = false;
         }
     })
-  }  
+  } 
+  
+  
+  NextPage(searchString: string, searchArea: string) {
+    this.offset += 10;
+    this.searchPatients(searchString, searchArea);
+  }
+
+  PreviousPage(searchString: string, searchArea: string) {
+    if(this.offset != 0) {
+      this.offset -= 10;
+    }
+    this.searchPatients(searchString, searchArea);
+  }
+
+  RemoveError() {
+    var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
+    this.invalidSearchArea = false;
+  }
 
 }

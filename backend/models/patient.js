@@ -1,5 +1,7 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+var mongoosePaginate = require('mongoose-paginate');
 var bcrypt = require('bcrypt');
+var autoIncrement = require("mongodb-autoincrement");
 
 var patientSchema = new mongoose.Schema(
     {
@@ -25,5 +27,9 @@ var patientSchema = new mongoose.Schema(
     }
 );
 
+patientSchema.plugin(autoIncrement.mongoosePlugin, {field: 'ID'});
+patientSchema.plugin(mongoosePaginate);
 var Patient =  mongoose.model('Patient', patientSchema);
 module.exports = Patient;
+
+//exports.Model = Patient;
