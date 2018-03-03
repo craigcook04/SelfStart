@@ -27,12 +27,8 @@ export class PatientProfileComponent implements OnInit {
               private emailService: EmailService) { }
 
   ngOnInit() {
-    this.patientService.GetAllPatients().subscribe(data => {
-      this.patients = Object.assign([], data.docs);
-      console.log('hello');
-      console.log(this.patients);
-    });
-
+    
+    this.StandardPatientList();
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
       this.countries = Object.assign([], retObj.country);
@@ -45,6 +41,15 @@ export class PatientProfileComponent implements OnInit {
 
  
 
+  }
+
+  StandardPatientList() {
+    
+    this.patientService.GetAllPatients().subscribe(data => {
+      this.patients = Object.assign([], data.docs);
+      console.log('hello');
+      console.log(this.patients);
+    });
   }
 
   open(content) {
