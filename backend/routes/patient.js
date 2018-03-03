@@ -90,11 +90,15 @@ router.route('/')
         //     })
         // }
         
-        if(request.query.q != null || request.query.q != undefined) {
+        var query = {};
+        if(request.query.s == "ID"){
+            
+            query['ID'] = Number(request.query.q);
+        }
+        else if(request.query.q != null || request.query.q != undefined) {
             //if the query string isn't null, set the query to search for the query string
             var search = '^' + request.query.q;
             var regexexp = new RegExp(search, 'i');
-            var query = {};
             query[request.query.s] = regexexp;
         }
         else{
