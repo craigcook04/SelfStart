@@ -5,7 +5,8 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors       = require('cors');
-
+var mongoose = require('mongoose');
+var connection = mongoose.connect('mongodb://localhost:27017/startUp');
 
 //linking variables to the files of the routes
 var exercises = require('./routes/exercises');
@@ -28,6 +29,7 @@ var testResult = require('./routes/testResult');
 var userAccount = require('./routes/userAccount');
 var image = require('./routes/image');
 var emailRoute = require('./routes/email');
+var verifyRoute = require('./routes/verification');
 
 
 
@@ -68,6 +70,7 @@ app.use('/api/testresult', testResult);
 app.use('/api/useraccount', userAccount);
 app.use('/api/image', image);
 app.use('/api/email', emailRoute);
+app.use('/api/temp', verifyRoute);
 
 
 
@@ -75,8 +78,6 @@ var port = 8082;        // set our port
 // DATABASE SETUP
 // =============================================================================
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/startUp');
 
 
 // ROUTES
