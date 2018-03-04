@@ -1,10 +1,222 @@
-<h1>Book Appointment Works!!</h1>
-<p>
-  book-appointment works!
-</p>
+<div id="container">
+    <br><br>
+    <h1>Select From The Options Below...</h1>
+    <hr>
+    <div id="content">
+        <div id="image">
+            <img src="../assets/images/marcotte-schedule.jpg">
+        </div>
+        <hr>
 
+        <div>       
+            <div id="buttons">
+                <button class="btn btn-lg btn-outline-primary col-5" (click)="open(book)">Book An Appointment</button>
+                <button class="btn btn-lg btn-outline-primary col-6 ml-sm-2" (click)="open(initial)">Request An Initial Consultation</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class=''>
+<ng-template #book let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title"><b>Book Your Appointment...</b></h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" id="infosheet">
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label"><strong>Client Name</strong></label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" placeholder="John Doe" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-2 col-form-label"><strong>Choose a Date</strong></label>
+                    <div class="col-10">
+                        <button class="form-control btn btn-lg btn-outline-secondary" value="Open Up Timetable" >Please Select From Available Dates</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-email-input" class="col-2 col-form-label"><strong>Description</strong></label>
+                    <div class="col-10">
+                        <textarea class="form-control" placeholder="Enter a short description outline your injury/hindrance" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputMedia" class="col-sm-2 col-form-label"><strong>Upload Images</strong></label>
+                    <div class="col-sm-10">
+                        <label class="btn btn-block btn-file" id="inputMedia">
+                            Click Here to Select File(s) for Upload&hellip;
+                            <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
+                        </label>
+                        <td nowrap>
+                            <button type="button" class="btn btn-success btn-s"
+                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                              <span class="glyphicon glyphicon-upload"></span> Upload all
+                            </button>
+                            <button type="button" class="btn btn-danger btn-m col-sm-10"
+                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                              <span class="glyphicon glyphicon-trash"></span> Remove all
+                            </button>
+                            <tr *ngFor="let item of uploader.queue">
+                              <td><strong>{{ item?.file?.name }}</strong></td>
+                            </tr>
+                        </td>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" (click)="c('Close click')">Book Appointment</button>
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+        </div>
+</ng-template>
+
+<ng-template #initial let-c="close" let-b="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Book Your Initial Consultation...</h4>
+            <button type="button" class="close" aria-label="Close" (click)="b('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div id="scrollable">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label"><strong>Client Name</strong></label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" placeholder="John Doe" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <label for="inputTargDate" class="col-2 col-form-label"><strong>Date</strong></label>
+                        <div class="col-10">
+                            <div class="input-group">
+                              <input id="dp" class="form-control" placeholder="yyyy-mm-dd" name="dp1" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                  </button>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label"><strong>Select a Time</strong></label>
+                    <div class="col-10">
+                        <button class="form-control btn btn-lg btn-outline-secondary" value="Open Up Timetable" >Please Select From Available Times</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label"><strong>Description</strong></label>
+                    <div class="col-10">
+                        <textarea class="form-control" placeholder="Enter a short description outline your injury/hindrance" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Address</strong></label>
+                        <div class="col-10">
+                            <div class="form-inline">
+                            <input class="form-control col-4" type="text" placeholder="123 Main St SW" >
+                            <input class="form-control col-3 ml-sm-2" type="text" placeholder="City" >
+                            <input class="form-control col-4 ml-sm-2" type="text" placeholder="Postal Code" >
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label for="inputTargDate" class="col-2 col-form-label"><strong>Date of Birth</strong></label>
+                        <div class="col-10">
+                            <div class="form-inline">
+                              <input id="dp" class="form-control col-6" placeholder="yyyy-mm-dd" name="dp2" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                  </button>
+                                </div>
+                                <input class="form-control col-4 ml-sm-2" type="number" placeholder="Age" >
+                            </div>
+                          </div>
+                    </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Email</strong></label>
+                        <div class="col-10">
+                            <input class="form-control" type="email" placeholder="example@gmail.com" >
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Personal Physician</strong></label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Dr. Jane Doe" >
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Treatment Area</strong></label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Lower-Back" >
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Referral Source</strong></label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Advertisments, Friends and Family, etc." >
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Emergency Contact</strong></label>
+                        <div class="col-10">
+                            <div class="form-inline">
+                                <input class="form-control col-6" type="text" placeholder="Contact Name" >
+                                <input class="form-control col-5 ml-sm-2" type="tel" placeholder="Phone Number" >
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Signature</strong></label>
+                        <div class="col-10">
+                            <div class="form-inline">
+                                <input class="form-control col-6" type="text" placeholder="TYPE IN CAPS" >
+                                <input id="dp" class="form-control col-4 ml-sm-2" placeholder="yyyy-mm-dd" name="dp2" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                  </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group row">
+                        <label class="col-2 col-form-label"><strong>Parent/Guardian</strong></label>
+                        <div class="col-10">
+                            <div class="form-inline">
+                                <input class="form-control ml-sm-2" type="checkbox" #check1>
+                                <label class="form-control-label ml-sm-2">Enable Guardian Signature</label>
+                                <input class="form-control col-7 ml-sm-2" type="text" placeholder="TYPE IN CAPS" [disabled]="check1.checked != true" >
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" (click)="c('Close click')">Book Initial Consultation</button>
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+        </div>
+</ng-template>
+
+<!-- <div class="collapse" id="collapseTermsCond">
+    <div class="card card-body">
+            <h3>Consent to Participate:</h3>
+            I voluntarily authorize and give consent to Kingsville Physiotherapy Clinic to provide its services to me. This includes, but is not limited to, evaluation, exercises prescription and other corrective procedures. I acknowledge that no guarantees have been, or can be made to me, as to the result of the services provided at Kingsville Physiotherapy Clinic.
+            <hr>
+            <h3>Acknowledgement of Informed Consent</h3>
+            I understand that I will be informed of the potential risks and benefits of all services provided by Kingsville Physiotherapy Clinic. I understand that I have the right to consent or refuse consent to any procedure or service offered by Kingsville Physiotherapy Clinic.
+            <hr>
+            <h3>Authorization to Release Information</h3>
+            I authorize the release of any information contained in my Kingsville Physiotherapy record for the following purposes:
+            <li>at my request, to assist in processing my insurance claims</li>
+            <li>to provide information to my health professional referral source (personal physician)</li>
+    </div>
+</div> -->
+
+<!-- <div class=''>
     <div class='header'>
         KINGSVILLE PHYSIOTHERAPY CLINIC
         CONFIDENTIAL CLIENT INFORMATION SHEET
@@ -87,4 +299,4 @@
         <input type='text' placeholder='Group Policy #'>
         <input type='text' placeholder='Member ID Cert. #'>
     </div>
-</div>
+</div> -->
