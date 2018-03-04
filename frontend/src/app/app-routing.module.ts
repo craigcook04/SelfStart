@@ -12,9 +12,15 @@ import {DynamicFormsComponent} from './dynamic-forms/dynamic-forms.component';
 import {RouterLinkActive} from '@angular/router';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {RehabPlansComponent} from './rehab-plans/rehab-plans.component';
-import {ExercisesComponent} from './exercises/exercises.component';
+import { ExercisesComponent } from './exercises/exercises.component';
+import {UserAccountsComponent} from './user-accounts/user-accounts.component';
+//import {ExercisesComponent} from './exercises/exercises.component';
 import {NewClientComponent} from './new-client/new-client.component';
+<<<<<<< HEAD
 import{ BookAppointmentComponent } from './book-appointment/book-appointment.component';
+=======
+import {ClientsOfTherapistComponent} from './clients-of-therapist/clients-of-therapist.component';
+>>>>>>> f1b5a2165625508477840a609eb26437ceb7cb1c
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -29,8 +35,14 @@ const routes: Routes = [
   {path: 'adminhome', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
+<<<<<<< HEAD
   {path: 'signup', component: NewClientComponent},
   {path: 'bookappointment', component: BookAppointmentComponent}
+=======
+  {path: 'useraccounts', component:UserAccountsComponent},
+  {path: 'signup', component: NewClientComponent},
+  {path: 'clients/:id', component: ClientsOfTherapistComponent}
+>>>>>>> f1b5a2165625508477840a609eb26437ceb7cb1c
 ];
 
 @NgModule({
