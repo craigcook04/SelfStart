@@ -5,36 +5,31 @@
         
         <!--<p style = "color: white; margin-left:10px;">client List</p>-->
         <!--<br>-->
+        
         <mat-nav-list>
+          <mat-divider></mat-divider>
+          <br><br>
           <mat-list-item>
-            <p style = "color:black;">HI THERe</p>
+            <p style = "color:black;">Admin Dashboard</p>
           </mat-list-item>
-          <mat-list-item><p style = "color:black;">fdsafdsafdsa</p></mat-list-item>
-          <mat-list-item><p style = "color:black;">
-            WOAH
-            </p>
+          <mat-divider></mat-divider>
+          <mat-list-item><p style = "color:black;">Client List</p></mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item><p style = "color:black;">Exercise Library</p>
           </mat-list-item>
-          <mat-list-item><p style = "color:black;">
-            
-            lets do it
-            </p>
+          <mat-divider></mat-divider>
+          <mat-list-item><p style = "color:black;">Forms</p>
           </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item><p style = "color:black;">Admin</p></mat-list-item>
+          <mat-divider></mat-divider>
         </mat-nav-list>
-        
-       
-        <!--<p style = "color: white;">Exercise library</p>-->
-        
-        <!--<p style = "color: white;">Forms</p>-->
-        
-        <!--<p style = "color: white;">Admin</p>-->
-        
-      
     </mat-sidenav>
 
 
 
 
-<mat-sidenav-content style = "margin-top: 50px;">
+<mat-sidenav-content style = "margin-top: 50px; background-color: white;">
   
 <div class="input-group mb-3 searchbar" id="custom-search-input">
     <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
@@ -65,7 +60,7 @@
    
   <ngb-tab title="Clients">
        <ng-template ngbTabContent>
-           <br>
+           <br><br>
            <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
            
            <br>
@@ -207,7 +202,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value); c('Close click')">Confirm</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value); c('Close click')">Confirm</button>
     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
@@ -234,6 +229,7 @@
                       <p><b>Country:  </b> {{patient.country.name}} </p>
                       <p><b>Province:  </b> {{patient.province.name}} </p>
                       <p><b>City:  </b> {{patient.city.name}} </p>
+                      
                     </div>
                     <ng-template #edit let-c="close" let-d="dismiss">
                       <div class="modal-header">
@@ -392,18 +388,130 @@
   
     <ngb-tab title="Physio Therapists">
        <ng-template ngbTabContent>
-         <div *ngFor = "let x of therapists">
-           <br>
-            <button class="accordion"  (click) = "showPhysio(x)" >{{x.givenName}}</button>
+         <br><br>
+         <button type="button" class="btn btn-primary createbtn" (click)="open(newPhysiomodal)">Add New Physiotherapist</button>
+         
+         <ng-template #newPhysiomodal let-c="close" let-d="dismiss">
+ 
+ 
+            <div class="modal-header">
+              <h4 class="modal-title">New Client</h4>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group row">
+                  <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPhysioFirstName>
+                  </div>
+                </div>
+              
+                <div class="form-group row">
+                  <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPhysioLastName>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputLastName" placeholder="User Name" #newPhysioUserName>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Password" #newPhysioPassword>
+                  </div>
+                </div>
+      <!--<div class="form-group row">-->
+      <!--  <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
+      <!--  <div class="col-sm-9">-->
+      <!--    <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>-->
+      <!--  </div>-->
+      <!--</div>-->
+                <div class="form-group row">
+                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPhysioEmail>
+                  </div>
+                </div>
+      <!--<div class="form-group row">-->
+      <!--  <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>-->
+      <!--  <div class="col-sm-9">-->
+      <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>-->
+      <!--  </div>-->
+      <!--</div>-->
+                <div class="form-group row">
+                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioHired>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finsihed</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioFinished>
+                  </div>
+                </div>
+                <!--<div class="form-group row">-->
+                <!--  <label for="inputTargDate" class="col-sm-3 col-form-label">Date Hired</label>-->
+                <!--  <div class="col-sm-9">-->
+                <!--    <div class="calFormat">-->
+                <!--      <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPhysioHired>-->
+                <!--      <div class="input-group-append">-->
+                <!--        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
+                <!--          <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
+                <!--        </button>-->
+                <!--      </div>-->
+                <!--    </div>-->
+                <!--  </div>-->
+                <!--</div> -->
+                <!--<div class="form-group row">-->
+                <!--  <label for="inputTargDate" class="col-sm-3 col-form-label">Date Finished</label>-->
+                <!--  <div class="col-sm-9">-->
+                <!--    <div class="calFormat">-->
+                <!--      <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="d1p" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPhysioFinished>-->
+                <!--      <div class="input-group-append">-->
+                <!--        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
+                <!--          <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
+                <!--        </button>-->
+                <!--      </div>-->
+                <!--    </div>-->
+                <!--  </div>-->
+                <!--</div> -->
+      <!--<div class="form-group row">-->
+      <!--  <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>-->
+      <!--  <div class="col-sm-9">-->
+      <!--    <select #newPatientGender class="mydropdown">-->
+      <!--        <option value="badvalue">Please select a gender</option>-->
+      <!--        <option disabled="disabled">----</option>-->
+      <!--        <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>-->
+      <!--    </select>-->
+      <!--  </div>-->
+              
+              </form>
+              </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="newPhysio(newPhysioFirstName.value, newPhysioLastName.value,  newPhysioEmail.value, newPhysioHired.value, newPhysioFinished.value, newPhysioUserName.value, newPhysioPassword.value); c('Close click')">Confirm</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                </div>
+            </ng-template>
            
-                <div *ngIf = "x == activated">
-                    <hr>
+            <br>
+            <br><br><br>
+            <div *ngFor = "let x of therapists">
+              <br>
+              <button class="accordion"  (click) = "showPhysio(x)" >{{x.givenName}}</button>
+           
+              <div *ngIf = "x == activated">
+                  <hr>
                      
-                    <div class="info">
-                      <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" ><i class="material-icons">mode_edit</i></button>
-                      <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge"><i  class="fa fa-trash"></i></button>
+                  <div class="info">
+                      <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(editPhysio)"><i class="material-icons">mode_edit</i></button>
+                      <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge" (click) = "open(deletePhysio)"><i  class="fa fa-trash"></i></button>
                       <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
-                      <p><b>Patient ID:  </b> {{x._id}}</p>
+                      <p><b>Patient ID:  </b> {{x.ID}}</p>
                       <p><b>Email:  </b> {{x.email}}</p>
                       <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
                       <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->
@@ -415,15 +523,94 @@
                       <!--<p><b>Country:  </b> {{patient.country.name}} </p>-->
                       <!--<p><b>Province:  </b> {{patient.province.name}} </p>-->
                       <!--<p><b>City:  </b> {{patient.city.name}} </p>-->
+                      <button type="button" class="btn btn-primary createbtn">View {{x.givenName}}'s Clients</button>
+                      <!--<button type="button" class="btn btn-primary createbtn"></button>-->
                     </div>
+                    <ng-template #deletePhysio let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Delete {{x.familyName}}, {{x.givenName}}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure you wish to delete therapist <b>{{x.familyName}}, {{x.givenName}}</b>. This action is cannot
+                        be undone. </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-med" (click)="deletePhysio1(x._id); c('Close click')">Delete</button>
+                        <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
+                      </div>
+                    </ng-template>
+                    <ng-template #editPhysio let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Update {{x.familyName}}, {{x.givenName}}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form>
+                          <div class="form-group row">
+                            <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{x.givenName}}" #newFirstNamePhysio>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{x.familyName}}" #newLastNamePhysio>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+                            <div class="col-sm-9">
+                              <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{x.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified" #physioID>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{x.email}}" #newEmailPhysio>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateFinished  | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>
+                            </div>
+                          </div>
+            <!-- <div class="form-group row">
+                  <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
+                  <div class="col-sm-9">
+                      <div class="calFormat">
+                        <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                              <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                            </button>
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
+                        
+                        </form>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePhysio(newFirstNamePhysio.value, newLastNamePhysio.value, newEmailPhysio.value, physioID.value, newDateHiredPhysio.value, newDateFinishedPhysio.value, x._id); c('Close click')">Confirm</button>
+                        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                      </div>
+                    </ng-template>
                    
-                </div>
-                <hr> 
-           
-         </div>
+              </div>
+              <hr> 
+            
+            </div>
        
-       </ng-template>
-    </ngb-tab>  
+         </ng-template>
+      </ngb-tab>  
   
 </ngb-tabset>
 

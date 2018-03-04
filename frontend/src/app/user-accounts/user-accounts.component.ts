@@ -4,6 +4,7 @@ import { UserAccountsService } from '../user-accounts.service';
 import {RehabPlansService} from '../rehab-plans.service';
 import {PhysiotherapistService} from '../physiotherapist.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NewClientService } from '../new-client.service';
 
 @Component({
   selector: 'app-user-accounts',
@@ -16,7 +17,8 @@ export class UserAccountsComponent implements OnInit {
               private userAccountService: UserAccountsService,
               private rehabPlansService: RehabPlansService,
               private physiotherapistService: PhysiotherapistService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private newClientService: NewClientService,) { }
   
   clients: Object[];
   therapists: Object[];
@@ -31,7 +33,8 @@ export class UserAccountsComponent implements OnInit {
   ngOnInit() {
     this.content = false;
     this.patientService.GetAllPatients().subscribe(data => {
-      this.clients = Object.assign([], data.patients);
+      console.log(data);
+      this.clients = Object.assign([], data.docs);
       console.log('hello');
       // console.log(this.patients);
     });
@@ -84,7 +87,7 @@ export class UserAccountsComponent implements OnInit {
       console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
-        this.clients = Object.assign([], data.patients);
+        this.clients = Object.assign([], data.docs);
         console.log(data);
       });
       this.activated = null;
@@ -96,8 +99,19 @@ export class UserAccountsComponent implements OnInit {
         //it was not successfuls
         //this.showFailure = true;
       }
-    })
+    });
 
+  }
+  updatePhysio(givenName: string, familyName: string, email:string, ID: string, dateHired: string, dateFinished: string, _id: string){
+    
+    console.log("in component");
+    this.physiotherapistService.updatePhysio(givenName, familyName, email, ID, dateHired, dateFinished, _id).subscribe (data =>{
+      console.log(data);
+      this.physiotherapistService.getTherapists().subscribe(data => {
+        this.therapists = Object.assign([], data.physiotherapist);
+      });  
+      this.activated = null;
+    });
   }
 
   deletePatient(ID: string) {
@@ -121,9 +135,9 @@ export class UserAccountsComponent implements OnInit {
       
     });
   }
-  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) {
+  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newUserName: string, newPassword: string) {
     //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
-    this.patientService.CreatePatient(firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
+    this.newClientService.CreateClient(newUserName, newPassword, lastName, firstName, email, DOB, newGender, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince,newCity).subscribe(data => {
       var retObj: any = data;
       if(retObj.success) {
         //this.showCreationSuccess = true;
@@ -139,7 +153,18 @@ export class UserAccountsComponent implements OnInit {
       });
     })
   }
-    GetProvinces(countryId: string) {
+  newPhysio(newPhysioFirstName: string, newPhysioLastName: string,  newPhysioEmail: string, newPhysioHired: string, newPhysioFinshed: string, newPhysioUserName: string, newPhysioPassword: string){
+    this.physiotherapistService.createPhysio(newPhysioFirstName, newPhysioLastName, newPhysioEmail, newPhysioHired, newPhysioFinshed, newPhysioUserName, newPhysioPassword ).subscribe(data => {
+      var retObj: any = data;
+       //reload the new patient list
+      this.physiotherapistService.getTherapists().subscribe(data => {
+        this.therapists = Object.assign([], data.physiotherapist);
+        console.log(this.therapists);
+      });
+    });
+    
+  }
+  GetProvinces(countryId: string) {
     //retrieve all provinces within a certain country
     this.patientService.GetProvinces(countryId).subscribe(data => {
       var retObj: any = data;
@@ -186,7 +211,17 @@ export class UserAccountsComponent implements OnInit {
       this.cities = Object.assign([], retObj.cities);
     })
   }
-
+  deletePhysio1(id: any){
+    console.log("in delete!")
+    this.physiotherapistService.deletePhysioTherapist(id).subscribe(data =>{
+      var retObj: any = data;
+       this.physiotherapistService.getTherapists().subscribe(data => {
+          this.therapists = Object.assign([], data.physiotherapist);
+        });
+      
+      
+    });
+  }
 
 
 }
