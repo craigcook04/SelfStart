@@ -19,6 +19,9 @@
     <ng-template let-c="close" let-d="dismiss" #create>
         <div class="modal-header">
             <h4 class="modal-title">Create a new plan</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
             <form>
@@ -192,7 +195,7 @@
                 </ngb-panel>
                 <div style = "margin-right:30px;">
                 <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" style="margin-bottom: 40px; margin-right: 50px;">
-                    <ngb-panel style="margin-left: 100px; float: left;">
+                    <ngb-panel style="margin-left = 100px; float: left;">
                         <ng-template ngbPanelTitle>
 
                             <p style="margin-left: 20px">Exercises</p>
@@ -203,7 +206,8 @@
                         <ng-template ngbPanelContent>
 
                             <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
-                                <ngb-panel *ngFor="let exercise1 of exercise">
+                               
+                                <ngb-panel *ngFor="let exercise1 of exercise | slice:1">
 
                                     <ng-template ngbPanelTitle>
                                         <p style="margin-left: 40px">{{exercise1.name}}</p>
@@ -213,16 +217,16 @@
 
                                     <ng-template ngbPanelContent>
                                         <div class="level3">
-                                            <p style="margin-left: 10px;"><b> Name: </b> {{ exercise1.name }} </p>
-                                            <p style="margin-left: 10px;"><b> Description: </b> {{ exercise1.description }} </p>
-                                            <p style="margin-left: 10px;"><b> Objectives: </b> {{ exercise1.objectives }} </p>
-                                            <p style="margin-left: 10px;"><b> Author: </b> {{ exercise1.authorName }} </p>
-                                            <p style="margin-left: 10px;"><b> Action Steps: </b> {{ exercise1.actionSteps }} </p>
-                                            <p style="margin-left: 10px;"><b> Location: </b> {{ exercise1.location }} </p>
-                                            <p style="margin-left: 10px;"><b> Frequency: </b> {{ exercise1.frequency }} </p>
-                                            <p style="margin-left: 10px;"><b> Duration: </b> {{ exercise1.duration }} </p>
-                                            <p style="margin-left: 10px;"><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise1.targetDate | date:'mediumDate' }}</time> </p>
-                                            <p style="margin-left: 10px;"><b> Multimedia: </b> {{ exercise1.multimedia }} </p>
+                                            <p style="margin-left: 80px;"><b> Name: </b> {{ exercise1.name }} </p>
+                                            <p style="margin-left: 80px;"><b> Description: </b> {{ exercise1.description }} </p>
+                                            <p style="margin-left: 80px;"><b> Objectives: </b> {{ exercise1.objectives }} </p>
+                                            <p style="margin-left: 80px;"><b> Author: </b> {{ exercise1.authorName }} </p>
+                                            <p style="margin-left: 80px;"><b> Action Steps: </b> {{ exercise1.actionSteps }} </p>
+                                            <p style="margin-left: 80px;"><b> Location: </b> {{ exercise1.location }} </p>
+                                            <p style="margin-left: 80px;"><b> Frequency: </b> {{ exercise1.frequency }} </p>
+                                            <p style="margin-left: 80px;"><b> Duration: </b> {{ exercise1.duration }} </p>
+                                            <p style="margin-left: 80px;"><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise1.targetDate | date:'mediumDate' }}</time> </p>
+                                            <p style="margin-left: 80px;"><b> Multimedia: </b> {{ exercise1.multimedia }} </p>
                                             <!-- <img src="{{ exercise.multimedia }}"> -->
                                             <button class="btn btn-danger btn-sm rehabbtn" (click)="open(delete)">Remove</button>
                                         </div>
@@ -245,8 +249,5 @@
                                     </ng-template>
 
                                 </ngb-panel>
-<br>
-<br>
-<br>
-<br>
-<br>                          
+                                
+                            
