@@ -16,6 +16,7 @@ router.route('/')
         patient.familyName = request.body.familyName;
         patient.givenName = request.body.givenName;
         patient.email = request.body.email;
+        patient.physioId = request.body.physioId;
         var myDate = new Date(request.body.DOB);
         patient.DOB = myDate;
         patient.postalCode = request.body.postalCode;
@@ -211,6 +212,18 @@ router.route('/findpatient/search')
             
             response.json({patients: patients});
             
+        });
+    });
+    
+router.route('/physiotherapist/:physiotherapist_id')
+    .get(function (request, response) {
+        Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({patient: patient});
+            }
         });
     });
 
