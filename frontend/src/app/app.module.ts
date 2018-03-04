@@ -22,6 +22,8 @@ import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
+
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -48,6 +50,7 @@ import {MatIconModule} from '@angular/material/icon';
     ExercisesComponent,
     PatientProfileComponent,
     AdminHomeComponent,
+    BookAppointmentComponent,
     NewClientComponent
   ],
   imports: [
