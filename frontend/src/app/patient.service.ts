@@ -15,6 +15,10 @@ export class PatientService {
     var url = '/api/patient?s=familyName&sortOrder=1&offset=0';
     return this.http.get(url);
   }
+  getPhysioPatients(id: string){
+    var url = "/api/patient/physiotherapist/" + id;
+    return this.http.get(url);
+  }
 
   UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) : any {
     //create the body of the request

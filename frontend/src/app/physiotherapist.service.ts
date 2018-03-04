@@ -52,4 +52,8 @@ export class PhysiotherapistService {
   
       return this.http.put(url, body);
   }
+  getInfo(id: string){
+      var url = 'api/physiotherapist/' + id;
+      return this.http.get(url);
+  }
 }

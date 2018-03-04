@@ -5,6 +5,7 @@ import {RehabPlansService} from '../rehab-plans.service';
 import {PhysiotherapistService} from '../physiotherapist.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { NewClientService } from '../new-client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-accounts',
@@ -18,7 +19,8 @@ export class UserAccountsComponent implements OnInit {
               private rehabPlansService: RehabPlansService,
               private physiotherapistService: PhysiotherapistService,
               private modalService: NgbModal,
-              private newClientService: NewClientService,) { }
+              private newClientService: NewClientService,
+              private router: Router) { }
   
   clients: Object[];
   therapists: Object[];
@@ -112,6 +114,9 @@ export class UserAccountsComponent implements OnInit {
       });  
       this.activated = null;
     });
+  }
+  viewClients(id: string){
+    this.router.navigate(["../clients/"+id]);
   }
 
   deletePatient(ID: string) {

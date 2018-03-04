@@ -1,12 +1,36 @@
-h2 {
+.example-container {
+  position: absolute;
+  top: 60px;
+ /*bottom: 60px;*/
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+h3 {
     margin: 1em;
 }
 
-.tab{
-    width: 80%;
-    margin-left: 60px;
+
+.example-sidenav-content {
+    margin-top: 400px;
+    display: flex;
+    height: 100%;
+    
 }
 
+.example-sidenav {
+  display: flex;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  width: 175px;
+  /*margin-top:10px;*/
+  background: #4169E1;
+}
+.searchbar{
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+    width: 50%;
+}
 .accordion {
     background-color: white;
     color: #444;
@@ -28,15 +52,18 @@ h2 {
 .active, .accordion:hover {
     width:75%;
     background-color: #F0F8FF; 
+}
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    position: absolute;
+    left: 75%;
     
-   
+    
 }
-.searchbar{
-    margin-left: 2.5em;
-    margin-right: 2.5em;
-    width: 50%;
-}
-
 hr { 
     display: block;
     /*margin-top: 0.5em;*/
@@ -53,56 +80,6 @@ hr {
     width: 75%;
     
 } 
-.accordion:after {
-    content: '\002B';
-    color: #777;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-    position: absolute;
-    left: 75%;
-    
-    
-}
-ul{ 
-    list-style-type: none; 
-    color: white;
-    
-}
-.example-container {
-  position: absolute;
-  top: 60px;
- /*bottom: 60px;*/
-  left: 0;
-  right: 0;
-}
-
-
-.example-sidenav-content {
-    margin-top: 400px;
-    display: flex;
-    height: 100%;
-    
-}
-
-.example-sidenav {
-  display: flex;
-  /*align-items: center;*/
-  /*justify-content: center;*/
-  width: 175px;
-  /*margin-top:10px;*/
-  background: #4169E1;
-}
-
-.side-nav-el{
-    margin-top: 20px;
-    
-}
-.active:after {
-    content: "\2212";
-    left: -20px;
-}
-
 #custom-search-input{
     padding: 3px;
     padding-left: 0px;

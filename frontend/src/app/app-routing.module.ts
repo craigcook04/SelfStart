@@ -16,6 +16,7 @@ import { ExercisesComponent } from './exercises/exercises.component';
 import {UserAccountsComponent} from './user-accounts/user-accounts.component';
 //import {ExercisesComponent} from './exercises/exercises.component';
 import {NewClientComponent} from './new-client/new-client.component';
+import {ClientsOfTherapistComponent} from './clients-of-therapist/clients-of-therapist.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
   {path: 'useraccounts', component:UserAccountsComponent},
-  {path: 'signup', component: NewClientComponent}
+  {path: 'signup', component: NewClientComponent},
+  {path: 'clients/:id', component: ClientsOfTherapistComponent}
 ];
 
 @NgModule({

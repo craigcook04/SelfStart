@@ -26,6 +26,7 @@ import { DynamicFormsService } from './dynamic-forms.service';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule } from '@angular/material';//fdsgd
 
@@ -39,6 +40,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
 //import {MatButtonModule} from '@angular/material/button';
 //import {MatIconModule} from '@angular/material/icon';
 
@@ -58,7 +60,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
     PatientProfileComponent,
     AdminHomeComponent,
     UserAccountsComponent,
-    NewClientComponent
+    NewClientComponent,
+    ClientsOfTherapistComponent
   ],
   imports: [
     BrowserModule,

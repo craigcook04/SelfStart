@@ -10,18 +10,18 @@
           <mat-divider></mat-divider>
           <br><br>
           <mat-list-item>
-            <p style = "color:black;">Admin Dashboard</p>
+            <p style = "color:white;">Admin Dashboard</p>
           </mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:black;">Client List</p></mat-list-item>
+          <mat-list-item><p style = "color:white;">Client List</p></mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:black;">Exercise Library</p>
+          <mat-list-item><p style = "color:white;">Exercise Library</p>
           </mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:black;">Forms</p>
+          <mat-list-item><p style = "color:white;">Forms</p>
           </mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:black;">Admin</p></mat-list-item>
+          <mat-list-item><p style = "color:white;">Admin</p></mat-list-item>
           <mat-divider></mat-divider>
         </mat-nav-list>
     </mat-sidenav>
@@ -523,7 +523,7 @@
                       <!--<p><b>Country:  </b> {{patient.country.name}} </p>-->
                       <!--<p><b>Province:  </b> {{patient.province.name}} </p>-->
                       <!--<p><b>City:  </b> {{patient.city.name}} </p>-->
-                      <button type="button" class="btn btn-primary createbtn">View {{x.givenName}}'s Clients</button>
+                      <button type="button" class="btn btn-primary createbtn" (click) = "viewClients(x._id);">View {{x.givenName}}'s Clients</button>
                       <!--<button type="button" class="btn btn-primary createbtn"></button>-->
                     </div>
                     <ng-template #deletePhysio let-c="close" let-d="dismiss">
