@@ -1,6 +1,4 @@
-.inputForm {
-    width: 75%;
-}
+
 
 .inputGroup {
     margin: 2rem;
@@ -22,7 +20,7 @@
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 5px;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-
+    cursor: pointer;
 }
 
 .toemail {
@@ -39,4 +37,25 @@
 
 .tobody {
     margin-left: 1rem;
+}
+
+.invalInput {
+    color: red;
+    font-size: 12px;
+}
+
+.hintText {
+    font-size: 12px;
+}
+
+.smallText {
+    font-size: 12px;
+}
+
+.stepperbtn {
+    margin-top: 25px;
+}
+
+.instepbtn {
+    margin-top: 15px;
 }

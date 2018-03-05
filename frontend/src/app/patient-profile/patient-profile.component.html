@@ -1,13 +1,38 @@
 <h2>Clients</h2>
+<div *ngIf="invalidSearchArea" class="failedSearch">
+    Please enter a search area
+</div>
+<div class='blockContainer'>
+<div class='left'>
+  <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError()">
+      <option value='badvalue'>Search by...</option>
+      <option disabled='disabled'>----</option>
+      <option value="givenName">First Name</option>
+      <option value="familyName">Last Name</option>
+      <option value="email">Email</option>
+      <option value="username">Username</option>
+      <option value="ID">Patient ID</option>    
+  </select>
+</div>
+
+<div class="right">
 <div class="input-group mb-3 searchbar" id="custom-search-input">
-  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
-    <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value)"  location="top" ngbTooltip="Search">
+    <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, searchArea.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
     </button>
 </span>
 </div>
-<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
+</div>
+</div>
+
+<br> <br><br> <br> <br>
+<button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, searchArea.value);">Next Page</button>
+<button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, searchArea.value);">Previous Page</button>
+<button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngTooltip="refresh list" (click)="StandardPatientList()">
+    <i class="material-icons">refresh</i>
+</button>
 <!-- Beginning of New Client Modal -->
 <ng-template #newmodal let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -147,16 +172,18 @@
     Client was successfully deleted
 </div> -->
 <p *ngIf="showFailure" class="failureMessage">Request was unsuccessful, please try again later</p>
+
+<div class="dummyclr"></div> <!--To fix a problem that the float right buttons screws up the accordion -->
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
     <ngb-panel *ngFor="let patient of patients;">
       <ng-template ngbPanelTitle>
-        <span (click)="HideMessage(); GetProvinces(patient.country._id); GetCities(patient.province._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
+        <span (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         <button type="button" class="btn btn-secondary btn-sm" (click)="open(delete)" style="float: right;">Delete Client</button>
         <button type="button" class="btn btn-primary btn-sm" (click)="open(update)" style="float: right; margin-right:10px;">Edit Client</button>
       </ng-template>
 
-      <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
+      <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
       <ng-template #delete let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
@@ -167,12 +194,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id, acc); c('Close click')">Delete</button>
-          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
+          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>          
         </div>
       </ng-template>
-      <!-- End of Second Modal -->
+      <!-- End of First Modal -->
 
-      <!-- The first modal which will be brought up when the physiotherapist wants to update the patient-->
+      <!-- The Second modal which will be brought up when the physiotherapist wants to update the patient-->
       <ng-template #update let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
@@ -227,7 +254,7 @@
               <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
               <div class="col-sm-9">
                 <select #newGender class="mydropdown">
-                            <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
+                            <option value="{{patient.gender._id}}">{{patient?.gender?.name}}</option>
                             <option disabled="disabled">----</option>
                             <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
                   </select>
@@ -255,8 +282,7 @@
             <div class="form-group row">
               <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}"
-                  #newHealthCardNumber>
+                <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}" #newHealthCardNumber>
               </div>
             </div>
             <div class="form-group row">
@@ -285,7 +311,7 @@
               <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
               <div class="col-sm-9">
                 <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
-                          <option value="{{patient.province._id}}">{{patient.province.name}}</option>
+                          <option value="{{patient.province._id}}">{{patient?.province?.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
                   </select>
@@ -295,7 +321,7 @@
               <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
               <div class="col-sm-9">
                 <select #newCity class="mydropdown">
-                          <option value="{{patient.city._id}}">{{patient.city.name}}</option>
+                          <option value="{{patient.city._id}}">{{patient?.city?.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
                   </select>
@@ -309,7 +335,7 @@
           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
         </div>
       </ng-template>
-      <!-- End of First Modal -->
+      <!-- End of Second Modal -->
  
       <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
       <ng-template #emailModal let-c="close" let-d="dismiss">
@@ -341,19 +367,19 @@
 
       <ng-template ngbPanelContent>
         <div class="info">
-          <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
-          <p><b>Patient ID:  </b> {{patient.ID}}</p>
-          <p><b>Email:  </b> {{patient.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
-          <p><b>Date of Birth:  </b> {{patient.DOB | date: 'yyyy-MM-dd'}}</p>
-          <p><b>Gender:  </b> {{patient.gender.name}}</p>
-          <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
-          <p><b>Phone Number:  </b> {{patient.phone}}</p>
-          <p><b>Marital Status:  </b> {{patient.maritalStatus}}</p>
-          <p><b>Health Card Number:  </b> {{patient.healthCardNumber}}</p>
-          <p><b>Occupation:  </b> {{patient.occupation}}</p>
-          <p><b>Country:  </b> {{patient.country.name}} </p>
-          <p><b>Province:  </b> {{patient.province.name}} </p>
-          <p><b>City:  </b> {{patient.city.name}} </p>
+          <p><b>Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
+          <p><b>Patient ID:  </b> {{patient?.ID}}</p>
+          <p><b>Email:  </b> {{patient?.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
+          <p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
+          <p><b>Gender:  </b> {{patient?.gender?.name}}</p>
+          <p><b>Postal Code:  </b> {{patient?.postalCode}}</p>
+          <p><b>Phone Number:  </b> {{patient?.phone}}</p>
+          <p><b>Marital Status:  </b> {{patient?.maritalStatus}}</p>
+          <p><b>Health Card Number:  </b> {{patient?.healthCardNumber}}</p>
+          <p><b>Occupation:  </b> {{patient?.occupation}}</p>
+          <p><b>Country:  </b> {{patient?.country?.name}} </p>
+          <p><b>Province:  </b> {{patient?.province?.name}} </p>
+          <p><b>City:  </b> {{patient?.city?.name}} </p>
         </div>
 
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
