@@ -38,8 +38,18 @@ router.route('/')
             }
         });
         
+        var fullName = request.body.firstName + " " + request.body.lastName;
         var url = 'https://se3350finalproject-sammallabone.c9users.io:8082/api/temp/' + userAccessCode;
-        var emailBody = "<h1>Hey Bro Click This </h1> <p> " + url + "</p>";
+        //var emailBody = "<h1>Please click this link to verify your account </h1> <p> " + url + "</p>";
+        var emailBody = `
+        <body style="background: whitesmoke; text-align: center">
+            <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
+            <h4>Hello ${fullName} let us be the first to welcome you to Self Start. <br> We are happy that we can help with your treatment</h4>
+            <h4>Thank you for registering for Self Start! <br> <br>You are just one click away from being able to use the site and getting started </h4>
+            <h4> Please <a href="${url}" >click here</a> to verify your account! </h4>
+              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
+        </body>
+        `;
         var mailOptions = {
             to: request.body.email,
             subject: 'Please Verify Your Email For SelfStart',

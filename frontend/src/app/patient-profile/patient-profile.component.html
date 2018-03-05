@@ -26,16 +26,12 @@
 </div>
 <br> <br><br> <br> <br>
 <p class='orderTag'><b>Order:</b> </p>
-  <!-- <select #ascvsdesc class="ascvsdesc" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value, ascvsdesc.value)">
-    <option value='asc'>Ascending</option>
-    <option value='desc'>Descending</option>   
-  </select> -->
   <i *ngIf="!ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to ascending order">arrow_downward</i>
   <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to descending order">arrow_upward</i>
 
 <button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, searchArea.value);">Next Page</button>
 <button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, searchArea.value);">Previous Page</button>
-<button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngTooltip="refresh list" (click)="StandardPatientList()">
+<button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">
     <i class="material-icons">refresh</i>
 </button>
 <!-- -->
@@ -51,7 +47,7 @@
 <!-- <div *ngIf="showDeleteSuccess" class="alert alert-success" role="alert">
     Client was successfully deleted
 </div> -->
-<div *ngIf="showFailure">
+<div *ngIf="showFailure" class="dangeralrt">
   <p class="failureMessage">Request was unsuccessful, please try again later</p>
 </div>
 <div class="dummyclr"></div> <!--To fix a problem that the float right buttons screws up the accordion -->
@@ -154,6 +150,15 @@
               </div>
             </div>
             <div class="form-group row">
+                <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputAddress" placeholder="Address" value="{{patient.address}}" #newAddress>
+                  <div *ngIf='invalidAddress' class='invalInput'>
+                      Please enter a valid Address
+                  </div>
+                </div>
+              </div>
+            <div class="form-group row">
               <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
@@ -165,8 +170,8 @@
             <div class="form-group row">
               <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
-                <div *ngIf='invalidFirstName' class='invalInput'>
+                <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" (keyup)="closeWarning()" #newPhoneNumber>
+                <div *ngIf='invalidPhoneNumber' class='invalInput'>
                     Please enter a valid phone number
                 </div>
               </div>
@@ -199,11 +204,11 @@
             <div class="form-group row">
               <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
               <div class="col-sm-9">
-                <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value)">
+                <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value); cannotContinue=false;">
                           <option value="{{patient.country._id}}">{{patient.country.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-                  </select>
+                </select>
               </div>
             </div>
             <div class="form-group row">
@@ -213,7 +218,7 @@
                           <option value="{{patient.province._id}}">{{patient?.province?.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-                  </select>
+                </select>
               </div>
             </div>
             <div class="form-group row">
@@ -223,17 +228,17 @@
                           <option value="{{patient.city._id}}">{{patient?.city?.name}}</option>
                           <option disabled="disabled">----</option>
                           <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
-                  </select>
+                </select>
               </div>
             </div>
           </form>
 
         </div>
         <div class="modal-footer">
-            
-          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, acc); ">Confirm</button>
-          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-          <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>
+          <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
+          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value, acc); ">Confirm</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click'); ResetErrorMessages();">Cancel</button>
+          <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>  
         </div>
       </ng-template>
       <!-- End of Second Modal -->
@@ -275,6 +280,7 @@
           <p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
           <p><b>Age: </b> {{calculateAge(patient?.DOB)}} years old</p>
           <p><b>Gender:  </b> {{patient?.gender?.name}}</p>
+          <p><b>Address: </b> {{patient?.address}}</p>
           <p><b>Postal Code:  </b> {{patient?.postalCode}}</p>
           <p><b>Phone Number:  </b> {{patient?.phone}}</p>
           <p><b>Country:  </b> {{patient?.country?.name}} </p>

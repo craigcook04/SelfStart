@@ -138,6 +138,12 @@
         </div>
       </div>
       <div class="form-group row">
+          <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputAddress" placeholder="Address" #newPatientAddress>
+          </div>
+        </div>
+      <div class="form-group row">
         <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #newPatientPostalCode>
@@ -202,7 +208,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value); c('Close click')">Confirm</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value, newPatientAddress.value); c('Close click')">Confirm</button>
     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
@@ -291,6 +297,12 @@
                             </div>
                           </div>
                           <div class="form-group row">
+                              <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputAddress" placeholder="Address" #newAddress>
+                              </div>
+                            </div>
+                          <div class="form-group row">
                             <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
@@ -360,7 +372,7 @@
 
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value); c('Close click')">Confirm</button>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); c('Close click')">Confirm</button>
                         <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
                       </div>
                     </ng-template>
