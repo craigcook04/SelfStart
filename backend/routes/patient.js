@@ -38,24 +38,38 @@ router.route('/')
         userAccount.userAccountName = request.body.username;
         userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
         console.log(userAccount.encryptedPassword);
-        
-        userAccount.save(function(err, userAccount) {
-            if(err){
+        UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
+            if(err) {
                 response.send(err);
                 return;
             }
-            //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
-            patient.account = userAccount._id;
             
-            patient.save(function (error) {
-            if (error) {
-                response.send(error);
+            console.log(retpatient.length);
+            
+            if(retpatient.length != 0) {
+                //someone with this username already exists
+                response.send({success: false, message: "Please choose a different username"});
                 return;
             }
-            
-            response.json({success: true, patient: patient});
-        });
-        });
+        
+            userAccount.save(function(err, userAccount) {
+                if(err){
+                    response.send(err);
+                    return;
+                }
+                //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
+                patient.account = userAccount._id;
+                
+                patient.save(function (error) {
+                if (error) {
+                    response.send(error);
+                    return;
+                }
+                
+                response.json({success: true, patient: patient});
+            });
+            });
+        })
         
     })
 
@@ -106,9 +120,16 @@ router.route('/')
             query = {};
         }
         
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
         var myparameter = request.query.s;
         var sort ={};
-        sort[myparameter] = request.query.sortOrder;
+        sort[myparameter] = sortOrder;
         var options = 
         {
             sort: sort,
