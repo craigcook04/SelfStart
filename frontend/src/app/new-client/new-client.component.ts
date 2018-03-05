@@ -26,6 +26,7 @@ export class NewClientComponent implements OnInit {
   invalidPhoneNumber: boolean = false;
   invalidPostalCode: boolean = false;
   invalidCountry: boolean = false;
+  newUsername: boolean = false;
 
   constructor(private newClientService: NewClientService,
               private patientService: PatientService,
@@ -122,6 +123,7 @@ export class NewClientComponent implements OnInit {
     this.invalidPostalCode = false;
     this.invalidCountry = false;  
     this.invalidEmail = false;
+    this.newUsername = false;
   }
 
   createClient(makeChanges,successfulModal, stepper) {
@@ -253,7 +255,7 @@ export class NewClientComponent implements OnInit {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
-        this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
+        this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
           console.log(data);
           document.body.style.cursor = 'default';
           this.modalService.open(successfulModal);
@@ -261,6 +263,9 @@ export class NewClientComponent implements OnInit {
       }
       else {
         //the user will be shown an error in the creation problem along the lines of there being a server problem.
+        stepper.reset();
+        var usernameBox = document.getElementById('inputUsername').style.borderColor = 'red';
+        this.newUsername = true;
       }
     })
   }

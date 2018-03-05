@@ -32,11 +32,13 @@ export class NewClientService {
     return this.http.post(url, body);
   }
 
-  SendToVerification(userID: String, email: String) {
+  SendToVerification(userID: String, email: String, firstName: string, lastName: string) {
     var url = "/api/temp";
     var body = {
       userID: userID,
-      email: email
+      email: email,
+      firstName: firstName,
+      lastName: lastName
     }
 
     return this.http.post(url, body);
