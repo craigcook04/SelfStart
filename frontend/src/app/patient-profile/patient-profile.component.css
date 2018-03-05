@@ -17,12 +17,16 @@
     margin-left: 2.5em;
     color: green;
     font-size: 16px;
+    vertical-align: middle;
+    line-height: 44px;
 }
 
 .failureMessage {
     margin-left: 2.5em;
     color: red;
     font-size: 16px;
+    vertical-align: middle;
+    line-height: 44px;
 }
 
 .failedSearch {
@@ -215,4 +219,31 @@ h2 {
 
 .hddn {
     display: none;
+    
+}
+
+.alrt {
+    height: 44px;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    margin-left: 2.5rem;
+    margin-right: 10rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem; 
+    border-radius: 2.5px;
+    vertical-align: middle;
+}
+
+.dangeralrt {
+    height: 44px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    margin-left: 2.5rem;
+    margin-right: 10rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem; 
+    border-radius: 2.5px;
+    vertical-align: middle;
 }
