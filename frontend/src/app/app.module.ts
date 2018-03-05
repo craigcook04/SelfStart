@@ -42,7 +42,6 @@ import {MatInputModule} from '@angular/material/input';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
-import { EmailValidationComponent } from './email-validation/email-validation.component';
 //import {MatButtonModule} from '@angular/material/button';
 //import {MatIconModule} from '@angular/material/icon';
 
@@ -64,8 +63,7 @@ import { EmailValidationComponent } from './email-validation/email-validation.co
     BookAppointmentComponent,
     UserAccountsComponent,
     NewClientComponent,
-    ClientsOfTherapistComponent,
-    EmailValidationComponent
+    ClientsOfTherapistComponent
 
   ],
   imports: [
