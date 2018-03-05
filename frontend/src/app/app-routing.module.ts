@@ -14,8 +14,8 @@ import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {RehabPlansComponent} from './rehab-plans/rehab-plans.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import {UserAccountsComponent} from './user-accounts/user-accounts.component';
-//import {ExercisesComponent} from './exercises/exercises.component';
 import {NewClientComponent} from './new-client/new-client.component';
+import{ BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import {ClientsOfTherapistComponent} from './clients-of-therapist/clients-of-therapist.component';
 import {AppointmentsComponent} from './appointments/appointments.component';
 
@@ -32,6 +32,8 @@ const routes: Routes = [
   {path: 'adminhome', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
+  {path: 'signup', component: NewClientComponent},
+  {path: 'bookappointment', component: BookAppointmentComponent},
   {path: 'useraccounts', component:UserAccountsComponent},
   {path: 'signup', component: NewClientComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
