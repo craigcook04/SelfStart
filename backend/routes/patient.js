@@ -32,6 +32,7 @@ router.route('/')
         patient.city = request.body.city;
         patient.gender = request.body.gender;
         patient.appointment = request.body.appointment;
+        patient.address = request.body.address;
         patient.verified = false;
         
         var userAccount = new UserAccount();
@@ -190,6 +191,7 @@ router.route('/:patient_id')
                 patient.province = request.body.province;
                 patient.city = request.body.city;
                 patient.gender = request.body.gender;
+                patient.address = request.body.address;
 
                 console.log(request.body);
                 patient.save(function (error) {

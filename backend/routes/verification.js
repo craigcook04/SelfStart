@@ -39,7 +39,7 @@ router.route('/')
         });
         
         var url = 'https://se3350finalproject-sammallabone.c9users.io:8082/api/temp/' + userAccessCode;
-        var emailBody = "<h1>Hey Bro Click This </h1> <p> " + url + "</p>";
+        var emailBody = "<h1>Please click this link to verify your account </h1> <p> " + url + "</p>";
         var mailOptions = {
             to: request.body.email,
             subject: 'Please Verify Your Email For SelfStart',
