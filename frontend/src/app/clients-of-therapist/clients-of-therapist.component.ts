@@ -117,10 +117,10 @@ export class ClientsOfTherapistComponent implements OnInit {
       this.cities = Object.assign([], retObj.cities);
     });
   }
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: any, newProvince: any, newCity: any, newGender: any) {
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: any, newProvince: any, newCity: any, newGender: any, newAddress: any) {
     
    //this.showSuccess = true;
-    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
       console.log(data);
       //reload the list of patients
       this.patientService.getPhysioPatients(this.physioId).subscribe(data => {
