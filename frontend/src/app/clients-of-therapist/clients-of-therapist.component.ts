@@ -22,6 +22,7 @@ export class ClientsOfTherapistComponent implements OnInit {
   
   
   clients: Object[];
+  allClients: Object[];
   activated: any;
   physioId: string;
   therapist: any = " ";
@@ -56,6 +57,10 @@ export class ClientsOfTherapistComponent implements OnInit {
       this.clients = Object.assign([], retObj.docs);
       console.log('hello');
       // console.log(this.patients);
+    });
+    this.patientService.GetAllPatients().subscribe(data => {
+        this.allClients = Object.assign([], data.docs);
+        console.log(data);
     });
 
     this.patientService.GetGenders().subscribe(data => {

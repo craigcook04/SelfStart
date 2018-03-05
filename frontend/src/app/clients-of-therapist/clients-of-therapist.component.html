@@ -30,7 +30,7 @@
       <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <mat-sidenav-content style=" background-color: white;">
 
 
@@ -470,6 +470,21 @@
         </ngb-tab>
         <ngb-tab title="Add Client from Existing Client">
           <ng-template ngbTabContent>
+            <h2>Add These Clients to Physio:</h2>
+            <div *ngFor = "let x of possibleClients">
+              
+            </div>
+            <hr class = "hr3">
+            <br><br><br>
+            <h2>Choose which clients to add to this Physio</h2>
+             <div *ngFor = "let client of allClients">
+               <label style = "float: left;">{{client.givenName}}</label>
+               <button style = "border: none; float: right; background-color: white;"><i class="fa fa-plus-square-o" style="font-size:24px; color:green;"></i></button>
+               
+               <br>
+               <hr class = "dvder">
+               <br><br>              
+            </div>
           </ng-template>
         </ngb-tab>
 
