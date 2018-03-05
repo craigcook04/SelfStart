@@ -23,6 +23,7 @@ import { ExerciseService } from './exercise.service';
 import { FormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,6 +57,8 @@ import { BookingsDirective } from './bookings.directive';
     ExercisesComponent,
     PatientProfileComponent,
     AdminHomeComponent,
+    BookAppointmentComponent,
+    NewClientComponent,
     UserAccountsComponent,
     NewClientComponent,
     ClientsOfTherapistComponent,
