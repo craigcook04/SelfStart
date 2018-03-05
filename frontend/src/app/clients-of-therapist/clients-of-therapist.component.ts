@@ -42,7 +42,7 @@ export class ClientsOfTherapistComponent implements OnInit {
     this.patientService.getPhysioPatients(this.physioId).subscribe(data => {
       console.log(data);
       var retObj: any = data;
-      this.clients = Object.assign([], retObj.patient);
+      this.clients = Object.assign([], retObj.docs);
       console.log('hello');
       // console.log(this.patients);
     });
