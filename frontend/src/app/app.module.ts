@@ -25,13 +25,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
 import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
-<<<<<<< HEAD
-import { UserAccountsService } from './user-accounts.service';
-
-
-=======
 import {UserAccountsService} from './user-accounts.service';
->>>>>>> 3f22138c585a7f781536ea02a74f7d07edbabb31
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule } from '@angular/material'; 
 import { EmailService } from './email.service';
