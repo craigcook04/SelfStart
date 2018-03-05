@@ -123,7 +123,7 @@ export class NewClientComponent implements OnInit {
     this.invalidEmail = false;
   }
 
-  createClient(makeChanges) {
+  createClient(makeChanges,successfulModal) {
     //because of the scoping rules of the md-step, the values of the text boxes need to be retrieved with javascript
     //need to retrieve all the textboxes and extract their values
     var username: any = document.getElementById('inputUsername');
@@ -248,7 +248,7 @@ export class NewClientComponent implements OnInit {
       if(retObj.success == true) {
         this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
           console.log(data);
-          this.router.navigate(['../home']);
+          this.modalService.open(successfulModal);
         })
       }
       else {
@@ -256,5 +256,10 @@ export class NewClientComponent implements OnInit {
       }
     })
   }
+
+
+GoHome() {
+  this.router.navigate(['../home']);
+}
 
 }
