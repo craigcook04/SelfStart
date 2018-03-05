@@ -242,7 +242,7 @@ export class NewClientComponent implements OnInit {
       return;
     }
 
-    this.newClientService.CreateClient(username, password, firstName, lastName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city).subscribe(data => {
+    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {

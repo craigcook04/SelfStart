@@ -12,7 +12,7 @@ export class PatientService {
   constructor(private http: HttpClient) { }
 
   GetAllPatients() : any{
-    var url = '/api/patient?s=familyName&sortOrder=1&offset=0';
+    var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
     return this.http.get(url);
   }
   getPhysioPatients(id: string){
@@ -49,8 +49,8 @@ export class PatientService {
     return this.http.delete(url);
   }
 
-  SearchPatient(searchString: string, searchArea: string, offset) {
-    var url = '/api/patient?q=' + searchString + '&s=' + searchArea + '&sortOrder=1&offset=' + offset;
+  SearchPatient(searchString: string, searchArea: string, offset, ascvsdesc) {
+    var url = '/api/patient?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
     return this.http.get(url);
   }
 

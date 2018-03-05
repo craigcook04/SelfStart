@@ -4,20 +4,18 @@
 </div>
 <div class='blockContainer'>
 <div class='left'>
-  <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError()">
-      <option value='badvalue'>Search by...</option>
+  <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value)">
+      <option value='familyName'>Search by...</option>
       <option disabled='disabled'>----</option>
       <option value="givenName">First Name</option>
       <option value="familyName">Last Name</option>
       <option value="email">Email</option>
-      <option value="username">Username</option>
       <option value="ID">Patient ID</option>    
   </select>
 </div>
-
 <div class="right">
 <div class="input-group mb-3 searchbar" id="custom-search-input">
-  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search for clients here..." aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+  <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
   <span class="input-group-btn">
     <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, searchArea.value)"  location="top" ngbTooltip="Search">
       <fa name="search"></fa>
@@ -26,8 +24,15 @@
 </div>
 </div>
 </div>
-
 <br> <br><br> <br> <br>
+<p class='orderTag'><b>Order:</b> </p>
+  <!-- <select #ascvsdesc class="ascvsdesc" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value, ascvsdesc.value)">
+    <option value='asc'>Ascending</option>
+    <option value='desc'>Descending</option>   
+  </select> -->
+  <i *ngIf="!ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to ascending order">arrow_downward</i>
+  <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to descending order">arrow_upward</i>
+
 <button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, searchArea.value);">Next Page</button>
 <button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, searchArea.value);">Previous Page</button>
 <button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngTooltip="refresh list" (click)="StandardPatientList()">
@@ -200,7 +205,7 @@
       <!-- End of First Modal -->
 
       <!-- The Second modal which will be brought up when the physiotherapist wants to update the patient-->
-      <ng-template #update let-c="close" let-d="dismiss">
+      <ng-template #update let-c="close" let-d="dismiss" id="updateModal">
         <div class="modal-header">
           <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
         </div>
@@ -210,12 +215,18 @@
               <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
+                <div *ngIf='invalidFirstname' class='invalInput'>
+                    Please enter a valid first name
+                </div>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
+                <div *ngIf='invalidLastname' class='invalInput'>
+                    Please enter a valid last name
+                </div>
               </div>
             </div>
             <div class="form-group row">
@@ -229,12 +240,18 @@
               <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
+                <div *ngIf='invalidEmail' class='invalInput'>
+                    Please enter a valid email
+                </div>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
+                <div *ngIf='invalidFirstName' class='invalInput'>
+                    Please enter a valid Date of Birth
+                </div>
               </div>
             </div>
             <!-- <div class="form-group row">
@@ -254,22 +271,28 @@
               <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
               <div class="col-sm-9">
                 <select #newGender class="mydropdown">
-                            <option value="{{patient.gender._id}}">{{patient?.gender?.name}}</option>
-                            <option disabled="disabled">----</option>
-                            <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
-                  </select>
+                      <option value="{{patient.gender._id}}">{{patient?.gender?.name}}</option>
+                      <option disabled="disabled">----</option>
+                      <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
+                <div *ngIf='invalidPostalCode' class='invalInput'>
+                    Please enter a valid Postal Code
+                </div>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
+                <div *ngIf='invalidFirstName' class='invalInput'>
+                    Please enter a valid phone number
+                </div>
               </div>
             </div>
             <div class="form-group row">
@@ -331,8 +354,10 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, acc); c('Close click')">Confirm</button>
+            
+          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, acc); ">Confirm</button>
           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+          <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>
         </div>
       </ng-template>
       <!-- End of Second Modal -->
@@ -367,19 +392,21 @@
 
       <ng-template ngbPanelContent>
         <div class="info">
+          <p><b>Username: </b> {{patient?.account?.userAccountName}}</p>
           <p><b>Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
           <p><b>Patient ID:  </b> {{patient?.ID}}</p>
           <p><b>Email:  </b> {{patient?.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
           <p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
           <p><b>Gender:  </b> {{patient?.gender?.name}}</p>
           <p><b>Postal Code:  </b> {{patient?.postalCode}}</p>
-          <p><b>Phone Number:  </b> {{patient?.phone}}</p>
+          <p><b>Phone Number:  </b> {{patient?.phone}}</p><i class="material-icons emailer" data-clipboard-target="#dummyInput">description</i>
           <p><b>Marital Status:  </b> {{patient?.maritalStatus}}</p>
           <p><b>Health Card Number:  </b> {{patient?.healthCardNumber}}</p>
           <p><b>Occupation:  </b> {{patient?.occupation}}</p>
           <p><b>Country:  </b> {{patient?.country?.name}} </p>
           <p><b>Province:  </b> {{patient?.province?.name}} </p>
           <p><b>City:  </b> {{patient?.city?.name}} </p>
+          <input type='text' class='dummy' id="dummyInput" value='{{patient.phone}}' #getPhoneNumber/>
         </div>
 
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
