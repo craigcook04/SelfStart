@@ -40,12 +40,9 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
 import { AppointmentsComponent } from './appointments/appointments.component';
 //import {MatButtonModule} from '@angular/material/button';
 //import {MatIconModule} from '@angular/material/icon';
-<<<<<<< HEAD
 import { ClipboardModule } from 'ngx-clipboard';
-=======
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
->>>>>>> 702b3fbf852767cde75429e029b75ee2c02af4f8
 
 
 @NgModule({
