@@ -1,0 +1,35 @@
+td {
+    height: 30px;
+    width: 10px;
+}
+
+
+.timeOfDay{
+    -webkit-transform: rotate(90deg);
+    font-size: 10px;
+    padding-bottom: 15px;
+    margin: auto;
+}
+
+.weekDay{
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.timeSlot{
+    border: 1px solid white;
+    background-color: white;
+    height: 30px;
+    width: 10px;
+}
+
+.calendar{
+    margin: auto;
+}
+
+.chooseTime{
+    height: 30px;
+    width: 100%;
+}
+
+
