@@ -26,7 +26,7 @@ h2 {
     width:65%;
 }
 .active, .accordion:hover {
-    width:75%;
+    width:90%;
     background-color: #F0F8FF; 
     
    
@@ -50,7 +50,7 @@ hr {
     /*color: blue;*/
     
     float: left;
-    width: 75%;
+    width: 90%;
     
 } 
 .accordion:after {

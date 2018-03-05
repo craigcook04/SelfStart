@@ -77,6 +77,11 @@ export class ClientsOfTherapistComponent implements OnInit {
       this.provinces = Object.assign([], retObj.province);
     })
   }
+  clear(){
+    console.log("in here");
+  
+    
+  }
 
   GetCities(provinceId: string) {
     //retrieve all cities within a certain province

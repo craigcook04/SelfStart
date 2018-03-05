@@ -9,6 +9,10 @@
 h3 {
     margin: 1em;
 }
+.tab{
+    width: 80%;
+    margin-left: 60px;
+}
 
 
 .example-sidenav-content {
@@ -50,7 +54,7 @@ h3 {
     width:65%;
 }
 .active, .accordion:hover {
-    width:75%;
+    width:90%;
     background-color: #F0F8FF; 
 }
 .accordion:after {
@@ -64,7 +68,7 @@ h3 {
     
     
 }
-hr { 
+.hr1 { 
     display: block;
     /*margin-top: 0.5em;*/
     /*margin-bottom: 0.5em;*/
@@ -77,9 +81,13 @@ hr {
     /*color: blue;*/
     
     float: left;
-    width: 75%;
+    width: 90%;
     
 } 
+.dvder {
+    float:left;
+    width:75%;    
+}
 #custom-search-input{
     padding: 3px;
     padding-left: 0px;
