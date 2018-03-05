@@ -42,8 +42,11 @@ import {MatInputModule} from '@angular/material/input';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
 //import {MatButtonModule} from '@angular/material/button';
 //import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MomentModule} from 'angular2-moment/moment.module';
 
 
 @NgModule({
@@ -64,7 +67,8 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
     NewClientComponent,
     UserAccountsComponent,
     NewClientComponent,
-    ClientsOfTherapistComponent
+    ClientsOfTherapistComponent,
+    AppointmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +89,8 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
     MatFormFieldModule,
     MatInputModule,
     NoopAnimationsModule,
+    MatGridListModule,
+    MomentModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService],
   bootstrap: [AppComponent]
