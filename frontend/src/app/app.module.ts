@@ -37,9 +37,15 @@ import {MatInputModule} from '@angular/material/input';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
 //import {MatButtonModule} from '@angular/material/button';
 //import {MatIconModule} from '@angular/material/icon';
+<<<<<<< HEAD
 import { ClipboardModule } from 'ngx-clipboard';
+=======
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MomentModule} from 'angular2-moment/moment.module';
+>>>>>>> 702b3fbf852767cde75429e029b75ee2c02af4f8
 
 
 @NgModule({
@@ -58,7 +64,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     AdminHomeComponent,
     UserAccountsComponent,
     NewClientComponent,
-    ClientsOfTherapistComponent
+    ClientsOfTherapistComponent,
+    AppointmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +86,12 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatFormFieldModule,
     MatInputModule,
     NoopAnimationsModule,
+<<<<<<< HEAD
     ClipboardModule
+=======
+    MatGridListModule,
+    MomentModule
+>>>>>>> 702b3fbf852767cde75429e029b75ee2c02af4f8
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService],
   bootstrap: [AppComponent]
