@@ -49,9 +49,4 @@ export class AppointmentsComponent implements OnInit {
       this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
     }
   }
-  
-  
-  
-  
-
 }
