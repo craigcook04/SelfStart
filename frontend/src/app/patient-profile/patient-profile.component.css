@@ -207,3 +207,12 @@ h2 {
      margin-left: 6rem;
      color: blue;
  }
+
+ .invalInput {
+    color: red;
+    font-size: 12px;
+}
+
+.hddn {
+    display: none;
+}

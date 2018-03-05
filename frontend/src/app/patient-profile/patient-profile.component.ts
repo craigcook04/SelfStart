@@ -18,12 +18,22 @@ export class PatientProfileComponent implements OnInit {
   showFailure: boolean;
   emailSuccess: boolean;
   invalidSearchArea: boolean;
+  invalidFirstname: boolean = false;
+  invalidLastname: boolean = false;
+  invalidDOB: boolean = false;
+  invalidPhoneNumber: boolean = false;
+  invalidPostalCode: boolean = false;
+  invalidEmail: boolean = false;
+  invalidGender: boolean = false;
+  invalidCountry: boolean = false;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
   cities: Object[];
   genders: Object[];
   ascendingOrd: boolean = true;
+  cannotContinue: boolean = false;
+  
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
               private emailService: EmailService) { }
@@ -45,6 +55,7 @@ export class PatientProfileComponent implements OnInit {
   StandardPatientList() {
     var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
     this.invalidSearchArea = false;
+    this.ascendingOrd = true;
     this.patientService.GetAllPatients().subscribe(data => {
       this.patients = Object.assign([], data.docs);
       console.log('hello');
@@ -56,8 +67,71 @@ export class PatientProfileComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
 
+  ResetErrorMessages() {
+    //Reset all the error messages. Then new ones will be shown if some still exist
+    var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'rgba(0,0,0,.15)';  
+    var lastnameBox = document.getElementById('inputLastName').style.borderColor = 'rgba(0,0,0,.15)';  
+    var DOBBox = document.getElementById('inputDOB').style.borderColor = 'rgba(0,0,0,.15)';
+    var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'rgba(0,0,0,.15)'; 
+    var emailBox = document.getElementById('inputEmail').style.borderColor = 'rgba(0,0,0,.15)';
+    var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'rgba(0,0,0,.15)';
+    this.invalidFirstname= false;
+    this.invalidLastname= false;
+    this.invalidGender= false;
+    this.invalidDOB= false;
+    this.invalidPhoneNumber = false;
+    this.invalidPostalCode = false;
+    this.invalidEmail = false;
+  }
+
   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, acc) {
+    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+    this.cannotContinue = false;
+
+    if(badFormatWithNumbers.test(firstName) || !firstName) {
+      var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'red';    
+      this.invalidFirstname = true;
+      this.cannotContinue = true;
+    }
+
+    if(badFormatWithNumbers.test(lastName) || !lastName) {
+      var firstnameBox = document.getElementById('inputLastName').style.borderColor = 'red';    
+      this.invalidLastname = true;
+      this.cannotContinue = true;
+    }
+
+    if(!DOB) {
+      var DOBBox = document.getElementById('inputDOB').style.borderColor = 'red';
+      this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+
+    if(!postalCode) {
+      var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'red';
+      this.invalidPostalCode = true;
+      this.cannotContinue = true;
+    }
     
+    if(!validPhoneNumber.test(phoneNumber)){
+      var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
+      this.invalidPhoneNumber = true;
+      this.cannotContinue = true;
+    }
+    if(!emailFormat.test(email)) {
+      var emailBox = document.getElementById('inputEmail').style.borderColor = 'red';
+      this.invalidEmail = true;
+      this.cannotContinue = true;
+    }
+
+    if(this.cannotContinue) {
+      //user cannot continue until changes have been fixed
+      return;
+    }
+
     this.showSuccess = true;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
       console.log(data);
@@ -70,6 +144,8 @@ export class PatientProfileComponent implements OnInit {
       if(data.success) {
         //the update was successful
         this.showSuccess = true;
+        var closebtn: any= document.getElementById('closeBtn');
+        closebtn.click();
       }
       else{
         //it was not successful
