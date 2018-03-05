@@ -58,4 +58,10 @@
 
 .instepbtn {
     margin-top: 15px;
+    cursor: pointer;
+}
+
+.dvder {
+    float:left;
+    width:75%;    
 }
