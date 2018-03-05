@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../patient.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { EmailService } from '../email.service'
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-patient-profile',
@@ -318,6 +319,12 @@ export class PatientProfileComponent implements OnInit {
 
   ChangeOrder() {
     this.ascendingOrd = !this.ascendingOrd;
+  }
+
+  calculateAge(DOB: string) {
+    var years = moment().diff(DOB, 'years');
+    console.log(years);
+    return years;
   }
 
 }

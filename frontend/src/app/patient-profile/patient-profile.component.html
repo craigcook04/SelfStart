@@ -273,12 +273,10 @@
           <p><b>Patient ID:  </b> {{patient?.ID}}</p>
           <p><b>Email:  </b> {{patient?.email}} <fa name="envelope-o" class="emailer" (click)="open(emailModal)"></fa></p>
           <p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
+          <p><b>Age: </b> {{calculateAge(patient?.DOB)}} years old</p>
           <p><b>Gender:  </b> {{patient?.gender?.name}}</p>
           <p><b>Postal Code:  </b> {{patient?.postalCode}}</p>
-          <p><b>Phone Number:  </b> {{patient?.phone}}</p><i class="material-icons emailer" data-clipboard-target="#dummyInput">description</i>
-          <p><b>Marital Status:  </b> {{patient?.maritalStatus}}</p>
-          <p><b>Health Card Number:  </b> {{patient?.healthCardNumber}}</p>
-          <p><b>Occupation:  </b> {{patient?.occupation}}</p>
+          <p><b>Phone Number:  </b> {{patient?.phone}}</p>
           <p><b>Country:  </b> {{patient?.country?.name}} </p>
           <p><b>Province:  </b> {{patient?.province?.name}} </p>
           <p><b>City:  </b> {{patient?.city?.name}} </p>
