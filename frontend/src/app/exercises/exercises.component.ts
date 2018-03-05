@@ -8,6 +8,7 @@ import { ImageService } from '../image.service';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-config';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 
+
 const URL = '/api/image';
 
 @Component({
@@ -22,10 +23,10 @@ export class ExercisesComponent implements OnInit {
   exercises: Object [];
   closeResult: string;
   images: any [];
-  maxSize: number = 1024;
+  activated: any;
 
   @ViewChild('carousel') carousel:NgbCarousel;
-  @ViewChild('dp') dp: any;
+  @ViewChild('dp1') dp: any;
 
   public uploader:FileUploader = new FileUploader({url: URL});
 
@@ -59,13 +60,11 @@ export class ExercisesComponent implements OnInit {
       //now link images to exercise
       console.log(data.exercise._id);
 
-      if(fileNames.length > 1){
-        fileNames.forEach(element => {
-          this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-            console.log(data);
-          })
-        });
-      }
+      fileNames.forEach(element => {
+        this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+          console.log(data);
+        })
+      })
       //window.location.reload();
     })
   }
@@ -125,6 +124,17 @@ export class ExercisesComponent implements OnInit {
 
       console.log(data);
     })
+  }
+
+  show(exercise: any){
+    if(this.activated == exercise){
+      this.activated = null;
+    }
+    else{
+      this.activated = exercise;
+    }
+
+    // this.dp.navigateTo(exercise.targDate);
   }
 
 }
