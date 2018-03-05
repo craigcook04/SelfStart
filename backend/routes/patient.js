@@ -127,6 +127,7 @@ router.route('/')
         else {
             sortOrder = -1;
         }
+        
         var myparameter = request.query.s;
         var sort ={};
         sort[myparameter] = sortOrder;
@@ -184,13 +185,11 @@ router.route('/:patient_id')
                 patient.healthCardNumber = request.body.healthCardNumber;
                 patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
-                patient.account = request.body.account;
                 patient.payment = request.body.payment;
                 patient.country = request.body.country;
                 patient.province = request.body.province;
                 patient.city = request.body.city;
                 patient.gender = request.body.gender;
-                patient.appointment = request.body.appointment;
 
                 console.log(request.body);
                 patient.save(function (error) {
