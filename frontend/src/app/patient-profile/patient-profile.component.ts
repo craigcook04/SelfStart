@@ -27,6 +27,7 @@ export class PatientProfileComponent implements OnInit {
   invalidEmail: boolean = false;
   invalidGender: boolean = false;
   invalidCountry: boolean = false;
+  invalidAddress: boolean = false;
   patients: Object[];
   countries: Object[];
   provinces: Object[];
@@ -57,6 +58,7 @@ export class PatientProfileComponent implements OnInit {
     var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
     this.invalidSearchArea = false;
     this.ascendingOrd = true;
+    
     this.patientService.GetAllPatients().subscribe(data => {
       this.patients = Object.assign([], data.docs);
       console.log('hello');
@@ -76,6 +78,7 @@ export class PatientProfileComponent implements OnInit {
     var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'rgba(0,0,0,.15)'; 
     var emailBox = document.getElementById('inputEmail').style.borderColor = 'rgba(0,0,0,.15)';
     var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'rgba(0,0,0,.15)';
+    var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'rgba(0,0,0,.15)';    
     this.invalidFirstname= false;
     this.invalidLastname= false;
     this.invalidGender= false;
@@ -85,7 +88,7 @@ export class PatientProfileComponent implements OnInit {
     this.invalidEmail = false;
   }
 
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, acc) {
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string, acc) {
     var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
     var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
     var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
@@ -108,6 +111,12 @@ export class PatientProfileComponent implements OnInit {
     if(!DOB) {
       var DOBBox = document.getElementById('inputDOB').style.borderColor = 'red';
       this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+
+    if(!newAddress) {
+      var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'red';
+      this.invalidAddress = true;
       this.cannotContinue = true;
     }
 
@@ -134,7 +143,7 @@ export class PatientProfileComponent implements OnInit {
     }
 
     this.showSuccess = true;
-    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
       console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
