@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ViewChild } from '@angular/core/';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import {MatStepperModule} from '@angular/material/stepper';
 
 const URL = "/api/image/bookappointment"
 const now = new Date();

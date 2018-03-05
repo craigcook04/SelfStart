@@ -40,7 +40,7 @@
                 <div class="form-group row">
                     <label for="example-email-input" class="col-2 col-form-label"><strong>Description</strong></label>
                     <div class="col-10">
-                        <textarea class="form-control" placeholder="Enter a short description outline your injury/hindrance" rows="3"></textarea>
+                        <textarea class="form-control" placeholder="Enter a short description outline your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -81,118 +81,245 @@
         </div>
         <div class="modal-body">
             <div id="scrollable">
-                <div class="form-group row">
-                    <label class="col-2 col-form-label"><strong>Client Name</strong></label>
-                    <div class="col-10">
-                        <input class="form-control" type="text" placeholder="John Doe" >
-                    </div>
-                </div>
-                <div class="form-group row">
-                        <label for="inputTargDate" class="col-2 col-form-label"><strong>Date</strong></label>
-                        <div class="col-10">
-                            <div class="input-group">
-                              <input id="dp" class="form-control" placeholder="yyyy-mm-dd" name="dp1" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                                  </button>
+                <mat-vertical-stepper>
+                    <mat-step label="Terms and Conditions">
+                        <p>
+                            <b>CONSENT TO PARTICIPATE:</b> I voluntarily authorize and give consent to Kingsville Physiotherapy Clinic to provide its services to me. This includes, but is not limited to, evaluation, exercises prescription and other corrective procedures. I acknowledge that no guarantees have been, or can be made to me, as to the result of the services provided at Kingsville Physiotherapy Clinic.
+                        </p>
+                        <p>
+                            <b>ACKNOWLEDGEMENT OF INFORMED CONSENT:</b> I understand that I will be informed of the potential risks and benefits of all services provided by Kingsville Physiotherapy Clinic. I understand that I have the right to consent or refuse consent to any procedure or service offered by Kingsville Physiotherapy Clinic.
+                        </p>
+                        <p>
+                            <b>AUTHORIZATION TO RELEASE INFORMATION:</b> I authorize the release of any information contained in my Kingsville Physiotherapy record for the following purposes:
+                        </p>
+                        <ol>
+                            <li>
+                                at my request, to assist in processing my insurance claims
+                            </li>
+                            <li>
+                                to provide information to my health professional referral source (personal physician)
+                            </li>
+                        </ol>
+                    </mat-step>
+                    <mat-step label="Confidential Client Information Sheet">
+                            <div class="form-group row">
+                                    <label class="col-2 col-form-label"><strong>Client Name</strong></label>
+                                    <div class="col-10">
+                                        <input class="form-control" type="text" placeholder="John Doe" >
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label for="inputTargDate" class="col-2 col-form-label"><strong>Date</strong></label>
+                                        <div class="col-10">
+                                            <div class="input-group">
+                                              <input id="dp" class="form-control" placeholder="yyyy-mm-dd" name="dp1" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                                  </button>
+                                                </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <hr>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label"><strong>Select a Time</strong></label>
+                                    <div class="col-10">
+                                        <button class="form-control btn btn-lg btn-outline-secondary" value="Open Up Timetable" >Please Select From Available Times</button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label"><strong>Description</strong></label>
+                                    <div class="col-10">
+                                        <textarea class="form-control" placeholder="Enter a short description outline your injury/hindrance" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Address</strong></label>
+                                        <div class="col-10">
+                                            <div class="form-inline">
+                                            <input class="form-control col-4" type="text" placeholder="123 Main St SW" >
+                                            <input class="form-control col-3 ml-sm-2" type="text" placeholder="City" >
+                                            <input class="form-control col-4 ml-sm-2" type="text" placeholder="Postal Code" >
+                                            </div>
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label for="inputTargDate" class="col-2 col-form-label"><strong>Date of Birth</strong></label>
+                                        <div class="col-10">
+                                            <div class="form-inline">
+                                              <input id="dp" class="form-control col-6" placeholder="yyyy-mm-dd" name="dp" value="selectToday()" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                  <button class="btn btn-outline-secondary" (click)="d1.toggle()" type="button">
+                                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                                  </button>
+                                                </div>
+                                                <input class="form-control col-4 ml-sm-2" type="number" placeholder="Age" >
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Email</strong></label>
+                                        <div class="col-10">
+                                            <input class="form-control" type="email" placeholder="example@gmail.com" >
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Personal Physician</strong></label>
+                                        <div class="col-10">
+                                            <input class="form-control" type="text" placeholder="Dr. Jane Doe" >
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Treatment Area</strong></label>
+                                        <div class="col-10">
+                                            <input class="form-control" type="text" placeholder="Lower-Back" >
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Referral Source</strong></label>
+                                        <div class="col-10">
+                                            <input class="form-control" type="text" placeholder="Advertisments, Friends and Family, etc." >
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Emergency Contact</strong></label>
+                                        <div class="col-10">
+                                            <div class="form-inline">
+                                                <input class="form-control col-6" type="text" placeholder="Contact Name" >
+                                                <input class="form-control col-5 ml-sm-2" type="tel" placeholder="Phone Number" >
+                                            </div>
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Signature</strong></label>
+                                        <div class="col-10">
+                                            <div class="form-inline">
+                                                <input class="form-control col-6" type="text" placeholder="TYPE IN CAPS" >
+                                                <input id="dp2" class="form-control col-4 ml-sm-2" placeholder="yyyy-mm-dd" name="dp2" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d2="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                  <button class="btn btn-outline-secondary" type="button">
+                                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                                  </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Parent or Guardian</strong></label>
+                                        <div class="col-10">
+                                            <div class="form-inline">
+                                                <input class="form-control ml-sm-2" type="checkbox" #check1>
+                                                <label class="form-control-label ml-sm-2">Enable Guardian Signature</label>
+                                                <input class="form-control col-7 ml-sm-2" type="text" placeholder="TYPE IN CAPS" [disabled]="check1.checked != true" >
+                                            </div>
+                                        </div>
+                                    </div>  
+                                      
+                    </mat-step>
+                    <mat-step label="Motor Vehicle Accident (Optional)">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label"><strong>Insurance Name</strong></label>
+                                <div class="col-10">
+                                    <div class="form-inline">
+                                        <input class="form-control col-6" type="text" placeholder="Blue Cross">
+                                        <input class="form-control col-5 ml-sm-2" type="text" placeholder="Address" >
+                                    </div>
+                                </div>
+                        </div>    
+                        <hr>
+                        <div class="form-group row">
+                                <label class="col-2 col-form-label"><strong>Policy or Claim #</strong></label>
+                                    <div class="col-10">
+                                        <div class="form-inline">
+                                            <input class="form-control col-6" type="text" placeholder="1234567">
+                                            <input id="dp3" class="form-control col-4 ml-sm-2" placeholder="Date of Accident" name="dp3" [(ngModel)]="model" ngbDatepicker #d3="ngbDatepicker">
+                                            <div class="input-group-append">
+                                              <button class="btn btn-outline-secondary" (click)="d3.toggle()" type="button">
+                                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        <hr>
+                        <div class="form-group row">
+                                <label class="col-3 col-form-label"><strong>Plan Member Name</strong></label>
+                                <div class="form-inline">
+                                    <input class="col-5 form-control" type="text" placeholder="John Doe" >
+                                    <input class="col-4 ml-sm-2 form-control" type="text" placeholder="Claim Number">
                                 </div>
                             </div>
-                          </div>
-                    </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label"><strong>Select a Time</strong></label>
-                    <div class="col-10">
-                        <button class="form-control btn btn-lg btn-outline-secondary" value="Open Up Timetable" >Please Select From Available Times</button>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label"><strong>Description</strong></label>
-                    <div class="col-10">
-                        <textarea class="form-control" placeholder="Enter a short description outline your injury/hindrance" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Address</strong></label>
-                        <div class="col-10">
-                            <div class="form-inline">
-                            <input class="form-control col-4" type="text" placeholder="123 Main St SW" >
-                            <input class="form-control col-3 ml-sm-2" type="text" placeholder="City" >
-                            <input class="form-control col-4 ml-sm-2" type="text" placeholder="Postal Code" >
-                            </div>
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label for="inputTargDate" class="col-2 col-form-label"><strong>Date of Birth</strong></label>
-                        <div class="col-10">
-                            <div class="form-inline">
-                              <input id="dp" class="form-control col-6" placeholder="yyyy-mm-dd" name="dp2" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                                  </button>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label"><strong>Adjuster Name</strong></label>
+                                <div class="col-10">
+                                    <div class="form-inline">
+                                        <input class="form-control col-6" type="text" placeholder="John Doe">
+                                        <input class="form-control col-5 ml-sm-2" type="tel" placeholder="Phone Number" >
+                                    </div>
                                 </div>
-                                <input class="form-control col-4 ml-sm-2" type="number" placeholder="Age" >
-                            </div>
-                          </div>
-                    </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Email</strong></label>
-                        <div class="col-10">
-                            <input class="form-control" type="email" placeholder="example@gmail.com" >
                         </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Personal Physician</strong></label>
-                        <div class="col-10">
-                            <input class="form-control" type="text" placeholder="Dr. Jane Doe" >
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Treatment Area</strong></label>
-                        <div class="col-10">
-                            <input class="form-control" type="text" placeholder="Lower-Back" >
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Referral Source</strong></label>
-                        <div class="col-10">
-                            <input class="form-control" type="text" placeholder="Advertisments, Friends and Family, etc." >
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Emergency Contact</strong></label>
-                        <div class="col-10">
-                            <div class="form-inline">
-                                <input class="form-control col-6" type="text" placeholder="Contact Name" >
-                                <input class="form-control col-5 ml-sm-2" type="tel" placeholder="Phone Number" >
-                            </div>
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Signature</strong></label>
-                        <div class="col-10">
-                            <div class="form-inline">
-                                <input class="form-control col-6" type="text" placeholder="TYPE IN CAPS" >
-                                <input id="dp" class="form-control col-4 ml-sm-2" placeholder="yyyy-mm-dd" name="dp2" (navigate)="selectToday()" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                                    <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                                  </button>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"><strong>Are You the Policy Holder?</strong></label>
+                                <div class="col-8">
+                                    <div class="form-inline">
+                                        <input class="form-control" type="checkbox" value="checked" #check2>
+                                        <label class="form-control-label ml-sm-4">If No, Name of Policy Holder:</label>
+                                        <input class="form-control col-4 ml-sm-1" type="text" placeholder="Jane Doe" [disabled]="check2.checked == true" >
+                                    </div>
                                 </div>
-                            </div>
                         </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-2 col-form-label"><strong>Parent/Guardian</strong></label>
-                        <div class="col-10">
-                            <div class="form-inline">
-                                <input class="form-control ml-sm-2" type="checkbox" #check1>
-                                <label class="form-control-label ml-sm-2">Enable Guardian Signature</label>
-                                <input class="form-control col-7 ml-sm-2" type="text" placeholder="TYPE IN CAPS" [disabled]="check1.checked != true" >
-                            </div>
-                        </div>
-                    </div>
+                        </mat-step>
+                        <mat-step label="Extended Care (Optional)">
+                            <b>Please Note:</b> Private Insurers must be billed first prior to your MVA Insurance
+                            <hr>
+                                <div class="form-group row">
+                                        <label class="col-3 col-form-label"><strong>Plan Member Name</strong></label>
+                                            <div>
+                                                <div class="form-inline">
+                                                    <input class="form-control col-6" type="text" placeholder="John Doe">
+                                                    <input id="dp4" class="form-control col-4 ml-sm-2" placeholder="Date of Birth" name="dp4" [(ngModel)]="model2" ngbDatepicker #d4="ngbDatepicker">
+                                                    <div class="input-group-append">
+                                                      <button class="btn btn-outline-secondary" (click)="d4.toggle()" type="button">
+                                                        <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                                      </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-4 col-form-label"><strong>Insurance Company Name</strong></label>
+                                        <div class="col-8">
+                                            <input class="form-control" type="text" placeholder="Sun Life Financial" >
+                                        </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                        <label class="col-2 col-form-label"><strong>Group Policy #</strong></label>
+                                        <div class="col-4">
+                                            <input class="form-control" type="text" placeholder="0000000" >
+                                        </div>
+                                        <label class="col-2 col-form-label"><strong>Member ID Cert. #</strong></label>
+                                        <div class="col-4">
+                                            <input class="form-control" type="text" placeholder="1111111" >
+                                        </div>
+                                </div>
+                        </mat-step>
+                    </mat-vertical-stepper>
             </div>
         </div>
         <div class="modal-footer">
@@ -201,28 +328,4 @@
         </div>
 </ng-template>
 
-
-
-    <!-- <div>
-        <h1>MOTOR VEHICLE ACCIDENT</h1>
-        <input type='text' placeholder='Insurance Name'>
-        <input type='text' placeholder='Address'>
-        <input type='text' placeholder='Adjuster Name'>
-        <input type='text' placeholder='Telephone'>
-        <input type='text' placeholder='Policy/Claim #'>
-        <input type='text' placeholder='Date of Accident'>
-        
-        <input type="radio" value='Yes'>
-        <input type="radio" value='No'>
-        If no, name of policy holder
-        <input type='text' placeholder='Name'>
-        
-        <h1><span>EXTENDED CARE ( Private Insurers must be billed first prior to your MVA insurance.</span></h1>
-        
-        <input type='text' placeholder='Insurance Company Name'>
-        <input type='text' placeholder='Plan Member Name'>
-        <input type='date' placeholder='Date of Birth'>
-        <input type='text' placeholder='Group Policy #'>
-        <input type='text' placeholder='Member ID Cert. #'>
-    </div> -->
 
