@@ -60,13 +60,11 @@ export class ExercisesComponent implements OnInit {
       //now link images to exercise
       console.log(data.exercise._id);
 
-      if(fileNames.length > 1){
-        fileNames.forEach(element => {
-          this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-            console.log(data);
-          })
-        });
-      }
+      fileNames.forEach(element => {
+        this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+          console.log(data);
+        })
+      })
       //window.location.reload();
     })
   }

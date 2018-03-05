@@ -260,9 +260,9 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer info">
-              <button type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
-              <button type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
+            <div class="modal-footer">
+              <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
+              <button id="modalButtons" type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
 
