@@ -110,7 +110,7 @@ router.route('/:accessCode')
                 });
                 
                 
-                response.send('<h1>Congrats you are verified</h1>');
+                response.send('<h1>Congrats you are verified</h1>'); // Change the text to an HTML page that aknowledges the client has been verified and with a button that ridirects the website to a different page that gets the unique client ID from a hashed value that needs to be passed
             });
         });
         
