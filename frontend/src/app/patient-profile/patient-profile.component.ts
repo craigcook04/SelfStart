@@ -146,6 +146,7 @@ export class PatientProfileComponent implements OnInit {
         //the update was successful
         this.showSuccess = true;
         var closebtn: any= document.getElementById('closeBtn');
+        this.ResetErrorMessages();
         closebtn.click();
       }
       else{
@@ -323,8 +324,11 @@ export class PatientProfileComponent implements OnInit {
 
   calculateAge(DOB: string) {
     var years = moment().diff(DOB, 'years');
-    console.log(years);
     return years;
+  }
+
+  closeWarning() {
+    this.cannotContinue = false;
   }
 
 }
