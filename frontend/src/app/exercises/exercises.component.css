@@ -8,7 +8,8 @@
 }
 
 .info {
-    margin: 1em;
+    margin-left: 5%;
+    width:65%;
 }
 
 #custom-search-input{
@@ -83,3 +84,56 @@ h2 {
     margin-left: 0.5em;
     margin-top: 1em;
 }
+
+.accordion {
+    background-color: white;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    margin-left: 15%;
+    transition: 0.4s;
+    width: 75%;
+ }
+ 
+ hr {
+    display: block;
+    /*margin-top: 0.5em;*/
+    /*margin-bottom: 0.5em;*/
+    margin-left: 70px;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+    border-top-color: #00FFFF;
+    /*color: blue;*/
+    
+    float: left;
+    width: 80%;
+    
+ }
+/*  
+ .active, .accordion:hover {
+    width:75%;
+    background-color: #F0F8FF;
+ } */
+
+ .modal-button {
+     float: right;
+     margin-left: 75%;
+ }
+
+ .left-one{
+     float: left;
+     margin-left: 10%;
+     text-align: left;
+ }
+
+ .carousel {
+    margin: auto;
+    width: 100%;
+    background: cover;
+ }
+
