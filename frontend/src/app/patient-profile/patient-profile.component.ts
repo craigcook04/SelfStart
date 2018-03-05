@@ -23,12 +23,12 @@ export class PatientProfileComponent implements OnInit {
   provinces: Object[];
   cities: Object[];
   genders: Object[];
+  ascendingOrd: boolean = true;
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
               private emailService: EmailService) { }
 
   ngOnInit() {
-    
     this.StandardPatientList();
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
@@ -39,9 +39,7 @@ export class PatientProfileComponent implements OnInit {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     })
-
- 
-
+   console.log('hi');
   }
 
   StandardPatientList() {
@@ -103,13 +101,14 @@ export class PatientProfileComponent implements OnInit {
   }
 
   searchPatients(searchString: string, searchArea: string) {
-    if(searchArea == 'badvalue') {
-      //user tried to search without choosing a field. Display an error
-      this.invalidSearchArea = true;
-      var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'red';
-      return;
+    var ascvsdesc;
+    if(this.ascendingOrd == true) {
+      ascvsdesc = 'asc';
     }
-    this.patientService.SearchPatient(searchString, searchArea, this.offset).subscribe(data => {
+    else {
+      ascvsdesc = 'desc';
+    }
+    this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
@@ -224,12 +223,12 @@ export class PatientProfileComponent implements OnInit {
   } 
   
   
-  NextPage(searchString: string, searchArea: string) {
+  NextPage(searchString: string, searchArea: string, ascvsdesc) {
     this.offset += 10;
     this.searchPatients(searchString, searchArea);
   }
 
-  PreviousPage(searchString: string, searchArea: string) {
+  PreviousPage(searchString: string, searchArea: string, ascvsdesc) {
     if(this.offset != 0) {
       this.offset -= 10;
     }
@@ -239,6 +238,10 @@ export class PatientProfileComponent implements OnInit {
   RemoveError() {
     var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
     this.invalidSearchArea = false;
+  }
+
+  ChangeOrder() {
+    this.ascendingOrd = !this.ascendingOrd;
   }
 
 }

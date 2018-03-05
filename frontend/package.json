@@ -28,6 +28,7 @@
     "angular-font-awesome": "^3.1.2",
     "angular-ui-carousel": "^0.1.10",
     "angular4-datepicker": "^1.0.1",
+    "copy-to-clipboard": "^3.0.8",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "ng-sidebar": "^7.0.1",
