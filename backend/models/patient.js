@@ -18,6 +18,7 @@ var patientSchema = new mongoose.Schema(
         others: String,
         verified: Boolean,
         physioId: String,
+        address: String,
         account: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'},
         payment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Payments'}],
         country: {type: mongoose.Schema.Types.ObjectId, ref: 'Country'},
