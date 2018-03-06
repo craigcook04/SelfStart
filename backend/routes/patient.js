@@ -239,14 +239,33 @@ router.route('/findpatient/search')
     
 router.route('/physiotherapist/:physiotherapist_id')
     .get(function (request, response) {
-        Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
-            if (error) {
-               response.send({error: error});
+        
+         var options = 
+        {
+            //sort: sort,
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+           // limit: 10,
+           // offset: Number(request.query.offset)
+        };
+        var query = {"physioId": request.params.physiotherapist_id};
+        
+        Patient.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
-            else {
-               response.json({patient: patient});
-            }
+            
+            response.send(results);
         });
+        // Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
+        //     if (error) {
+        //       response.send({error: error});
+        //     }
+        //     else {
+        //       response.json({patient: patient});
+        //     }
+        // });
     });
 
 module.exports = router;
