@@ -6,45 +6,7 @@ export class NewClientService {
 
   constructor(private http: HttpClient) { }
 
-  CreateClient(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string) {
-    var url = "/api/patient"
-    var body = {
-      username: username,
-      password: password,
-      ID: 0,
-      familyName: lastName,
-      givenName: firstName,
-      email: email,
-      DOB: DOB,
-      gender: gender,
-      postalCode: postalCode,
-      phone: phone,
-      maritalStatus: maritalStatus,
-      healthCardNumber: healthCardNumber,
-      occupation: occupation,
-      others: others,
-      country: country,
-      province: province,
-      city: city
-    }
-
-    return this.http.post(url, body);
-  }
-
-  SendToVerification(userID: String, email: String) {
-    var url = "/api/temp";
-    var body = {
-      userID: userID,
-      email: email
-    }
-
-    return this.http.post(url, body);
-  }
-  
-  //NOTE: it will probably be a good idea to combine this with create client above. but for the 
-  // sake of not messing up any one elses calls to that function, this is a temporary fix.
-  // -jak.
-  CreateClientWithPhysioAssigned(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string, physioID: string) {
+  CreateClient(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string, address: string) {
     var url = "/api/patient"
     var body = {
       username: username,
@@ -64,7 +26,50 @@ export class NewClientService {
       country: country,
       province: province,
       city: city,
-      physioId: physioID
+      address: address
+    }
+
+    return this.http.post(url, body);
+  }
+
+  SendToVerification(userID: String, email: String, firstName: string, lastName: string) {
+    var url = "/api/temp";
+    var body = {
+      userID: userID,
+      email: email,
+      firstName: firstName,
+      lastName: lastName
+    }
+
+    return this.http.post(url, body);
+  }
+  
+  //NOTE: it will probably be a good idea to combine this with create client above. but for the 
+  // sake of not messing up any one elses calls to that function, this is a temporary fix.
+  // -jak.
+  CreateClientWithPhysioAssigned(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string, physioID: string, address: string) {
+    var url = "/api/patient"
+    var body = {
+      username: username,
+      password: password,
+      ID: 0,
+      familyName: lastName,
+      givenName: firstName,
+      email: email,
+      DOB: DOB,
+      gender: gender,
+      postalCode: postalCode,
+      phone: phone,
+      maritalStatus: maritalStatus,
+      healthCardNumber: healthCardNumber,
+      occupation: occupation,
+      others: others,
+      country: country,
+      province: province,
+      city: city,
+      physioId: physioID,
+      address: address
+      
     }
 
     return this.http.post(url, body);

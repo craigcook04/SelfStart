@@ -20,7 +20,7 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) : any {
+  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) : any {
     //create the body of the request
     var body = {
       ID: patientID,
@@ -37,7 +37,8 @@ export class PatientService {
       others: others,
       country: newCountry,
       province: newProvince,
-      city: newCity
+      city: newCity,
+      address: newAddress
     }
     //url that the request is going to be sent too
     var url = '/api/patient/' + ID;
