@@ -462,7 +462,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finsihed</label>
+                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioFinished>
                   </div>
@@ -524,7 +524,7 @@
                       <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(editPhysio)"><i class="material-icons">mode_edit</i></button>
                       <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge" (click) = "open(deletePhysio)"><i  class="fa fa-trash"></i></button>
                       <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
-                      <p><b>Patient ID:  </b> {{x.ID}}</p>
+                      <p><b>Patient ID:  </b> {{x.dateHired | date: 'yyyy-MM-dd'}}</p>
                       <p><b>Email:  </b> {{x.email}}</p>
                       <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
                       <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->
