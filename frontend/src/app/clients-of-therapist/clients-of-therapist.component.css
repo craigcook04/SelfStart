@@ -4,10 +4,14 @@
  /*bottom: 60px;*/
   left: 0;
   right: 0;
-  height: 100%;
+  height: 91%;
 }
 h3 {
     margin: 1em;
+}
+.tab{
+    width: 80%;
+    margin-left: 60px;
 }
 
 
@@ -42,7 +46,7 @@ h3 {
     outline: none;
     margin-left: 70px;
     transition: 0.4s;
-    width: 65%;
+    /*width: 65%;*/
 }
 .info {
     margin-left: 100px;
@@ -50,7 +54,7 @@ h3 {
     width:65%;
 }
 .active, .accordion:hover {
-    width:75%;
+    width:90%;
     background-color: #F0F8FF; 
 }
 .accordion:after {
@@ -64,7 +68,7 @@ h3 {
     
     
 }
-hr { 
+.hr1 { 
     display: block;
     /*margin-top: 0.5em;*/
     /*margin-bottom: 0.5em;*/
@@ -77,9 +81,20 @@ hr {
     /*color: blue;*/
     
     float: left;
-    width: 75%;
+    width: 90%;
     
 } 
+.hr3{
+    float:left;
+    border-width: 1px;
+    border-color: black;
+    width:75%; 
+    
+}
+.dvder {
+    float:left;
+    width:75%;    
+}
 #custom-search-input{
     padding: 3px;
     padding-left: 0px;
