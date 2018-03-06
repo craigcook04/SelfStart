@@ -99,7 +99,7 @@ router.route('/:accessCode')
                               <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
                         </body>
                     `;
-                    response.send("<h2>Sorry we could not verify your account</h2>");
+                    response.send(returnEmail);
                     return;
                 }
                 if(user == null){
@@ -111,7 +111,7 @@ router.route('/:accessCode')
                               <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
                         </body>
                     `;
-                    response.send("<h2>Sorry we could not verify your account</h2>");
+                    response.send(returnEmail);
                     return;
                 }
                 
@@ -138,7 +138,7 @@ router.route('/:accessCode')
                 var returnEmail = `
                 <body style="background: whitesmoke; text-align: center">
                   <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
-                  <h4>Congratulations ]], you have verified your email account! <br> We are excited to learn more about you.</h4>
+                  <h4>Congratulations, you have verified your email account! <br> We are excited to learn more about you.</h4>
                   <h4>You're all done! <br> <br>You may now able to enjoy the many features of the site! </h4>
                   <h4> Please <a href="" >click here</a> to return home. </h4>
                     <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
