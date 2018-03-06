@@ -338,7 +338,6 @@ export class ClientsOfTherapistComponent implements OnInit {
       if(retObj.success == true) {
         this.newClientService.SendToVerification(retObj.patient._id, email,firstName,lastName).subscribe(data => {
           console.log(data);
-          this.modalService.open(successfulModal);
         })
          this.patientService.getPhysioPatients(this.physioId).subscribe(data => {
            console.log(data);
