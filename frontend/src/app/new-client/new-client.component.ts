@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NewClientService } from '../new-client.service';
 import { PatientService } from '../patient.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { EncryptionService } from '../encryption.service';
 
 @Component({
   selector: 'app-new-client',
@@ -31,7 +32,8 @@ export class NewClientComponent implements OnInit {
   constructor(private newClientService: NewClientService,
               private patientService: PatientService,
               private modalService: NgbModal,
-              private router: Router) { }
+              private router: Router,
+              private encryptionService: EncryptionService) { }
  
 
   ngOnInit() {
@@ -45,6 +47,12 @@ export class NewClientComponent implements OnInit {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     })
+
+    var hello = this.encryptionService.encrypt('sammallabone');
+    console.log(hello);
+
+    var returned = this.encryptionService.decrypt(hello);
+    console.log(returned);
   }
 
   GetProvinces(countryId: string) {
