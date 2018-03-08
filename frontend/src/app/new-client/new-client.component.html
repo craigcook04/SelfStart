@@ -1,5 +1,5 @@
-<h1>Welcome!</h1>
-<h3>Please input the following information so we can properly sign you up</h3>
+<h1>Register</h1>
+<h4>Welcome to Self Start! Please input your information so we can properly register your account</h4>
 
 <div class="container-fluid inputGroup">
   <form class="inputForm needs-validation" novalidate>
@@ -16,6 +16,7 @@
               <div class="hintText" *ngIf="!invalidUsername">
                 Username cannot contain special characters
               </div>
+              <div class='invalInput' *ngIf=""></div>
             </div> 
           </div>
           <hr class='dvder'>
@@ -61,7 +62,7 @@
             <label for="inputLastName" class="col-sm-2 col-form-label">*Last Name</label>
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #lastName>
-              <div class="invalInput" *ngIf="invalidFirstname">
+              <div class="invalInput" *ngIf="invalidLastname">
                 Please enter a valid First Name
               </div>
             </div>
@@ -108,11 +109,14 @@
         </mat-step>
         <mat-step  label="Contact Information">
           <div class="form-group row">
-            <label for="inputPostalCode" class="col-sm-2 col-form-label">*Postal Code</label>
-            <div class="col-sm-7">
-              <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #postalCode>
+            <label for="inputPostalCode" class="col-sm-2 col-form-label">*Address</label>
+            <div class="col-sm-8">
+              <div class="form-inline">
+                <input class="form-control col-6" type="text" placeholder="Address" id="inputAddress" #address>
+                <input type="text" class="form-control ml-sm-2 col-3" id="inputPostalCode" placeholder="Postal Code" #postalCode>
+              </div>
               <div class="invalInput" *ngIf="invalidPostalCode">
-                  Please enter a valid Postal Code
+                  Please enter a valid Address and Postal Code
               </div>
             </div>
           </div>
@@ -233,10 +237,16 @@
                 </div>
             </ng-template>
             <button class="btn btn-secondary btn-sm stepperbtn" (click)="stepper.reset()">Reset</button> 
-            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="stepper.reset(); createClient(makeChanges, successfulModal)">Confirm</button> 
+            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="createClient(makeChanges, successfulModal, stepper)">Confirm</button> 
         </mat-step>
       </mat-vertical-stepper>  
   </form>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 
