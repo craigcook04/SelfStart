@@ -1,5 +1,5 @@
-<h1>Welcome!</h1>
-<h3>Please input the following information so we can properly sign you up</h3>
+<h1>Register</h1>
+<h4>Welcome to Self Start! Please input your information so we can properly register your account</h4>
 
 <div class="container-fluid inputGroup">
   <form class="inputForm needs-validation" novalidate>
@@ -16,8 +16,12 @@
               <div class="hintText" *ngIf="!invalidUsername">
                 Username cannot contain special characters
               </div>
+              <div class='invalInput' *ngIf=""></div>
             </div> 
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label">*Password: </label>
             <div class="col-sm-7">
@@ -27,6 +31,9 @@
                   </div>
             </div>
         </div>
+        <hr class='dvder'>
+        <br>
+        <br>
         <div class="form-group row">
               <label for="inputRepeatPassword" class="col-sm-2 col-form-label">*Repeat Password: </label>
               <div class="col-sm-7">
@@ -48,15 +55,21 @@
               </div>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputLastName" class="col-sm-2 col-form-label">*Last Name</label>
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #lastName>
-              <div class="invalInput" *ngIf="invalidFirstname">
+              <div class="invalInput" *ngIf="invalidLastname">
                 Please enter a valid First Name
               </div>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">*Email</label>
             <div class="col-sm-7">
@@ -66,12 +79,18 @@
             </div>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputGender" class="col-sm-2 col-form-label">*Gender</label>
             <div class="col-sm-7">
@@ -90,14 +109,20 @@
         </mat-step>
         <mat-step  label="Contact Information">
           <div class="form-group row">
-            <label for="inputPostalCode" class="col-sm-2 col-form-label">*Postal Code</label>
-            <div class="col-sm-7">
-              <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #postalCode>
+            <label for="inputPostalCode" class="col-sm-2 col-form-label">*Address</label>
+            <div class="col-sm-8">
+              <div class="form-inline">
+                <input class="form-control col-6" type="text" placeholder="Address" id="inputAddress" #address>
+                <input type="text" class="form-control ml-sm-2 col-3" id="inputPostalCode" placeholder="Postal Code" #postalCode>
+              </div>
               <div class="invalInput" *ngIf="invalidPostalCode">
-                  Please enter a valid Postal Code
+                  Please enter a valid Address and Postal Code
               </div>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputPhoneNumber" class="col-sm-2 col-form-label">*Phone Number</label>
             <div class="col-sm-7">
@@ -110,6 +135,9 @@
               </div>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputOthers" class="col-sm-2 col-form-label">*Country</label>
             <div class="col-sm-7">
@@ -123,6 +151,9 @@
               </div>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputOthers" class="col-sm-2 col-form-label">*Province</label>
             <div class="col-sm-7">
@@ -131,6 +162,9 @@
               </select>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputOthers" class="col-sm-2 col-form-label">*City</label>
             <div class="col-sm-7">
@@ -149,18 +183,27 @@
               <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" #maritalStatus>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputHealthCardNumber" class="col-sm-2 col-form-label">Health Card Number</label>
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputHealthCardNumber" placeholder="Health Card Number" #healthCardNumber>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
             <label for="inputOccupation" class="col-sm-2 col-form-label">Occupation</label>
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #occupation>
             </div>
           </div>
+          <hr class='dvder'>
+          <br>
+          <br>
           <div class="form-group row">
               <label for="inputOthers" class="col-sm-2 col-form-label">Other Notable Info</label>
               <div class="col-sm-7">
@@ -182,11 +225,28 @@
                   <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>        
                 </div>
             </ng-template>
+            <ng-template #successfulModal let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title">Welcome!</h4>
+                </div>
+                <div class="modal-body">
+                  <p>You have successfully created an account! Please click on the link that was sent to your email to verify your account and start using the website </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-med" (click)="c('Close click'); GoHome()">OK</button>        
+                </div>
+            </ng-template>
             <button class="btn btn-secondary btn-sm stepperbtn" (click)="stepper.reset()">Reset</button> 
-            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="stepper.reset(); createClient(makeChanges)">Confirm</button> 
+            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="createClient(makeChanges, successfulModal, stepper)">Confirm</button> 
         </mat-step>
       </mat-vertical-stepper>  
   </form>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 

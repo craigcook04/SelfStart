@@ -32,30 +32,45 @@ router.route('/')
         patient.city = request.body.city;
         patient.gender = request.body.gender;
         patient.appointment = request.body.appointment;
+        patient.address = request.body.address;
         patient.verified = false;
         
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
         userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
         console.log(userAccount.encryptedPassword);
-        
-        userAccount.save(function(err, userAccount) {
-            if(err){
+        UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
+            if(err) {
                 response.send(err);
                 return;
             }
-            //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
-            patient.account = userAccount._id;
             
-            patient.save(function (error) {
-            if (error) {
-                response.send(error);
+            console.log(retpatient.length);
+            
+            if(retpatient.length != 0) {
+                //someone with this username already exists
+                response.send({success: false, message: "Please choose a different username"});
                 return;
             }
-            
-            response.json({success: true, patient: patient});
-        });
-        });
+        
+            userAccount.save(function(err, userAccount) {
+                if(err){
+                    response.send(err);
+                    return;
+                }
+                //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
+                patient.account = userAccount._id;
+                
+                patient.save(function (error) {
+                if (error) {
+                    response.send(error);
+                    return;
+                }
+                
+                response.json({success: true, patient: patient});
+            });
+            });
+        })
         
     })
 
@@ -106,9 +121,17 @@ router.route('/')
             query = {};
         }
         
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
+        
         var myparameter = request.query.s;
         var sort ={};
-        sort[myparameter] = request.query.sortOrder;
+        sort[myparameter] = sortOrder;
         var options = 
         {
             sort: sort,
@@ -163,13 +186,12 @@ router.route('/:patient_id')
                 patient.healthCardNumber = request.body.healthCardNumber;
                 patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
-                patient.account = request.body.account;
                 patient.payment = request.body.payment;
                 patient.country = request.body.country;
                 patient.province = request.body.province;
                 patient.city = request.body.city;
                 patient.gender = request.body.gender;
-                patient.appointment = request.body.appointment;
+                patient.address = request.body.address;
 
                 console.log(request.body);
                 patient.save(function (error) {
@@ -217,14 +239,33 @@ router.route('/findpatient/search')
     
 router.route('/physiotherapist/:physiotherapist_id')
     .get(function (request, response) {
-        Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
-            if (error) {
-               response.send({error: error});
+        
+         var options = 
+        {
+            //sort: sort,
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+           // limit: 10,
+           // offset: Number(request.query.offset)
+        };
+        var query = {"physioId": request.params.physiotherapist_id};
+        
+        Patient.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
-            else {
-               response.json({patient: patient});
-            }
+            
+            response.send(results);
         });
+        // Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
+        //     if (error) {
+        //       response.send({error: error});
+        //     }
+        //     else {
+        //       response.json({patient: patient});
+        //     }
+        // });
     });
 
 module.exports = router;

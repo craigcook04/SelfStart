@@ -12,7 +12,7 @@ export class PatientService {
   constructor(private http: HttpClient) { }
 
   GetAllPatients() : any{
-    var url = '/api/patient?s=familyName&sortOrder=1&offset=0';
+    var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
     return this.http.get(url);
   }
   getPhysioPatients(id: string){
@@ -20,7 +20,7 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) : any {
+  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) : any {
     //create the body of the request
     var body = {
       ID: patientID,
@@ -37,7 +37,8 @@ export class PatientService {
       others: others,
       country: newCountry,
       province: newProvince,
-      city: newCity
+      city: newCity,
+      address: newAddress
     }
     //url that the request is going to be sent too
     var url = '/api/patient/' + ID;
@@ -49,8 +50,8 @@ export class PatientService {
     return this.http.delete(url);
   }
 
-  SearchPatient(searchString: string, searchArea: string, offset) {
-    var url = '/api/patient?q=' + searchString + '&s=' + searchArea + '&sortOrder=1&offset=' + offset;
+  SearchPatient(searchString: string, searchArea: string, offset, ascvsdesc) {
+    var url = '/api/patient?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
     return this.http.get(url);
   }
 
