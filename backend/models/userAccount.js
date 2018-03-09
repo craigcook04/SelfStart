@@ -24,7 +24,7 @@ userAccountSchema.methods.hash = function(text) {
 };
 
 userAccountSchema.methods.encrypt = function(plainText) {
-    var cipher = crypto.createCipher('aes256', 'sammallabone');
+    var cipher = crypto.createCipher('aes256', 'sammallabone'); 
     var crypted = cipher.update(plainText, 'ascii', 'binary');
     crypted += cipher.final('binary');
     return crypted;

@@ -31,5 +31,16 @@ router.route('/')
         });
     });
     
+router.route('/forgotten')
+    .post(function(request, response) {
+       var emailBody = `
+       <h4>Hello, please click the link below to reset your password </h4>
+       <p><a href="localhost:8080/forgottenpassword"
+       `
+       var mailOptions = {
+           
+       } 
+    });
+    
 module.exports = router;
 
