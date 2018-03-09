@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var UserAccount = require('../models/userAccount');
-
+var ResetEmail = require('../models/resetEmail');
 router.route('/')
 
     .post(function (request, response) {
@@ -84,5 +84,55 @@ router.route('/:userAccount_id')
             }
         );
     });
+    
+
+//route for changing the user's password    
+router.route('/account/change')
+    .put(function(request, response) {
+        ResetEmail.findOne({'myHash': request.body.myHash}, function(err, validUser) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(validUser == {} || validUser == null) {
+                console.log('bad');
+                response.send("Invalid reset code");
+                return;
+            }
+            
+            UserAccount.findOne({userAccountName: validUser.username}, function(err, useraccount) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                if(useraccount == {} || useraccount == null) {
+                    response.send("couldn't find the account");
+                    return;
+                }
+                
+                ResetEmail.findByIdAndRemove(validUser._id, function(err, deleted) {
+                    if(err) {
+                        response.send(err);
+                        return;
+                    }
+                    
+                    console.log(deleted);
+                })
+                
+                useraccount.encryptedPassword = useraccount.generateHash(request.body.newpassword);
+                useraccount.save(function(err) {
+                    if(err) {
+                        response.send(err);
+                        return;
+                    }
+                    
+                    response.send({success: true, message: "Password successfully updated"});
+                })
+                
+            })
+        })
+    })
 
 module.exports = router;
