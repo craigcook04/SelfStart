@@ -42,6 +42,8 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
 import { EncryptionService } from './encryption.service';
+import { LoginComponent } from './login/login.component';
+import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { EncryptionService } from './encryption.service';
     UserAccountsComponent,
     NewClientComponent,
     ClientsOfTherapistComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    LoginComponent,
+    ForgottenPasswordComponent
   ],
   imports: [
     BrowserModule,

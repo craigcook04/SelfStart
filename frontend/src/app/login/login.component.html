@@ -1,0 +1,21 @@
+<h1>Hello! Please log in here</h1>
+
+<h4>Enter your credentials to log in</h4>
+<div class="form-group row">
+  <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
+  </div> 
+</div>
+
+<div class="form-group row">
+  <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="inputPassword" placeholder="Password" #password>
+  </div> 
+</div>
+
+<button class="btn btn-sm btn-primary">Login</button>
+<button class="btn btn-sm btn-secondary">Cancel</button>
+
+<p><a [routerLink]="['forgotten']" >Forgot Password</a></p>
