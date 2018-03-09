@@ -269,21 +269,5 @@ router.route('/physiotherapist/:physiotherapist_id')
         // });
     });
 
-//route for changing the user's password    
-router.route('/account/change')
-    .put(function(request, response) {
-        ResetEmail.findOne({'myHash': request.body.myHash}, function(err, validUser) {
-            if(err) {
-                response.send(err);
-                return;
-            }
-            
-            if(validUser == {} || validUser == null) {
-                console.log('bad');
-                response.send("couldn't find the user");
-                return;
-            }
-        })
-    })
 
 module.exports = router;

@@ -10,7 +10,6 @@ router.route('/')
     .post(function (request, response) {
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.userAccountName;
-        userAccount.encryptedPassword = request.body.encryptedPassword;
         userAccount.adminUser = request.body.adminUser;
         userAccount.physioUser = request.body.physioUser;
         userAccount.patientUser = request.body.patientUser;
@@ -111,7 +110,7 @@ router.route('/account/change')
                     response.send("couldn't find the account");
                     return;
                 }
-                
+                console.log(useraccount);
                 ResetEmail.findByIdAndRemove(validUser._id, function(err, deleted) {
                     if(err) {
                         response.send(err);
@@ -119,7 +118,7 @@ router.route('/account/change')
                     }
                     
                     console.log(deleted);
-                })
+                });
                 
                 useraccount.encryptedPassword = useraccount.generateHash(request.body.newpassword);
                 useraccount.save(function(err) {
@@ -127,12 +126,13 @@ router.route('/account/change')
                         response.send(err);
                         return;
                     }
+                    console.log(2, " -----", useraccount)
                     
-                    response.send({success: true, message: "Password successfully updated"});
-                })
+                    response.send({success: true, message: "Password successfully updated", username: useraccount.userAccountName});
+                });
                 
-            })
-        })
-    })
+            });
+        });
+    });
 
 module.exports = router;
