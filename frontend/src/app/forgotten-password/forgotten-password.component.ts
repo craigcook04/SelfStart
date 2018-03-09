@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-forgotten-password',
@@ -9,7 +10,7 @@ export class ForgottenPasswordComponent implements OnInit {
 
   inputtedUsername: boolean;
   username: string;
-  constructor() { }
+  constructor(private emailService: EmailService) { }
 
   ngOnInit() {
   }
@@ -17,6 +18,10 @@ export class ForgottenPasswordComponent implements OnInit {
   SendEmail(inputUsername: string) {
     this.inputtedUsername = true;
     this.username = inputUsername;
+
+    this.emailService.SendRecoveryEmail(inputUsername).subscribe(data => {
+      console.log(data);
+    })
   }
 
 }

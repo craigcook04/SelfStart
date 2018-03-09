@@ -43,7 +43,7 @@ const routes: Routes = [
   {path: 'bookappointement', component: AppointmentsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
-  {path: 'login/recover', component: RecoverAccountComponent}
+  {path: 'login/recover/:id', component: RecoverAccountComponent}
 ];
 
 @NgModule({
