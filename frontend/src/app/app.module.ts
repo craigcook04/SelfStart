@@ -44,6 +44,7 @@ import {MomentModule} from 'angular2-moment/moment.module';
 import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
+import { RecoverAccountComponent } from './recover-account/recover-account.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ForgottenPasswordComponent } from './forgotten-password/forgotten-passw
     ClientsOfTherapistComponent,
     AppointmentsComponent,
     LoginComponent,
-    ForgottenPasswordComponent
+    ForgottenPasswordComponent,
+    RecoverAccountComponent
   ],
   imports: [
     BrowserModule,
