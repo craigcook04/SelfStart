@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router'
+import { PatientService } from '../patient.service'
 
 @Component({
   selector: 'app-recover-account',
@@ -9,11 +11,30 @@ import { Component, OnInit } from '@angular/core';
 export class RecoverAccountComponent implements OnInit {
 
   username: string;
-  constructor() { }
+  hash: string;
+  constructor(private route: ActivatedRoute,
+              private patientService: PatientService) { }
 
   ngOnInit() {
     //this component should have a hashed passed in the url
-    this.username = "temp username"; //to be changed once there is actually a server call to be made
+    this.hash = this.route.snapshot.paramMap.get("id");
+  }
+
+  ResetPassword(password: string, repeatPassword: string) {
+    if(!password || !repeatPassword) {
+      console.log('null field');
+      return;
+    }
+
+    if(password != repeatPassword) {
+      console.log('passwords dont match');
+      return;
+    }
+
+    this.patientService.ChangePassword(this.hash, password).subscribe(data => {
+      console.log(data);
+    })
+
   }
 
 }

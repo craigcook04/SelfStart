@@ -6,13 +6,16 @@
 <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
     <div class="col-sm-7">
-      <input type="text" class="form-control" id="inputPassword" placeholder="Password" #password>
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password>
     </div> 
 </div>
 
 <div class="form-group row">
       <label for="inputRepeatPassword" class="col-sm-2 col-form-label">Repeat Password: </label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword>
+        <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword>
       </div> 
 </div>
+
+<button class="btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value)">Reset</button>
+<button class="btn btn-sm btn-secondary" [routerLink]="['home']">Cancel</button>
