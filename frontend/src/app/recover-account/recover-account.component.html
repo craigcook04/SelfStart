@@ -1,21 +1,29 @@
 <h2>Account Recovery</h2>
 
-<h4>Hello {{username}}, please enter your next password</h4>
-<p>The provided passwords must match</p>
+<div *ngIf="!successfullyChangePassword">
+  <h4>Hello! please enter your next password</h4>
+  <p>The provided passwords must match</p>
 
-<div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
-    <div class="col-sm-7">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password>
-    </div> 
-</div>
-
-<div class="form-group row">
-      <label for="inputRepeatPassword" class="col-sm-2 col-form-label">Repeat Password: </label>
+  <div class="form-group row">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
       <div class="col-sm-7">
-        <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword>
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password>
       </div> 
+  </div>
+
+  <div class="form-group row">
+        <label for="inputRepeatPassword" class="col-sm-2 col-form-label">Repeat Password: </label>
+        <div class="col-sm-7">
+          <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword>
+        </div> 
+  </div>
+
+  <button class="btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value)">Reset</button>
+  <button class="btn btn-sm btn-secondary" [routerLink]="['home']">Cancel</button>
 </div>
 
-<button class="btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value)">Reset</button>
-<button class="btn btn-sm btn-secondary" [routerLink]="['home']">Cancel</button>
+<div *ngIf="successfullyChangePassword">
+  <h4>You have successfully updated your password</h4>
+  <p>You can now log in</p>
+  <button class="btn btn-sm btn-primary">Return to Log In</button>
+</div>

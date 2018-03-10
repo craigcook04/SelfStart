@@ -12,6 +12,10 @@ export class RecoverAccountComponent implements OnInit {
 
   username: string;
   hash: string;
+  passwordNull: boolean;
+  repeatPasswordNull: boolean;
+  passwordsDontMatch: boolean;
+  successfullyChangePassword: boolean;
   constructor(private route: ActivatedRoute,
               private patientService: PatientService) { }
 
@@ -20,19 +24,46 @@ export class RecoverAccountComponent implements OnInit {
     this.hash = this.route.snapshot.paramMap.get("id");
   }
 
+  RemoveErrors() {
+    var passwordBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';
+    var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'rgba(0,0,0,.15)';
+    this.passwordNull = false;
+    this.repeatPasswordNull = false;
+    this.passwordsDontMatch = false;
+  }
+
   ResetPassword(password: string, repeatPassword: string) {
-    if(!password || !repeatPassword) {
-      console.log('null field');
+    var cannotContinue = false;
+    if(!password) {
+      var passwordBox = document.getElementById('inputPassword').style.borderColor = 'red';
+      cannotContinue = true;
+      this.passwordNull = true;
+    }
+
+    if(!repeatPassword) {
+      var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'red';
+      cannotContinue = true;
+      this.repeatPasswordNull = true;
+    }
+
+    if(password != repeatPassword && !cannotContinue) {
+      console.log('passwords dont match');
+      this.passwordsDontMatch = true;
       return;
     }
 
-    if(password != repeatPassword) {
-      console.log('passwords dont match');
+    if(cannotContinue) {
       return;
     }
 
     this.patientService.ChangePassword(this.hash, password).subscribe(data => {
-      console.log(data);
+      var retObj: any = data;
+      if(retObj.success) {
+
+      }
+      else {
+
+      }
     })
 
   }

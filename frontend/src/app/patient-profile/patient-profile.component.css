@@ -261,3 +261,10 @@ h2 {
     vertical-align: middle;
     width: 60%;
 }
+
+.copyicon {
+    cursor: pointer;
+    display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 2px;
+}
