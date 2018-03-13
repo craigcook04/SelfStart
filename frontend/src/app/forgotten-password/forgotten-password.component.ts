@@ -23,6 +23,7 @@ export class ForgottenPasswordComponent implements OnInit {
     this.username = inputUsername;
 
     this.userAccountService.RequestResetPassword(inputUsername).subscribe(data => {
+      console.log(data);
       var retObj :any = data;
       if(retObj.success = true) {
         this.inputtedUsername = true;
@@ -32,9 +33,7 @@ export class ForgottenPasswordComponent implements OnInit {
         this.badUsername = true;
       }
     })
-    // this.emailService.SendRecoveryEmail(inputUsername).subscribe(data => {
-    //   console.log(data);
-    // })
+    
   }
 
 }

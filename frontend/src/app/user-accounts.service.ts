@@ -13,4 +13,10 @@ export class UserAccountsService {
     return this.http.put(url, body);
   }
 
+  GetUsersWantingAPasswordReset() {
+    var url = '/api/useraccount/account/reset';
+
+    return this.http.get(url);
+  }
+
 }
