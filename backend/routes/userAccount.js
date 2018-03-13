@@ -135,4 +135,31 @@ router.route('/account/change')
         });
     });
 
+router.route('/account/reset')
+    .put(function(request, response) {
+        UserAccount.findOne({'username': request.body.username}, function(err, user) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(user == {} || user == null) {
+                //no account exists with that user name:
+                response.send({success: false, message: "No account exists with this as a username"});
+                return;
+                
+            }
+            
+            user.needToChangePass = true;
+            user.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({success: true, message: "A reset request has been sent to the admin"});
+            })
+        })
+    })
+
 module.exports = router;

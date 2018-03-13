@@ -39,6 +39,8 @@ router.route('/')
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
         userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
+        userAccount.salt = request.body.salt;
+        userAccount.needToChangePass = false;
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {

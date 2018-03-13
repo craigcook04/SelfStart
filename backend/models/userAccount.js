@@ -6,6 +6,8 @@ var userAccountSchema = mongoose.Schema(
     {
         userAccountName: String,
         encryptedPassword: String,
+        salt: String, 
+        needToChangePass: Boolean,
         adminUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Administrator'},
         physioUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
         patientUser: {type: mongoose.Schema.Types.ObjectId, red: 'Patient'}
