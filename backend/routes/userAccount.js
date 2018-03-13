@@ -172,5 +172,29 @@ router.route('/account/reset')
             response.send(users);
         });
     });
+    
+router.route('/account/login')
+    .post(function(request, response) {
+       UserAccount.findOne({'userAccountName': request.body.username}, function(err, user) {
+           if(err) {
+               response.send(err);
+               return;
+           }
+           
+           if(user == null ){
+               response.send({success: false, message: "This username doesnt exist"});
+               return;
+           }
+           
+           var hashedpass = user.hash(request.body.password);
+           var PassAndSalt = hashedpass + user.salt;
+           var hashedSaltPlusPass = user.hash(PassAndSalt);
+           console.log(user.encryptedPassword);
+           var hashedPassword = user.decrypt(user.encryptedPassword);
+           console.log(hashedSaltPlusPass);
+           console.log(hashedPassword);
+           response.send('yo');
+       }) 
+    });
 
 module.exports = router;
