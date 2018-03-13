@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NewClientService } from '../new-client.service';
 import { PatientService } from '../patient.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { EncryptionService } from '../encryption.service';
 
 @Component({
   selector: 'app-new-client',
@@ -31,7 +32,8 @@ export class NewClientComponent implements OnInit {
   constructor(private newClientService: NewClientService,
               private patientService: PatientService,
               private modalService: NgbModal,
-              private router: Router) { }
+              private router: Router,
+              private encryptionService: EncryptionService) { }
  
 
   ngOnInit() {
@@ -155,17 +157,10 @@ export class NewClientComponent implements OnInit {
     email = email.value;
     var phone: any = document.getElementById('inputPhoneNumber');
     phone = phone.value;
-    var maritalStatus: any = document.getElementById('inputMaritalStatus');
-    maritalStatus = maritalStatus.value;
-    var occupation: any = document.getElementById('inputOccupation');
-    occupation = occupation.value;
-    var healthCardNumber: any = document.getElementById('inputHealthCardNumber');
-    healthCardNumber = healthCardNumber.value;
     var others: any = document.getElementById('inputOthers');
     others = others.value;
     var address: any = document.getElementById('inputAddress');
     address = address.value;
-    console.log(healthCardNumber, maritalStatus, occupation);
     this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -251,7 +246,7 @@ export class NewClientComponent implements OnInit {
 
     document.body.style.cursor = "wait";
 
-    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city, address).subscribe(data => {
+    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
@@ -272,7 +267,7 @@ export class NewClientComponent implements OnInit {
 
 
 GoHome() {
-  this.router.navigate(['../home']);
+  this.router.navigate(['../login']);
 }
 
 }

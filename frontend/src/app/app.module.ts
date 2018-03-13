@@ -41,6 +41,10 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
 import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
+import { EncryptionService } from './encryption.service';
+import { LoginComponent } from './login/login.component';
+import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
+import { RecoverAccountComponent } from './recover-account/recover-account.component';
 import { BookingsDirective } from './bookings.directive';
 import { AppointmentsService } from './appointments.service';
 
@@ -64,6 +68,9 @@ import { AppointmentsService } from './appointments.service';
     NewClientComponent,
     ClientsOfTherapistComponent,
     AppointmentsComponent,
+    LoginComponent,
+    ForgottenPasswordComponent,
+    RecoverAccountComponent
     BookingsDirective
   ],
   imports: [
@@ -98,7 +105,8 @@ import { AppointmentsService } from './appointments.service';
     UserAccountsService,
     ImageService, 
     PhysiotherapistService,
-    AppointmentsService],
+    AppointmentsService,
+    EncryptionService],
   bootstrap: [AppComponent]
 })
 
