@@ -29,7 +29,8 @@
 
 
 
-<mat-sidenav-content style = "margin-top: 50px; background-color: white;">
+<mat-sidenav-content style = "background-color: white;">
+  <br><br>
   
 <div class="input-group mb-3 searchbar" id="custom-search-input">
     <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
@@ -138,6 +139,12 @@
         </div>
       </div>
       <div class="form-group row">
+          <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputAddress" placeholder="Address" #newPatientAddress>
+          </div>
+        </div>
+      <div class="form-group row">
         <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #newPatientPostalCode>
@@ -202,7 +209,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value); c('Close click')">Confirm</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value, newPatientMaritalStatus.value, newPatientHealthCardNumber.value, newPatientOccupation.value, newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value, newPatientAddress.value); c('Close click')">Confirm</button>
     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
@@ -291,6 +298,12 @@
                             </div>
                           </div>
                           <div class="form-group row">
+                              <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
+                              <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputAddress" placeholder="Address" #newAddress>
+                              </div>
+                            </div>
+                          <div class="form-group row">
                             <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
@@ -306,24 +319,6 @@
                             <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" value="{{patient.maritalStatus}}" #newMaritalStatus>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}" #newHealthCardNumber>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" value="{{patient.occupation}}" #newOccupation>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
                             </div>
                           </div>
                           <div class="form-group row">
@@ -360,7 +355,7 @@
 
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value); c('Close click')">Confirm</button>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); c('Close click')">Confirm</button>
                         <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
                       </div>
                     </ng-template>
@@ -449,7 +444,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finsihed</label>
+                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioFinished>
                   </div>
@@ -511,7 +506,7 @@
                       <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(editPhysio)"><i class="material-icons">mode_edit</i></button>
                       <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge" (click) = "open(deletePhysio)"><i  class="fa fa-trash"></i></button>
                       <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
-                      <p><b>Patient ID:  </b> {{x.ID}}</p>
+                      <p><b>Patient ID:  </b> {{x.dateHired | date: 'yyyy-MM-dd'}}</p>
                       <p><b>Email:  </b> {{x.email}}</p>
                       <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
                       <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->

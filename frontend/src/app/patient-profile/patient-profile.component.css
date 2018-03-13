@@ -162,12 +162,14 @@ h2 {
     float: right;
     margin-right: 2.5rem;
     margin-bottom: 0.75rem;
+    cursor: pointer;
 }
 
 .prevpagebtn {
     float: right;
     margin-right: 1rem; 
     margin-bottom: 0.75rem; 
+    cursor: pointer;
 }
 
 .dummyclr{
@@ -209,7 +211,7 @@ h2 {
      cursor: pointer;
      display: inline-block;
      margin-left: 6rem;
-     color: blue;
+     color: #0275d8;
  }
 
  .invalInput {
@@ -246,4 +248,23 @@ h2 {
     margin-bottom: 1rem; 
     border-radius: 2.5px;
     vertical-align: middle;
+}
+
+.fixchanges {
+    height: 44px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    border-radius: 2.5px;
+    vertical-align: middle;
+    width: 60%;
+}
+
+.copyicon {
+    cursor: pointer;
+    display: inline-flex;
+    vertical-align: middle;
+    margin-bottom: 2px;
 }

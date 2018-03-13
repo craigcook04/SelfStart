@@ -16,4 +16,14 @@ export class EmailService {
 
     return this.http.post(url, body);
   }
+
+  SendRecoveryEmail(username: string) {
+    var url = "/api/email/forgotten";
+    var body = {
+      username: username
+    }
+
+    return this.http.post(url, body);
+  }
+
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NewClientService } from '../new-client.service';
 import { PatientService } from '../patient.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { EncryptionService } from '../encryption.service';
 
 @Component({
   selector: 'app-new-client',
@@ -26,11 +27,13 @@ export class NewClientComponent implements OnInit {
   invalidPhoneNumber: boolean = false;
   invalidPostalCode: boolean = false;
   invalidCountry: boolean = false;
+  newUsername: boolean = false;
 
   constructor(private newClientService: NewClientService,
               private patientService: PatientService,
               private modalService: NgbModal,
-              private router: Router) { }
+              private router: Router,
+              private encryptionService: EncryptionService) { }
  
 
   ngOnInit() {
@@ -111,6 +114,7 @@ export class NewClientComponent implements OnInit {
     var cityBox = document.getElementById('inputCity').style.borderColor = 'rgba(0,0,0,.15)';  
     var emailBox = document.getElementById('inputEmail').style.borderColor = 'rgba(0,0,0,.15)';
     var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'rgba(0,0,0,.15)';
+    var addressBox = document.getElementById('inputAddress').style.borderColor = 'rgba(0,0,0,.15)';    
     this.invalidUsername= false;
     this.invalidPassword= false;
     this.invalidFirstname= false;
@@ -121,9 +125,10 @@ export class NewClientComponent implements OnInit {
     this.invalidPostalCode = false;
     this.invalidCountry = false;  
     this.invalidEmail = false;
+    this.newUsername = false;
   }
 
-  createClient(makeChanges,successfulModal) {
+  createClient(makeChanges,successfulModal, stepper) {
     //because of the scoping rules of the md-step, the values of the text boxes need to be retrieved with javascript
     //need to retrieve all the textboxes and extract their values
     var username: any = document.getElementById('inputUsername');
@@ -152,15 +157,10 @@ export class NewClientComponent implements OnInit {
     email = email.value;
     var phone: any = document.getElementById('inputPhoneNumber');
     phone = phone.value;
-    var maritalStatus: any = document.getElementById('inputMaritalStatus');
-    maritalStatus = maritalStatus.value;
-    var occupation: any = document.getElementById('inputOccupation');
-    occupation = occupation.value;
-    var healthCardNumber: any = document.getElementById('inputHealthCardNumber');
-    healthCardNumber = healthCardNumber.value;
     var others: any = document.getElementById('inputOthers');
     others = others.value;
-    console.log(healthCardNumber, maritalStatus, occupation);
+    var address: any = document.getElementById('inputAddress');
+    address = address.value;
     this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -202,8 +202,9 @@ export class NewClientComponent implements OnInit {
       cannotContinue = true;
     }
 
-    if(!postalCode) {
+    if(!postalCode || !address) {
       var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'red';
+      var addressBox = document.getElementById('inputAddress').style.borderColor = 'red';
       this.invalidPostalCode = true;
       cannotContinue = true;
     }
@@ -239,27 +240,34 @@ export class NewClientComponent implements OnInit {
     //if this if statement is triggered, there are errors in the code
     if(cannotContinue) {
       this.modalService.open(makeChanges, {size: 'lg'});
+      stepper.reset();
       return;
     }
 
-    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city).subscribe(data => {
+    document.body.style.cursor = "wait";
+
+    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
-        this.newClientService.SendToVerification(retObj.patient._id, email).subscribe(data => {
+        this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
           console.log(data);
+          document.body.style.cursor = 'default';
           this.modalService.open(successfulModal);
         })
       }
       else {
         //the user will be shown an error in the creation problem along the lines of there being a server problem.
+        stepper.reset();
+        var usernameBox = document.getElementById('inputUsername').style.borderColor = 'red';
+        this.newUsername = true;
       }
     })
   }
 
 
 GoHome() {
-  this.router.navigate(['../home']);
+  this.router.navigate(['../login']);
 }
 
 }

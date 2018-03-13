@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Patient = require('../models/patient');
 var UserAccount = require('../models/userAccount');
+var ResetEmail = require('../models/resetEmail');
 
 //generic route for fetching all patients
 
@@ -32,11 +33,14 @@ router.route('/')
         patient.city = request.body.city;
         patient.gender = request.body.gender;
         patient.appointment = request.body.appointment;
+        patient.address = request.body.address;
         patient.verified = false;
         
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
         userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
+        userAccount.salt = request.body.salt;
+        userAccount.needToChangePass = false;
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {
@@ -127,6 +131,7 @@ router.route('/')
         else {
             sortOrder = -1;
         }
+        
         var myparameter = request.query.s;
         var sort ={};
         sort[myparameter] = sortOrder;
@@ -184,13 +189,12 @@ router.route('/:patient_id')
                 patient.healthCardNumber = request.body.healthCardNumber;
                 patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
-                patient.account = request.body.account;
                 patient.payment = request.body.payment;
                 patient.country = request.body.country;
                 patient.province = request.body.province;
                 patient.city = request.body.city;
                 patient.gender = request.body.gender;
-                patient.appointment = request.body.appointment;
+                patient.address = request.body.address;
 
                 console.log(request.body);
                 patient.save(function (error) {
@@ -238,14 +242,34 @@ router.route('/findpatient/search')
     
 router.route('/physiotherapist/:physiotherapist_id')
     .get(function (request, response) {
-        Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
-            if (error) {
-               response.send({error: error});
+        
+         var options = 
+        {
+            //sort: sort,
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+           // limit: 10,
+           // offset: Number(request.query.offset)
+        };
+        var query = {"physioId": request.params.physiotherapist_id};
+        
+        Patient.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
-            else {
-               response.json({patient: patient});
-            }
+            
+            response.send(results);
         });
+        // Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
+        //     if (error) {
+        //       response.send({error: error});
+        //     }
+        //     else {
+        //       response.json({patient: patient});
+        //     }
+        // });
     });
+
 
 module.exports = router;
