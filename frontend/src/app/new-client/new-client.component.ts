@@ -47,12 +47,6 @@ export class NewClientComponent implements OnInit {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     })
-
-    var hello = this.encryptionService.encrypt('sammallabone');
-    console.log(hello);
-
-    var returned = this.encryptionService.decrypt(hello);
-    console.log(returned);
   }
 
   GetProvinces(countryId: string) {
@@ -163,17 +157,10 @@ export class NewClientComponent implements OnInit {
     email = email.value;
     var phone: any = document.getElementById('inputPhoneNumber');
     phone = phone.value;
-    var maritalStatus: any = document.getElementById('inputMaritalStatus');
-    maritalStatus = maritalStatus.value;
-    var occupation: any = document.getElementById('inputOccupation');
-    occupation = occupation.value;
-    var healthCardNumber: any = document.getElementById('inputHealthCardNumber');
-    healthCardNumber = healthCardNumber.value;
     var others: any = document.getElementById('inputOthers');
     others = others.value;
     var address: any = document.getElementById('inputAddress');
     address = address.value;
-    console.log(healthCardNumber, maritalStatus, occupation);
     this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -259,7 +246,7 @@ export class NewClientComponent implements OnInit {
 
     document.body.style.cursor = "wait";
 
-    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city, address).subscribe(data => {
+    this.newClientService.CreateClient(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {

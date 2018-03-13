@@ -177,25 +177,6 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" value="{{patient.maritalStatus}}"
-                  #newMaritalStatus>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" value="{{patient.healthCardNumber}}" #newHealthCardNumber>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" value="{{patient.occupation}}" #newOccupation>
-              </div>
-            </div>
-            <div class="form-group row">
               <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
@@ -236,7 +217,7 @@
         </div>
         <div class="modal-footer">
           <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
-          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newMaritalStatus.value, newHealthCardNumber.value, newOccupation.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value, acc); ">Confirm</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value, acc); ">Confirm</button>
           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click'); ResetErrorMessages();">Cancel</button>
           <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>  
         </div>
