@@ -6,7 +6,7 @@ export class NewClientService {
 
   constructor(private http: HttpClient) { }
 
-  CreateClient(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string, address: string) {
+  CreateClient(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, others: String, country: string, province: string, city: string, address: string) {
     var url = "/api/patient"
     var body = {
       username: username,
@@ -19,9 +19,6 @@ export class NewClientService {
       gender: gender,
       postalCode: postalCode,
       phone: phone,
-      maritalStatus: maritalStatus,
-      healthCardNumber: healthCardNumber,
-      occupation: occupation,
       others: others,
       country: country,
       province: province,
@@ -47,7 +44,7 @@ export class NewClientService {
   //NOTE: it will probably be a good idea to combine this with create client above. but for the 
   // sake of not messing up any one elses calls to that function, this is a temporary fix.
   // -jak.
-  CreateClientWithPhysioAssigned(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, maritalStatus: String, healthCardNumber: String, occupation: String, others: String, country: string, province: string, city: string, physioID: string, address: string) {
+  CreateClientWithPhysioAssigned(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, others: String, country: string, province: string, city: string, physioID: string, address: string) {
     var url = "/api/patient"
     var body = {
       username: username,
@@ -60,9 +57,9 @@ export class NewClientService {
       gender: gender,
       postalCode: postalCode,
       phone: phone,
-      maritalStatus: maritalStatus,
-      healthCardNumber: healthCardNumber,
-      occupation: occupation,
+      // maritalStatus: maritalStatus,
+      // healthCardNumber: healthCardNumber,
+      // occupation: occupation,
       others: others,
       country: country,
       province: province,

@@ -82,10 +82,10 @@ export class UserAccountsComponent implements OnInit {
    open(content) {
     this.modalService.open(content, {size: 'lg'});
   }
-   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) {
-    
+   updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) {
+    console.log(newAddress, newProvince);
    //this.showSuccess = true;
-    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
       console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
@@ -131,7 +131,9 @@ export class UserAccountsComponent implements OnInit {
         this.activated = null;
         //acc.activeIds = []; //close all accordian panels
         this.patientService.GetAllPatients().subscribe(data => {
-          this.clients = Object.assign([], data.patients);
+          console.log(data);
+          this.clients = Object.assign([], data.docs)
+          console.log(this.clients);
         });
       }
       else { 
@@ -140,12 +142,15 @@ export class UserAccountsComponent implements OnInit {
       
     });
   }
-  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newUserName: string, newPassword: string, newAddress: string) {
+  NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newUserName: string, newPassword: string, newAddress: string) {
     //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
-    this.newClientService.CreateClient(newUserName, newPassword, lastName, firstName, email, DOB, newGender, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newAddress).subscribe(data => {
+    this.newClientService.CreateClient(newUserName, newPassword, lastName, firstName, email, DOB, newGender, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newAddress).subscribe(data => {
       var retObj: any = data;
       if(retObj.success) {
         //this.showCreationSuccess = true;
+        this.newClientService.SendToVerification(retObj.patient._id, email,firstName,lastName).subscribe(data => {
+          console.log(data);
+        });
       }
       else{
        // this.showFailure = true;
