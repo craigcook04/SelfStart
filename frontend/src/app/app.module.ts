@@ -42,6 +42,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
 import { BookingsDirective } from './bookings.directive';
+import { AppointmentsService } from './appointments.service';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,17 @@ import { BookingsDirective } from './bookings.directive';
     MatGridListModule,
     MomentModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService],
+  providers: [
+    PatientService, 
+    RehabPlansService, 
+    ExerciseService, 
+    DynamicFormsService, 
+    EmailService, 
+    NewClientService, 
+    UserAccountsService,
+    ImageService, 
+    PhysiotherapistService,
+    AppointmentsService],
   bootstrap: [AppComponent]
 })
 
