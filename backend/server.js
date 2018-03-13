@@ -2,10 +2,21 @@
 // DATABASE SETUP
 // =============================================================================
 var express    = require('express');        // call express
-var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors       = require('cors');
 var mongoose = require('mongoose');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+const crypto = require('crypto');
+
+var sslOptions = {
+    key: "temporarykey",
+    cert: "temporarycertificate"
+};
+
+var app = express();                 // define our app using express
+
 var connection = mongoose.connect('mongodb://localhost:27017/startUp');
 
 //linking variables to the files of the routes
@@ -106,4 +117,6 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
+//https.createServer(sslOptions, app).listen(8443);
+https.createServer(app).listen(8443);
 console.log('Magic happens on port ' + port);
