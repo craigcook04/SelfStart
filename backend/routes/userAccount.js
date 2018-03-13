@@ -88,19 +88,7 @@ router.route('/:userAccount_id')
 //route for changing the user's password    
 router.route('/account/change')
     .put(function(request, response) {
-        ResetEmail.findOne({'myHash': request.body.myHash}, function(err, validUser) {
-            if(err) {
-                response.send(err);
-                return;
-            }
-            
-            if(validUser == {} || validUser == null) {
-                console.log('bad');
-                response.send("Invalid reset code");
-                return;
-            }
-            
-            UserAccount.findOne({userAccountName: validUser.username}, function(err, useraccount) {
+            UserAccount.findById(request.body.userID, function(err, useraccount) {
                 if(err) {
                     response.send(err);
                     return;
@@ -110,29 +98,41 @@ router.route('/account/change')
                     response.send("couldn't find the account");
                     return;
                 }
-                console.log(useraccount);
-                ResetEmail.findByIdAndRemove(validUser._id, function(err, deleted) {
-                    if(err) {
-                        response.send(err);
-                        return;
-                    }
-                    
-                    console.log(deleted);
-                });
                 
-                useraccount.encryptedPassword = useraccount.generateHash(request.body.newpassword);
+                console.log(useraccount.encryptedPassword);
+                var hashedpass = useraccount.hash(request.body.temppassword);
+                var PassAndSalt = hashedpass + useraccount.salt;
+                var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
+                var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
+                var inputPassDecrypted = useraccount.decrypt(inputPassEncrypted);
+                var hashedPassword = useraccount.decrypt(useraccount.encryptedPassword);
+                console.log(inputPassDecrypted, hashedPassword);
+                if(inputPassDecrypted == hashedPassword) {
+                    console.log('hello');
+                    var newPassHash = useraccount.hash(request.body.password);
+                    var newPashAndSalt = newPassHash + useraccount.salt;
+                    var newhashedSaltPlusPass = useraccount.hash(newPashAndSalt);
+                    var newinputPassEncrypted = useraccount.encrypt(newhashedSaltPlusPass);
+                    useraccount.encryptedPassword = newinputPassEncrypted;
+                    useraccount.needToChangePass = false;
+                }
+                
+                else{
+                    response.send({success: false, message: "Temporary password is not correct"});
+                    return;
+                }
+                
                 useraccount.save(function(err) {
                     if(err) {
                         response.send(err);
                         return;
                     }
-                    console.log(2, " -----", useraccount)
+                    console.log(2, " -----", useraccount.encryptedPassword);
                     
                     response.send({success: true, message: "Password successfully updated", username: useraccount.userAccountName});
                 });
                 
             });
-        });
     });
 
 router.route('/account/reset')

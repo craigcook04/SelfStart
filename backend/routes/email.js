@@ -97,7 +97,8 @@ router.route('/forgotten')
                       response.send(err);
                       return;
                   }
-              })
+              });
+              
               var emailBody = `
               <h4>Hello, please click the link below to reset your password </h4>
               <p>Your temporary password is ${newPassword} </p>
