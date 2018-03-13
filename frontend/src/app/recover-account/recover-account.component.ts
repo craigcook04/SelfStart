@@ -27,13 +27,19 @@ export class RecoverAccountComponent implements OnInit {
   RemoveErrors() {
     var passwordBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';
     var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'rgba(0,0,0,.15)';
+    var tempPasswordBox = document.getElementById('inputTempPassword').style.borderColor = 'rgba(0,0,0,.15)';    
     this.passwordNull = false;
     this.repeatPasswordNull = false;
     this.passwordsDontMatch = false;
   }
 
-  ResetPassword(password: string, repeatPassword: string) {
+  ResetPassword(password: string, repeatPassword: string, tempPassword: string) {
     var cannotContinue = false;
+    if(!tempPassword) {
+      var tempPasswordBox = document.getElementById('inputTempPassword').style.borderColor = 'red';
+      cannotContinue = true;
+    }
+
     if(!password) {
       var passwordBox = document.getElementById('inputPassword').style.borderColor = 'red';
       cannotContinue = true;
