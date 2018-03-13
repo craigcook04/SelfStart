@@ -45,6 +45,7 @@ import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { RecoverAccountComponent } from './recover-account/recover-account.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
     AppointmentsComponent,
     LoginComponent,
     ForgottenPasswordComponent,
-    RecoverAccountComponent
+    RecoverAccountComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
