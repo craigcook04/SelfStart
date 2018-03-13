@@ -80,12 +80,15 @@ router.route('/forgotten')
                       console.log("couldn't save");
                   }
               });
-               
-              var url = 'http://localhost:8080/login/recover/' + randomHash;
+              //need to generate a random password for the user, and set it to their account.
+              var newPassword = makeHash();
                
               var emailBody = `
               <h4>Hello, please click the link below to reset your password </h4>
-              <p><a href="${url}">Click here to recover your account</a> </p>
+              <p>Your temporary password is ${newPassword} </p>
+              <p>Please use this new password to log in to your account</p> 
+              <p>Upon logging in, you will be prompted to enter a new password. Once you have entered your new password, your account will be updated accordingly</p>
+              <h5>Thank you for using Self Start </h5>
               `;
               var mailOptions = {
                   to: myPatient.email,

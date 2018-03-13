@@ -137,7 +137,7 @@ router.route('/account/change')
 
 router.route('/account/reset')
     .put(function(request, response) {
-        UserAccount.findOne({'username': request.body.username}, function(err, user) {
+        UserAccount.findOne({'userAccountName': request.body.username}, function(err, user) {
             if(err) {
                 response.send(err);
                 return;
@@ -149,17 +149,28 @@ router.route('/account/reset')
                 return;
                 
             }
-            
+            console.log('hello');
             user.needToChangePass = true;
             user.save(function(err) {
                 if(err) {
                     response.send(err);
                     return;
                 }
-                
+                console.log(user);
                 response.send({success: true, message: "A reset request has been sent to the admin"});
-            })
-        })
+            });
+        });
     })
+    .get(function(request, response) {
+        //get all accounts requesting to have their account reset
+        UserAccount.find({'needToChangePass': true}, function(err, users) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send(users);
+        });
+    });
 
 module.exports = router;
