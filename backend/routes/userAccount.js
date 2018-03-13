@@ -172,5 +172,43 @@ router.route('/account/reset')
             response.send(users);
         });
     });
+    
+router.route('/account/login')
+    .post(function(request, response) {
+       UserAccount.findOne({'userAccountName': request.body.username}, function(err, user) {
+           if(err) {
+               response.send(err);
+               return;
+           }
+           
+           if(user == null ){
+               response.send({success: false, message: "This username doesnt exist"});
+               return;
+           }
+           
+           console.log(request.body.password);
+           var hashedpass = user.hash(request.body.password);
+           var PassAndSalt = hashedpass + user.salt;
+           var hashedSaltPlusPass = user.hash(PassAndSalt);
+           var inputPassEncryped = user.encrypt(hashedSaltPlusPass);
+           var inputPassDecrypted = user.decrypt(inputPassEncryped);
+           var hashedPassword = user.decrypt(user.encryptedPassword);
+           
+           if(inputPassDecrypted == hashedPassword) {
+               if(user.needToChangePass == true) {
+                   response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id});
+               }
+               else {
+                 response.send({success: true, changePass: false, message: "Congratulations you now verified"});
+               }
+           }
+           
+           else {
+               response.send({success: false, message: "Password is incorrect"});
+               return;
+           }
+
+       });
+    });
 
 module.exports = router;

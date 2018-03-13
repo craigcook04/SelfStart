@@ -17,7 +17,7 @@ function makeHash() {
   var text = "";
   var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-  for (var i = 0; i < 25; i++)
+  for (var i = 0; i < 10; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
@@ -58,6 +58,11 @@ router.route('/forgotten')
                return;
            }
            
+           if(useraccount.changePass == true) {
+               response.send({success: false, message: "password request already issued"});
+               return;
+           }
+           
            Patient.findOne({account: useraccount._id}, function(err, myPatient) {
                if(err) {
                    response.send('bad');
@@ -82,7 +87,17 @@ router.route('/forgotten')
               });
               //need to generate a random password for the user, and set it to their account.
               var newPassword = makeHash();
-               
+              var hashedpass = useraccount.hash(newPassword);
+              var PassAndSalt = hashedpass + useraccount.salt;
+              var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
+              var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
+              useraccount.encryptedPassword = inputPassEncrypted;
+              useraccount.save(function(err) {
+                  if(err) {
+                      response.send(err);
+                      return;
+                  }
+              })
               var emailBody = `
               <h4>Hello, please click the link below to reset your password </h4>
               <p>Your temporary password is ${newPassword} </p>
