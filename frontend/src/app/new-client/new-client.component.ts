@@ -280,7 +280,7 @@ export class NewClientComponent implements OnInit {
 
 
 GoHome() {
-  this.router.navigate(['../home']);
+  this.router.navigate(['../login']);
 }
 
 }

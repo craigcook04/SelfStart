@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailService } from '../email.service';
+import { UserAccountsService } from '../user-accounts.service'
 
 @Component({
   selector: 'app-forgotten-password',
@@ -10,7 +11,9 @@ export class ForgottenPasswordComponent implements OnInit {
 
   inputtedUsername: boolean;
   username: string;
-  constructor(private emailService: EmailService) { }
+  badUsername: boolean;
+  constructor(private emailService: EmailService,
+              private userAccountService: UserAccountsService) { }
 
   ngOnInit() {
   }
@@ -19,9 +22,19 @@ export class ForgottenPasswordComponent implements OnInit {
     this.inputtedUsername = true;
     this.username = inputUsername;
 
-    this.emailService.SendRecoveryEmail(inputUsername).subscribe(data => {
-      console.log(data);
+    this.userAccountService.RequestResetPassword(inputUsername).subscribe(data => {
+      var retObj :any = data;
+      if(retObj.success = true) {
+        this.inputtedUsername = true;
+        this.username = inputUsername;
+      }
+      else {
+        this.badUsername = true;
+      }
     })
+    // this.emailService.SendRecoveryEmail(inputUsername).subscribe(data => {
+    //   console.log(data);
+    // })
   }
 
 }
