@@ -1,3 +1,45 @@
-<p>
-  client-exercise works!
-</p>
+<div class="jumbotron container-fluid">
+ <h3 class="title">
+  Good {{ timeOfDay }}, Andy.
+ </h3>
+  <p class="quote">
+    Fix the system, fix the pain. That starts here, select an exercise...
+  </p>
+</div>
+
+<div class="page">
+  <div class="row">
+    <div class="col-lg-6">
+        <mat-list>
+          <mat-list-item class="listItems" *ngFor="let exercise of exercises" (click)="getExerciseInfo(exercise)" (click)="getExerciseImages(exercise._id)">
+            <button class="btn-block button">
+              <div class="row">
+                <div class="col-sm-1">
+                    <mat-icon svgIcon="dumbbell"></mat-icon> &nbsp;
+                </div>
+                <div class="col-sm-3">
+                    <h5> <b>{{ exercise.name }}</b> </h5>
+                </div>
+                <div class="col-sm-5">
+                    <b>Target Date:</b>
+                    <time datetime="yyyy-MM-dd" class="cl-sm-5">{{ exercise.targetDate | date:'mediumDate' }}</time> 
+                </div>
+              </div>
+              <div class="divider">
+                <mat-divider></mat-divider>
+              </div>
+            </button>
+          </mat-list-item>
+        </mat-list>
+    </div>
+    <div class="col-lg-6">
+      <div>
+          <mat-card>
+              <mat-card-title>
+                {{ currExercise.name }}
+              </mat-card-title>
+            </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

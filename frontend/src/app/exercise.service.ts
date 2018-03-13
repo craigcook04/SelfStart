@@ -15,6 +15,11 @@ export class ExerciseService {
     return this.httpClient.get(url);
   }
 
+  GetClientExercises(id: string){
+    var url = '/api/' + id + 'exercises';
+    return this.httpClient;
+  }
+
   DeleteExercise(id: string) {
     var url = '/api/exercises/' + id;
     return this.httpClient.delete(url);
