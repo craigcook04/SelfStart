@@ -41,7 +41,14 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
 import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
+<<<<<<< HEAD
 import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
+=======
+import { EncryptionService } from './encryption.service';
+import { LoginComponent } from './login/login.component';
+import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
+import { RecoverAccountComponent } from './recover-account/recover-account.component';
+>>>>>>> 7e8070c0058075fead9c78ce5c3b557daec01521
 
 @NgModule({
   declarations: [
@@ -63,7 +70,13 @@ import { ClientExerciseComponent } from './client-exercise/client-exercise.compo
     NewClientComponent,
     ClientsOfTherapistComponent,
     AppointmentsComponent,
+<<<<<<< HEAD
     ClientExerciseComponent
+=======
+    LoginComponent,
+    ForgottenPasswordComponent,
+    RecoverAccountComponent
+>>>>>>> 7e8070c0058075fead9c78ce5c3b557daec01521
   ],
   imports: [
     BrowserModule,
@@ -87,7 +100,7 @@ import { ClientExerciseComponent } from './client-exercise/client-exercise.compo
     MatGridListModule,
     MomentModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService],
   bootstrap: [AppComponent]
 })
 

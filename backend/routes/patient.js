@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Patient = require('../models/patient');
 var UserAccount = require('../models/userAccount');
+var ResetEmail = require('../models/resetEmail');
 
 //generic route for fetching all patients
 
@@ -38,6 +39,8 @@ router.route('/')
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
         userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
+        userAccount.salt = request.body.salt;
+        userAccount.needToChangePass = false;
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {
@@ -267,5 +270,6 @@ router.route('/physiotherapist/:physiotherapist_id')
         //     }
         // });
     });
+
 
 module.exports = router;

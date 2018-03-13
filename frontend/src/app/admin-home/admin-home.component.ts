@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserAccountsService } from '../user-accounts.service';
+import { EmailService} from '../email.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -8,10 +10,15 @@ import { Router } from '@angular/router';
 })
 export class AdminHomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  resetUsers: any[];
+  constructor(private router: Router, 
+              private userAccountService: UserAccountsService,
+              private emailService: EmailService ) { }
 
   ngOnInit() {
-  
+    this.userAccountService.GetUsersWantingAPasswordReset().subscribe(data => {
+      this.resetUsers = Object.assign([], data);
+    })
   }
   
   goToExercises(){
@@ -29,6 +36,12 @@ export class AdminHomeComponent implements OnInit {
   
   goToRehabPlans(){
     this.router.navigate(['../rehabplans']);
+  }
+
+  ResetPassword(username: string) {
+    this.emailService.SendRecoveryEmail(username).subscribe(data => {
+      console.log(data);
+    })
   }
   
 }
