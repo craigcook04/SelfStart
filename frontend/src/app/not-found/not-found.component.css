@@ -4,6 +4,7 @@ h1 {
 }
 
 div {
+    margin-top: -25px;
     height: 91.9vh;
     background-color: black;
     color: black;
