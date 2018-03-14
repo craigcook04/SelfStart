@@ -101,7 +101,34 @@
         <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
     </div>
     <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
-        <button type="button" class="btn btn-primary createbtn" (click)="createTest();" style="margin-left: 2em; background-color: green;">Save Plan</button>
+        <button type="button" class="btn btn-primary createbtn" (click)="open(askIfAssign);" style="margin-left: 2em; background-color: green;">Save Plan</button>
     </div>
+    <ng-template #askIfAssign let-c="close" let-d="dismiss">
+        <div class = "modal-header">
+            <h4 class = "modal-title">Would you like to save this plan to a specific patient?</h4>
+        </div>
+        <div class = "modal-body">
+            <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something
+            you would like to do?</p>
+        </div>
+        <div class = modal-footer>
+            <button type="button" class="btn btn-primary btn-sm" (click) = "openListOfPatients();  c('Close click')">Yes</button>
+            <button type="button" class="btn btn-primary btn-sm" (click) = "c('Close click'); createTest();  ">No</button>
+            
+        </div>
+    </ng-template>
+    <div *ngIf = "showPatients">
+        <h2>Assign Test To:</h2>
+        <mat-selection-list #clientsList>
+          <mat-list-option *ngFor="let client of clients" value = "{{client._id}}">
+            {{client.givenName}}
+          </mat-list-option>
+        </mat-selection-list>
+         <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected);" style="margin-left: 2em; float: right;">Assign Test</button>
+    </div>
+    
+    
+    
     <br><br><br><br>
+    
 </div>

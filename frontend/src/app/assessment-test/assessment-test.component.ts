@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AssessmentTestService} from '../assessment-test.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { PatientService } from '../patient.service';
 
 @Component({
   selector: 'app-assessment-test',
@@ -12,19 +14,22 @@ export class AssessmentTestComponent implements OnInit {
   shortAnswer: boolean = false;
   multipleChoice: boolean = false;
   rating: boolean = false;
+  showPatients: boolean = false;
   showCreat: boolean = true;
   options: any[];
   optionText: any[];
   questions: any[];
   name: string;
   description: string;
+  clients: any[];
  
   
   
   // var currOption = 'c';
   currOption: string = 'c';
 
-  constructor(private assessmentTestService: AssessmentTestService) { }
+  constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
+              private patientService: PatientService) { }
 
   ngOnInit() {
     this.showDrop = false;
@@ -32,6 +37,7 @@ export class AssessmentTestComponent implements OnInit {
     this.options = [];
     this.optionText = [];
     this.questions = [];
+    this.clients = [];
  
     // this.questions.push(question);
   }
@@ -129,6 +135,7 @@ export class AssessmentTestComponent implements OnInit {
     this.rating = false;
     this.type = "type of question";
   }
+  
   createTest(){
     var temp:any = document.getElementById('name');
     temp = temp.value;
@@ -139,17 +146,62 @@ export class AssessmentTestComponent implements OnInit {
     this.description = temp2;
     
     
-    this.assessmentTestService.createPlan(this.name, this.description, this.questions,).subscribe(data => {
+    this.assessmentTestService.createPlan(this.name, this.description, this.questions).subscribe(data => {
       console.log(data);
     });
     this.showDrop = false;
     this.rating = false;
     this.multipleChoice = false;
+    this.showPatients = false;
     this.type = "type of question";
     this.showCreat = true;
     this.optionText = [];
     this.options =[];
     this.questions = [];
     
+  }
+  open(content) {
+    this.modalService.open(content, {size: 'lg'});
+  }
+  openListOfPatients(){
+  
+   this.showCreat =true;
+   this.showDrop = false;
+   this.rating = false;
+   this.multipleChoice = false;
+   this.type = "type of question";
+    //this.showCreat = true;
+  // this.optionText = [];
+  // this.options =[];
+  // this.questions = [];
+   this.patientService.GetAllPatients().subscribe(data => {
+      console.log(data);
+      this.clients = Object.assign([], data.docs);
+      console.log('hello');
+      // console.log(this.patients);
+      console.log(this.clients);
+    });
+   
+    this.showPatients = true;
+    
+  }
+  assignTest(listOfClients: any[]){
+    console.log(listOfClients);
+    var clientIds: string[] = [];
+    
+    for (var i = 0; i<listOfClients.length; i++){
+      clientIds.push(listOfClients[i].value);
+    }
+    for (var i = 0; i<clientIds.length; i++){
+      this.assessmentTestService.createPlanwithAssignedTest(this.name, this.description, this.questions,clientIds[i]).subscribe(data => {
+        console.log(data);
+      });
+    }
+    this.showCreat = true;
+    this.optionText = [];
+    this.options =[];
+    this.questions = [];
+    this.showPatients = false;
+    console.log(clientIds);
   }
 }
