@@ -70,7 +70,7 @@ import { AppointmentsService } from './appointments.service';
     AppointmentsComponent,
     LoginComponent,
     ForgottenPasswordComponent,
-    RecoverAccountComponent
+    RecoverAccountComponent,
     BookingsDirective
   ],
   imports: [

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import {MomentModule} from 'angular2-moment/moment.module';
@@ -11,7 +11,7 @@ import { AppointmentsService } from '../appointments.service';
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css']
 })
-export class AppointmentsComponent implements OnInit {
+export class AppointmentsComponent implements OnInit, AfterViewInit {
   
   cells: Object[];
   dateSelected: any;
@@ -30,6 +30,33 @@ export class AppointmentsComponent implements OnInit {
     this.cells = new Array(37); //Create 37 time slots
     this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially
     this.refreshCalendar(); //populate calendar
+
+  }
+  
+  ngAfterViewInit(){
+    //document.getElementById('slot14').setAttribute("class", "taken");
+    this.apptService.GetAllAppointments().subscribe(data =>{
+      var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
+      this.bookedDates = Object.assign([], data.appointment); //assigns all appointements to bookedDates
+      console.log(this.bookedDates);
+      
+      for(var i = 0; i < this.bookedDates.length; i++ ){
+        if(moment(this.bookedDates[i].date).isSameOrAfter(moment().add(this.currentWeek, 'weeks').startOf('week').format('YYYY-MM-DD')) && moment(this.bookedDates[i].date).isSameOrBefore(moment().add(this.currentWeek, 'weeks').endOf('week').format('YYYY-MM-DD'))){
+          var currDate = moment(this.bookedDates[i].date) //creates moment object out of string date
+          var dayNum = currDate.day(); //this gets the day of the week in numerical form 0 = sunday -> 6=saturday
+          
+          //figure out how many 15-minute intervals are needed to get to time
+          
+          
+          
+          var timeNum = ""; //DO THIS STILL vv
+          var takenSlot = "slot" + dayNum + ""; //slot0{{i}}, slot1{{i}} ...etc
+          document.getElementById(takenSlot).classList.remove("bg-primary");
+          document.getElementById(takenSlot).className = "bg-warning";
+          console.log(dayNum);
+        }
+      }
+    });
   }
   
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
