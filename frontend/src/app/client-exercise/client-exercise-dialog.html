@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>{{ data.exercise.name }}</h1>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-sm-2">
+          <b>Description: </b>
+        </div>
+        <div class="col-sm- descrip">
+          {{ data.exercise.description }}
+          </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-2">
+          <b>Objectives</b>
+        </div>
+        <div class="col-sm-8 descrip">
+          {{ data.exercise.objectives }}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-2">
+          <b>Repetitions: </b>
+        </div>
+        <div class="col-sm-2">
+          {{ data.exercise.duration }}
+        </div>
+        <div class="col-sm-2">
+          <b>Sets: </b>
+        </div>
+        <div class="col-sm-2">
+          {{ data.exercise.frequency }}
+        </div>
+        <div class="col-sm-2">
+          <b>Location: </b>
+        </div>
+        <div class="col-sm-2">
+          {{ data.exercise.location }}
+        </div>
+      </div>
+      <br>
+      <div *ngFor="let image of data.images">
+          <img src="data:image/png;base64,{{image.data}}">
+          <br>
+      </div>
+      <br>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button cdkFocusInitial>Print</button>
+</div>

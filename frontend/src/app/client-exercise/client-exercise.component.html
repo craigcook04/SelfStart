@@ -1,3 +1,8 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+
 <div class="jumbotron container-fluid">
  <h3 class="title">
   Good {{ timeOfDay }}, Andy.
@@ -36,10 +41,69 @@
       <div>
           <mat-card>
               <mat-card-title>
-                {{ currExercise.name }}
+                <div class="row">
+                  <div class="col-sm-10">
+                    {{ currExercise?.name }}
+                  </div>
+                  <div class="ml-sm-5 print">
+                    <i class="fa fa-print" (click)="openDialog()"></i>
+                  </div>
+                </div>
               </mat-card-title>
+              <div class="divider2">
+                  <mat-divider></mat-divider>
+              </div>
+              <br>
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <b>Description: </b>
+                  </div>
+                  <div class="col-sm- descrip">
+                    {{ currExercise?.description }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <b>Objectives</b>
+                  </div>
+                  <div class="col-sm-8 descrip">
+                    {{ currExercise?.objectives }}
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <b>Repetitions: </b>
+                  </div>
+                  <div class="col-sm-2">
+                    {{ currExercise?.duration }}
+                  </div>
+                  <div class="col-sm-2">
+                    <b>Sets: </b>
+                  </div>
+                  <div class="col-sm-2">
+                    {{ currExercise?.frequency }}
+                  </div>
+                  <div class="col-sm-2">
+                    <b>Location: </b>
+                  </div>
+                  <div class="col-sm-2">
+                    {{ currExercise?.location }}
+                  </div>
+                </div>
+                <br>
+                <ngb-carousel *ngIf="images?.length > 0">
+                    <ng-template ngbSlide *ngFor="let image of images">
+                      <img mat-card-image src="data:image/png;base64,{{image.data}}">
+                    </ng-template>
+                  </ngb-carousel>
+              </mat-card-content>
             </mat-card>
       </div>
     </div>
   </div>
 </div>
+
+

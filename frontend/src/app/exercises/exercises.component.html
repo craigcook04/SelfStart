@@ -160,9 +160,9 @@
           <p><b> Multimedia: </b> </p>
           <br>
 
-          <ngb-carousel class=".col-sm-6 carousel" #carousel>
+          <ngb-carousel *ngIf="images?.length > 0" class=".col-sm-6 carousel" #carousel>
               <ng-template ngbSlide *ngFor="let image of images">
-                <img  *ngIf="images.length > 0" src="data:image/png;base64,{{image.data}}">
+                <img src="data:image/png;base64,{{image.data}}">
               </ng-template>
           </ngb-carousel>
         

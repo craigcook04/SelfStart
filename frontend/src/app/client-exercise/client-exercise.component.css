@@ -10,10 +10,12 @@
 
 h3 {
     font-size: 2em;
+    text-align: center;
 }
 
 p {
     font-size: 1.2em;
+    text-align: center;
 }
 
 .button{
@@ -33,4 +35,17 @@ p {
 
 .divider{
     margin-top: -25px;
+}
+
+.divider2{
+    margin-top: -10px;
+}
+
+.descrip{
+    text-align: left;
+}
+
+.print{
+    margin-right: auto;
+    cursor: pointer;
 }
