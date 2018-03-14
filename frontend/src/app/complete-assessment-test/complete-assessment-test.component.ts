@@ -54,7 +54,9 @@ export class CompleteAssessmentTestComponent implements OnInit {
         this.assessmentTestQuestions[i].answer = this.MCAnswers[i];
       }
     }
-    console.log("new list", this.assessmentTestQuestions);
+      this.assessmentTestService.SendCompletedQuestions(this.assessmentTest._id, this.assessmentTestQuestions).subscribe(data=> {
+        console.log(data);
+      })
   }
 
 }

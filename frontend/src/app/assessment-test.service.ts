@@ -23,4 +23,14 @@ export class AssessmentTestService {
 
         return this.http.get(url);
     }
+
+    SendCompletedQuestions(assessmentID: string, completedQuestions) {
+        var url = "/api/assessmentTest/client/completed";
+        var body = {
+            assessmentID: assessmentID,
+            questions: completedQuestions
+        }
+
+        return this.http.put(url, body);
+    }
 }

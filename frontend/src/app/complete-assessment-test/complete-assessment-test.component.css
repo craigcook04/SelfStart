@@ -1,13 +1,30 @@
+
+
 .myta {
-    margin: 2rem;
+    margin-left: 2rem;
+    width: 600px;
 }
 
 .star {
     font-size: 1.5rem;
     color: #b0c4de;
-  }
-  .filled {
-    color: #1e90ff;
-  }
+}
 
- 
+.filled {
+    color: #1e90ff;
+}
+
+.rdio {
+    display: block;
+}
+
+.assessTest {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  text-align: center;
+  padding-top: 2rem;
+}
