@@ -5,7 +5,8 @@ var assessmentTestSchema = new mongoose.Schema({
     description: String,
     completed: Boolean,
     creator: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
-    belongsTo: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
+    belongsTo: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
+    questions: []
     
     
     // authorName: String,
