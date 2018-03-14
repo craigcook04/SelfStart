@@ -19,4 +19,11 @@ export class UserAccountsService {
     return this.http.get(url);
   }
 
+  Login(username: string, password: string) {
+    var url = "/api/useraccount/account/login";
+    var body = {username: username, password: password};
+
+    return this.http.post(url, body);
+  }
+
 }

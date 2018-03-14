@@ -26,4 +26,8 @@ export class EncryptionService {
     dec += decipher.final('ascii');
     return dec;
   }
+
+  GenSalt() {
+    return crypto.randomBytes(16).toString('base64');
+  }
 }
