@@ -16,5 +16,11 @@ export class AssessmentTestService {
             
         };
         return this.http.post(url,body);
-    }       
+    }    
+    
+    GetPlans() {
+        var url = '/api/assessmentTest';
+
+        return this.http.get(url);
+    }
 }
