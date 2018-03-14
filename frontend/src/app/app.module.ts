@@ -46,6 +46,9 @@ import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { RecoverAccountComponent } from './recover-account/recover-account.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
+import {AssessmentTestService} from './assessment-test.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,9 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
     ClientExerciseComponent,
     LoginComponent,
     ForgottenPasswordComponent,
-    RecoverAccountComponent
+    RecoverAccountComponent,
+    NotFoundComponent,
+    AssessmentTestComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +100,7 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
     MomentModule,
     MatDialogModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]
 })
 

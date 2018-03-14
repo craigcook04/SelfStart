@@ -95,11 +95,12 @@ export class PatientService {
     return this.http.post(url, body);
   }
 
-  ChangePassword(hash: string, password: string) {
+  ChangePassword(hash: string, password: string, tempPassword: string) {
     var url = "/api/useraccount/account/change";
     var body = {
-      myHash: hash,
-      newpassword: password
+      userID: hash,
+      password: password,
+      temppassword: tempPassword
     }
 
     return this.http.put(url, body);

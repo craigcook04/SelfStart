@@ -11,10 +11,14 @@ router.route('/')
         var assessmentTest = new AssessmentTest();
         assessmentTest.name = request.body.name;
         assessmentTest.description = request.body.description;
-        assessmentTest.authorName = request.body.authorName;
-        assessmentTest.recommendation = request.body.recommendation;
-        assessmentTest.testResults = request.body.testResults;
-        assessmentTest.rehabilitionPlans = request.body.rehabilationPlans;
+        assessmentTest.completed = request.body.completed;
+        assessmentTest.creator = request.body.creator;
+        assessmentTest.belongsTo = request.body.belongsTo;
+        assessmentTest.questions = request.body.questions;
+        // assessmentTest.authorName = request.body.authorName;
+        // assessmentTest.recommendation = request.body.recommendation;
+        // assessmentTest.testResults = request.body.testResults;
+        // assessmentTest.rehabilitionPlans = request.body.rehabilationPlans;
         
         assessmentTest.save(function (error) {
             if (error) {
