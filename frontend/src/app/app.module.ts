@@ -41,6 +41,7 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
 import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
+import { PhysioHomeComponent } from './physio-home/physio-home.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {MomentModule} from 'angular2-moment/moment.module';
     UserAccountsComponent,
     NewClientComponent,
     ClientsOfTherapistComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    PhysioHomeComponent
   ],
   imports: [
     BrowserModule,

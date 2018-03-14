@@ -18,6 +18,7 @@ import {NewClientComponent} from './new-client/new-client.component';
 import{ BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import {ClientsOfTherapistComponent} from './clients-of-therapist/clients-of-therapist.component';
 import {AppointmentsComponent} from './appointments/appointments.component';
+import { PhysioHomeComponent } from './physio-home/physio-home.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -37,7 +38,8 @@ const routes: Routes = [
   {path: 'useraccounts', component:UserAccountsComponent},
   {path: 'signup', component: NewClientComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
-  {path: 'bookappointement', component: AppointmentsComponent}
+  {path: 'bookappointement', component: AppointmentsComponent},
+  {path: 'physiohome', component: PhysioHomeComponent},
 ];
 
 @NgModule({
