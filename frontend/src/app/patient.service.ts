@@ -20,7 +20,7 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) : any {
+  UpdatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) : any {
     //create the body of the request
     var body = {
       ID: patientID,
@@ -31,9 +31,6 @@ export class PatientService {
       gender: newGender,
       postalCode: postalCode,
       phone: phoneNumber,
-      maritalStatus: maritalStatus,
-      healthCardNumber: healthCardNumber,
-      occupation: occupation,
       others: others,
       country: newCountry,
       province: newProvince,
@@ -96,6 +93,17 @@ export class PatientService {
 
     var url = '/api/patient'
     return this.http.post(url, body);
+  }
+
+  ChangePassword(hash: string, password: string, tempPassword: string) {
+    var url = "/api/useraccount/account/change";
+    var body = {
+      userID: hash,
+      password: password,
+      temppassword: tempPassword
+    }
+
+    return this.http.put(url, body);
   }
 
 }

@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Patient = require('../models/patient');
 var UserAccount = require('../models/userAccount');
+var ResetEmail = require('../models/resetEmail');
 
 //generic route for fetching all patients
 
@@ -21,9 +22,6 @@ router.route('/')
         patient.DOB = myDate;
         patient.postalCode = request.body.postalCode;
         patient.phone = request.body.phone;
-        patient.maritalStatus = request.body.maritalStatus;
-        patient.healthCardNumber = request.body.healthCardNumber;
-        patient.occupation = request.body.occupation;
         patient.others = request.body.others;
         patient.account = request.body.account;
         patient.payment = request.body.payment;
@@ -37,7 +35,9 @@ router.route('/')
         
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
-        userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
+        userAccount.encryptedPassword = request.body.encryptedPassword;
+        userAccount.salt = request.body.salt;
+        userAccount.needToChangePass = false;
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {
@@ -75,36 +75,6 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        
-        //TO DO: SEARCH BY USERNAME
-        // if(request.query.s == 'username') {
-        //     //if the query string isn't null, set the query to search for the query string
-        //     var search = '^' + request.query.q;
-        //     var regexexp = new RegExp(search, 'i');
-        //     var query = {givenName: regexexp};
-        //     UserAccount.find({username: regexexp}, function(err, user) {
-        //         if(err) {
-        //             response.send(err);
-        //             return;
-        //         }
-        //         else if(user == null) {
-        //             response.send({docs: null});
-        //             return;
-        //         }
-        //         else {
-        //             var options = 
-        //             {
-        //                 sort: sort,
-        //                 populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
-        //                 limit: 10,
-        //                 offset: Number(request.query.offset)
-        //             };
-                    
-        //             query = { : { $elemMatch:  } }
-                    
-        //         }
-        //     })
-        // }
         
         var query = {};
         if(request.query.s == "ID"){
@@ -182,9 +152,6 @@ router.route('/:patient_id')
                 patient.DOB = myDate;
                 patient.postalCode = request.body.postalCode;
                 patient.phone = request.body.phone;
-                patient.maritalStatus = request.body.maritalStatus;
-                patient.healthCardNumber = request.body.healthCardNumber;
-                patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
                 patient.payment = request.body.payment;
                 patient.country = request.body.country;
@@ -258,14 +225,7 @@ router.route('/physiotherapist/:physiotherapist_id')
             
             response.send(results);
         });
-        // Patient.find({"physioId": request.params.physiotherapist_id}, function (error, patient) {
-        //     if (error) {
-        //       response.send({error: error});
-        //     }
-        //     else {
-        //       response.json({patient: patient});
-        //     }
-        // });
     });
+
 
 module.exports = router;

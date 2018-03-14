@@ -138,10 +138,10 @@ export class ClientsOfTherapistComponent implements OnInit {
       this.cities = Object.assign([], retObj.cities);
     });
   }
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: any, newProvince: any, newCity: any, newGender: any, newAddress: any) {
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: any, newProvince: any, newCity: any, newGender: any, newAddress: any) {
     
    //this.showSuccess = true;
-    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
       console.log(data);
       //reload the list of patients
       this.patientService.getPhysioPatients(this.physioId).subscribe(data => {
@@ -240,17 +240,17 @@ export class ClientsOfTherapistComponent implements OnInit {
     email = email.value;
     var phone: any = document.getElementById('inputPhoneNumber');
     phone = phone.value;
-    var maritalStatus: any = document.getElementById('inputMaritalStatus');
-    maritalStatus = maritalStatus.value;
-    var occupation: any = document.getElementById('inputOccupation');
-    occupation = occupation.value;
-    var healthCardNumber: any = document.getElementById('inputHealthCardNumber');
-    healthCardNumber = healthCardNumber.value;
-    var others: any = document.getElementById('inputOthers');
+    //var maritalStatus: any = document.getElementById('inputMaritalStatus');
+    // maritalStatus = maritalStatus.value;
+    // var occupation: any = document.getElementById('inputOccupation');
+    // occupation = occupation.value;
+    // var healthCardNumber: any = document.getElementById('inputHealthCardNumber');
+    // healthCardNumber = healthCardNumber.value;
+     var others: any = document.getElementById('inputOthers');
     others = others.value;
     var address: any = document.getElementById('inputAddress');
     address = address.value;
-    console.log(healthCardNumber, maritalStatus, occupation);
+   // console.log(healthCardNumber, maritalStatus, occupation);
     this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -332,7 +332,7 @@ export class ClientsOfTherapistComponent implements OnInit {
       return;
     }
 
-    this.newClientService.CreateClientWithPhysioAssigned(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, maritalStatus, healthCardNumber, occupation, others, country, province, city,this.physioId,address).subscribe(data => {
+    this.newClientService.CreateClientWithPhysioAssigned(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city,this.physioId,address).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {

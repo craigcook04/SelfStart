@@ -42,6 +42,13 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
 import { PhysioHomeComponent } from './physio-home/physio-home.component';
+import { EncryptionService } from './encryption.service';
+import { LoginComponent } from './login/login.component';
+import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
+import { RecoverAccountComponent } from './recover-account/recover-account.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
+import {AssessmentTestService} from './assessment-test.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +71,11 @@ import { PhysioHomeComponent } from './physio-home/physio-home.component';
     ClientsOfTherapistComponent,
     AppointmentsComponent,
     PhysioHomeComponent
+    LoginComponent,
+    ForgottenPasswordComponent,
+    RecoverAccountComponent,
+    NotFoundComponent,
+    AssessmentTestComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +99,7 @@ import { PhysioHomeComponent } from './physio-home/physio-home.component';
     MatGridListModule,
     MomentModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService],
+  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]
 })
 
