@@ -13,6 +13,8 @@ export class CompleteAssessmentTestComponent implements OnInit {
   assessmentTest: any;
   assessmentTestQuestions: any[];
   testLength: Number;
+  MCAnswers: any[];
+
   constructor(private assessmentTestService: AssessmentTestService,
               private config: NgbRatingConfig) {
                 this.config.max = 5;
@@ -24,16 +26,20 @@ export class CompleteAssessmentTestComponent implements OnInit {
       this.assessmentTest = retObj.assessmentTest[0];
       this.assessmentTestQuestions = this.assessmentTest.questions;
       this.testLength = this.assessmentTestQuestions.length;
-      console.log(this.testLength);
-      console.log(this.assessmentTest);
-      console.log(this.assessmentTestQuestions);
     })
+
+    this.MCAnswers = [];
+  }
+
+  RadioButtonClicked(content: string, i) {
+    this.MCAnswers[i] = content;
+  }
+
+  SendBack(rating, i) {
+    this.MCAnswers[i] = rating + 1;
   }
 
   SubmitAnswers() {
-    console.log(this.assessmentTest);
-    console.log(this.assessmentTestQuestions);
-    console.log(this.testLength);
     for(var i = 0; i < this.testLength; i++) {
       var question = "question" + i;
       var element: any = document.getElementById(question);
@@ -42,17 +48,12 @@ export class CompleteAssessmentTestComponent implements OnInit {
         this.assessmentTestQuestions[i].answer = element.value;
       }
       if(questionCode == "MC") {
-        var numberOfMCs = this.assessmentTestQuestions[i].questionContent.length;
-        for(var j = 0; j < numberOfMCs; j++) {
-          var newQuestion = question + j;
-          var radioButton : any = document.getElementById(newQuestion);
-          console.log("---->",radioButton.class);
-        }
-        
+        this.assessmentTestQuestions[i].answer = this.MCAnswers[i];
       }
-      console.log('element', element);
+      if(questionCode == "RA") {
+        this.assessmentTestQuestions[i].answer = this.MCAnswers[i];
+      }
     }
-
     console.log("new list", this.assessmentTestQuestions);
   }
 
