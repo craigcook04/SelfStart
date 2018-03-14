@@ -16,6 +16,8 @@ export class AssessmentTestComponent implements OnInit {
   options: any[];
   optionText: any[];
   questions: any[];
+  name: string;
+  description: string;
  
   
   
@@ -126,5 +128,28 @@ export class AssessmentTestComponent implements OnInit {
     this.showDrop = false;
     this.rating = false;
     this.type = "type of question";
+  }
+  createTest(){
+    var temp:any = document.getElementById('name');
+    temp = temp.value;
+    this.name = temp;
+    
+    var temp2:any = document.getElementById('description');
+    temp2 = temp2.value;
+    this.description = temp2;
+    
+    
+    this.assessmentTestService.createPlan(this.name, this.description, this.questions,).subscribe(data => {
+      console.log(data);
+    });
+    this.showDrop = false;
+    this.rating = false;
+    this.multipleChoice = false;
+    this.type = "type of question";
+    this.showCreat = true;
+    this.optionText = [];
+    this.options =[];
+    this.questions = [];
+    
   }
 }

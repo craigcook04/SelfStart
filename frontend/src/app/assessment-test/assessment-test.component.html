@@ -3,6 +3,7 @@
 <!--</p>-->
 <br><br>
 <div style="margin-left: 2em;">
+    
     <button *ngIf="showCreat" type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>
     <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
         <p><b>Enter the name of the test: </b></p>
@@ -33,21 +34,23 @@
             </ol>
             <hr>
         </li>
-        <br>
+        
     </ol>
-    <br><br><br><br>
+     
     <br>
+    
+    
     <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{type}}</button>
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
             <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
             <button class="dropdown-item" (click)="changeRA();">Rating</button>
         </div>
-
+        <br><br>
         <!--<hr>-->
     </div>
-    <br>
+    <br><br><br>
 
     <div *ngIf="shortAnswer" style="margin-left:2em; width:50%">
         <p><b>Enter Your Short Answer Question</b></p>
@@ -93,9 +96,12 @@
         <hr>
     </div>
 
-    <br><br>
-
-    <button *ngIf="!showCreat" type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
-
+    
+    <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
+        <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
+    </div>
+    <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
+        <button type="button" class="btn btn-primary createbtn" (click)="createTest();" style="margin-left: 2em; background-color: green;">Save Plan</button>
+    </div>
     <br><br><br><br>
 </div>
