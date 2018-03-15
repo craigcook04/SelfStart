@@ -50,6 +50,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
 import { MatButtonModule } from '@angular/material/button';
+import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { MatButtonModule } from '@angular/material/button';
     ForgottenPasswordComponent,
     RecoverAccountComponent,
     NotFoundComponent,
-    AssessmentTestComponent
+    AssessmentTestComponent,
+    AssignPlanComponent
   ],
   imports: [
     BrowserModule,
