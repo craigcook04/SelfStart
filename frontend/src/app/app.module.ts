@@ -35,6 +35,7 @@ import { ImageService } from './image.service';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatRadioModule} from '@angular/material/radio';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
@@ -48,7 +49,7 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
-//import {MatListModule} from '@angular/material/list';
+import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import {AssessmentTestService} from './assessment-test.service';
     ForgottenPasswordComponent,
     RecoverAccountComponent,
     NotFoundComponent,
-    AssessmentTestComponent
+    AssessmentTestComponent,
+    CompleteAssessmentTestComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +99,8 @@ import {AssessmentTestService} from './assessment-test.service';
     
     NoopAnimationsModule,
     MatGridListModule,
-    MomentModule
+    MomentModule,
+    MatRadioModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]
