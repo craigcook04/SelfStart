@@ -82,3 +82,20 @@ h4 {
     margin-left: 2.5rem;
     font-family: Helvetica, sans-serif, Arial;
 }
+
+ .mat-input-underline {
+    display: none;
+  }
+
+  .dateinput {
+      display: inline;
+  }
+
+  .dontshow {
+      visibility: hidden;
+      width: 1px;
+  }
+
+.inl {
+    display: inline;
+}

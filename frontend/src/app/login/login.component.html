@@ -12,7 +12,6 @@
       <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
     </div> 
   </div>
-
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
     <div class="col-sm-9">
@@ -20,9 +19,10 @@
     </div> 
   </div>
   <br> 
-
   <hr>
   <mat-card-actions>
+      <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
+      <p class="cont">||</p>
       <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
       <span flex></span>
       <div class="btns">
