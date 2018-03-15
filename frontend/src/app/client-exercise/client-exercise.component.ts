@@ -7,6 +7,11 @@ import { ImageService } from '../image.service';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+declare var jquery: any;
+declare var $: any;
 
 
 @Component({
@@ -25,6 +30,10 @@ export class ClientExerciseComponent implements OnInit {
     images: any
   } [];
   timeOfDay: string;
+  currSteps: string [];
+
+  @ViewChild('test') test: ElementRef;
+  @ViewChild('test2') test2: ElementRef;
   
   constructor( private exerciseService: ExerciseService, 
                private router: Router,
@@ -58,7 +67,11 @@ export class ClientExerciseComponent implements OnInit {
 
   getExerciseInfo(exercise: any){
     this.currExercise = exercise;
-    console.log(this.currExercise);
+    var steps = exercise.actionSteps.split(/[0-9]+\./g);
+    console.log(steps);
+    this.currSteps = steps;
+    this.currSteps.shift();
+    console.log(this.currSteps);
   }
 
   getExerciseImages(id: string, name:string){
@@ -70,4 +83,51 @@ export class ClientExerciseComponent implements OnInit {
 
     })
   }
+
+  openPrint(exercise: any){
+    let doc = new jsPDF();
+
+    let specialElementHandlers = {
+      '#editor': function(element, renderer){
+        return true;
+      }
+    }
+
+    let content = this.test.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 180,
+      'elementHandlers': specialElementHandlers
+    });
+
+    var pageHeight = doc.internal.pageSize.height;
+    
+    // Before adding new content
+    var y = 500 // Height position of new content
+    if (y >= pageHeight)
+    {
+      doc.addPage();
+      y = 0 // Restart height position
+    }
+
+    var vert = 0;
+    doc.text( 30, 30, "Images:");
+    this.images.forEach(image => {
+      var imgData = 'data:image/png;base64,' + image.data;
+      if(vert == 0){
+        vert = 40;
+      }
+      else{
+        vert = 140;
+      }
+      doc.addImage(imgData, 'PNG', 30, vert, 100, 100);
+    });
+
+    doc.save(exercise.name + '.pdf');
+
+  }
+
+  // openCarousel(carouel: any){
+  //   document.
+  // }
 }

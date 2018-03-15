@@ -46,7 +46,7 @@
                     {{ currExercise?.name }}
                   </div>
                   <div class="ml-sm-5 print">
-                    <i class="fa fa-print" (click)="openDialog()"></i>
+                    <i class="fa fa-print" (click)="openPrint(currExercise)"></i>
                   </div>
                 </div>
               </mat-card-title>
@@ -59,16 +59,16 @@
                   <div class="col-sm-2">
                     <b>Description: </b>
                   </div>
-                  <div class="col-sm- descrip">
+                  <div class="col-sm-10 descrip">
                     {{ currExercise?.description }}
                     </div>
                 </div>
                 <br>
                 <div class="row">
                   <div class="col-sm-2">
-                    <b>Objectives</b>
+                    <b>Objectives: </b>
                   </div>
-                  <div class="col-sm-8 descrip">
+                  <div class="col-sm-10 descrip">
                     {{ currExercise?.objectives }}
                   </div>
                 </div>
@@ -94,15 +94,73 @@
                   </div>
                 </div>
                 <br>
-                <ngb-carousel *ngIf="images?.length > 0">
-                    <ng-template ngbSlide *ngFor="let image of images">
-                      <img mat-card-image src="data:image/png;base64,{{image.data}}">
-                    </ng-template>
-                  </ngb-carousel>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <b>Action Steps:</b>
+                  </div>
+                  <div class ="col-sm-10">
+                    <ol *ngFor="let step of currSteps; index as i" class="col-sm">
+                      <b>{{ i + 1 }}. </b> &nbsp; {{ currSteps[i] }}
+                    </ol>
+                  </div>
+                </div>
+                <div>
+                  <br>
+                  <mat-divider></mat-divider>
+                </div>
+                <div #carousel>
+                    <ngb-carousel *ngIf="images?.length > 0">
+                        <ng-template ngbSlide *ngFor="let image of images">
+                          <img mat-card-image src="data:image/png;base64,{{image.data}}">
+                        </ng-template>
+                      </ngb-carousel>
+                </div>
               </mat-card-content>
+              <!-- <mat-card-footer>
+                  <div class="col-sm-12">
+                      <button mat-button class="btn btn-block md" (click)="openCarousel(carousel)">
+                        <i class="fa fa-images"></i>
+                        <b>Show Exercise Images</b>
+                      </button>
+                    </div>
+                    <br>
+              </mat-card-footer> -->
             </mat-card>
       </div>
     </div>
+  </div>
+</div>
+
+<div style="display:none" #test>
+  <h1>Self Start: &nbsp; {{ currExercise?.name }} </h1>
+  <br>
+  <div>
+    <b>Description: </b> &nbsp; {{ currExercise?.description }}
+  </div>
+  <br>
+  <div>
+    <b>Objectives: </b> &nbsp; {{ currExercise?.objectives }}
+  </div>
+  <div>
+    <p>
+      <b>Repetitions: </b> &nbsp; {{ currExercise?.duration }} &nbsp; &nbsp;
+      <b>Sets: </b> &nbsp; {{ currExercise?.frequency }} &nbsp; &nbsp;
+      <b>Location: </b> &nbsp; {{ currExercise?.location }} &nbsp; &nbsp;
+    </p>
+  </div>
+  <b>Action Steps: </b> &nbsp;
+  <div>
+      <ol *ngFor="let step of currSteps; index as i">
+        <li> {{ currSteps[i] }} </li>
+      </ol>
+  </div>
+</div>
+
+<div style="display:none;" #test2>
+  <b>Images:</b>
+  <div *ngFor="let image of images">
+    <img src="data:image/png;base64,{{image.data}}">
+    <br>
   </div>
 </div>
 

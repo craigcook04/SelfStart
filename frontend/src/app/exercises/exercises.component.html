@@ -81,13 +81,13 @@
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputFreq" class="col-sm-3 col-form-label"><b>Frequency</b></label>
+                <label for="inputFreq" class="col-sm-3 col-form-label"><b>Sets</b></label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" #frequency>
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputDur" class="col-sm-3 col-form-label"><b>Duration</b></label>
+                <label for="inputDur" class="col-sm-3 col-form-label"><b>Repetitions</b></label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputDur" placeholder="Duration" #duration>
                   </div>
@@ -154,8 +154,8 @@
           <p><b> Author: </b> {{ exercise.authorName }} </p>
           <p><b> Action Steps: </b> {{ exercise.actionSteps }} </p>
           <p><b> Location: </b> {{ exercise.location }} </p>
-          <p><b> Frequency: </b> {{ exercise.frequency }} </p>
-          <p><b> Duration: </b> {{ exercise.duration }} </p>
+          <p><b> Sets: </b> {{ exercise.frequency }} </p>
+          <p><b> Repititions: </b> {{ exercise.duration }} </p>
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
           <p><b> Multimedia: </b> </p>
           <br>
@@ -227,7 +227,7 @@
                 </form>
                 <form>
                     <div class="form-group row">
-                      <label for="inputFreq" class="col-sm-3 col-form-label">Frequency</label>
+                      <label for="inputFreq" class="col-sm-3 col-form-label">Sets</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" value="{{ exercise.frequency }}" #newFreq>
                       </div>
@@ -235,7 +235,7 @@
                 </form>
                 <form>
                     <div class="form-group row">
-                      <label for="inputDur" class="col-sm-3 col-form-label">Duration</label>
+                      <label for="inputDur" class="col-sm-3 col-form-label">Repetitions</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputDur" placeholder="Duration" value="{{ exercise.duration }}" #newDur>
                       </div>
