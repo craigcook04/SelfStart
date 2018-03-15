@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import {MomentModule} from 'angular2-moment/moment.module';
@@ -30,11 +30,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     this.cells = new Array(37); //Create 37 time slots
     this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially
     this.refreshCalendar(); //populate calendar
-
   }
   
   ngAfterViewInit(){
-    //document.getElementById('slot14').setAttribute("class", "taken");
     this.apptService.GetAllAppointments().subscribe(data =>{
       var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
       this.bookedDates = Object.assign([], data.appointment); //assigns all appointements to bookedDates
@@ -44,20 +42,34 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         if(moment(this.bookedDates[i].date).isSameOrAfter(moment().add(this.currentWeek, 'weeks').startOf('week').format('YYYY-MM-DD')) && moment(this.bookedDates[i].date).isSameOrBefore(moment().add(this.currentWeek, 'weeks').endOf('week').format('YYYY-MM-DD'))){
           var currDate = moment(this.bookedDates[i].date) //creates moment object out of string date
           var dayNum = currDate.day(); //this gets the day of the week in numerical form 0 = sunday -> 6=saturday
-          
+          var tempTime  = moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNum, 'days').startOf('day').add(8, 'hours').add(30, 'minutes').format('YYYY-MM-DD'); //get start of selected week
+          var timeCount = 0;
+          var countUp = true;
           //figure out how many 15-minute intervals are needed to get to time
+          //** the work day starts at 830
           
+          while(countUp){
+            if(moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNum, 'days').startOf('day').add(8, 'hours').add((30 + (timeCount*15)), 'minutes').isBefore(currDate)){
+              timeCount = timeCount + 1; //will give me slot number
+              
+            }
+            else{
+              countUp = false;
+            }
+          }
           
-          
-          var timeNum = ""; //DO THIS STILL vv
-          var takenSlot = "slot" + dayNum + ""; //slot0{{i}}, slot1{{i}} ...etc
-          document.getElementById(takenSlot).classList.remove("bg-primary");
-          document.getElementById(takenSlot).className = "bg-warning";
+          console.log("made it here " + timeCount);
+          var takenSlot = "slot" + (dayNum + 1) + timeCount; //slot0{{i}}, slot1{{i}} ...etc
+          // document.getElementById(takenSlot).classList.remove('bg-primary');
+          document.getElementById(takenSlot).setAttribute("class", "btn btn-sm bg-muted chooseTime");
           console.log(dayNum);
         }
       }
     });
+    
   }
+  
+  
   
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
     this.isSelected = true; //If one is selected they cant select another

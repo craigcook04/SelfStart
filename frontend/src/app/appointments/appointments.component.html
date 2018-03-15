@@ -56,7 +56,7 @@
       </tr>
       <tr>
         <td colspan="2" id="sunday" class="weekDay">Sunday</td>
-        <td *ngFor="let cell of cells; let i = index" class="timeSlot" id="slot0{{ i }}" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(0, i);" bookingSlot></button></td>
+        <td *ngFor="let cell of cells; let i = index" class="timeSlot"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(0, i);" id="slot0{{ i }}"></button></td>
       </tr>
       <tr>
         <td colspan="2" class="weekDay">Monday</td>
@@ -64,23 +64,23 @@
       </tr>
       <tr>
         <td colspan="2" class="weekDay" >Tuesday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" id="slot2{{ i }}"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(2, i);"></button></td>
+        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(2, i);" id="slot2{{ i }}"></button></td>
       </tr>
       <tr>
         <td colspan="2" class="weekDay">Wednesday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" id="slot3{{ i }}"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(3, i);"></button></td>
+        <td *ngFor='let cell of cells; let i = index' class="timeSlot"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(3, i);"  id="slot3{{ i }}"></button></td>
       </tr>
       <tr>
         <td colspan="2" class="weekDay">Thursday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" id="slot4{{ i }}"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(4, i);"></button></td>
+        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(4, i);" id="slot4{{ i }}"></button></td>
       </tr>
       <tr>
         <td colspan="2" class="weekDay">Friday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" id="slot5{{ i }}"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(5, i);"></button></td>
+        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(5, i);" id="slot5{{ i }}"></button></td>
       </tr>
       <tr>
         <td colspan="2" class="weekDay">Satruday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" id="slot6{{ i }}"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(6, i);"></button></td>
+        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(6, i);" id="slot6{{ i }}"></button></td>
       </tr>
   </table>
   </div>

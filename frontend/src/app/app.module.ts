@@ -45,14 +45,11 @@ import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { RecoverAccountComponent } from './recover-account/recover-account.component';
-<<<<<<< HEAD
 import { BookingsDirective } from './bookings.directive';
 import { AppointmentsService } from './appointments.service';
-=======
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
->>>>>>> 562cd1f5c7189790603b7c5c0f689bf4bdce9c3a
 
 @NgModule({
   declarations: [
