@@ -46,7 +46,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
-  {path: 'assessmentTest', component: AssessmentTestComponent}
+  {path: 'assessmentTest', component: AssessmentTestComponent},
   {path: '**', component: NotFoundComponent}, //this NEEDS to be last
  
 ];

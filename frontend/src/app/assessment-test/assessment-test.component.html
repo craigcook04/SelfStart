@@ -23,7 +23,7 @@
 
         <hr>
     </div>
-    <ol>
+    <ol *ngIf = "!showPatients">
         <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
 
             <label><b>{{question.questionText}}</b></label>
