@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute, Router} from '@angular/router'
 import { PatientService } from '../patient.service'
+
 
 @Component({
   selector: 'app-recover-account',
@@ -11,29 +12,37 @@ import { PatientService } from '../patient.service'
 export class RecoverAccountComponent implements OnInit {
 
   username: string;
-  hash: string;
+  userID: string;
   passwordNull: boolean;
   repeatPasswordNull: boolean;
   passwordsDontMatch: boolean;
   successfullyChangePassword: boolean;
   constructor(private route: ActivatedRoute,
-              private patientService: PatientService) { }
+              private patientService: PatientService,
+              private router: Router) { }
 
   ngOnInit() {
     //this component should have a hashed passed in the url
-    this.hash = this.route.snapshot.paramMap.get("id");
+    this.userID = this.route.snapshot.paramMap.get("id");
   }
 
   RemoveErrors() {
     var passwordBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';
     var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'rgba(0,0,0,.15)';
+    var tempPasswordBox = document.getElementById('inputTempPassword').style.borderColor = 'rgba(0,0,0,.15)';    
     this.passwordNull = false;
     this.repeatPasswordNull = false;
     this.passwordsDontMatch = false;
   }
 
-  ResetPassword(password: string, repeatPassword: string) {
+  ResetPassword(password: string, repeatPassword: string, tempPassword: string) {
     var cannotContinue = false;
+    console.log('hello');
+    if(!tempPassword) {
+      var tempPasswordBox = document.getElementById('inputTempPassword').style.borderColor = 'red';
+      cannotContinue = true;
+    }
+
     if(!password) {
       var passwordBox = document.getElementById('inputPassword').style.borderColor = 'red';
       cannotContinue = true;
@@ -56,10 +65,11 @@ export class RecoverAccountComponent implements OnInit {
       return;
     }
 
-    this.patientService.ChangePassword(this.hash, password).subscribe(data => {
+    this.patientService.ChangePassword(this.userID, password, tempPassword).subscribe(data => {
       var retObj: any = data;
+      console.log(data);
       if(retObj.success) {
-
+        this.router.navigate(['../login']);        
       }
       else {
 

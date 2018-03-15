@@ -11,10 +11,15 @@ router.route('/')
         var assessmentTest = new AssessmentTest();
         assessmentTest.name = request.body.name;
         assessmentTest.description = request.body.description;
-        assessmentTest.authorName = request.body.authorName;
-        assessmentTest.recommendation = request.body.recommendation;
-        assessmentTest.testResults = request.body.testResults;
-        assessmentTest.rehabilitionPlans = request.body.rehabilationPlans;
+        assessmentTest.completed = request.body.completed;
+        assessmentTest.creator = request.body.creator;
+        assessmentTest.belongsTo = request.body.belongsTo;
+        assessmentTest.questions = request.body.questions;
+        assessmentTest.dateCreated = new Date();
+        // assessmentTest.authorName = request.body.authorName;
+        // assessmentTest.recommendation = request.body.recommendation;
+        // assessmentTest.testResults = request.body.testResults;
+        // assessmentTest.rehabilitionPlans = request.body.rehabilationPlans;
         
         assessmentTest.save(function (error) {
             if (error) {
@@ -85,6 +90,33 @@ router.route('/:assessment_id')
                 }
             }
         );
+    });
+    
+router.route('/client/completed')
+    .put(function(request, response) {
+        AssessmentTest.findById(request.body.assessmentID, function(error, assessmentTest) {
+            if(error){
+                response.send(error);
+                return;
+            }
+            
+            if(assessmentTest == null) {
+                response.send({success: true, message: "could not retrieve the assessment test"});
+                return;
+            }
+            
+            assessmentTest.questions = request.body.questions;
+            assessmentTest.completed = true;
+            assessmentTest.dateCompleted = new Date();
+            assessmentTest.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({assessmentTest: assessmentTest, success: true});
+            });
+        });
     });
 
 module.exports = router;
