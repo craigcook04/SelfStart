@@ -57,7 +57,7 @@
       <ng-template ngbPanelTitle>
         <span (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
         <button type="button" class="btn btn-secondary btn-sm" (click)="open(delete)" style="float: right;">Delete Client</button>
-        <button type="button" class="btn btn-primary btn-sm" (click)="open(update)" style="float: right; margin-right:10px;">Edit Client</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="SetDate(patient.DOB); open(update)" style="float: right; margin-right:10px;">Edit Client</button>
       </ng-template>
 
       <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
