@@ -16,15 +16,17 @@
 
   <br>
   <br>
+  <div class="resetPass">
   <h4>Password Reset Requests</h4>
-  <div>
-    <ol>
+  <hr>
+  <div class="names">
+    <ul>
       <li *ngFor="let user of resetUsers">
-        {{user.userAccountName}} <button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button>
+         <span class="lefts">{{user.userAccountName}}</span> <fa class="rights check" name="check" ngbTooltip="Confirm Reset for {{user.userAccountName}}"></fa><!--<button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button> -->
       </li>
-    </ol>
+    </ul>
   </div>
-
+  </div>
   <br><br>
 <div class = 'jumbotron' style = "left:10px">
    
