@@ -27,7 +27,7 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule } from '@angular/material'; 
+import { MatMenuModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule, MatDialogModule, MatButtonToggleModule } from '@angular/material'; 
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -43,6 +43,7 @@ import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-t
 import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MomentModule} from 'angular2-moment/moment.module';
+import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
 import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
@@ -50,6 +51,8 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
+import { MatButtonModule } from '@angular/material/button';
+import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
 @NgModule({
@@ -72,11 +75,13 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     NewClientComponent,
     ClientsOfTherapistComponent,
     AppointmentsComponent,
+    ClientExerciseComponent,
     LoginComponent,
     ForgottenPasswordComponent,
     RecoverAccountComponent,
     NotFoundComponent,
     AssessmentTestComponent,
+    AssignPlanComponent,
     CompleteAssessmentTestComponent
   ],
   imports: [
@@ -102,7 +107,9 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MomentModule,
     MatRadioModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDialogModule,
+    MatButtonToggleModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]

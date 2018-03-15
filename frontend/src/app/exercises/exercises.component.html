@@ -1,10 +1,39 @@
 
+<br>
+
 <h2>Exercises</h2>
+<br>
+<div *ngIf="invalidSearchArea" class="failedSearch">
+  Please enter a search area
+</div>
+<div class='blockContainer'>
+  <div class='left'>
+    <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value)">
+      <option value='exerciseName'>Search by...</option>
+      <option disabled='disabled'>----</option>
+      <option value="exerciseName">Exercise Name</option>
+      <option value="exerciseLocation">Location</option>
+      <option value="">Author Name</option>
+    </select>
+  </div>
+  <div class="right">
+    <div class="input-group mb-3 searchbar" id="custom-search-input">
+      <input type="text" class="form-control" placeholder="Search term" aria-label="Search for exercise here..." aria-describedby="basic-addon2" #searchValue>
+      <span class="input-group-btn">
+        <button class="btn btn-info btn-lg" type="button" location="top" ngbTooltip="Search">
+          <fa name="search"></fa>
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+<br><br>
+<br>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-<button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Exercise</button>
+<button type="button" id="addExerciseButton" class="btn btn-primary createbtn ml-sm-5" (click)="open(newmodal)">Add New Exercise</button>
 
 <div>
   <div>
@@ -52,13 +81,13 @@
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputFreq" class="col-sm-3 col-form-label"><b>Frequency</b></label>
+                <label for="inputFreq" class="col-sm-3 col-form-label"><b>Sets</b></label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" #frequency>
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputDur" class="col-sm-3 col-form-label"><b>Duration</b></label>
+                <label for="inputDur" class="col-sm-3 col-form-label"><b>Repetitions</b></label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputDur" placeholder="Duration" #duration>
                   </div>
@@ -77,7 +106,7 @@
                   </div>
             </div>
             <div class="form-group row">
-              <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
+              <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
               <div class="col-sm-9">
                 <label class="btn btn-block btn-file" id="inputMedia">
                   Click Here to Select File(s) for Upload&hellip;
@@ -116,8 +145,8 @@
       <div *ngIf="exercise == activated" class=".col-sm-4 accordion">
         <div class="info">
           <br>
-          <button style = "float: right; background-color: white; color: blue; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(update)"><i class="material-icons">mode_edit</i></button>
-          <button style = "float: right; background-color: white; color: red; border:none; margin-top: none; margin-right: 2px " class =  " w3-xlarge" (click) = "open(delete)"><i  class="fa fa-trash"></i></button>
+          <button style = "float: right; background-color: white; color: rgb(90, 134, 228); border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(update)"><i class="material-icons">mode_edit</i></button>
+          <button style = "float: right; background-color: white; color: rgb(236, 104, 104); border:none; margin-top: none; margin-right: 2px " class =  " w3-xlarge" (click) = "open(delete)"><i  class="fa fa-trash"></i></button>
 
           <p><b> Name: </b> {{ exercise.name }} </p>
           <p><b> Description: </b> {{ exercise.description }} </p>
@@ -125,15 +154,15 @@
           <p><b> Author: </b> {{ exercise.authorName }} </p>
           <p><b> Action Steps: </b> {{ exercise.actionSteps }} </p>
           <p><b> Location: </b> {{ exercise.location }} </p>
-          <p><b> Frequency: </b> {{ exercise.frequency }} </p>
-          <p><b> Duration: </b> {{ exercise.duration }} </p>
+          <p><b> Sets: </b> {{ exercise.frequency }} </p>
+          <p><b> Repititions: </b> {{ exercise.duration }} </p>
           <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
           <p><b> Multimedia: </b> </p>
           <br>
 
-          <ngb-carousel class=".col-sm-6 carousel" #carousel>
+          <ngb-carousel *ngIf="images?.length > 0" class=".col-sm-6 carousel" #carousel>
               <ng-template ngbSlide *ngFor="let image of images">
-                <img  *ngIf="images.length > 0" src="data:image/png;base64,{{image.data}}">
+                <img src="data:image/png;base64,{{image.data}}">
               </ng-template>
           </ngb-carousel>
         
@@ -198,7 +227,7 @@
                 </form>
                 <form>
                     <div class="form-group row">
-                      <label for="inputFreq" class="col-sm-3 col-form-label">Frequency</label>
+                      <label for="inputFreq" class="col-sm-3 col-form-label">Sets</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" value="{{ exercise.frequency }}" #newFreq>
                       </div>
@@ -206,7 +235,7 @@
                 </form>
                 <form>
                     <div class="form-group row">
-                      <label for="inputDur" class="col-sm-3 col-form-label">Duration</label>
+                      <label for="inputDur" class="col-sm-3 col-form-label">Repetitions</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputDur" placeholder="Duration" value="{{ exercise.duration }}" #newDur>
                       </div>

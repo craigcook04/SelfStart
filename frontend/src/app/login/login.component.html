@@ -18,6 +18,9 @@
       <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password>
     </div> 
   </div>
+  <div *ngIf="showFailure" class="dangeralrt">
+      <p class="failureMessage">Request was unsuccessful, please try again later</p>
+  </div>
   <br> 
   <hr>
   <mat-card-actions>
