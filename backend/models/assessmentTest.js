@@ -4,6 +4,8 @@ var assessmentTestSchema = new mongoose.Schema({
     name: String,
     description: String,
     completed: Boolean,
+    dateCreated: Date,
+    dateCompleted: Date,
     creator: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
     belongsTo: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
     questions: []

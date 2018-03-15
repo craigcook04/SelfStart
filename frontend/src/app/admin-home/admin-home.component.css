@@ -1,0 +1,28 @@
+.resetPass {
+    background: #eceeef;
+    margin-left: 5%;
+    padding: 1%;
+    display: inline-block;
+    border-radius: 5%;
+}
+
+.names {
+    clear: both;
+}
+
+.lefts {
+    float: left;
+}
+
+.rights {
+    float: right;
+}
+
+.check {
+    color: green;
+    cursor: pointer;
+}
+
+li {
+    margin-bottom: 5px;
+}

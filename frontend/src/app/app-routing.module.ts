@@ -23,6 +23,7 @@ import { ForgottenPasswordComponent } from './forgotten-password/forgotten-passw
 import { RecoverAccountComponent } from './recover-account/recover-account.component' 
 import {NotFoundComponent} from './not-found/not-found.component'
 import {AssessmentTestComponent} from './assessment-test/assessment-test.component';
+import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -46,8 +47,9 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
-  {path: '**', component: NotFoundComponent}, //this NEEDS to be last
-  {path: 'assessmentTest', component: AssessmentTestComponent}
+  {path: 'assessmentTest', component: AssessmentTestComponent},
+  {path: 'completetest', component: CompleteAssessmentTestComponent},
+  {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 
 @NgModule({
