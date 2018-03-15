@@ -81,7 +81,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     RecoverAccountComponent,
     NotFoundComponent,
     AssessmentTestComponent,
-    AssignPlanComponent
+    AssignPlanComponent,
     CompleteAssessmentTestComponent
   ],
   imports: [
@@ -107,7 +107,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MomentModule,
     MatRadioModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
     MatDialogModule,
     MatButtonToggleModule
   ],
