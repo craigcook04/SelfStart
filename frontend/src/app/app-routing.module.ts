@@ -24,6 +24,7 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
 import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AssessmentTestComponent} from './assessment-test/assessment-test.component';
+import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -50,6 +51,8 @@ const routes: Routes = [
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmentTest', component: AssessmentTestComponent},
   {path: '**', component: NotFoundComponent}, //this NEEDS to be last
+  {path: 'completetest', component: CompleteAssessmentTestComponent},
+  {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 
 @NgModule({

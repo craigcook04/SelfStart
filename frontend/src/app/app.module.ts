@@ -35,6 +35,7 @@ import { ImageService } from './image.service';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatRadioModule} from '@angular/material/radio';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
@@ -51,6 +52,7 @@ import { AssessmentTestComponent } from './assessment-test/assessment-test.compo
 import {AssessmentTestService} from './assessment-test.service';
 import { MatButtonModule } from '@angular/material/button';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
+import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,7 @@ import { AssignPlanComponent } from './assign-plan/assign-plan.component';
     NotFoundComponent,
     AssessmentTestComponent,
     AssignPlanComponent
+    CompleteAssessmentTestComponent
   ],
   imports: [
     BrowserModule,
@@ -103,6 +106,7 @@ import { AssignPlanComponent } from './assign-plan/assign-plan.component';
     MomentModule,
     MatDialogModule,
     MatButtonToggleModule
+    MatRadioModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]

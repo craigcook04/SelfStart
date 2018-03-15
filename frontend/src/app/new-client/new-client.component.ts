@@ -252,6 +252,7 @@ export class NewClientComponent implements OnInit {
     var hashWithSalt = hashPassword + salt;
     var hashedPassAndSalt = this.encryptionService.hash(hashWithSalt);
     var encryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
+    
     this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
       console.log(data);
       var retObj: any = data;
