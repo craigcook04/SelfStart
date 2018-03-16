@@ -8,18 +8,15 @@ router.route('/')
 
     .post(function (request, response) {
         var form = new Forms();
-        form.ID = request.body.ID;
         form.name = request.body.name;
         form.description = request.body.description;
-        form.assessmentTool = null;
-        //request.body.assessmentTool;
         form.questions = request.body.questions;
-        //request.body.questions;
         
         form.save(function (error) {
             if (error){
                 response.send(error);
             } 
+            
             response.json({form: form});
         });
     })
@@ -54,10 +51,8 @@ router.route('/:form_id')
             else {
 
                 //save updated info for the form
-                form.ID = request.body.ID;
                 form.name = request.body.name;
                 form.description = request.body.description;
-                form.assessmentTool = null;
                 form.questions = request.body.questions;
 
                 form.save(function (error) {
