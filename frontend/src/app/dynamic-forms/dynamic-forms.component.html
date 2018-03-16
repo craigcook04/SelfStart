@@ -83,10 +83,9 @@
     </div>
     <div *ngIf="rating">
         <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
-
-        <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 50%; height: 100%" #newRAQuestion>
+        <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." #newRAQuestion>
         <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+        <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();">Save Question</button>
         <br><br>
     </div>
     <button class="btn btn-sm btn-primary" (click)="showDrop=true">Add Question</button>
@@ -103,20 +102,20 @@
     <!-- This is the block of code that will be repeated for every form -->
     <ngb-panel *ngFor='let form of forms'>
       <ng-template ngbPanelTitle>
-        <span (click)="getFormQuestions(form._id)">{{ form.name }}</span>
+        <span>{{ form.name }}</span>
       </ng-template>
       <ng-template let-c="close" let-d="dismiss" #yousure>
           <div class="modal-header">
-            <h4 class="modal-title">Are you sure?</h4>
+            <h4>Are you sure?</h4>
           </div>
           <div class="modal-body">
-              <p>Are you sure you wish to delete client <b>{{form.name}}</b>. This action is cannot
+              <p>Are you sure you wish to delete form <b>{{form.name}}</b>. This action is cannot
                 be undone. 
               </p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Yes</button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">No</button>              
+            <button type="button" class="btn btn-primary btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Delete</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Do Not Delete</button>              
           </div>
         </ng-template>
         <!-- New Question modal -->
@@ -163,31 +162,54 @@
         </ng-template>
       
       <ng-template ngbPanelContent>
+        <h6><b>Name: </b>{{form.name}}</h6>
+        <h6><b>Description: </b>{{form.description}}</h6>
+        <h6>Questions: </h6>
+        <div *ngFor="let q of form?.questions; let i = index" class="qs">
+            <div *ngIf="q.questionCode == 'SA'">
+              <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}</p>
+            </div>
+            <div *ngIf="q.questionCode == 'MC'">
+              <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}</p>
+              <br>
+              <mat-radio-group id="question{{i}}">
+                  <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
+                      <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label>
+                      <mat-radio-button class=" mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+                  </div>
+              </mat-radio-group>
+            </div>
+            <br>
+            <div *ngIf="q.questionCode == 'RA'">
+              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}}</p>    
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>
         <form>
           <div >
-            <button class="btn btn-success formbtns" (click)="open(quest, form._id)">New Question</button>
+            <!-- <button class="btn btn-success formbtns" (click)="open(quest, form._id)">New Question</button>
             <button class="btn btn-primary formbtns" (click)="open(yousure); onForm=true;">Delete Form</button>
             <button *ngIf="!editMode" class="btn btn-primary align-bottom formbtns" (click)="switchMode()">Edit Form</button>
             <button *ngIf="editMode" class="btn btn-primary align-bottom formbtns" (click)="open(edityousure); switchMode();">Save</button>
-            <button *ngIf="editMode" class="btn btn-secondary align-bottom formbtns" (click)="switchMode();">Cancel</button>
+            <button *ngIf="editMode" class="btn btn-secondary align-bottom formbtns" (click)="switchMode();">Cancel</button> -->
             
-            <h4>Questions: </h4>
-            <div *ngFor='let question of questions;  let i = index;' class="form-group row">
+            <!-- <h4>Questions: </h4> -->
+            <div *ngFor='let question of forms;  let i = index;' class="form-group row">
                 
               <!-- Are you sure modal -->
               
               <div>
-                <div *ngIf="editMode" class="dynforms">
+                <!-- <div *ngIf="editMode" class="dynforms">
                   <label  [attr.for]="'ques-' + i">{{ question.questionText }}</label>
                   <input  [attr.id]="'ques-' + i" type="text" class="form-control" placeholder="{{ question.questionText }}" #qtext>
                   <label  [attr.for]="'ques-' + i">{{ question.helpDescription}}</label>
                   <input  [attr.id]="'ques-' + i" type="text" class="form-control" placeholder="{{ question.helpDescription }}" #qtext>
-                </div>
-                <div *ngIf="!editMode" class="dynforms">
-                  <p><b>Question:  </b>{{ question.questionText }}</p>
+                </div> -->
+                <!-- <div *ngIf="!editMode" class="dynforms">
+                  <p><b>Form Name:  </b>{{ question.questionText }}</p>
                   <p><b>Description:  </b>{{question.helpDescription}}</p>
                   <hr>
-                </div>
+                </div> -->
               </div>
               <div>
                 <div>

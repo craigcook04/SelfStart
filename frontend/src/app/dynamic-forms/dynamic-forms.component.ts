@@ -131,6 +131,7 @@ export class DynamicFormsComponent implements OnInit {
     this.shortAnswer = false;
     this.type = "type of question";
   }
+
   saveRatingQuestion(){
     var temp: any = document.getElementById('inputRatingQuestion');
     temp = temp.value;
@@ -154,7 +155,40 @@ export class DynamicFormsComponent implements OnInit {
   }
 
   SaveDynamicForm(name: string, description: string) {
-    console.log(name, description);
+    var cannotContinue: boolean = false;;
+    if(!name) {
+      //name value is bad
+      cannotContinue = true;
+    }
+
+    if(!description) {
+      //description value is null
+      cannotContinue = true;
+    }
+
+    if(cannotContinue) {
+      return;
+    }
+
+    this.dynamicFormsService.CreateNewForm(name, description, this.questions).subscribe(data => {
+      console.log(data);
+      this.dynamicFormsService.GetAllForms().subscribe(data => {
+        this.forms = Object.assign([], data.form);
+        console.log(data);
+        
+      });
+      
+      this.openEditor = false;
+      this.showDrop = false;
+      this.rating = false;
+      this.multipleChoice = false;
+      this.shortAnswer =  false;
+      this.type = "type of question";
+      this.showCreat = true;
+      this.optionText = [];
+      this.options =[];
+      this.questions = [];
+    })
   }
 
   CancelNewForm() {
@@ -188,18 +222,6 @@ export class DynamicFormsComponent implements OnInit {
       console.log(data);
       })
       
-    })
-  }
-  
-  createNewForm(name: string, description: string){
-    this.dynamicFormsService.CreateNewForm(name, description).subscribe(data => {
-      console.log(data);
-      
-      //update the list to reflect new form
-      this.dynamicFormsService.GetAllForms().subscribe(data =>{
-      this.forms = Object.assign([], data.form);
-      console.log(data);
-      })
     })
   }
   
