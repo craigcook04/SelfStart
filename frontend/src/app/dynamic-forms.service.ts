@@ -17,11 +17,12 @@ export class DynamicFormsService {
   }
   
   //Create a form
-  CreateNewForm(name: string, description: string) {
+  CreateNewForm(name: string, description: string, questions) {
     //request body
     var body = {
       name: name,
-      description: description
+      description: description,
+      questions: questions
     }
     
     var url = '/api/forms';

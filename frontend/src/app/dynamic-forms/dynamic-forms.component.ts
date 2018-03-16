@@ -152,6 +152,23 @@ export class DynamicFormsComponent implements OnInit {
     var ch = String.fromCharCode(97 + n);
     return ch;
   }
+
+  SaveDynamicForm(name: string, description: string) {
+    console.log(name, description);
+  }
+
+  CancelNewForm() {
+    this.openEditor = false;
+    this.showDrop = false;
+    this.rating = false;
+    this.multipleChoice = false;
+    this.shortAnswer =  false;
+    this.type = "type of question";
+    this.showCreat = true;
+    this.optionText = [];
+    this.options =[];
+    this.questions = [];
+  }
   
   switchMode(){
     if(this.editMode == true){

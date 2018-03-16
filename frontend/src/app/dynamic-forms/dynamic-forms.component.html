@@ -19,22 +19,16 @@
         </div>
       </div>
     </form>
-    <hr>
-    <div *ngIf="showDrop" ngbDropdown>
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{type}}</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
-            <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
-            <button class="dropdown-item" (click)="changeRA();">Rating</button>
-        </div>
-        <br><br>
-    </div>
+
+    <h4 *ngIf="questions?.length > 0">
+      Questions: 
+    </h4>
     <div *ngFor="let q of questions; let i = index">
         <div *ngIf="q.questionCode == 'SA'">
-          <p><b>{{i + 1}}) {{q.questionText}}</b></p>
+          <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}</p>
         </div>
         <div *ngIf="q.questionCode == 'MC'">
-          <p><b>{{i + 1}}) {{q.questionText}}</b></p>
+          <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}</p>
           <br>
           <mat-radio-group id="question{{i}}">
               <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
@@ -45,16 +39,26 @@
         </div>
         <br>
         <div *ngIf="q.questionCode == 'RA'">
-          <p><b>{{i + 1}}) {{q.questionText}}</b></p>    
+          <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}}</p>    
         </div>
       </div>
+    <hr>
+    <div *ngIf="showDrop" ngbDropdown>
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{type}}</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
+            <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
+            <button class="dropdown-item" (click)="changeRA();">Rating</button>
+        </div>
+        <br><br>
+    </div>
+    
     <div *ngIf="shortAnswer">
         <p><b>Enter Your Short Answer Question</b></p>
         <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
         <br>
         <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();">Save Question</button>
         <br><br>
-        <hr>
     </div>
     <div *ngIf="multipleChoice">
         <p><b>Enter Your Multiple Choice Question</b></p>
@@ -76,7 +80,6 @@
         <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" >Save Question</button>
         <button type="button" class="btn btn-primary createbtn" (click)="addOption();">Add Option</button>
         <br><br>
-        <hr>
     </div>
     <div *ngIf="rating">
         <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
@@ -85,12 +88,13 @@
         <br><br>
         <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
         <br><br>
-        <hr>
     </div>
     <button class="btn btn-sm btn-primary" (click)="showDrop=true">Add Question</button>
-    <mat-card-actions>
-      <button class="btn btn-sm btn-primary">Save Form</button>
-      <button class="btn btn-sm btn-secondary">Cancel</button>
+    <br>
+    <hr>
+    <mat-card-actions align="end">
+      <button class="btn btn-sm btn-primary sve" (click)="SaveDynamicForm(newFormName.value, newFormDescrip.value)">Save Form</button>
+      <button class="btn btn-sm btn-secondary cncl" (click)="CancelNewForm()">Cancel</button>
     </mat-card-actions>
 </mat-card>
 
