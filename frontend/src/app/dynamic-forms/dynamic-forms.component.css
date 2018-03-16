@@ -25,3 +25,9 @@ h4 {
     margin-bottom: 1em;
     margin-left: 0.5em;
 }
+
+.formEditor {
+    width: 50%;
+    margin-left: 2.5rem;
+    margin-bottom: 1rem;
+}

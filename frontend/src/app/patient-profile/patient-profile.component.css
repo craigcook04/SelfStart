@@ -282,3 +282,13 @@ h2 {
 .changez {
     z-index: 10000 !important
 }
+
+.mypanel {
+    vertical-align: middle;
+    line-height: 30px;
+    text-align: middle;
+}
+
+.plusbtn {
+    font-size: 1rem;
+}

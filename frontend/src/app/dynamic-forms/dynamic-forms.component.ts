@@ -11,7 +11,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class DynamicFormsComponent implements OnInit {
 
   public isCollapsed = false;
-  questions: Object [];
+  //questions: Object [];
   forms: Object [];
   types: Object [];
   showSuccess: boolean;
@@ -22,8 +22,20 @@ export class DynamicFormsComponent implements OnInit {
   tempFID: string;
   tempQID: string;
   selectedType: string;
+  openEditor: boolean;
+  showDrop: boolean;
+  type: string;
+  shortAnswer: boolean = false;
+  multipleChoice: boolean = false;
+  rating: boolean = false;
+  showCreat: boolean = true;
+  options: any[];
+  optionText: any[];
+  questions: any[];
+  name: string;
+  description: string;
+  currOption: string = 'c';
 
-  
   constructor(private dynamicFormsService: DynamicFormsService,
               private modalService: NgbModal,
               private router: Router) { }
@@ -36,6 +48,109 @@ export class DynamicFormsComponent implements OnInit {
     
     this.editMode = false;
     this.getTypes();
+
+    this.showDrop = false;
+    this.type = "Type Of Question";
+    this.options = [];
+    this.optionText = [];
+    this.questions = [];
+  }
+
+  changeSA(){
+    this.type = "Short Answer";
+    this.shortAnswer =true;
+    this.multipleChoice = false;
+    this.rating = false;
+  }
+
+  changeMC(){
+    this.type = "Multiple Choice";
+    this.shortAnswer =false;
+    this.multipleChoice = true;
+    this.rating = false;
+  }
+
+  changeRA(){
+    this.type = "Rating";
+    this.shortAnswer =false;
+    this.multipleChoice = false;
+    this.rating = true;
+  }
+
+  addOption(){
+     console.log(this.currOption);
+     if (this.options.length<=8){
+      this.options.push(this.currOption);
+      this.currOption = String.fromCharCode(this.currOption.charCodeAt(0) + 1);
+     }
+  }
+
+  saveMCQuestion(){
+    var temp: any = document.getElementById('inputOption');
+    temp = temp.value;
+    this.optionText.push(temp);
+    var temp2: any = document.getElementById('inputOption2');
+    temp2 = temp2.value;
+    this.optionText.push(temp2);
+    for (var i = 0; i<this.options.length; i++){
+      var temp: any = document.getElementById(this.options[i]);
+      temp = temp.value;
+      this.optionText.push(temp);
+      
+    }
+    var temp3: any = document.getElementById('inputMCQuestion');
+    temp3 = temp3.value;
+    var question = {
+      questionText: temp3,
+      questionCode: "MC",
+      questionContent: this.optionText,
+      answer: null
+    }
+    this.questions.push(question);
+    this.optionText = [];
+    this.options =[];
+    this.showDrop = false;
+    this.multipleChoice = false;
+    this.type = "type of question";
+    
+    console.log(this.optionText);
+    console.log(this.questions);
+  }
+  saveSAQuestion(){
+    var temp: any = document.getElementById('inputShortAnswerQuestion');
+    temp = temp.value;
+    var question = {
+      questionText: temp,
+      questionCode: "SA",
+      answer: null
+    }
+    this.questions.push(question);
+    this.optionText = [];
+    this.options =[];
+    this.showDrop = false;
+    this.shortAnswer = false;
+    this.type = "type of question";
+  }
+  saveRatingQuestion(){
+    var temp: any = document.getElementById('inputRatingQuestion');
+    temp = temp.value;
+    var question = {
+      questionText: temp,
+      questionCode: "RA",
+      answer: null
+    }
+    this.questions.push(question);
+    this.optionText = [];
+    this.options =[];
+    this.showDrop = false;
+    this.rating = false;
+    this.type = "type of question";
+    console.log(this.questions);
+  }
+
+  NumToChar(n) {
+    var ch = String.fromCharCode(97 + n);
+    return ch;
   }
   
   switchMode(){
