@@ -36,7 +36,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
-//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
@@ -80,7 +81,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     RecoverAccountComponent,
     NotFoundComponent,
     AssessmentTestComponent,
-    AssignPlanComponent
+    AssignPlanComponent,
     CompleteAssessmentTestComponent
   ],
   imports: [
@@ -104,9 +105,11 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
+    MatRadioModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatButtonToggleModule
-    MatRadioModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]
