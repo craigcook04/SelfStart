@@ -47,7 +47,7 @@
         </mat-step>
         <mat-step  label="Personal Information">
           <div class="form-group row">
-            <label for="inputFirstName" class="col-sm-2 col-form-label">*First Name: </label>
+            <label for="inputFirstName" class="col-sm-2 col-form-label">*First Name </label>
             <div class="col-sm-7">
               <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
               <div class="invalInput" *ngIf="invalidFirstname">
@@ -84,9 +84,18 @@
           <br>
           <div class="form-group row">
             <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
-            <div class="col-sm-7">
-              <input type="text" class="form-control" id="inputDOB" placeholder="Date Of Birth" #DOB>
+            <div class="col-sm-3">
+                <input class="form-control dateinput" id="inputyearDOB" placeholder="yyyy" #yearDOB>
             </div>
+            <div class="col-sm-2">
+                <input class="form-control dateinput" id="inputmonthDOB" placeholder="mm" #monthDOB>
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control dateinput" id="inputdayDOB" placeholder="dd" #dayDOB>
+            </div>
+            <!-- <input matInput [matDatepicker]="picker" class="dontshow" #datepick>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker class="dateinput" #picker></mat-datepicker> -->
           </div>
           <hr class='dvder'>
           <br>
