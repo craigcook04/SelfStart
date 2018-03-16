@@ -36,14 +36,15 @@ export class DynamicFormsService {
   }
   
   //Update a form
-  UpdateForm(id: string, name: string, description: string){
+  UpdateForm(id: string, name: string, description: string, questions){
     //id is the variable from mongo, newID is a self assigned id to track forms numerically
     var body = {
       name: name,
-      description: description
+      description: description,
+      questions: questions
     }
     
-    var url = '/api/forms' + id;
+    var url = '/api/forms/' + id;
     return this.http.put(url, body);
   }
   

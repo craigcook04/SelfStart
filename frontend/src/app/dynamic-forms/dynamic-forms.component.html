@@ -167,10 +167,10 @@
         <h6>Questions: </h6>
         <div *ngFor="let q of form?.questions; let i = index" class="qs">
             <div *ngIf="q.questionCode == 'SA'">
-              <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}</p>
+              <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}        <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions, form.name, form.description)"></fa></p>
             </div>
             <div *ngIf="q.questionCode == 'MC'">
-              <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}</p>
+              <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>
               <br>
               <mat-radio-group id="question{{i}}">
                   <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
@@ -181,7 +181,7 @@
             </div>
             <br>
             <div *ngIf="q.questionCode == 'RA'">
-              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}}</p>    
+              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times"   class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
             </div>
           </div>
           <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>

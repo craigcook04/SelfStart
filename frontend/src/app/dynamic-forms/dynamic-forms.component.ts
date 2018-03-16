@@ -154,6 +154,16 @@ export class DynamicFormsComponent implements OnInit {
     return ch;
   }
 
+  RemoveQuestion(num, formID, questions, name, description) {
+    console.log(num, formID, questions);
+    console.log(questions[num]);
+    questions.splice(num, 1);
+    this.dynamicFormsService.UpdateForm(formID, name, description, questions).subscribe(data => {
+      console.log(data);
+    })
+
+  }
+
   SaveDynamicForm(name: string, description: string) {
     var cannotContinue: boolean = false;;
     if(!name) {
@@ -177,7 +187,7 @@ export class DynamicFormsComponent implements OnInit {
         console.log(data);
         
       });
-      
+
       this.openEditor = false;
       this.showDrop = false;
       this.rating = false;

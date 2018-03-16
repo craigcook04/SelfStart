@@ -43,3 +43,7 @@ h4 {
 .qs {
     margin-left: 2rem;
 }
+
+.removebtn {
+    cursor: pointer;
+}
