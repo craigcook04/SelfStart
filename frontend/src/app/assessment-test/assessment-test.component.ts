@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
 import {AssessmentTestService} from '../assessment-test.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { PatientService } from '../patient.service';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-assessment-test',
@@ -14,14 +15,22 @@ export class AssessmentTestComponent implements OnInit {
   shortAnswer: boolean = false;
   multipleChoice: boolean = false;
   rating: boolean = false;
+  manageTests: boolean = true;
   showPatients: boolean = false;
   showCreat: boolean = true;
+  viewDetails:boolean = false;
   options: any[];
   optionText: any[];
   questions: any[];
   name: string;
   description: string;
   clients: any[];
+  selectedPlan: any[];
+  tests = new MatTableDataSource();
+  displayedColumns = ["Patient", "Plan Assigned", "Date", "Status", "View Test Results"];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
  
   
   
@@ -30,19 +39,57 @@ export class AssessmentTestComponent implements OnInit {
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
               private patientService: PatientService) { }
+              
+  
 
   ngOnInit() {
+    console.log("in it");
     this.showDrop = false;
     this.type = "Type Of Question";
     this.options = [];
     this.optionText = [];
     this.questions = [];
     this.clients = [];
+    this.selectedPlan =[];
+    this.tests = new MatTableDataSource();
+    this.assessmentTestService.getTests().subscribe(data => {
+      var retObj: any = data;
+      this.tests.data = retObj.assessmentTest;
+      console.log(this.tests);
+      console.log(data);
+      console.log(this.tests);
+      
+    });
+   // this.paginator = 10;
+    // this.tests.paginator = this.paginator;
+    // this.tests.sort = this.sort;
+    
+  }
+   ngAfterViewInit() {
+    console.log("fdsafdsa");
+    //this.paginator = 10;
+    this.tests.paginator = this.paginator;
+    this.tests.sort = this.sort;
+  }
+
+  /**
+   * Set the sort after the view init since this component will
+   * be able to query its view for the initialized sort.
+   */
+ 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.tests.filter = filterValue;
+  }
+    
  
     // this.questions.push(question);
-  }
+  
   enable(){
     this.showCreat = false;
+    // this.manageTests = true;
+    
   }
   enableAddQuestion(){
     
@@ -155,21 +202,33 @@ export class AssessmentTestComponent implements OnInit {
     this.showPatients = false;
     this.type = "type of question";
     this.showCreat = true;
+    this.manageTests = true;
     this.optionText = [];
     this.options =[];
     this.questions = [];
+    this.ngOnInit();
+    this.ngAfterViewInit();
     
   }
   open(content) {
     this.modalService.open(content, {size: 'lg'});
   }
   openListOfPatients(){
+    var temp:any = document.getElementById('name');
+    temp = temp.value;
+    this.name = temp;
+    
+    var temp2:any = document.getElementById('description');
+    temp2 = temp2.value;
+    this.description = temp2;
+    
   
    this.showCreat =true;
    this.showDrop = false;
    this.rating = false;
    this.multipleChoice = false;
    this.type = "type of question";
+   this.manageTests = false;
     //this.showCreat = true;
   // this.optionText = [];
   // this.options =[];
@@ -202,6 +261,28 @@ export class AssessmentTestComponent implements OnInit {
     this.options =[];
     this.questions = [];
     this.showPatients = false;
+    this.manageTests = true;
     console.log(clientIds);
+  }
+  showTable(){
+    this.manageTests = true;
+    this.assessmentTestService.getTests().subscribe(data => {
+      var retObj: any = data;
+      this.tests.data = retObj.assessmentTest;
+      console.log(this.tests);
+      console.log(data);
+      console.log(this.tests);
+      
+    });
+  }
+  view(planSel: any){
+    console.log("wohooo");
+    //console.log(id);
+    this.selectedPlan = planSel.questions;
+    this.viewDetails = true;
+    
+    console.log(this.selectedPlan);
+    //this.managaeTests = false;
+    
   }
 }

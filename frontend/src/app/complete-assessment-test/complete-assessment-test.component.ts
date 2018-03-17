@@ -23,7 +23,7 @@ export class CompleteAssessmentTestComponent implements OnInit {
   ngOnInit() {
     this.assessmentTestService.GetPlans().subscribe(data => {
       var retObj: any = data;
-      this.assessmentTest = retObj.assessmentTest[0];
+      this.assessmentTest = retObj.assessmentTest[61];
       this.assessmentTestQuestions = this.assessmentTest.questions;
       this.testLength = this.assessmentTestQuestions.length;
     })

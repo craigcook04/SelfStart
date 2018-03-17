@@ -2,9 +2,49 @@
 <!--  assessment-test works!-->
 <!--</p>-->
 <br><br>
+<button *ngIf="showCreat" type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>
+<br><br><br>
+<button *ngIf="!manageTests" type="button" class="btn btn-primary createbtn" (click)="showTable()" style="margin-left: 2em;">Manage Tests</button>
+
+<mat-card *ngIf="manageTests && showCreat" class="assessTest">
+    <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    </div>
+    <mat-table  [dataSource]="tests" matSort>
+        <ng-container matColumnDef="Patient">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.belongsTo?.givenName}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Plan Assigned">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Plan Assigned </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <p *ngIf="row.completed" style="color: green">completed</p>
+                <p *ngIf="!row.completed" style="color: red">incomplete</p>
+            </mat-cell>
+        </ng-container>
+         <ng-container matColumnDef="View Test Results">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button type="button" class="btn btn-primary createbtn" (click) = "view(row)">view</button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+</mat-card>
 <div style="margin-left: 2em;">
-    
-    <button *ngIf="showCreat" type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>
+
     <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
         <p><b>Enter the name of the test: </b></p>
 
@@ -23,7 +63,7 @@
 
         <hr>
     </div>
-    <ol *ngIf = "!showPatients">
+    <ol *ngIf="!showPatients">
         <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
 
             <label><b>{{question.questionText}}</b></label>
@@ -34,12 +74,12 @@
             </ol>
             <hr>
         </li>
-        
+
     </ol>
-     
+
     <br>
-    
-    
+
+
     <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
         <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -96,39 +136,54 @@
         <hr>
     </div>
 
-    
-    <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
+
+    <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
         <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
     </div>
-    <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
+    <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
         <button type="button" class="btn btn-primary createbtn" (click)="open(askIfAssign);" style="margin-left: 2em; background-color: green;">Save Plan</button>
     </div>
     <ng-template #askIfAssign let-c="close" let-d="dismiss">
-        <div class = "modal-header">
-            <h4 class = "modal-title">Would you like to save this plan to a specific patient?</h4>
+        <div class="modal-header">
+            <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
         </div>
-        <div class = "modal-body">
-            <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something
-            you would like to do?</p>
+        <div class="modal-body">
+            <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something you would like to do?</p>
         </div>
-        <div class = modal-footer>
-            <button type="button" class="btn btn-primary btn-sm" (click) = "openListOfPatients();  c('Close click')">Yes</button>
-            <button type="button" class="btn btn-primary btn-sm" (click) = "c('Close click'); createTest();  ">No</button>
-            
+        <div class= modal-footer>
+            <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPatients();  c('Close click')">Yes</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest();  ">No</button>
+            <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
         </div>
     </ng-template>
-    <div *ngIf = "showPatients">
-        <h2>Assign Test To:</h2>
-        <mat-selection-list #clientsList>
-          <mat-list-option *ngFor="let client of clients" value = "{{client._id}}">
-            {{client.givenName}}
-          </mat-list-option>
-        </mat-selection-list>
-         <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected);" style="margin-left: 2em; float: right;">Assign Test</button>
+    <div *ngIf="showPatients">
+        <mat-card class="assessTest">
+            <h2>Assign Test To:</h2>
+            <mat-selection-list #clientsList>
+                <mat-list-option *ngFor="let client of clients" value="{{client._id}}">
+                    {{client.givenName}}
+                </mat-list-option>
+            </mat-selection-list>
+            <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected);" style="margin-left: 2em; float: right;">Assign Test</button>
+            <br><br><br><br>
+        </mat-card>
+        
     </div>
-    
-    
-    
+    <div *ngIf = "viewDetails">
+        <mat-card  class="assessTest">
+            <ol>
+                <li  *ngFor="let question of selectedPlan">
+                    <div><p><b>Question: </b>{{question.questionText}}</p></div>
+                    <div><p><b>Answer: </b>{{question.answer}}</p></div>
+                </li>
+                
+            </ol>
+        </mat-card>
+        
+    </div>
+
+
+
     <br><br><br><br>
-    
+
 </div>

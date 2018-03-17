@@ -27,7 +27,7 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule } from '@angular/material'; 
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule } from '@angular/material'; 
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -41,6 +41,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'angular2-moment/moment.module';
 import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
@@ -94,8 +95,11 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatSidenavModule,
     MatListModule,
     MatStepperModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTableModule,
+    
     
     NoopAnimationsModule,
     MatGridListModule,

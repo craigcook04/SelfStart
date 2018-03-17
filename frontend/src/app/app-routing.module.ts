@@ -41,7 +41,6 @@ const routes: Routes = [
   {path: 'signup', component: NewClientComponent},
   {path: 'bookappointment', component: BookAppointmentComponent},
   {path: 'useraccounts', component:UserAccountsComponent},
-  {path: 'signup', component: NewClientComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
   {path: 'bookappointement', component: AppointmentsComponent},
   {path: 'login', component: LoginComponent},
