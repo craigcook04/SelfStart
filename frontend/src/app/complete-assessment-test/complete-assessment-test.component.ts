@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentTestService } from '../assessment-test.service'
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-complete-assessment-test',
@@ -16,7 +17,8 @@ export class CompleteAssessmentTestComponent implements OnInit {
   MCAnswers: any[];
 
   constructor(private assessmentTestService: AssessmentTestService,
-              private config: NgbRatingConfig) {
+              private config: NgbRatingConfig,  
+              private modalService: NgbModal) {
                 this.config.max = 5;
                }
 
@@ -29,6 +31,7 @@ export class CompleteAssessmentTestComponent implements OnInit {
     })
 
     this.MCAnswers = [];
+
   }
 
   RadioButtonClicked(content: string, i) {
@@ -37,6 +40,10 @@ export class CompleteAssessmentTestComponent implements OnInit {
 
   SendBack(rating, i) {
     this.MCAnswers[i] = rating + 1;
+  }
+
+  Open(modal) {
+    this.modalService.open(modal, {size: 'lg'});
   }
 
   SubmitAnswers() {
@@ -57,6 +64,11 @@ export class CompleteAssessmentTestComponent implements OnInit {
       this.assessmentTestService.SendCompletedQuestions(this.assessmentTest._id, this.assessmentTestQuestions).subscribe(data=> {
         console.log(data);
       })
+  }
+
+  NumToChar(n) {
+    var ch = String.fromCharCode(97 + n);
+    return ch;
   }
 
 }

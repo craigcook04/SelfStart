@@ -6,6 +6,8 @@
 }
 .navcolor {
     background-color: #4169E1;
+    /* position:fixed;
+    width:100%; For when we want to lock the taskbar */
 }
 
 #navbutton {

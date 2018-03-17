@@ -20,26 +20,43 @@
     <div *ngIf="q.questionCode == 'SA'">
       <p><b>{{i + 1}}) {{q.questionText}}</b></p>
       <label>Response:</label>
-      <textarea class="form-control myta" rows="5" id="question{{i}}" value="{{q.answer}}" #emailBody> </textarea>
+      <textarea class="form-control myta" rows="5" id="question{{i}}" value="{{q.answer}}"> </textarea>
     </div>
     <div *ngIf="q.questionCode == 'MC'">
       <p><b>{{i + 1}}) {{q.questionText}}</b></p>
       <br>
       <mat-radio-group id="question{{i}}">
-          <mat-radio-button class="rdio" *ngFor="let qcontent of q.questionContent; let j = index" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+          <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
+              <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label>
+              <mat-radio-button class=" mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+          </div>
       </mat-radio-group>
     </div>
     <br>
     <div *ngIf="q.questionCode == 'RA'">
-      <p><b>{{i + 1}}) {{q.questionText}}</b></p> 
-      <br>    
-      <ngb-rating [(rate)]="currentRate" id="question{{i}}">
+      <p><b>{{i + 1}}) {{q.questionText}}</b></p>    
+      <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
           <ng-template let-fill="fill" let-index="index">
             <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
           </ng-template>
       </ngb-rating> 
     </div>
   </div>
-  <button class="btn btn-sm btn-primary" (click)="SubmitAnswers()">Submit</button>
+
+  <ng-template #confirm let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Please Confirm Action</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please confirm whether you would like to submit your response for assessment test <b> {{assessmentTest.name}}</b>. Once this assessment test has been
+          submitted, this action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-med" (click)="SubmitAnswers(); c('Close click')">OK</button>     
+        <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>   
+      </div>
+  </ng-template>
+  <button class="btn btn-sm btn-primary" (click)="Open(confirm)">Submit</button>
 </mat-card-content>
 </mat-card>
