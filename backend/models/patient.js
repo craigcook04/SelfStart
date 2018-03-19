@@ -23,8 +23,7 @@ var patientSchema = new mongoose.Schema(
         city: {type: mongoose.Schema.Types.ObjectId, ref: 'City'},
         gender: {type: mongoose.Schema.Types.ObjectId, ref: 'Gender'},
         appointment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Appointment'}],
-        rehabPlan: {type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitationPlans'},
-        planName: String
+        rehabPlan: {type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitationPlans'}
     }
 );
 
