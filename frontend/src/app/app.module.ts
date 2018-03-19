@@ -27,7 +27,7 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule, MatDialogModule, MatButtonToggleModule } from '@angular/material'; 
+import { MatMenuModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule, MatDialogModule, MatButtonToggleModule, MatTableModule, MatPaginatorModule } from '@angular/material'; 
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -111,7 +111,9 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatDialogModule,
     MatButtonToggleModule,
     MatRadioModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]

@@ -11,8 +11,26 @@
     cursor: pointer;
 }
 
+.clientList{
+    text-align: left;
+    border: none;
+    background-color: transparent;
+}
+
 .button:focus{
     outline: none;
+}
+
+.clientList:focus{
+    outline: none;
+}
+
+.delete{
+    cursor: pointer;
+}
+
+.delete:hover{
+    color: rgb(196, 62, 62);
 }
 
 .listItems{
@@ -21,4 +39,16 @@
 
 .divider{
     margin-top: -25px;
+}
+
+.divider2{
+    margin-top: -10px;
+}
+
+.descrip{
+    text-align: left;
+}
+
+.date, delete{
+    text-align: right;
 }
