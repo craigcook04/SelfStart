@@ -9,15 +9,19 @@ import { Router } from '@angular/router'
 })
 export class LoginComponent implements OnInit {
 
+  showFailure: boolean;
   constructor(private userAccountsService: UserAccountsService,
               private router: Router) { }
 
   ngOnInit() {
+    this.showFailure = false;
   }
 
   Login(username: string, password: string) {
+    this.showFailure = false;
     this.userAccountsService.Login(username, password).subscribe(data => {
       var retObj: any = data;
+      console.log(data);
       if(retObj.success = true) {
         if(retObj.changePass == true) {
           var url = '../login/recover/' + retObj.userID;
@@ -25,6 +29,11 @@ export class LoginComponent implements OnInit {
         }
         else {
           //router to the success screen
+        }
+      }
+      else{ 
+        if(retObj.incPass == true) {
+          this.showFailure = true;
         }
       }
     })
