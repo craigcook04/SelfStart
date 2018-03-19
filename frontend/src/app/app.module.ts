@@ -48,6 +48,8 @@ import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { RecoverAccountComponent } from './recover-account/recover-account.component';
+import { BookingsDirective } from './bookings.directive';
+import { AppointmentsService } from './appointments.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
@@ -79,6 +81,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     LoginComponent,
     ForgottenPasswordComponent,
     RecoverAccountComponent,
+    BookingsDirective,
     NotFoundComponent,
     AssessmentTestComponent,
     AssignPlanComponent,
@@ -111,7 +114,19 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatDialogModule,
     MatButtonToggleModule
   ],
-  providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
+  providers: [
+    PatientService, 
+    RehabPlansService, 
+    ExerciseService, 
+    DynamicFormsService, 
+    EmailService, 
+    NewClientService, 
+    UserAccountsService,
+    ImageService, 
+    PhysiotherapistService,
+    AppointmentsService,
+    EncryptionService, 
+    AssessmentTestService],
   bootstrap: [AppComponent]
 })
 

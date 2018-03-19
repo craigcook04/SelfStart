@@ -3,6 +3,14 @@ td {
     width: 10px;
 }
 
+.slotDiv{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    /*margin: auto;*/
+    margin-left: 0;
+    padding-left: 0;
+    /*margin-right: 5%;*/
+}
 
 .timeOfDay{
     -webkit-transform: rotate(90deg);
@@ -18,18 +26,36 @@ td {
 
 .timeSlot{
     border: 1px solid white;
-    background-color: white;
     height: 30px;
-    width: 10px;
-}
-
-.calendar{
-    margin: auto;
 }
 
 .chooseTime{
     height: 30px;
     width: 100%;
+    box-shadow:none !important;
+}
+
+.chooseTime:focus {
+  outline: none;
+  box-shadow:none !important;
+}
+
+.sel{
+    background-color: #f94545;
+}
+
+.taken{
+    background-color: #828282;
+}
+
+/*.saveAppt{*/
+/*    margin-left: 5%;*/
+/*    margin-top: 5%;*/
+/*}*/
+
+table{
+    table-layout: fixed;
+    max-width: 100%;
 }
 
 
