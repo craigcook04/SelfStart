@@ -178,7 +178,7 @@
             </div>
             <br>
             <div *ngIf="q.questionCode == 'RA'">
-              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times"   class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
+              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
             </div>
           </div>
           <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>
