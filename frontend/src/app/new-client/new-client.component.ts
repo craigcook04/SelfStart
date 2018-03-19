@@ -276,7 +276,7 @@ export class NewClientComponent implements OnInit {
         //the user will be shown an error in the creation problem along the lines of there being a server problem.
         stepper.reset();
         var usernameBox = document.getElementById('inputUsername').style.borderColor = 'red';
-        this.newUsername = true;
+        this.invalidUsername = true;
       }
     })
   }
