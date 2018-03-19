@@ -6,7 +6,7 @@ export class AppointmentsService {
 
   constructor(private httpClient: HttpClient) { }
   
-  GetAllAppointments(): any{
+  GetAllAppointments(){
       var url = '/api/appointment';
       return this.httpClient.get(url);
   }

@@ -128,7 +128,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     //populate with new dates
     this.apptService.GetAllAppointments().subscribe(data =>{
       var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
-      this.bookedDates = Object.assign([], data.appointment); //assigns all appointements to bookedDates
+      this.bookedDates = Object.assign([], retObj.appointment); //assigns all appointements to bookedDates
       console.log(this.bookedDates); //at this point we have all booked dates
       
       //make all squares blue
