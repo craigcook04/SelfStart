@@ -17,10 +17,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   dateSelected: any;
   currentWeek = 0;
   currentlyHighlighted: any;
-  isSelected;
+  isSelected: any;
   bookedDates: any[];
   timeIndex: any; 
   dayIndex: any;
+  currentlyFilled: any[];
+
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -28,45 +30,61 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.currentlyFilled = new Array(37);
     this.cells = new Array(37); //Create 37 time slots
     this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially
     this.refreshCalendar(); //populate calendar
+    
   }
   
   ngAfterViewInit(){
     this.refreshCalendar();
+    this.isSelected = false;
   }
   
   
   
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
-    this.isSelected = true; //If one is selected they cant select another
-    this.timeIndex = indx; //keeping variable with selected index
-    this.dayIndex = day;
-    // day = Number(day) - 1;
-    this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
-    //console.log(this.currentlyHighlighted);
-    var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
-    
-    if(indx > 34){
-      if(indx == 35){
-        document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-        document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+    var notTaken = true;
+    if(!(this.isSelected)){
+      for(var i = 0; i<this.currentlyFilled.length; i++){
+        if(this.currentlyFilled[i] == ("slot"+day+indx)){
+          notTaken = false;
+        }
+      }
+      if(notTaken){
+        this.isSelected = true; //If one is selected they cant select another
+        this.timeIndex = indx; //keeping variable with selected index
+        this.dayIndex = day;
+        // day = Number(day) - 1;
+        this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
+        //console.log(this.currentlyHighlighted);
+        var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
+        
+        if(indx > 34){
+          if(indx == 35){
+            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          }else{
+            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          }
+        }else{
+          document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+        }
       }else{
-        document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+        console.log("sorry, slot is already booked by another client");
       }
     }else{
-      document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-      document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-      document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+      console.log("sorry, slot is already chosen");
     }
-    
   }
   
   cancelSelection(){
     
     var highlighted = [("slot"+this.dayIndex+this.timeIndex), ("slot"+this.dayIndex+(this.timeIndex+1)), ("slot"+this.dayIndex+(this.timeIndex+2))];
-    
+    this.isSelected = false;
     if(this.timeIndex > 34){
       if(this.timeIndex == 35){
         document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
@@ -82,10 +100,6 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   }
   
   refreshCalendar(){
-    //clear calandar to leave fresh slate for new dates for the week
-    
-    
-    
     //populate with new dates
     this.apptService.GetAllAppointments().subscribe(data =>{
       var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
@@ -116,6 +130,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
               timeCount = timeCount + 1; //will give me slot number
               nextSlot = timeCount + 1;
               secondSlot = nextSlot + 1;
+              
             }
             else{
               break;
@@ -123,18 +138,20 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           }
           
           var takenSlot = [("slot" + dayNum + timeCount), ("slot" + dayNum + nextSlot), ("slot" + dayNum + secondSlot)]; //slot0{{i}}, slot1{{i}} ...etc
+          this.currentlyFilled.push(takenSlot[0],takenSlot[1],takenSlot[2]);
+          
           
           if(timeCount > 34){
             if(timeCount == 35){
-              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime");
-              document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime");
+              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
+              document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
             }else{
-              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime");
+              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
             }
           }else{
-            document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime");
-            document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime");
-            document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime");
+            document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
+            document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
+            document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
           }
           
           console.log("Week: " + this.currentWeek);
@@ -156,7 +173,6 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       this.currentWeek = this.currentWeek - 1;
       this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
     }
-    this.refreshCalendar();
   }
   
   addAppointement(date: any, reason: string, other: string, patient: string){ //function to create a new appointement
