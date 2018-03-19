@@ -59,8 +59,8 @@
             </div>
             <mat-table [dataSource]="tests" matSort>
                 <ng-container matColumnDef="Patient">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.belongsTo?.givenName}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Rehab Plan Name </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.belongsTo?.name}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="Plan Assigned">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Test Assigned </mat-header-cell>
@@ -211,11 +211,11 @@
                         <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something you would like to do?</p>
+                        <p>Assigning a test to a rehab plan allows that patient who is assigned to that plan to answer the questions on this test. Is that something you would like to do?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPatients();  c('Close click')">Yes</button>
-                        <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest();  ">No</button>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPlans();  c('Close click')">Yes</button>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest(); showTable(); ">No</button>
                         <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
                     </div>
                 </ng-template>
@@ -246,11 +246,11 @@
                     <h2>Assign Test To:</h2>
                     <mat-selection-list #clientsList>
                         <mat-list-option *ngFor="let client of clients" value="{{client._id}}">
-                            {{client.givenName}}
+                            {{client.name}}
                         </mat-list-option>
                     </mat-selection-list>
                     <br><br>
-                    <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected);" style="margin-left: 2em; float: right;">Assign Test</button>
+                    <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected); showTable();" style="margin-left: 2em; float: right;">Assign Test</button>
                     <br><br><br><br>
                 </mat-card>
                 <br><br><br><br>
@@ -266,7 +266,7 @@
                     <br>
                     <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
                     <br>
-                    <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.givenName}}</h5>
+                    <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.name}}</h5>
                 </div>
                 <br><br><br>
                 <ol>
