@@ -8,23 +8,28 @@
 
 <mat-card *ngIf="manageTests && showCreat" class="assessTest">
     <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
     </div>
-    <mat-table  [dataSource]="tests" matSort>
+    <mat-table [dataSource]="tests" matSort>
         <ng-container matColumnDef="Patient">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.belongsTo?.givenName}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Plan Assigned">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Plan Assigned </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Test Assigned </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Date">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date Created</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateCreated}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="Date Completed">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Date completed</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateCompleted}} </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="Status">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
             <mat-cell *matCellDef="let row">
@@ -32,130 +37,142 @@
                 <p *ngIf="!row.completed" style="color: red">incomplete</p>
             </mat-cell>
         </ng-container>
-         <ng-container matColumnDef="View Test Results">
+        <ng-container matColumnDef="View Test Results">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <button type="button" class="btn btn-primary createbtn" (click) = "view(row)">view</button>
+                <button type="button" class="btn btn-primary createbtn" (click)="view(row)">view</button>
             </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
+    <!--<mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>-->
 </mat-card>
+
 <div style="margin-left: 2em;">
+    <mat-card  *ngIf="!showCreat" class="assessTest">
+        <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
+            <p><b>Enter the name of the test: </b></p>
 
-    <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
-        <p><b>Enter the name of the test: </b></p>
+            <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+            <br>
+            <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
 
-        <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
-
-        <hr>
-    </div>
-    <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
-        <p><b>Enter the description of the test: </b></p>
-
-        <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
-
-        <hr>
-    </div>
-    <ol *ngIf="!showPatients">
-        <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
-
-            <label><b>{{question.questionText}}</b></label>
-            <ol>
-                <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
-                    <p>{{options}}</p>
-                </li>
-            </ol>
             <hr>
-        </li>
-
-    </ol>
-
-    <br>
-
-
-    <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
-            <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
-            <button class="dropdown-item" (click)="changeRA();">Rating</button>
         </div>
-        <br><br>
-        <!--<hr>-->
-    </div>
-    <br><br><br>
+        <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
+            <p><b>Enter the description of the test: </b></p>
 
-    <div *ngIf="shortAnswer" style="margin-left:2em; width:50%">
-        <p><b>Enter Your Short Answer Question</b></p>
+            <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+            <br>
+            <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
 
-        <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-        <br><br>
-        <hr>
-    </div>
-    <div *ngIf="multipleChoice" style="width: 50%; margin-left: 2em;">
-        <p><b>Enter Your Multiple Choice Question</b></p>
+            <hr>
+        </div>
+        <ol *ngIf="!showPatients">
+            <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
 
-        <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." style="margin-left: 2em; width: 50%; height: 100%" #newMAQuestion>
+                <label><b>{{question.questionText}}</b></label>
+                <button class = "btn btn-outline-primary" style = "float: right;" (click) = "deleteQuestion(question)">Remove Question</button>
+                <ol>
+                    <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
+                        <p>{{options}}</p>
+                    </li>
+                </ol>
+                <hr>
+                <br><br><br>
+            </li>
+
+        </ol>
 
         <br><br>
-        <div class="form-group row">
-            <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
-            <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...." style=" width: 50%; height: 100%; " #newOption>
-        </div>
-        <div class="form-group row">
-            <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
-            <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." style=" width: 50%; height: 100%;" #newOption1>
-        </div>
-        <div *ngFor="let option of options" class="form-group row">
-            <label for="inputOption2" class="col-sm-3 col-form-label">{{option}})</label>
-            <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...." style="width: 50%; height: 100%;" #newOption2>
-        </div>
-        <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-
-        <button type="button" class="btn btn-primary createbtn" (click)="addOption();" style="margin-left: 2em; float: left;">Add Option</button>
-        <br><br>
-        <hr>
-    </div>
-    <div *ngIf="rating" style="margin-left:2em; width: 50%;">
-        <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
-
-        <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 50%; height: 100%" #newRAQuestion>
-        <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-        <br><br>
-        <hr>
-    </div>
 
 
-    <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
-        <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
-    </div>
-    <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
-        <button type="button" class="btn btn-primary createbtn" (click)="open(askIfAssign);" style="margin-left: 2em; background-color: green;">Save Plan</button>
-    </div>
-    <ng-template #askIfAssign let-c="close" let-d="dismiss">
-        <div class="modal-header">
-            <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
+        <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
+            <br><br>
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
+                <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
+                <button class="dropdown-item" (click)="changeRA();">Rating</button>
+            </div>
+            <br><br>
+            <!--<hr>-->
         </div>
-        <div class="modal-body">
-            <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something you would like to do?</p>
+        <br><br>
+
+        <div *ngIf="shortAnswer" style="margin-left:2em; width:50%">
+            <br><br>
+            <p><b>Enter Your Short Answer Question</b></p>
+
+            <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+            <br>
+            <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+            <br><br>
+            <hr>
         </div>
-        <div class= modal-footer>
-            <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPatients();  c('Close click')">Yes</button>
-            <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest();  ">No</button>
-            <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
+        <br><br><br>
+        <div *ngIf="multipleChoice" style="width: 50%; margin-left: 2em;">
+            <br><br>
+            <p><b>Enter Your Multiple Choice Question</b></p>
+
+            <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." style="margin-left: 2em; width: 50%; height: 100%" #newMAQuestion>
+
+            <br><br>
+            <div class="form-group row">
+                <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
+                <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...." style=" width: 50%; height: 100%; " #newOption>
+            </div>
+            <div class="form-group row">
+                <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
+                <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." style=" width: 50%; height: 100%;" #newOption1>
+            </div>
+            <div *ngFor="let option of options" class="form-group row">
+                <label for="inputOption2" class="col-sm-3 col-form-label">{{option}})</label>
+                <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...." style="width: 50%; height: 100%;" #newOption2>
+            </div>
+            <br><br>
+            <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+
+            <button type="button" class="btn btn-primary createbtn" (click)="addOption();" style="margin-left: 2em; float: left;">Add Option</button>
+            <br><br>
+            <hr>
         </div>
-    </ng-template>
+        <br><br><br>
+        <div *ngIf="rating" style="margin-left:2em; width: 50%;">
+            <br><br>
+            <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
+
+            <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 50%; height: 100%" #newRAQuestion>
+            <br><br>
+            <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+            <br><br>
+            <hr>
+        </div>
+        <br><br><br>
+
+
+        <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
+            <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
+        </div>
+        <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
+            <button type="button" class="btn btn-primary createbtn" (click)="open(askIfAssign);" style="margin-left: 2em; background-color: green;">Save Plan</button>
+        </div>
+
+        <ng-template #askIfAssign let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something you would like to do?</p>
+            </div>
+            <div class= "modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPatients();  c('Close click')">Yes</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest();  ">No</button>
+                <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
+            </div>
+        </ng-template>
+    </mat-card>
     <div *ngIf="showPatients">
         <mat-card class="assessTest">
             <h2>Assign Test To:</h2>
@@ -164,26 +181,47 @@
                     {{client.givenName}}
                 </mat-list-option>
             </mat-selection-list>
+            <br><br>
             <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected);" style="margin-left: 2em; float: right;">Assign Test</button>
             <br><br><br><br>
         </mat-card>
-        
+        <br><br><br><br>
+
+
     </div>
-    <div *ngIf = "viewDetails">
-        <mat-card  class="assessTest">
-            <ol>
-                <li  *ngFor="let question of selectedPlan">
-                    <div><p><b>Question: </b>{{question.questionText}}</p></div>
-                    <div><p><b>Answer: </b>{{question.answer}}</p></div>
-                </li>
-                
-            </ol>
-        </mat-card>
-        
-    </div>
+    
+</div>
+<div *ngIf="viewDetails">
+    <mat-card class="assessTest">
+        <div class="center">
+            <h2>{{selectedPlan.name}}</h2>
+            <br>
+            <h3>{{selectedPlan.description}}</h3>
+            <br>
+            <h4>{{selectedPlan.belongsTo?.givenName}}</h4>
+        </div>
+        <br><br><br>
+        <ol>
+            <li *ngFor="let question of selectedPlan.questions">
+                <div>
+                    <p><b>Question: </b>{{question.questionText}}</p>
+                </div>
+                <div>
+                    <p><b>Answer: </b>{{question.answer}}</p>
+                </div>
+            </li>
 
+        </ol>
 
+        <br><br>
 
-    <br><br><br><br>
+        <button class="btn btn-primary createbtn">Assign Followup</button>
+        <button class="btn btn-primary createbtn">Close Treatment</button>
+
+    </mat-card>
 
 </div>
+
+
+
+<br><br><br><br>

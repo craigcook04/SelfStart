@@ -11,4 +11,7 @@ th, td {
     margin-right: auto;
     
 }
-  
+.center {
+  text-align: center;
+  padding-top: 2rem;
+}

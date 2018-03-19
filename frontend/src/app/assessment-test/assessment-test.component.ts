@@ -15,7 +15,7 @@ export class AssessmentTestComponent implements OnInit {
   shortAnswer: boolean = false;
   multipleChoice: boolean = false;
   rating: boolean = false;
-  manageTests: boolean = true;
+  manageTests: boolean = false;
   showPatients: boolean = false;
   showCreat: boolean = true;
   viewDetails:boolean = false;
@@ -27,7 +27,7 @@ export class AssessmentTestComponent implements OnInit {
   clients: any[];
   selectedPlan: any[];
   tests = new MatTableDataSource();
-  displayedColumns = ["Patient", "Plan Assigned", "Date", "Status", "View Test Results"];
+  displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -65,12 +65,12 @@ export class AssessmentTestComponent implements OnInit {
     // this.tests.sort = this.sort;
     
   }
-   ngAfterViewInit() {
-    console.log("fdsafdsa");
-    //this.paginator = 10;
-    this.tests.paginator = this.paginator;
-    this.tests.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   console.log("fdsafdsa");
+  //   //this.paginator = 10;
+  //   this.tests.paginator = this.paginator;
+  //   this.tests.sort = this.sort;
+  // }
 
   /**
    * Set the sort after the view init since this component will
@@ -88,6 +88,7 @@ export class AssessmentTestComponent implements OnInit {
   
   enable(){
     this.showCreat = false;
+    this.viewDetails = false;
     // this.manageTests = true;
     
   }
@@ -202,12 +203,13 @@ export class AssessmentTestComponent implements OnInit {
     this.showPatients = false;
     this.type = "type of question";
     this.showCreat = true;
-    this.manageTests = true;
+    this.manageTests = false;
+    this.viewDetails = false;
     this.optionText = [];
     this.options =[];
     this.questions = [];
-    this.ngOnInit();
-    this.ngAfterViewInit();
+    //this.ngOnInit();
+    //this.ngAfterViewInit();
     
   }
   open(content) {
@@ -265,7 +267,9 @@ export class AssessmentTestComponent implements OnInit {
     console.log(clientIds);
   }
   showTable(){
+    this.viewDetails = false;
     this.manageTests = true;
+    this.showPatients = false
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
       this.tests.data = retObj.assessmentTest;
@@ -278,11 +282,19 @@ export class AssessmentTestComponent implements OnInit {
   view(planSel: any){
     console.log("wohooo");
     //console.log(id);
-    this.selectedPlan = planSel.questions;
+    this.selectedPlan = planSel;
+    this.manageTests = false;
     this.viewDetails = true;
     
     console.log(this.selectedPlan);
     //this.managaeTests = false;
     
+  }
+  deleteQuestion(que: any){
+    console.log(que);
+    var index = this.questions.indexOf(que);
+    console.log(index);
+    this.questions.splice(index,1);
+    console.log(this.questions);
   }
 }
