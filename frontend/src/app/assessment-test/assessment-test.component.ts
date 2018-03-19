@@ -26,16 +26,14 @@ export class AssessmentTestComponent implements OnInit {
   description: string;
   clients: any[];
   selectedPlan: any[];
+  offset: number = 0;
   tests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
  
-  
-  
   // var currOption = 'c';
   currOption: string = 'c';
+  
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
               private patientService: PatientService) { }
@@ -60,17 +58,13 @@ export class AssessmentTestComponent implements OnInit {
       console.log(this.tests);
       
     });
-   // this.paginator = 10;
-    // this.tests.paginator = this.paginator;
-    // this.tests.sort = this.sort;
+
     
   }
   // ngAfterViewInit() {
-  //   console.log("fdsafdsa");
-  //   //this.paginator = 10;
   //   this.tests.paginator = this.paginator;
-  //   this.tests.sort = this.sort;
   // }
+  
 
   /**
    * Set the sort after the view init since this component will
@@ -89,6 +83,8 @@ export class AssessmentTestComponent implements OnInit {
   enable(){
     this.showCreat = false;
     this.viewDetails = false;
+    this.manageTests = false;
+    this.showPatients = false;
     // this.manageTests = true;
     
   }
@@ -197,6 +193,15 @@ export class AssessmentTestComponent implements OnInit {
     this.assessmentTestService.createPlan(this.name, this.description, this.questions).subscribe(data => {
       console.log(data);
     });
+    this.tests = new MatTableDataSource();
+    this.assessmentTestService.getTests().subscribe(data => {
+      var retObj: any = data;
+      this.tests.data = retObj.assessmentTest;
+      console.log(this.tests);
+      console.log(data);
+      console.log(this.tests);
+      
+    });
     this.showDrop = false;
     this.rating = false;
     this.multipleChoice = false;
@@ -231,10 +236,7 @@ export class AssessmentTestComponent implements OnInit {
    this.multipleChoice = false;
    this.type = "type of question";
    this.manageTests = false;
-    //this.showCreat = true;
-  // this.optionText = [];
-  // this.options =[];
-  // this.questions = [];
+  
    this.patientService.GetAllPatients().subscribe(data => {
       console.log(data);
       this.clients = Object.assign([], data.docs);
@@ -258,18 +260,28 @@ export class AssessmentTestComponent implements OnInit {
         console.log(data);
       });
     }
+    this.tests = new MatTableDataSource();
+    this.assessmentTestService.getTests().subscribe(data => {
+      var retObj: any = data;
+      this.tests.data = retObj.assessmentTest;
+      console.log(this.tests);
+      console.log(data);
+      console.log(this.tests);
+      
+    });
     this.showCreat = true;
     this.optionText = [];
     this.options =[];
     this.questions = [];
     this.showPatients = false;
-    this.manageTests = true;
+    this.manageTests = false;
     console.log(clientIds);
   }
   showTable(){
     this.viewDetails = false;
     this.manageTests = true;
-    this.showPatients = false
+    this.showPatients = false;
+    this.showCreat = true;
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
       this.tests.data = retObj.assessmentTest;
@@ -297,4 +309,33 @@ export class AssessmentTestComponent implements OnInit {
     this.questions.splice(index,1);
     console.log(this.questions);
   }
+  
+  
+  searchPatients(searchString: string, searchArea: string) {
+    // var ascvsdesc;
+    // if(this.ascendingOrd == true) {
+    //   ascvsdesc = 'asc';
+    // }
+    // else {
+    //   ascvsdesc = 'desc';
+    // }
+    this.patientService.SearchPatient(searchString, searchArea, this.offset, 'asc').subscribe(data => {
+      if(data != []) {
+        var retObj : any = data;
+        this.clients = Object.assign([], retObj.docs);
+      }
+    });
+  }
+  NextPage(searchString: string, searchArea: string) {
+    this.offset += 10;
+    this.searchPatients(searchString, searchArea);
+  }
+
+  PreviousPage(searchString: string, searchArea: string) {
+    if(this.offset != 0) {
+      this.offset -= 10;
+    }
+    this.searchPatients(searchString, searchArea);
+  }
+
 }

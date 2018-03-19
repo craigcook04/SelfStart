@@ -38,7 +38,7 @@ router.route('/')
         
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
-        userAccount.encryptedPassword = userAccount.generateHash(request.body.password);
+        userAccount.encryptedPassword = request.body.encryptedPassword;
         userAccount.salt = request.body.salt;
         userAccount.needToChangePass = false;
         console.log(userAccount.encryptedPassword);

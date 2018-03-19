@@ -2,10 +2,10 @@
 <!--  assessment-test works!-->
 <!--</p>-->
 <br><br>
-<button *ngIf="showCreat" type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>
+<button type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>
 <br><br><br>
-<button *ngIf="!manageTests" type="button" class="btn btn-primary createbtn" (click)="showTable()" style="margin-left: 2em;">Manage Tests</button>
-
+<button type="button" class="btn btn-primary createbtn" (click)="showTable()" style="margin-left: 2em;">Manage Tests</button>
+<br><br><br>
 <mat-card *ngIf="manageTests && showCreat" class="assessTest">
     <div class="example-header">
         <mat-form-field>
@@ -50,7 +50,8 @@
 </mat-card>
 
 <div style="margin-left: 2em;">
-    <mat-card  *ngIf="!showCreat" class="assessTest">
+    <mat-card *ngIf="!showCreat" class="assessTest">
+        <div>
         <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
             <p><b>Enter the name of the test: </b></p>
 
@@ -73,7 +74,7 @@
             <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
 
                 <label><b>{{question.questionText}}</b></label>
-                <button class = "btn btn-outline-primary" style = "float: right;" (click) = "deleteQuestion(question)">Remove Question</button>
+                <button class="btn btn-outline-primary" style="float: right;" (click)="deleteQuestion(question)">Remove Question</button>
                 <ol>
                     <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
                         <p>{{options}}</p>
@@ -152,11 +153,12 @@
         <br><br><br>
 
 
-        <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
+        <div *ngIf="!showCreat" style="margin-left:2em; margin-top:2em; width:50%;">
             <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
         </div>
-        <div *ngIf="!showCreat" style="margin-left:2em; width:50%;">
+        <div *ngIf="!showCreat" style="margin-left:2em; margin-top:2em; width:50%;">
             <button type="button" class="btn btn-primary createbtn" (click)="open(askIfAssign);" style="margin-left: 2em; background-color: green;">Save Plan</button>
+        </div>
         </div>
 
         <ng-template #askIfAssign let-c="close" let-d="dismiss">
@@ -166,7 +168,7 @@
             <div class="modal-body">
                 <p>Assigning a plan to a patient allows that patient to answer the questions on this test. Is that something you would like to do?</p>
             </div>
-            <div class= "modal-footer">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPatients();  c('Close click')">Yes</button>
                 <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest();  ">No</button>
                 <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
@@ -175,6 +177,27 @@
     </mat-card>
     <div *ngIf="showPatients">
         <mat-card class="assessTest">
+            <div class='blockContainer'>
+               
+                <div class="right">
+                    <div class="input-group mb-3 searchbar" id="custom-search-input">
+                        <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, 'givenName')" placeholder="Search term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, 'givenName')"  location="top" ngbTooltip="Search">
+                              <fa name="search"></fa>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <br> <br><br> <br> <br>
+
+            <button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, 'givenName');">Next Page</button>
+            <button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, 'givenName');">Previous Page</button>
+            <!--<button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">-->
+            <!--    <i class="material-icons">refresh</i>-->
+            <!--</button>-->
+
             <h2>Assign Test To:</h2>
             <mat-selection-list #clientsList>
                 <mat-list-option *ngFor="let client of clients" value="{{client._id}}">
@@ -189,16 +212,16 @@
 
 
     </div>
-    
+
 </div>
 <div *ngIf="viewDetails">
     <mat-card class="assessTest">
         <div class="center">
-            <h2>{{selectedPlan.name}}</h2>
+            <h2 style = "color: #0275d8;">{{selectedPlan.name}}</h2>
             <br>
-            <h3>{{selectedPlan.description}}</h3>
+            <h4 style = "color: #0275d8;">{{selectedPlan.description}}</h4>
             <br>
-            <h4>{{selectedPlan.belongsTo?.givenName}}</h4>
+            <h5 style = "color: #0275d8;">{{selectedPlan.belongsTo?.givenName}}</h5>
         </div>
         <br><br><br>
         <ol>
