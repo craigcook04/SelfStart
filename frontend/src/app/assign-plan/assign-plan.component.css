@@ -1,0 +1,24 @@
+.page{
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+.button{
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.button:focus{
+    outline: none;
+}
+
+.listItems{
+    padding-bottom: 1em;
+}
+
+.divider{
+    margin-top: -25px;
+}

@@ -80,7 +80,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     RecoverAccountComponent,
     NotFoundComponent,
     AssessmentTestComponent,
-    AssignPlanComponent
+    AssignPlanComponent,
     CompleteAssessmentTestComponent
   ],
   imports: [
@@ -105,7 +105,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatGridListModule,
     MomentModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
     MatRadioModule
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],

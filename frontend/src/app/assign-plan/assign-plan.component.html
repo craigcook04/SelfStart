@@ -1,3 +1,52 @@
-<p>
-  assign-plan works!
-</p>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<div class="page">
+  <div class="row">
+    <div class="col-lg-6">
+      <mat-list>
+        <mat-list-item class="listItems" *ngFor="let plan of rehabPlans">
+            <button class="btn-block button">
+                <div class="row">
+                  <div class="col-sm-1">
+                      <i class="fa fa-columns"></i> &nbsp;
+                  </div>
+                  <div class="col-sm-5">
+                      <h5><b>Plan Name: </b> &nbsp; {{ plan.name }} </h5>
+                  </div>
+                  <div class="col-sm-4">
+                      <b>Author:</b> &nbsp; {{ plan.authorName }}
+                  </div>
+                </div>
+                <div class="divider">
+                  <mat-divider></mat-divider>
+                </div>
+              </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-lg-6">
+      <mat-list>
+        <mat-list-item class="listItems" *ngFor="let client of clients">
+            <button class="btn-block button">
+                <div class="row">
+                  <div class="col-sm-1">
+                      <i class="fa fa-user"></i> &nbsp;
+                  </div>
+                  <div class="col-sm-6">
+                      <h5><b>Client: </b> &nbsp; {{ client.name }} </h5>
+                  </div>
+                  <!-- <div class="col-sm-4">
+                      <b>Author:</b> &nbsp; {{ plan.authorName }}
+                  </div> -->
+                </div>
+                <div class="divider">
+                  <mat-divider></mat-divider>
+                </div>
+            </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>
