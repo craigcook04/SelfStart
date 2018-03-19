@@ -67,6 +67,7 @@ router.route('/')
                 patient.save(function (error) {
                 if (error) {
                     response.send(error);
+                    console.log(error);
                     return;
                 }
                 
@@ -270,6 +271,83 @@ router.route('/physiotherapist/:physiotherapist_id')
         //     }
         // });
     });
+    
+router.route('/assign/:patient_id')
 
+    .put(function (request, response) {
+        Patient.findById(request.params.patient_id, function (error, patient) {
+            if (error) {
+                response.send({error: error});
+                console.log("Error")
+            }
+            else {
+                //save updated information of patient
+                patient.rehabPlan = request.body.rehabPlan;
+                console.log(patient.rehabPlan);
+
+                console.log(request.body);
+                patient.save(function (error) {
+                    if (error) {
+                        response.send({error: error});
+                    }
+                    else {
+                        console.log("Here");
+                        response.json({success: true, patient: patient});
+                    }
+                });
+            }
+        });
+    });
+    
+router.route('/plan/:plan_id')
+
+    .get(function (request, response) {
+        Patient.find({"rehabPlan": request.params.plan_id}, function (error, patients) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({patients: patients});
+            }
+        })
+    });
+    
+router.route('/notplan/:plan_id')
+
+    .get(function (request, response) {
+        Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({patients: patients});
+            }
+        })
+    });
+    
+router.route('/plan/remove')
+
+    .put(function (request, response) {
+        Patient.findById(request.body.patient, function (error, patient) {
+            if (error) {
+                response.send({error: error});
+            }
+            else {
+                patient.rehabPlan = undefined;
+
+                console.log(request.body);
+                patient.save(function (error) {
+                    if (error) {
+                        console.log("Error");
+                        response.send({error: error});
+                    }
+                    else {
+                        console.log("Here");
+                        response.json({success: true, patient: patient});
+                    }
+                });
+            }
+        });
+    });
 
 module.exports = router;

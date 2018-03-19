@@ -25,6 +25,7 @@ import { ClientExerciseComponent } from './client-exercise/client-exercise.compo
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AssessmentTestComponent} from './assessment-test/assessment-test.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
+import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -49,6 +50,7 @@ const routes: Routes = [
   {path: 'login/recover/:id', component: RecoverAccountComponent},
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmentTest', component: AssessmentTestComponent},
+  {path: 'assignplans', component: AssignPlanComponent},
 
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
