@@ -34,56 +34,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(){
-    this.apptService.GetAllAppointments().subscribe(data =>{
-      var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
-      this.bookedDates = Object.assign([], data.appointment); //assigns all appointements to bookedDates
-      console.log(this.bookedDates);
-      
-      for(var i = 0; i < this.bookedDates.length; i++ ){
-        if(moment(this.bookedDates[i].date).isSameOrAfter(moment().add(this.currentWeek, 'weeks').startOf('week')) && moment(this.bookedDates[i].date).isSameOrBefore(moment().add(this.currentWeek, 'weeks').startOf('week').add(7, 'days'))){
-          var currDate = moment(this.bookedDates[i].date) //creates moment object out of string date
-          var dayNum = currDate.day(); //this gets the day of the week in numerical form 0 = sunday -> 6=saturday
-          var tempTime  = moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNum, 'days').startOf('day').add(8.5, 'hours'); //get start of selected day
-          var timeCount = 0;
-          var nextSlot = 0;
-          var secondSlot = 0;
-          var countUp = true;
-          //figure out how many 15-minute intervals are needed to get to time
-          //** the work day starts at 830
-          
-          while(true){
-            if(moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNum, 'days').startOf('day').add(8, 'hours').add((30 + (timeCount*15)), 'minutes').isBefore(currDate)){
-              
-              timeCount = timeCount + 1; //will give me slot number
-              nextSlot = timeCount + 1;
-              secondSlot = nextSlot + 1;
-            }
-            else{
-              break;
-            }
-          }
-          
-          console.log("made it here " + timeCount);
-          var takenSlot = [("slot" + dayNum + timeCount), ("slot" + dayNum + nextSlot), ("slot" + dayNum + secondSlot)]; //slot0{{i}}, slot1{{i}} ...etc
-          
-          if(timeCount > 34){
-            if(timeCount == 35){
-              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm bg-muted chooseTime");
-              document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm bg-muted chooseTime");
-            }else{
-              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm bg-muted chooseTime");
-            }
-          }else{
-            document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm bg-muted chooseTime");
-            document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm bg-muted chooseTime");
-            document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm bg-muted chooseTime");
-          }
-          
-          //console.log(dayNum);
-        }
-      }
-    });
-    
+    this.refreshCalendar();
   }
   
   
@@ -128,29 +79,65 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
       document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
   }
   
   refreshCalendar(){
+    //clear calandar to leave fresh slate for new dates for the week
+    
+    
+    
+    //populate with new dates
     this.apptService.GetAllAppointments().subscribe(data =>{
       var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
       this.bookedDates = Object.assign([], data.appointment); //assigns all appointements to bookedDates
-      console.log(this.bookedDates);
+      console.log(this.bookedDates); //at this point we have all booked dates
+      
+      for(var i=0; i<7; i++){
+        for(var j=0; j<37; j++){
+          document.getElementById("slot"+i+j).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        }
+      }
       
       for(var i = 0; i < this.bookedDates.length; i++ ){
-        if(moment(this.bookedDates[i].date).isSameOrAfter(moment().add(this.currentWeek, 'weeks').startOf('week').format('YYYY-MM-DD')) && moment(this.bookedDates[i].date).isSameOrBefore(moment().add(this.currentWeek, 'weeks').endOf('week').format('YYYY-MM-DD'))){
+        if(moment(this.bookedDates[i].date).isSameOrAfter(moment().add(this.currentWeek, 'weeks').startOf('week')) && moment(this.bookedDates[i].date).isSameOrBefore(moment().add(this.currentWeek, 'weeks').startOf('week').add(7, 'days'))){
           var currDate = moment(this.bookedDates[i].date) //creates moment object out of string date
-          var dayNum = currDate.day(); //this gets the day of the week in numerical form
-          console.log(dayNum);
+          var dayNum = currDate.day(); //this gets the day of the week in numerical form 0 = sunday -> 6=saturday
+          var tempTime  = moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNum, 'days').startOf('day').add(8.5, 'hours'); //get start of selected day
+          var timeCount = 0;
+          var nextSlot = 0;
+          var secondSlot = 0;
+          var countUp = true;
+          //figure out how many 15-minute intervals are needed to get to time
+          //** the work day starts at 830
+          
+          while(true){
+            if(moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNum, 'days').startOf('day').add(8, 'hours').add((30 + (timeCount*15)), 'minutes').isBefore(currDate)){
+              
+              timeCount = timeCount + 1; //will give me slot number
+              nextSlot = timeCount + 1;
+              secondSlot = nextSlot + 1;
+            }
+            else{
+              break;
+            }
+          }
+          
+          var takenSlot = [("slot" + dayNum + timeCount), ("slot" + dayNum + nextSlot), ("slot" + dayNum + secondSlot)]; //slot0{{i}}, slot1{{i}} ...etc
+          
+          if(timeCount > 34){
+            if(timeCount == 35){
+              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime");
+              document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime");
+            }else{
+              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime");
+            }
+          }else{
+            document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime");
+            document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime");
+            document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime");
+          }
+          
+          console.log("Week: " + this.currentWeek);
         }
       }
     });
@@ -159,6 +146,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   nextWeek(){ //function for when they click the next button -- this works perfectly
     this.currentWeek = this.currentWeek + 1;
     this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
+    
   }
   
   prevWeek(){ //function for the previous button -- also works perfectly
@@ -168,6 +156,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       this.currentWeek = this.currentWeek - 1;
       this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
     }
+    this.refreshCalendar();
   }
   
   addAppointement(date: any, reason: string, other: string, patient: string){ //function to create a new appointement

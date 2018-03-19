@@ -4,13 +4,13 @@
       <div class="input-group" style="position: sticky;">
         <input type="text" class="form-control" readonly="readonly" value="{{ dateSelected }}">
         <div class="input-group-append ml-1">
-          <button class="btn btn-outline-secondary mr-0" type="button" (click)="prevWeek();"><fa name="angle-left"></fa></button>
-          <button class="btn btn-outline-secondary ml-0" type="button" (click)="nextWeek();"><fa name="angle-right"></fa></button>
+          <button class="btn btn-outline-secondary mr-0" type="button" (click)="prevWeek(); refreshCalendar();"><fa name="angle-left"></fa></button>
+          <button class="btn btn-outline-secondary ml-0" type="button" (click)="nextWeek(); refreshCalendar();"><fa name="angle-right"></fa></button>
         </div>
       </div>
     </div>
     <br>
-    <div class="slotDiv">
+    <div class="col-10 slotDiv" style="overflow: auto; overflow-x:scroll;">
       <div class="slotSlider" style="max-width: 100%; overflow-x: hidden;">
     <table>
       <tr>
@@ -85,7 +85,7 @@
     </div>
   </div>
   <div class="saveAppt">
-    <button class="btn btn-primary" (click)="saveAppointment();">Save</button>
-    <button class="btn btn-secondary" (click)="cancelSelection();">Cancel</button>
+    <button class="btn btn-sm btn-primary" (click)="saveAppointment();">Save</button>
+    <button class="btn btn-sm btn-secondary" (click)="cancelSelection();">Cancel</button>
   </div>
 </div>
