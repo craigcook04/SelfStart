@@ -1,10 +1,7 @@
-<h1>Book an Appointment</h1>
-<hr>
-<br>
 <div class="row">
   <div class="calendar">
     <div class="col-sm-12 col-med-6 col-lg-6">
-      <div class="input-group">
+      <div class="input-group" style="position: sticky;">
         <input type="text" class="form-control" readonly="readonly" value="{{ dateSelected }}">
         <div class="input-group-append ml-1">
           <button class="btn btn-outline-secondary mr-0" type="button" (click)="prevWeek();"><fa name="angle-left"></fa></button>
@@ -13,80 +10,82 @@
       </div>
     </div>
     <br>
-  <table>
-    <tr>
-        <td colspan="2" class="corner"></td>
-        <th class="timeOfDay">8:30</th>
-        <th class="timeOfDay">8:45</th> 
-        <th class="timeOfDay">9:00</th>
-        <th class="timeOfDay">9:15</th>
-        <th class="timeOfDay">9:30</th> 
-        <th class="timeOfDay">9:45</th>
-        <th class="timeOfDay">10:00</th>
-        <th class="timeOfDay">10:15</th>
-        <th class="timeOfDay">10:30</th> 
-        <th class="timeOfDay">10:45</th>
-        <th class="timeOfDay">11:00</th>
-        <th class="timeOfDay">11:15</th>
-        <th class="timeOfDay">11:30</th> 
-        <th class="timeOfDay">11:45</th>
-        <th class="timeOfDay">12:00</th>
-        <th class="timeOfDay">12:15</th>
-        <th class="timeOfDay">12:30</th> 
-        <th class="timeOfDay">12:45</th>
-        <th class="timeOfDay">1:00</th>
-        <th class="timeOfDay">1:15</th>
-        <th class="timeOfDay">1:30</th> 
-        <th class="timeOfDay">1:45</th>
-        <th class="timeOfDay">2:00</th>
-        <th class="timeOfDay">2:15</th>
-        <th class="timeOfDay">2:30</th> 
-        <th class="timeOfDay">2:45</th>
-        <th class="timeOfDay">3:00</th>
-        <th class="timeOfDay">3:15</th>
-        <th class="timeOfDay">3:30</th> 
-        <th class="timeOfDay">3:45</th>
-        <th class="timeOfDay">4:00</th>
-        <th class="timeOfDay">4:15</th>
-        <th class="timeOfDay">4:30</th> 
-        <th class="timeOfDay">4:45</th>
-        <th class="timeOfDay">5:00</th>
-        <th class="timeOfDay">5:15</th>
-        <th class="timeOfDay">5:30</th>
-      </tr>
+    <div class="slotDiv">
+      <div class="slotSlider" style="max-width: 100%; overflow-x: hidden;">
+    <table>
       <tr>
-        <td colspan="2" id="sunday" class="weekDay">Sunday</td>
-        <td *ngFor="let cell of cells; let i = index" class="timeSlot"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(0, i);" id="slot0{{ i }}"></button></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="weekDay">Monday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(1, i);" id="slot1{{ i }}"></button></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="weekDay" >Tuesday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(2, i);" id="slot2{{ i }}"></button></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="weekDay">Wednesday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(3, i);"  id="slot3{{ i }}"></button></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="weekDay">Thursday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(4, i);" id="slot4{{ i }}"></button></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="weekDay">Friday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(5, i);" id="slot5{{ i }}"></button></td>
-      </tr>
-      <tr>
-        <td colspan="2" class="weekDay">Satruday</td>
-        <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(6, i);" id="slot6{{ i }}"></button></td>
-      </tr>
-      
-  </table>
+          <td colspan="2" class="corner"></td>
+          <th class="timeOfDay">8:30</th>
+          <th class="timeOfDay">8:45</th> 
+          <th class="timeOfDay">9:00</th>
+          <th class="timeOfDay">9:15</th>
+          <th class="timeOfDay">9:30</th> 
+          <th class="timeOfDay">9:45</th>
+          <th class="timeOfDay">10:00</th>
+          <th class="timeOfDay">10:15</th>
+          <th class="timeOfDay">10:30</th> 
+          <th class="timeOfDay">10:45</th>
+          <th class="timeOfDay">11:00</th>
+          <th class="timeOfDay">11:15</th>
+          <th class="timeOfDay">11:30</th> 
+          <th class="timeOfDay">11:45</th>
+          <th class="timeOfDay">12:00</th>
+          <th class="timeOfDay">12:15</th>
+          <th class="timeOfDay">12:30</th> 
+          <th class="timeOfDay">12:45</th>
+          <th class="timeOfDay">1:00</th>
+          <th class="timeOfDay">1:15</th>
+          <th class="timeOfDay">1:30</th> 
+          <th class="timeOfDay">1:45</th>
+          <th class="timeOfDay">2:00</th>
+          <th class="timeOfDay">2:15</th>
+          <th class="timeOfDay">2:30</th> 
+          <th class="timeOfDay">2:45</th>
+          <th class="timeOfDay">3:00</th>
+          <th class="timeOfDay">3:15</th>
+          <th class="timeOfDay">3:30</th> 
+          <th class="timeOfDay">3:45</th>
+          <th class="timeOfDay">4:00</th>
+          <th class="timeOfDay">4:15</th>
+          <th class="timeOfDay">4:30</th> 
+          <th class="timeOfDay">4:45</th>
+          <th class="timeOfDay">5:00</th>
+          <th class="timeOfDay">5:15</th>
+          <th class="timeOfDay">5:30</th>
+        </tr>
+        <tr>
+          <td colspan="2" id="sunday" class="weekDay">Sunday</td>
+          <td *ngFor="let cell of cells; let i = index" class="timeSlot"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(0, i);" id="slot0{{ i }}"></button></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="weekDay">Monday</td>
+          <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(1, i);" id="slot1{{ i }}"></button></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="weekDay" >Tuesday</td>
+          <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(2, i);" id="slot2{{ i }}"></button></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="weekDay">Wednesday</td>
+          <td *ngFor='let cell of cells; let i = index' class="timeSlot"><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(3, i);"  id="slot3{{ i }}"></button></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="weekDay">Thursday</td>
+          <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(4, i);" id="slot4{{ i }}"></button></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="weekDay">Friday</td>
+          <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(5, i);" id="slot5{{ i }}"></button></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="weekDay">Satruday</td>
+          <td *ngFor='let cell of cells; let i = index' class="timeSlot" ><button class="btn btn-sm bg-primary chooseTime" (click)="choosenSlot(6, i);" id="slot6{{ i }}"></button></td>
+        </tr>
+    </table>
+    </div>
   </div>
   <div class="saveAppt">
-    <button class="btn btn-primary" (click)="saveAppointment();">Submit</button>
+    <button class="btn btn-primary" (click)="saveAppointment();">Save</button>
     <button class="btn btn-secondary" (click)="cancelSelection();">Cancel</button>
   </div>
 </div>

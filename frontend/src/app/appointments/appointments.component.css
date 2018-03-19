@@ -1,8 +1,13 @@
 td {
-    height: 30px;
-    width: 10px;
+    /*height: 30px;*/
+    /*width: 10px;*/
 }
 
+.slotDiv{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin: auto;
+}
 
 .timeOfDay{
     -webkit-transform: rotate(90deg);
@@ -19,17 +24,16 @@ td {
 .timeSlot{
     border: 1px solid white;
     background-color: white;
-    height: 30px;
-    width: 10px;
+    /*height: 30px;*/
 }
 
-.calendar{
-    margin: auto;
-}
+/*.calendar{*/
+/*    margin: auto;*/
+/*}*/
 
 .chooseTime{
-    height: 30px;
-    width: 100%;
+    /*height: 30px;*/
+    /*width: 100%;*/
 }
 
 .sel{
