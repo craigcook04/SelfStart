@@ -27,6 +27,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   temp: any[];
   toCancel: any;
   selectedWeek: any;
+  isSaved: any;
 
 
   constructor(private modalService: NgbModal,
@@ -34,6 +35,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
               private apptService: AppointmentsService) {}
 
   ngOnInit() {
+    this.isSelected = false;
     this.currentlyFilled = new Array(37);
     this.cells = new Array(37); //Create 37 time slots
     this.temp = new Array(3);
@@ -41,6 +43,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     this.refreshCalendar(); //populate calendar
     this.isStart = true;
     this.toCancel = false;
+    this.isSaved = false;
   }
   
   ngAfterViewInit(){
@@ -96,6 +99,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     
     if(this.isSelected){
       var highlighted = [("slot"+this.dayIndex+this.timeIndex), ("slot"+this.dayIndex+(this.timeIndex+1)), ("slot"+this.dayIndex+(this.timeIndex+2))];
+      this.isSaved = false;
       this.isSelected = false;
       if(this.timeIndex > 34){
         if(this.timeIndex == 35){
@@ -183,6 +187,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             document.getElementById(this.currentlySaved[2]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
           }
           
+          if((this.isSelected) && (this.currentWeek == this.selectedWeek) && (this.isSaved == false)){
+            document.getElementById(this.temp[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime disabled");
+            document.getElementById(this.temp[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime disabled");
+            document.getElementById(this.temp[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime disabled");
+          }
+          
           console.log("Week: " + this.currentWeek);
         }
       }
@@ -208,6 +218,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   saveAppointment(){
     if(this.isSelected){
       //keep the selected values to store in the database
+      this.isSaved = true;
       this.currentlySaved = this.temp;
       this.isStart = false;
     }
