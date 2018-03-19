@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
 import {AssessmentTestService} from '../assessment-test.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { PatientService } from '../patient.service';
+import {RehabPlansService} from '../rehab-plans.service'
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
@@ -36,7 +37,7 @@ export class AssessmentTestComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
-              private patientService: PatientService) { }
+              private patientService: PatientService, private rehabPlanService: RehabPlansService) { }
               
   
 
@@ -220,6 +221,34 @@ export class AssessmentTestComponent implements OnInit {
   open(content) {
     this.modalService.open(content, {size: 'lg'});
   }
+  
+  openListOfPlans(){
+     var temp:any = document.getElementById('name');
+    temp = temp.value;
+    this.name = temp;
+    
+    var temp2:any = document.getElementById('description');
+    temp2 = temp2.value;
+    this.description = temp2;
+    
+  
+   this.showCreat =true;
+   this.showDrop = false;
+   this.rating = false;
+   this.multipleChoice = false;
+   this.type = "type of question";
+   this.manageTests = false;
+   
+   this.rehabPlanService.getPlans().subscribe(data => {
+     console.log(data);
+     this.clients = Object.assign([], data.rehabPlans);
+     console.log(this.clients);
+   });
+   this.showPatients = true;
+   
+    
+  }
+  
   openListOfPatients(){
     var temp:any = document.getElementById('name');
     temp = temp.value;
