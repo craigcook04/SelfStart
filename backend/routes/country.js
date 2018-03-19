@@ -10,6 +10,8 @@ router.route('/')
 
     .post(function (request, response) {
          var country = new Country();
+         
+         console.log(request.body);
          country.name = request.body.name;
          country.province = request.body.province;
          country.patient = request.body.patient;

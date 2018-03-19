@@ -6,12 +6,8 @@ import { Router } from '@angular/router';
 import { ImageService } from '../image.service';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-declare var jquery: any;
-declare var $: any;
 
 
 @Component({
@@ -39,8 +35,7 @@ export class ClientExerciseComponent implements OnInit {
                private router: Router,
                private imageService: ImageService,
                private iconRegistry: MatIconRegistry,
-               private sanitizer: DomSanitizer,
-               public dialog: MatDialog) {
+               private sanitizer: DomSanitizer) {
                  iconRegistry.addSvgIcon(
                     'dumbbell',
                     sanitizer.bypassSecurityTrustResourceUrl('../assets/images/dumbbell.svg'));

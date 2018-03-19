@@ -106,4 +106,32 @@ export class PatientService {
     return this.http.put(url, body);
   }
 
+  AssignPlan(id: string, plan: any){
+    var body={
+      ID: id,
+      rehabPlan: plan
+    }
+    var url = '/api/patient/assign/' + id;
+
+    return this.http.put(url, body);
+  }
+
+  GetPatientsUnderPlan(id: string){
+    var url = '/api/patient/plan/' + id;
+    return this.http.get(url);
+  }
+
+  GetPatientsNotUnderPlan(id: string){
+    var url ='/api/patient/notplan/' + id;
+    return this.http.get(url);
+  }
+
+  RemovePatient(id: string){
+    var body = {
+      patient: id
+    }
+    var url = '/api/patient/plan/remove';
+    return this.http.put(url, body);
+  }
+
 }
