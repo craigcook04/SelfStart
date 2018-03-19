@@ -31,10 +31,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
 
   constructor(private modalService: NgbModal,
               private router: Router,
-              private apptService: AppointmentsService) {
-                
-
-  }
+              private apptService: AppointmentsService) {}
 
   ngOnInit() {
     this.currentlyFilled = new Array(37);
@@ -181,9 +178,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           }
           
           if(!(this.isStart) && (this.currentWeek == this.selectedWeek)){
-            document.getElementById(this.currentlySaved[0]).setAttribute("class", "btn btn-sm btn-danger chooseTime disabled");
-            document.getElementById(this.currentlySaved[1]).setAttribute("class", "btn btn-sm btn-danger chooseTime disabled");
-            document.getElementById(this.currentlySaved[2]).setAttribute("class", "btn btn-sm btn-danger chooseTime disabled");
+            document.getElementById(this.currentlySaved[0]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
+            document.getElementById(this.currentlySaved[1]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
+            document.getElementById(this.currentlySaved[2]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
           }
           
           console.log("Week: " + this.currentWeek);

@@ -6,9 +6,10 @@ td {
 .slotDiv{
     overflow-x: scroll;
     overflow-y: hidden;
-    margin: auto;
-    margin-left: 5%;
-    margin-right: 5%;
+    /*margin: auto;*/
+    margin-left: 0;
+    padding-left: 0;
+    /*margin-right: 5%;*/
 }
 
 .timeOfDay{
@@ -31,19 +32,30 @@ td {
 .chooseTime{
     height: 30px;
     width: 100%;
+    box-shadow:none !important;
+}
+
+.chooseTime:focus {
+  outline: none;
+  box-shadow:none !important;
 }
 
 .sel{
-    background-color: green;
+    background-color: #f94545;
 }
 
 .taken{
     background-color: #828282;
 }
 
-.saveAppt{
-    margin-left: 5%;
-    margin-top: 5%;
+/*.saveAppt{*/
+/*    margin-left: 5%;*/
+/*    margin-top: 5%;*/
+/*}*/
+
+table{
+    table-layout: fixed;
+    max-width: 100%;
 }
 
 
