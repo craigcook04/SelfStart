@@ -22,23 +22,32 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   timeIndex: any; 
   dayIndex: any;
   currentlyFilled: any[];
+  currentlySaved: any[];
+  isStart: any;
+  temp: any[];
+  toCancel: any;
+  selectedWeek: any;
 
 
   constructor(private modalService: NgbModal,
               private router: Router,
-              private apptService: AppointmentsService) { 
+              private apptService: AppointmentsService) {
+                
+
   }
 
   ngOnInit() {
     this.currentlyFilled = new Array(37);
     this.cells = new Array(37); //Create 37 time slots
+    this.temp = new Array(3);
     this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially
     this.refreshCalendar(); //populate calendar
-    
+    this.isStart = true;
+    this.toCancel = false;
   }
   
   ngAfterViewInit(){
-    this.refreshCalendar();
+    // this.refreshCalendar();
     this.isSelected = false;
   }
   
@@ -46,12 +55,15 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
     var notTaken = true;
+    //make sure they havnt selected more than one date
     if(!(this.isSelected)){
+      //make sure the date they chose isnt already booked
       for(var i = 0; i<this.currentlyFilled.length; i++){
         if(this.currentlyFilled[i] == ("slot"+day+indx)){
           notTaken = false;
         }
       }
+      //if booking is okay...
       if(notTaken){
         this.isSelected = true; //If one is selected they cant select another
         this.timeIndex = indx; //keeping variable with selected index
@@ -60,6 +72,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
         //console.log(this.currentlyHighlighted);
         var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
+        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
+        this.selectedWeek = this.currentWeek;
         
         if(indx > 34){
           if(indx == 35){
@@ -83,20 +97,30 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   
   cancelSelection(){
     
-    var highlighted = [("slot"+this.dayIndex+this.timeIndex), ("slot"+this.dayIndex+(this.timeIndex+1)), ("slot"+this.dayIndex+(this.timeIndex+2))];
-    this.isSelected = false;
-    if(this.timeIndex > 34){
-      if(this.timeIndex == 35){
-        document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-        document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+    if(this.isSelected){
+      var highlighted = [("slot"+this.dayIndex+this.timeIndex), ("slot"+this.dayIndex+(this.timeIndex+1)), ("slot"+this.dayIndex+(this.timeIndex+2))];
+      this.isSelected = false;
+      if(this.timeIndex > 34){
+        if(this.timeIndex == 35){
+          document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        }else{
+          document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        }
       }else{
         document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
       }
-    }else{
-      document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-      document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-      document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+      
     }
+    else{
+      console.log("Cannot cancel without selecting");
+    }
+    
+    //initialize new arrays for these to start fresh for next booking choice
+    this.temp = new Array(3);
+    this.currentlySaved = new Array(3);
   }
   
   refreshCalendar(){
@@ -106,12 +130,14 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       this.bookedDates = Object.assign([], data.appointment); //assigns all appointements to bookedDates
       console.log(this.bookedDates); //at this point we have all booked dates
       
+      //make all squares blue
       for(var i=0; i<7; i++){
         for(var j=0; j<37; j++){
           document.getElementById("slot"+i+j).setAttribute("class", "btn btn-sm bg-primary chooseTime");
         }
       }
       
+      //start looping through dates
       for(var i = 0; i < this.bookedDates.length; i++ ){
         if(moment(this.bookedDates[i].date).isSameOrAfter(moment().add(this.currentWeek, 'weeks').startOf('week')) && moment(this.bookedDates[i].date).isSameOrBefore(moment().add(this.currentWeek, 'weeks').startOf('week').add(7, 'days'))){
           var currDate = moment(this.bookedDates[i].date) //creates moment object out of string date
@@ -154,6 +180,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
           }
           
+          if(!(this.isStart) && (this.currentWeek == this.selectedWeek)){
+            document.getElementById(this.currentlySaved[0]).setAttribute("class", "btn btn-sm btn-danger chooseTime disabled");
+            document.getElementById(this.currentlySaved[1]).setAttribute("class", "btn btn-sm btn-danger chooseTime disabled");
+            document.getElementById(this.currentlySaved[2]).setAttribute("class", "btn btn-sm btn-danger chooseTime disabled");
+          }
+          
           console.log("Week: " + this.currentWeek);
         }
       }
@@ -175,17 +207,15 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     }
   }
   
-  addAppointement(date: any, reason: string, other: string, patient: string){ //function to create a new appointement
-    this.apptService.AddAppointment(date, reason, other).subscribe(data =>{
-      console.log(data);
-    })
-  }
-  
-  
   //this is the function ive made for submitting a selection
   saveAppointment(){
-    this.apptService.AddAppointment(this.currentlyHighlighted, 'test69', 'test69').subscribe(data =>{
-      console.log(data);
-    });
+    if(this.isSelected){
+      //keep the selected values to store in the database
+      this.currentlySaved = this.temp;
+      this.isStart = false;
+    }
+    else{
+      console.log("Cannot save without booking");
+    }
   }
 }
