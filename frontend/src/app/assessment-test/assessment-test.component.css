@@ -81,3 +81,34 @@ th, td {
     font-size: 16px;
 }
 
+.example-container {
+  position: absolute;
+  top: 60px;
+ /*bottom: 60px;*/
+  left: 0;
+  right: 0;
+  height: 91%;
+}
+
+
+.example-sidenav-content {
+    margin-top: 400px;
+    display: flex;
+    height: 100%;
+    
+}
+
+.example-sidenav {
+  display: flex;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  width: 175px;
+  /*margin-top:10px;*/
+  background-color: #4169E1;
+}
+
+.side-nav-el{
+    margin-top: 20px;
+    
+}
+

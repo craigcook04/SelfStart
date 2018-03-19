@@ -15,7 +15,7 @@ export class AssessmentTestComponent implements OnInit {
   shortAnswer: boolean = false;
   multipleChoice: boolean = false;
   rating: boolean = false;
-  manageTests: boolean = false;
+  manageTests: boolean = true;
   showPatients: boolean = false;
   showCreat: boolean = true;
   viewDetails:boolean = false;
