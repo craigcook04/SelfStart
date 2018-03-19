@@ -43,7 +43,6 @@ const routes: Routes = [
   {path: 'signup', component: NewClientComponent},
   {path: 'bookappointment', component: BookAppointmentComponent},
   {path: 'useraccounts', component:UserAccountsComponent},
-  {path: 'signup', component: NewClientComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
   {path: 'bookappointement', component: AppointmentsComponent},
   {path: 'login', component: LoginComponent},
@@ -52,8 +51,10 @@ const routes: Routes = [
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmentTest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
+
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
+
 ];
 
 @NgModule({

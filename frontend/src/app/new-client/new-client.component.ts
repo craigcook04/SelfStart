@@ -256,6 +256,7 @@ export class NewClientComponent implements OnInit {
 
     document.body.style.cursor = "wait";
 
+
     var hashPassword = this.encryptionService.hash(password);
     var salt = this.encryptionService.GenSalt();
     var hashWithSalt = hashPassword + salt;
@@ -263,6 +264,7 @@ export class NewClientComponent implements OnInit {
     var encryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
 
     this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
+
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
