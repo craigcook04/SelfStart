@@ -70,7 +70,7 @@ import {AssessmentTestService} from './assessment-test.service';
     NewClientComponent,
     ClientsOfTherapistComponent,
     AppointmentsComponent,
-    PhysioHomeComponent
+    PhysioHomeComponent,
     LoginComponent,
     ForgottenPasswordComponent,
     RecoverAccountComponent,
