@@ -1,0 +1,52 @@
+<div id=today>
+  <h4>Your Appointments Today</h4>
+  <hr>
+  <div *ngFor = "let appt of appointments">
+    <br>
+    <button class="accordion"  (click)="show(appt)"><b>{{appt.date.slice(5,7)}} {{appt.date.slice(8,10)}}, {{appt.date.slice(0,4)}}</b></button>
+    <div *ngIf = "appt == activated">
+      <div class="info">
+        <hr>
+        <p><b>Name:  </b>{{appt.patient}}</p>
+        <p><b>Reason:  </b>{{appt.reason}}</p>
+        <p><b>Other:  </b>{{appt.other}}</p>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+<div id="mySidenav" class="sidenav">
+  <a id=exercise (click)="goToExercises()">Manage Exercises</a>
+  <a id=patient (click)="goToPatients()">Manage Client Profiles</a>
+  <a id=rehabplan (click)="goToRehabPlans()">Manage Rehabilitation Plans</a>
+  <a id=test (click)="goToTests()">Manage Assessment Tests</a>
+  <a id=report (click)="goToReports()">Generate Client Reports</a>
+</div>
+
+<!--<mwl-demo-utils-calendar-header
+  [(view)]="view"
+  [(viewDate)]="viewDate">
+</mwl-demo-utils-calendar-header>
+
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="'month'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [activeDayIsOpen]="true"
+    (eventClicked)="eventClicked($event)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view
+    *ngSwitchCase="'week'"
+    [viewDate]="viewDate"
+    [events]="events"
+    (eventClicked)="eventClicked($event)">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="'day'"
+    [viewDate]="viewDate"
+    [events]="events"
+    (eventClicked)="eventClicked($event)">
+  </mwl-calendar-day-view>
+</div>-->
