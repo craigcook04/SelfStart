@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-physio-home',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './physio-home.component.html',
   styleUrls: ['./physio-home.component.css'],
   providers: [PhysioHomeService]
@@ -11,6 +13,11 @@ import { PhysioHomeService } from '../physio-home.service';
 export class PhysioHomeComponent implements OnInit {
 
   constructor(private router: Router, private physioHomeService: PhysioHomeService) { }
+  
+  view: string = 'month';
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
+  clickedDate: Date;
   
   activated: any;
   appointments: any[];

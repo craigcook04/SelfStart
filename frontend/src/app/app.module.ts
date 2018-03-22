@@ -49,6 +49,8 @@ import { RecoverAccountComponent } from './recover-account/recover-account.compo
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
+import { CommonModule } from '@angular/common';
+import { CalendarModule } from 'angular-calendar';
 
 @NgModule({
   declarations: [
@@ -97,7 +99,9 @@ import {AssessmentTestService} from './assessment-test.service';
     MatInputModule,
     NoopAnimationsModule,
     MatGridListModule,
-    MomentModule
+    MomentModule,
+    CommonModule,
+    CalendarModule.forRoot()
   ],
   providers: [PatientService, RehabPlansService, ExerciseService, DynamicFormsService, EmailService, NewClientService,UserAccountsService,ImageService, PhysiotherapistService, EncryptionService, AssessmentTestService],
   bootstrap: [AppComponent]

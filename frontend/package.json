@@ -25,6 +25,7 @@
     "@angular/router": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "@types/moment": "^2.13.0",
+    "angular-calendar": "^0.23.7",
     "angular-file-upload": "^2.5.0",
     "angular-font-awesome": "^3.1.2",
     "angular-ui-carousel": "^0.1.10",
