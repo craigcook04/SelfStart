@@ -47,7 +47,6 @@ export class NewClientComponent implements OnInit {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     })
-
   }
 
   GetProvinces(countryId: string) {
@@ -107,7 +106,9 @@ export class NewClientComponent implements OnInit {
     var repeatPasswordBox = document.getElementById('inputRepeatPassword').style.borderColor = 'rgba(0,0,0,.15)';
     var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'rgba(0,0,0,.15)';  
     var lastnameBox = document.getElementById('inputLastName').style.borderColor = 'rgba(0,0,0,.15)';  
-    var DOBBox = document.getElementById('inputDOB').style.borderColor = 'rgba(0,0,0,.15)';
+    var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'rgba(0,0,0,.15)';
+    var DOBBox = document.getElementById('inputmonthDOB').style.borderColor = 'rgba(0,0,0,.15)';
+    var DOBBox = document.getElementById('inputdayDOB').style.borderColor = 'rgba(0,0,0,.15)';
     var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'rgba(0,0,0,.15)';
     var firstnameBox = document.getElementById('inputGender').style.borderColor = 'rgba(0,0,0,.15)';   
     var countryBox = document.getElementById('inputCountry').style.borderColor = 'rgba(0,0,0,.15)';    
@@ -142,8 +143,12 @@ export class NewClientComponent implements OnInit {
     firstName = firstName.value;
     var lastName: any = document.getElementById('inputLastName');  
     lastName = lastName.value;
-    var DOB: any = document.getElementById('inputDOB');
-    DOB = DOB.value;
+    var yearDOB: any = document.getElementById('inputyearDOB');
+    yearDOB = yearDOB.value;
+    var monthDOB: any = document.getElementById('inputmonthDOB');
+    monthDOB = monthDOB.value;
+    var dayDOB: any = document.getElementById('inputdayDOB');
+    dayDOB = dayDOB.value;
     var postalCode: any = document.getElementById('inputPostalCode');
     postalCode = postalCode.value;
     var gender: any = document.getElementById('inputGender');   
@@ -197,8 +202,12 @@ export class NewClientComponent implements OnInit {
       cannotContinue = true;
     }
 
+    var DOB = yearDOB + '/' + monthDOB + '/' + dayDOB;
+    console.log(DOB);
     if(!DOB) {
-      var DOBBox = document.getElementById('inputDOB').style.borderColor = 'red';
+      var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'red';
+      var DOBBox2 = document.getElementById('inputmonthDOB').style.borderColor = 'red';
+      var DOBBox = document.getElementById('inputdayDOB').style.borderColor = 'red';
       this.invalidDOB = false;
       cannotContinue = true;
     }
@@ -247,12 +256,15 @@ export class NewClientComponent implements OnInit {
 
     document.body.style.cursor = "wait";
 
+
     var hashPassword = this.encryptionService.hash(password);
     var salt = this.encryptionService.GenSalt();
     var hashWithSalt = hashPassword + salt;
     var hashedPassAndSalt = this.encryptionService.hash(hashWithSalt);
     var encryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
+
     this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
+
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
@@ -266,7 +278,7 @@ export class NewClientComponent implements OnInit {
         //the user will be shown an error in the creation problem along the lines of there being a server problem.
         stepper.reset();
         var usernameBox = document.getElementById('inputUsername').style.borderColor = 'red';
-        this.newUsername = true;
+        this.invalidUsername = true;
       }
     })
   }

@@ -1,0 +1,43 @@
+.assessTest {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+  
+.center {
+    text-align: center;
+    padding-top: 2rem;
+    color: #0275d8;
+}
+
+.btns {
+    display: inline;
+    float: right;
+    margin-right: 5%;
+}
+
+.cont {
+    display:inline;
+}
+
+.dangeralrt {
+    height: 44px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    margin-left: 2.5rem;
+    margin-right: 10rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem; 
+    border-radius: 2.5px;
+    vertical-align: middle;
+}
+
+.failureMessage {
+    margin-left: 2.5em;
+    color: red;
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 44px;
+}

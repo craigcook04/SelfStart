@@ -193,18 +193,20 @@ router.route('/account/login')
            var inputPassEncryped = user.encrypt(hashedSaltPlusPass);
            var inputPassDecrypted = user.decrypt(inputPassEncryped);
            var hashedPassword = user.decrypt(user.encryptedPassword);
-           
+            
            if(inputPassDecrypted == hashedPassword) {
                if(user.needToChangePass == true) {
                    response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id});
+                   return;
                }
                else {
-                 response.send({success: true, changePass: false, message: "Congratulations you now verified"});
+                 response.send({success: true, changePass: false, message: "Congratulations you are now logged in"});
+                 return;
                }
            }
            
            else {
-               response.send({success: false, message: "Password is incorrect"});
+               response.send({success: false, incPass: true, message: "Password is incorrect"});
                return;
            }
 

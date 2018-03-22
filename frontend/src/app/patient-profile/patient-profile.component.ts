@@ -35,7 +35,7 @@ export class PatientProfileComponent implements OnInit {
   genders: Object[];
   ascendingOrd: boolean = true;
   cannotContinue: boolean = false;
-  
+
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
               private emailService: EmailService) { }
@@ -70,6 +70,11 @@ export class PatientProfileComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
 
+  SetDate(DOB: string) {
+    var textbox: any = document.getElementById('datepick');
+    textbox.value = DOB;
+    console.log(DOB);
+  }
   ResetErrorMessages() {
     //Reset all the error messages. Then new ones will be shown if some still exist
     var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'rgba(0,0,0,.15)';  

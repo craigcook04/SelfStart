@@ -34,11 +34,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label"><strong>Choose a Date</strong></label>
-                    <div class="col-10">
-                        <button class="form-control btn btn-lg btn-outline-secondary" value="Open Up Timetable" [routerLink]="['../bookappointement']" (click)="c('Close click');">Please Select From Available Dates</button>
-                    </div>
+                <div class="form-group row" >
+                    <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
+                    <!--<div class="col-10"></div>-->
+                        <!--<div style="overflow: auto; overflow-x:scroll;"></div>-->
+                    <div class="col-12"><app-appointments></app-appointments></div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label"><strong>Description</strong></label>
@@ -353,6 +353,6 @@
             <button type="button" class="btn btn-outline-primary" [disabled]="check3.checked != true" (click)="sendInitialInfoSheet(makeChanges)" (click)="c('Close click')">Book Initial Consultation</button>
             <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
         </div>
-</ng-template>
+        </ng-template>
 
 

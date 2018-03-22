@@ -54,10 +54,14 @@
 <div class="patients">
   <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
     <ngb-panel *ngFor="let patient of patients;">
-      <ng-template ngbPanelTitle>
-        <span (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)">{{patient.familyName}}, {{patient.givenName}}  ||  {{patient.email}}</span>
-        <button type="button" class="btn btn-secondary btn-sm" (click)="open(delete)" style="float: right;">Delete Client</button>
-        <button type="button" class="btn btn-primary btn-sm" (click)="open(update)" style="float: right; margin-right:10px;">Edit Client</button>
+      <ng-template ngbPanelTitle class="mypanel" >
+        <div class="form-group row mypanel" >
+            <label class="col-sm-2">{{patient.familyName}}, {{patient.givenName}}</label>
+            <label class="col-sm-3">{{patient.email}}</label>
+            <label class="col-sm-2">{{calculateAge(patient?.DOB)}} years old</label>
+            <label class="col-sm-3">{{patient?.phone}}</label>
+            <fa name="plus" class="plusbtn" (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)"></fa>
+        </div>
       </ng-template>
 
       <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->

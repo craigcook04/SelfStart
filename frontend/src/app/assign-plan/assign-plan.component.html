@@ -1,0 +1,138 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<br>
+<br>
+<div class="page">
+  <div class="row">
+    <div class="col-lg-6">
+      <mat-list>
+        <mat-list-item class="listItems" *ngFor="let plan of rehabPlans">
+            <button class="btn-block button" (click)="assignCurrentPlan(plan)">
+                <div class="row">
+                  <div class="col-sm-1">
+                      <i class="fa fa-columns"></i> &nbsp;
+                  </div>
+                  <div class="col-sm-5">
+                      <h5><b>Plan Name: </b> &nbsp; {{ plan?.name }} </h5>
+                  </div>
+                  <div class="col-sm-4">
+                      <b>Author:</b> &nbsp; {{ plan?.authorName }}
+                  </div>
+                </div>
+                <div class="divider">
+                  <mat-divider></mat-divider>
+                </div>
+              </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-lg-6">
+      <mat-card>
+          <mat-card-title>
+            <div>
+              <div >
+                <b> {{ currPlan?.name }}</b>
+              </div>
+              <mat-card-subtitle class="date">
+                  <b>Target Date: &nbsp; </b> 
+                  <time datetime="yyyy-MM-dd"> {{ currPlan?.timeFrameToComplete | date:'mediumDate' }} </time>
+              </mat-card-subtitle>
+              <div>
+              </div>
+            </div>
+          </mat-card-title>
+          <div class="divider2">
+            <mat-divider></mat-divider>
+          </div>
+          <br>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-2">
+                <b> Description: </b>
+              </div>
+              <div class="col-sm-10 descrip">
+                {{ currPlan?.description }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2">
+                <b>Goal: </b>
+              </div>
+              <div class="col-sm-10">
+                {{ currPlan?.goal }}
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <br>
+          <h6>
+            <b>Clients Currently using this Plan:</b>
+          </h6>
+          <mat-list class="currList">
+              <mat-list-item class="listItems" *ngFor="let client of clients">
+                  <button class="btn-block clientList">
+                      <div class="row">
+                        <div class="col-sm-1">
+                            <i class="fa fa-user"></i> &nbsp;
+                        </div>
+                        <div class="col-sm-6">
+                            <h5><b>Client: </b> &nbsp; {{ client?.familyName }}, {{ client?.givenName }} </h5>
+                        </div>
+                        <div class="pull-right delete">
+                            <i class="fa fa-times-circle" (click)="removePatient(client)"></i>
+                          </div>
+                      </div>
+                      <div class="divider">
+                        <mat-divider></mat-divider>
+                      </div>
+                  </button>
+              </mat-list-item>
+            </mat-list>
+            <br>
+            <br>
+            <br>
+            <div>
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+              </mat-form-field>
+              <mat-table [dataSource]="dataSource" class="searchList" matSort>
+                  <ng-container matColumnDef="name">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row?.name}} </mat-cell>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="plan">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Current Plan </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{ row?.plan }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef> Assign Current Plan </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> 
+                          <button class="btn block" mat-button (click)="assignPatientPlan(row?.id, currPlan)">
+                            Assign
+                          </button>
+                        </mat-cell>
+                      </ng-container>
+                
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+            <br>
+              <!-- <mat-card-footer>
+                  <div class="col-sm-12">
+                      <button mat-button class="btn btn-block md">
+                        <b>Add Patients to Plan</b>
+                      </button>
+                    </div>
+                    <br>
+              </mat-card-footer> -->
+      </mat-card>
+    </div>
+  </div>
+</div>

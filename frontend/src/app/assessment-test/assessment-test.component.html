@@ -2,106 +2,296 @@
 <!--  assessment-test works!-->
 <!--</p>-->
 <br><br>
-<div style="margin-left: 2em;">
-    
-    <button *ngIf="showCreat" type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>
-    <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
-        <p><b>Enter the name of the test: </b></p>
+<br>
+<mat-sidenav-container class="example-container">
 
-        <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+    <mat-sidenav #sidenav mode="side" opened="true" class="example-sidenav">
 
-        <hr>
-    </div>
-    <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
-        <p><b>Enter the description of the test: </b></p>
+        <!--<p style = "color: white; margin-left:10px;">client List</p>-->
+        <!--<br>-->
 
-        <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+        <mat-nav-list>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-list-item style = "background-color: #4169E1">
+                <br>
+                <b><p style="color:white;">Physiotherapist Dashboard</p></b>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-list-item style = "background-color: #4169E1">
+                <br>
+                <p style="color:white;">Home</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-list-item (click) = "enable();" style = "background-color: #4169E1">
+                <br>
+                <p style="color:white;">New Assessment Test</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-list-item (click) = "showTable();" style = "background-color: #4169E1">
+                <br>
+                <p style="color:white;">Manage Assessment Tests</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <!--<mat-list-item>-->
+            <!--    <br>-->
+            <!--    <p style="color:white;">Admin</p>-->
+            <!--</mat-list-item>-->
+            <!--<mat-divider></mat-divider>-->
+        </mat-nav-list>
+    </mat-sidenav>
 
-        <hr>
-    </div>
-    <ol>
-        <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
+    <mat-sidenav-content style="background-color: white;">
+        <br><br>
 
-            <label><b>{{question.questionText}}</b></label>
-            <ol>
-                <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
-                    <p>{{options}}</p>
-                </li>
-            </ol>
-            <hr>
-        </li>
-        
-    </ol>
-     
-    <br>
-    
-    
-    <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
-            <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
-            <button class="dropdown-item" (click)="changeRA();">Rating</button>
+        <!--<button type="button" class="btn btn-primary createbtn" (click)="enable()" style="margin-left: 2em;">Create New Assessment Test</button>-->
+        <!--<br><br><br>-->
+        <!--<button type="button" class="btn btn-primary createbtn" (click)="showTable()" style="margin-left: 2em;">Manage Tests</button>-->
+        <br><br><br>
+        <mat-card *ngIf="manageTests && showCreat" class="assessTest">
+            <div class="example-header">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+            </div>
+            <mat-table [dataSource]="tests" matSort>
+                <ng-container matColumnDef="Patient">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Rehab Plan Name </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.belongsTo?.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Plan Assigned">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Assigned </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date Created</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dateCreated}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Date Completed">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date completed</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dateCompleted}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <p *ngIf="row.completed" style="color: green">completed</p>
+                        <p *ngIf="!row.completed" style="color: red">incomplete</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="View Test Results">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button type="button" class="btn btn-primary createbtn" (click)="view(row)">view</button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <!--<mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>-->
+        </mat-card>
+
+        <div style="margin-left: 2em;">
+            <mat-card *ngIf="!showCreat" class="assessTest">
+                <div>
+                    <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
+                        <p><b>Enter the name of the test: </b></p>
+
+                        <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+                        <br>
+                        <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+
+                        <hr>
+                    </div>
+                    <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
+                        <p><b>Enter the description of the test: </b></p>
+
+                        <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+                        <br>
+                        <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+
+                        <hr>
+                    </div>
+                    <ol *ngIf="!showPatients">
+                        <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
+
+                            <label><b>{{question.questionText}}</b></label>
+                            <button class="btn btn-outline-primary" style="float: right;" (click)="deleteQuestion(question)">Remove Question</button>
+                            <ol>
+                                <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
+                                    <p>{{options}}</p>
+                                </li>
+                            </ol>
+                            <hr>
+                            <br><br><br>
+                        </li>
+
+                    </ol>
+
+                    <br><br>
+
+
+                    <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
+                        <br><br>
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
+                            <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
+                            <button class="dropdown-item" (click)="changeRA();">Rating</button>
+                        </div>
+                        <br><br>
+                        <!--<hr>-->
+                    </div>
+                    <br><br>
+
+                    <div *ngIf="shortAnswer" style="margin-left:2em; width:50%">
+                        <br><br>
+                        <p><b>Enter Your Short Answer Question</b></p>
+
+                        <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+                        <br>
+                        <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+                        <br><br>
+                        <hr>
+                    </div>
+                    <br><br><br>
+                    <div *ngIf="multipleChoice" style="width: 50%; margin-left: 2em;">
+                        <br><br>
+                        <p><b>Enter Your Multiple Choice Question</b></p>
+
+                        <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." style="margin-left: 2em; width: 50%; height: 100%" #newMAQuestion>
+
+                        <br><br>
+                        <div class="form-group row">
+                            <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
+                            <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...." style=" width: 50%; height: 100%; " #newOption>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
+                            <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." style=" width: 50%; height: 100%;" #newOption1>
+                        </div>
+                        <div *ngFor="let option of options" class="form-group row">
+                            <label for="inputOption2" class="col-sm-3 col-form-label">{{option}})</label>
+                            <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...." style="width: 50%; height: 100%;" #newOption2>
+                        </div>
+                        <br><br>
+                        <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+
+                        <button type="button" class="btn btn-primary createbtn" (click)="addOption();" style="margin-left: 2em; float: left;">Add Option</button>
+                        <br><br>
+                        <hr>
+                    </div>
+                    <br><br><br>
+                    <div *ngIf="rating" style="margin-left:2em; width: 50%;">
+                        <br><br>
+                        <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
+
+                        <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 50%; height: 100%" #newRAQuestion>
+                        <br><br>
+                        <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+                        <br><br>
+                        <hr>
+                    </div>
+                    <br><br><br>
+
+
+                    <div *ngIf="!showCreat" style="margin-left:2em; margin-top:2em; width:50%;">
+                        <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
+                    </div>
+                    <div *ngIf="!showCreat" style="margin-left:2em; margin-top:2em; width:50%;">
+                        <button type="button" class="btn btn-primary createbtn" (click)="open(askIfAssign);" style="margin-left: 2em; background-color: green;">Save Plan</button>
+                    </div>
+                </div>
+
+                <ng-template #askIfAssign let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Assigning a test to a rehab plan allows that patient who is assigned to that plan to answer the questions on this test. Is that something you would like to do?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPlans();  c('Close click')">Yes</button>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest(); showTable(); ">No</button>
+                        <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
+                    </div>
+                </ng-template>
+            </mat-card>
+            <div *ngIf="showPatients">
+                <mat-card class="assessTest">
+                    <div class='blockContainer'>
+
+                        <div class="right">
+                            <div class="input-group mb-3 searchbar" id="custom-search-input">
+                                <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, 'givenName')" placeholder="Search term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+                                <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, 'givenName')"  location="top" ngbTooltip="Search">
+                              <fa name="search"></fa>
+                            </button>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                    <br> <br><br> <br> <br>
+
+                    <button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, 'givenName');">Next Page</button>
+                    <button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, 'givenName');">Previous Page</button>
+                    <!--<button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">-->
+                    <!--    <i class="material-icons">refresh</i>-->
+                    <!--</button>-->
+
+                    <h2>Assign Test To:</h2>
+                    <mat-selection-list #clientsList>
+                        <mat-list-option *ngFor="let client of clients" value="{{client._id}}">
+                            {{client.name}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <br><br>
+                    <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected); showTable();" style="margin-left: 2em; float: right;">Assign Test</button>
+                    <br><br><br><br>
+                </mat-card>
+                <br><br><br><br>
+
+
+            </div>
+
         </div>
-        <br><br>
-        <!--<hr>-->
-    </div>
-    <br><br><br>
+        <div *ngIf="viewDetails">
+            <mat-card class="assessTest">
+                <div class="center">
+                    <h2 style="color: #0275d8;">{{selectedPlan.name}}</h2>
+                    <br>
+                    <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
+                    <br>
+                    <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.name}}</h5>
+                </div>
+                <br><br><br>
+                <ol>
+                    <li *ngFor="let question of selectedPlan.questions">
+                        <div>
+                            <p><b>Question: </b>{{question.questionText}}</p>
+                        </div>
+                        <div>
+                            <p><b>Answer: </b>{{question.answer}}</p>
+                        </div>
+                    </li>
 
-    <div *ngIf="shortAnswer" style="margin-left:2em; width:50%">
-        <p><b>Enter Your Short Answer Question</b></p>
+                </ol>
 
-        <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-        <br><br>
-        <hr>
-    </div>
-    <div *ngIf="multipleChoice" style="width: 50%; margin-left: 2em;">
-        <p><b>Enter Your Multiple Choice Question</b></p>
+                <br><br>
 
-        <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." style="margin-left: 2em; width: 50%; height: 100%" #newMAQuestion>
+                <button class="btn btn-primary createbtn" (click) = "showTable();">Assign Followup</button>
+                <button class="btn btn-primary createbtn" (click) = "showTable();">Close Treatment</button>
 
-        <br><br>
-        <div class="form-group row">
-            <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
-            <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...." style=" width: 50%; height: 100%; " #newOption>
+            </mat-card>
+
         </div>
-        <div class="form-group row">
-            <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
-            <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." style=" width: 50%; height: 100%;" #newOption1>
-        </div>
-        <div *ngFor="let option of options" class="form-group row">
-            <label for="inputOption2" class="col-sm-3 col-form-label">{{option}})</label>
-            <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...." style="width: 50%; height: 100%;" #newOption2>
-        </div>
-        <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
 
-        <button type="button" class="btn btn-primary createbtn" (click)="addOption();" style="margin-left: 2em; float: left;">Add Option</button>
-        <br><br>
-        <hr>
-    </div>
-    <div *ngIf="rating" style="margin-left:2em; width: 50%;">
-        <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
 
-        <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 50%; height: 100%" #newRAQuestion>
-        <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-        <br><br>
-        <hr>
-    </div>
 
-    
-    <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
-        <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
-    </div>
-    <div *ngIf = "!showCreat" style="margin-left:2em; width:50%;" >
-        <button type="button" class="btn btn-primary createbtn" (click)="createTest();" style="margin-left: 2em; background-color: green;">Save Plan</button>
-    </div>
-    <br><br><br><br>
-</div>
+        <br><br><br><br>
+        </mat-sidenav-content>
+    </mat-sidenav-container>

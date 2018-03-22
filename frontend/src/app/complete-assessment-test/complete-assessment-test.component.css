@@ -1,0 +1,43 @@
+
+
+.myta {
+    margin-left: 2rem;
+    width: 600px;
+}
+
+.star {
+    font-size: 2rem;
+    color: #b0c4de;
+}
+
+.filled {
+    color: #1e90ff;
+}
+
+.assessTest {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.mcchoices {
+    margin-left: 1rem; 
+    vertical-align: middle; 
+    margin-right:5px;
+}
+
+.mctext {
+    display: inline-block;
+    vertical-align: middle; 
+    margin-right:5px;
+}
+
+.ratingstars {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
