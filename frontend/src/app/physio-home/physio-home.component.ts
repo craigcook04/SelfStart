@@ -45,21 +45,22 @@ export class PhysioHomeComponent implements OnInit {
   viewDate: Date = new Date();
   //events: CalendarEvent[] = [];
   //clickedDate: Date;
-  events$: Observable<Array<CalendarEvent<{ appointment: Appointment }>>>;
-  activeDayIsOpen: boolean = false;
+  
+  //events$: Observable<Array<CalendarEvent<{ appointment: Appointment }>>>;
+  //activeDayIsOpen: boolean = false;
 
   
   //events: any;
   //items: Array<CalendarEvent<{ time: any }>> = [];
   
   ngOnInit() {
-    //this.appointments = [];
+    this.appointments = [];
      this.physioHomeService.getAppointments().subscribe(data =>{
-      //console.log(data);
-      //var retObj:any = data;
-      //this.appointments = retObj.appointment;
-      //console.log(this.appointments);
-        for(let i=0; i<appointment.data.length; i++) {
+      console.log(data);
+      var retObj:any = data;
+      this.appointments = retObj.appointment;
+      console.log(this.appointments);
+        /*for(let i=0; i<appointment.data.length; i++) {
           this.items.push(
           {
             title: appointment.data[i].name,
@@ -70,11 +71,11 @@ export class PhysioHomeComponent implements OnInit {
             }
           });
           this.events = this.items;
-        }
+        }*/
     });
   }
   
-  dayClicked({
+  /*dayClicked({
     date,
     events
   }: {
@@ -92,7 +93,7 @@ export class PhysioHomeComponent implements OnInit {
         this.viewDate = date;
       }
     }
-  }
+  }*/
   
   show(appointment: any){
     if(this.activated == appointment){
