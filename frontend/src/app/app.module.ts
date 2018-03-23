@@ -46,6 +46,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'angular2-moment/moment.module';
+import { PhysioHomeComponent } from './physio-home/physio-home.component';
 import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
 import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
@@ -56,7 +57,9 @@ import { AppointmentsService } from './appointments.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
-
+import { CommonModule } from '@angular/common';
+import { CalendarModule } from 'angular-calendar';
+import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
@@ -80,6 +83,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     NewClientComponent,
     ClientsOfTherapistComponent,
     AppointmentsComponent,
+    PhysioHomeComponent,
     ClientExerciseComponent,
     LoginComponent,
     ForgottenPasswordComponent,
@@ -115,6 +119,9 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
+    CommonModule,
+    CalendarModule.forRoot(),
+    DemoUtilsModule,
     MatRadioModule,
     MatNativeDateModule,
     MatDatepickerModule,
