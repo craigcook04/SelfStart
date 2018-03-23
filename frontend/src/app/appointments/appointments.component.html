@@ -6,9 +6,9 @@
       <div style="width: 100%;">
       <button class="btn btn-sm btn-outline-secondary mr-0" type="button" (click)="prevWeek(); refreshCalendar();"><fa name="arrow-left"></fa></button>
       <button class="btn btn-sm btn-outline-secondary mx-0" type="button" (click)="nextWeek(); refreshCalendar();"><fa name="arrow-right"></fa></button>
-      <br>
-      <button class="btn btn-sm btn-outline-secondary mr-0 mt-1" type="button" (click)="saveAppointment(); refreshCalendar();"><fa name="save"></fa></button>
-      <button class="btn btn-sm btn-outline-secondary ml-0 mt-1" type="button" (click)="cancelSelection();"><fa name="times"></fa></button>
+      <!--<br>-->
+      <!--<button class="btn btn-sm btn-outline-secondary mr-0 mt-1" type="button" (click)="saveAppointment(); refreshCalendar();"><fa name="save"></fa></button>-->
+      <!--<button class="btn btn-sm btn-outline-secondary ml-0 mt-1" type="button" (click)="cancelSelection();"><fa name="times"></fa></button>-->
       </div>
     </div>
   </div>
@@ -116,9 +116,8 @@
             </tr>
         </table>
       </div>
-      <!--<div class="saveAppt">-->
-      <!--  <button class="btn btn-sm btn-primary" (click)="saveAppointment(); refreshCalendar();">Save</button>-->
-      <!--  <button class="btn btn-sm btn-secondary" (click)="cancelSelection();">Cancel</button>-->
-      <!--</div>-->
+      <div class="liveDate">
+        <p>Selected Date: {{ formattedLiveDate }}</p>
+      </div>
     </div>
 </div>

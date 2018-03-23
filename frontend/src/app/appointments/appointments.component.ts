@@ -17,6 +17,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   dateSelected: any;
   currentWeek = 0;
   currentlyHighlighted: any;
+  previouslyHighlighted: any[];
   isSelected: any;
   bookedDates: any[];
   timeIndex: any; 
@@ -28,6 +29,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   toCancel: any;
   selectedWeek: any;
   isSaved: any;
+  edgePage: any;
+  formattedLiveDate: any;
 
 
   constructor(private modalService: NgbModal,
@@ -52,9 +55,11 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   }
   
   
-  
+  //this gets called when a time slot is clicked
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
     var notTaken = true;
+    
+    
     //make sure they havnt selected more than one date
     if(!(this.isSelected)){
       //make sure the date they chose isnt already booked
@@ -63,6 +68,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           notTaken = false;
         }
       }
+      
+      
       //if booking is okay...
       if(notTaken){
         this.isSelected = true; //If one is selected they cant select another
@@ -70,8 +77,10 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         this.dayIndex = day;
         // day = Number(day) - 1;
         this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
+        this.formattedLiveDate = moment(this.currentlyHighlighted).format("dddd, MMMM Do YYYY, h:mm a");
         //console.log(this.currentlyHighlighted);
         var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
+        this.previouslyHighlighted = highlighted;
         this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
         this.selectedWeek = this.currentWeek;
         
@@ -90,11 +99,62 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       }else{
         console.log("sorry, slot is already booked by another client");
       }
-    }else{
+    }else{ //this will have to change the current selection to a new one
       console.log("sorry, slot is already chosen");
+      //make sure the date they chose isnt already booked
+      for(var i = 0; i<this.currentlyFilled.length; i++){
+        if(this.currentlyFilled[i] == ("slot"+day+indx)){
+          notTaken = false;
+        }
+      }
+      
+      //if booking is okay...
+      if(notTaken){
+        this.timeIndex = indx; //keeping variable with selected index
+        this.dayIndex = day;
+        // day = Number(day) - 1;
+        this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
+        this.formattedLiveDate = moment(this.currentlyHighlighted).format("dddd, MMMM Do YYYY, h:mm a");
+        //console.log(this.currentlyHighlighted);
+        var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
+        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
+        this.selectedWeek = this.currentWeek;
+        
+        if(this.previouslyHighlighted[0] == "slot035" || this.previouslyHighlighted[0] == "slot135" || this.previouslyHighlighted[0] == "slot235" || this.previouslyHighlighted[0] == "slot335" ||this.previouslyHighlighted[0] == "slot435" ||this.previouslyHighlighted[0] ==  "slot535" ||this.previouslyHighlighted[0] == "slot635" || this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"){
+          if(this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"){
+            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          }else{
+          document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          }
+        }else{
+        document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+        }
+        this.previouslyHighlighted = highlighted;
+        
+        if(indx > 34){
+          if(indx == 35){
+            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          }else{
+            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          }
+        }else{
+          document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+          document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+        }
+      }else{
+        console.log("sorry, slot is already booked by another client");
+      }
+      
     }
   }
   
+  
+  //we ended up taking this feature out to simplify the user exp.
   cancelSelection(){
     
     if(this.isSelected){
@@ -214,6 +274,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     }
   }
   
+  //we ended up taking this feature out to simplify the user exp.
   //this is the function ive made for submitting a selection
   saveAppointment(){
     if(this.isSelected){
