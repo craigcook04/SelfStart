@@ -16,6 +16,8 @@
   </div>
   <br>
 </div>
+<br><br>
+<button class="button" style="vertical-align:middle" (click)="goToCalendar()"><span>Monthly Calendar</span></button>
 <div id="mySidenav" class="sidenav">
   <a id=exercise (click)="goToExercises()">Manage Exercises</a>
   <a id=patient (click)="goToPatients()">Manage Client Profiles</a>
@@ -24,9 +26,9 @@
   <a id=report (click)="goToReports()">Generate Client Reports</a>
 </div>
 
-<br>
+<!--<br>
 
-<!--<mwl-demo-utils-calendar-header
+<mwl-demo-utils-calendar-header
   [(view)]="view"
   [(viewDate)]="viewDate">
 </mwl-demo-utils-calendar-header>

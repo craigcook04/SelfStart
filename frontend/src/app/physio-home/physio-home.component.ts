@@ -120,4 +120,7 @@ export class PhysioHomeComponent implements OnInit {
   goToReports(){
     
   }
+  goToCalendar(){
+    this.router.navigate(['../calendar']);
+  }
 }
