@@ -24,11 +24,21 @@ export class RehabPlansComponent implements OnInit {
   rehabPlans: Object[];
   exercise: Object[];
   allExercises: Object[];
+  currPlan: any;
+  exercisesInCurrPlan: any =[];
 
   ngOnInit() {
     this.rehabPlansService.getPlans().subscribe(data => {
       console.log(data);
-      this.rehabPlans = Object.assign([], data.rehabPlans)
+      this.rehabPlans = Object.assign([], data.rehabPlans);
+      this.currPlan = this.rehabPlans[0];
+     // exercisesInCurrPlan = this.currPlan.exerciseObjects;
+    });
+     this.exerciseService.GetAllExercises().subscribe(data =>{
+      var retObj: any = data;
+      console.log(data);
+      this.allExercises = Object.assign([], retObj.exercise);
+      
     });
   }
   
@@ -67,7 +77,12 @@ export class RehabPlansComponent implements OnInit {
     console.log(body);
     this.rehabPlansService.CreatePlan(body).subscribe(data =>{
       console.log(data);
-      window.location.reload();
+      //window.location.reload();
+      
+    this.rehabPlansService.getPlans().subscribe(data => {
+      console.log(data);
+      this.rehabPlans = Object.assign([], data.rehabPlans)
+    });
     });
    
   }
@@ -96,19 +111,43 @@ export class RehabPlansComponent implements OnInit {
     this.router.navigate(['../adminhome']);
   }
   
-  addExercise( exerciseToBeAdded: any, ID: string){
+  addExercise( exerciseToBeAdded: any){
     console.log("in comp.");
-    this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
-      var retObj: any = data;
-      console.log(retObj);
-      window.location.reload();
-    });
+    console.log(exerciseToBeAdded);
+    var flag = true;
+    console.log(this.exercisesInCurrPlan);
+    for (var i =0; i<this.exercisesInCurrPlan.length; i++){
+      if(this.exercisesInCurrPlan[i]._id == exerciseToBeAdded._id){
+        flag = false;
+        console.log(flag);
+      }
+    }
+    console.log(this.exercisesInCurrPlan.indexOf(exerciseToBeAdded));
+    var ID = this.currPlan._id;
+    if (flag == false){
+      this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
+        var retObj: any = data;
+        console.log(retObj);
+      // window.location.reload();
+        this.rehabPlansService.getPlans().subscribe(data => {
+          console.log(data);
+          this.rehabPlans = Object.assign([], data.rehabPlans)
+        });
+        this.exercisesInCurrPlan.push(exerciseToBeAdded);
     
+      });
+    }
+    this.allExercises.splice(this.allExercises.indexOf(exerciseToBeAdded),1)
   }
   removePlan(ID: string){
     this.rehabPlansService.removePlan(ID).subscribe(data => {
       console.log(data);
-      window.location.reload();
+      this.rehabPlansService.getPlans().subscribe(data => {
+        console.log(data);
+        this.rehabPlans = Object.assign([], data.rehabPlans)
+      });
+    
+      //window.location.reload();
     });
     
     
@@ -122,20 +161,48 @@ export class RehabPlansComponent implements OnInit {
     plan.timeFrameToComplete = newTimeFrame;
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
-      window.location.reload();
+      //window.location.reload();
+      this.rehabPlansService.getPlans().subscribe(data => {
+        console.log(data);
+        this.rehabPlans = Object.assign([], data.rehabPlans)
+      });
+    
+      
     });
     
   }
-  removeExercise(exer: any, plan: any){
+  removeExercise(exer: any){
     console.log("in the component")
-    console.log(plan.exerciseObjects.indexOf(exer));
-    plan.exerciseObjects.splice(plan.exerciseObjects.indexOf(exer),1);
-    console.log(plan.exerciseObjects);
-    this.rehabPlansService.updatePlan(plan).subscribe(data =>{
+    console.log(this.currPlan.exerciseObjects.indexOf(exer));
+    this.currPlan.exerciseObjects.splice(this.currPlan.exerciseObjects.indexOf(exer),1);
+    console.log(this.currPlan.exerciseObjects);
+    this.rehabPlansService.updatePlan(this.currPlan).subscribe(data =>{
       console.log(data)
-      window.location.reload();
+      //window.location.reload();
+      
+      this.rehabPlansService.getPlans().subscribe(data => {
+        console.log(data);
+        this.rehabPlans = Object.assign([], data.rehabPlans)
+      });
     });
-    
+    this.exercisesInCurrPlan = this.currPlan.exerciseObjects;
+    this.allExercises.push(exer);
     
   }
+  
+  viewPlan(plan:any){
+    this.currPlan = plan;
+    
+    
+    this.exercisesInCurrPlan = this.currPlan.exerciseObjects;
+    
+    this.exerciseService.GetAllExercises().subscribe(data =>{
+      var retObj: any = data;
+      console.log(data);
+      this.allExercises = Object.assign([], retObj.exercise);
+    });
+  
+    
+    
+  } 
 }
