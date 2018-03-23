@@ -2,12 +2,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
 import { CalendarEvent } from 'angular-calendar';
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-physio-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './physio-home.component.html',
-  styleUrls: ['./physio-home.component.css'],
+  styleUrls: ['./physio-home.component.css', '../../../node_modules/angular-calendar/css/angular-calendar.css'],
+  encapsulation: ViewEncapsulation.None,
   providers: [PhysioHomeService]
 })
 export class PhysioHomeComponent implements OnInit {
@@ -33,7 +35,7 @@ export class PhysioHomeComponent implements OnInit {
   }
   show(appointment: any){
     if(this.activated == appointment){
-      this.activated =null;
+      this.activated = null;
     }
     else{
       this.activated = appointment;

@@ -59,7 +59,7 @@ import { AssessmentTestComponent } from './assessment-test/assessment-test.compo
 import {AssessmentTestService} from './assessment-test.service';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from 'angular-calendar';
-
+import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
@@ -120,7 +120,8 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatGridListModule,
     MomentModule,
     CommonModule,
-    CalendarModule.forRoot()
+    CalendarModule.forRoot(),
+    DemoUtilsModule,
     MatRadioModule,
     MatNativeDateModule,
     MatDatepickerModule,
