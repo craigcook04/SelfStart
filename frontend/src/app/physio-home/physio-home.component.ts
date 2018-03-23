@@ -114,7 +114,7 @@ export class PhysioHomeComponent implements OnInit {
     this.router.navigate(['../rehabplans']);
   }
   goToTests(){
-    
+    this.router.navigate(['../assessmentTest']);
   }
   goToReports(){
     
