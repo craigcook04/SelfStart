@@ -53,24 +53,24 @@ export class PhysioHomeComponent implements OnInit {
   //items: Array<CalendarEvent<{ time: any }>> = [];
   
   ngOnInit() {
-    this.appointments = [];
+    //this.appointments = [];
      this.physioHomeService.getAppointments().subscribe(data =>{
-      console.log(data);
-      var retObj:any = data;
-      this.appointments = retObj.appointment;
-      console.log(this.appointments);
-        /*for(let i=0; i<res.data.length; i++) {
+      //console.log(data);
+      //var retObj:any = data;
+      //this.appointments = retObj.appointment;
+      //console.log(this.appointments);
+        for(let i=0; i<appointment.data.length; i++) {
           this.items.push(
           {
-            title: res.data[i].name,
-            start: new Date(res.data[i].date),
-            color: {colors.blue},
+            title: appointment.data[i].name,
+            start: new Date(appointments.data[i].date),
+            color: colors.blue,
             meta: {
-              time: res.data[i].date
+              time: appointments.data[i].date
             }
           });
           this.events = this.items;
-        }*/
+        }
     });
   }
   
