@@ -7,26 +7,28 @@
 <div class="page">
   <div class="row">
     <div class="col-lg-6">
-      <mat-list>
-        <mat-list-item class="listItems" *ngFor="let plan of rehabPlans">
-            <button class="btn-block button" (click)="assignCurrentPlan(plan)">
-                <div class="row">
-                  <div class="col-sm-1">
-                      <i class="fa fa-columns"></i> &nbsp;
+      <mat-card>
+        <mat-list>
+          <mat-list-item class="listItems" *ngFor="let plan of rehabPlans">
+              <button class="btn-block button" (click)="assignCurrentPlan(plan)">
+                  <div class="row">
+                    <div class="col-sm-1">
+                        <i class="fa fa-columns"></i> &nbsp;
+                    </div>
+                    <div class="col-sm-5">
+                        <h5><b>Plan Name: </b> &nbsp; {{ plan?.name }} </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <b>Author:</b> &nbsp; {{ plan?.authorName }}
+                    </div>
                   </div>
-                  <div class="col-sm-5">
-                      <h5><b>Plan Name: </b> &nbsp; {{ plan?.name }} </h5>
+                  <div class="divider">
+                    <mat-divider></mat-divider>
                   </div>
-                  <div class="col-sm-4">
-                      <b>Author:</b> &nbsp; {{ plan?.authorName }}
-                  </div>
-                </div>
-                <div class="divider">
-                  <mat-divider></mat-divider>
-                </div>
-              </button>
-        </mat-list-item>
-      </mat-list>
+                </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
     </div>
     <div class="col-lg-6">
       <mat-card>
@@ -121,7 +123,7 @@
                     <mat-row *matRowDef="let row; columns: displayedColumns;">
                     </mat-row>
                 </mat-table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, searchArea.value, $event)"></mat-paginator>
             </div>
             <br>
               <!-- <mat-card-footer>

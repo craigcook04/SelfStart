@@ -3,6 +3,7 @@ import { RehabPlansService } from '../rehab-plans.service';
 import { PatientService } from '../patient.service';
 import { Router } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { PageEvent } from '@angular/material';
 
 
 @Component({
@@ -19,6 +20,12 @@ export class AssignPlanComponent implements OnInit {
   exercises: any [];
   displayedColumns = ['name', 'plan', 'actions'];
   dataSource: MatTableDataSource<Client>;
+  offset = 0;
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25, 100];
+  pageEvent: PageEvent;
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -83,6 +90,18 @@ export class AssignPlanComponent implements OnInit {
       obj = data;
       this.clientList.push(createClient(obj.patient));
       this.dataSource = new MatTableDataSource(this.clientList);
+    })
+  }
+
+  SetOffset( searchValue: string, searchArea: string, event: PageEvent){
+    this.offset = event.pageIndex;
+    this.pageSize = event.pageSize;
+
+    this.patientService.SearchPatient(searchValue, searchArea, this.offset, this.pageSize).subscribe(data =>{
+      if(data != []){
+        var obj: any = data;
+        this.exercises = obj.docs;
+      }
     })
   }
 
