@@ -41,4 +41,10 @@ export class RehabPlansService {
     var url = '/api/rehabPlans?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
     return this.http.get(url);
   }
+  
+  removeClientFromPlan(ID: string){
+    var url = 'api/patient/unassignPlan' + ID;
+    return this.http.put(url, "");
+  }
+  
 }

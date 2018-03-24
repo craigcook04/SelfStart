@@ -1,6 +1,9 @@
 <br>
 <br>
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
 <!--<h2>Rehabilitation Plans</h2>-->
 <!--<div class="input-group mb-3 searchbar" id="custom-search-input">-->
@@ -75,7 +78,7 @@
     <div class="row">
         <div class="col-lg-6">
             <mat-card>
-                <mat-card-title>Current Rehab Plans</mat-card-title>
+                <mat-card-title style="color: #0275d8;">Current Rehab Plans</mat-card-title>
                 <mat-card-content>
                     <br><br>
                     <mat-form-field>
@@ -91,7 +94,7 @@
                                   </div>
                                   <br><br>
                                   <div class="col-sm-5">
-                                      <h5><b>Plan Name: </b> &nbsp; {{ plan?.name }} </h5>
+                                      <h5 style = "color: #0275d8; "> &nbsp; {{ plan?.name }} </h5>
                                   </div>
                                   <div class="col-sm-4">
                                       <b>Author:</b> &nbsp; {{ plan?.authorName }}
@@ -105,9 +108,7 @@
                             </div>
                         </mat-list-item>
                     </mat-list>
-                    <mat-paginator [pageSizeOptions]="[10]"
-                                   [length] = "total"
-                                   (page) = "switchPage($event, searchString.value);"></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[10]" [length]="total" (page)="switchPage($event, searchString.value);"></mat-paginator>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -116,7 +117,7 @@
                 <mat-card-title>
                     <div>
                         <div>
-                            <b> {{ currPlan?.name }}</b>
+                            <b style="color: #0275d8;"> {{ currPlan?.name }}</b>
                         </div>
                         <mat-card-subtitle class="date">
                             <b>Target Date: &nbsp; </b>
@@ -125,7 +126,10 @@
                         <div>
                         </div>
                     </div>
+                    <i class="fa fa-edit" style="color: #0275d8;" (click)="open(editPlan)"></i>
+                    <i class="fa fa-trash" style="color:red;" (click) = "open(delete)"></i>
                 </mat-card-title>
+
                 <div class="divider2">
                     <mat-divider></mat-divider>
                 </div>
@@ -151,7 +155,7 @@
                 <mat-divider></mat-divider>
                 <br>
                 <h6>
-                    <b>Exercises Currently using this Plan:</b>
+                    <b style="color: #0275d8;">Exercises Currently using this Plan:</b>
                 </h6>
                 <mat-list class="currList">
                     <mat-list-item class="listItems" *ngFor="let exercise of exercisesInCurrPlan">
@@ -178,7 +182,7 @@
                 <br>
                 <div>
                     <h6>
-                        <b>Select Exercises you wish to add</b>
+                        <b style="color: #0275d8;">Select Exercises you wish to add</b>
                     </h6>
                     <mat-selection-list>
                         <mat-list-option *ngFor="let exercise of allExercises" (click)="addExercise(exercise, searchString.value)">
@@ -226,6 +230,76 @@
                     <br>
               </mat-card-footer> -->
             </mat-card>
+            <ng-template #editPlan let-c="close" let-d="dismiss">
+                <div class="modal-header" style="text-align: center;">
+                    <h4 class="modal-title">Edit plan "{{currPlan.name}}"</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+
+                        <div class="form-group row">
+                            <label for="inputFirstName" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputFirstName" placeholder="Name" value="{{currPlan.name}}" #newName>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="description" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="description" placeholder="Description" value="{{currPlan.description}}" #description>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputFirstName" class="col-sm-3 col-form-label">Author Name </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputFirstName" placeholder="Author Name" value="{{currPlan.authorName}}" #newAuthorName>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputFirstName" class="col-sm-3 col-form-label">Goal</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputFirstName" placeholder="Goal" value="{{currPlan.goal}}" #newGoalName>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputFirstName" class="col-sm-3 col-form-label">Completion Date</label>
+                            <div class="col-sm-9">
+                                <div class="calFormat">
+                                    <input class="form-control" placeholder="Date (YYYY-MM-DD)" value="{{currPlan.timeFrameToComplete}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newTimeFrame>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                              </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm align-left" (click)="c('Close click'); editThePlan(currPlan, newName.value, newAuthorName.value, newGoalName.value, newTimeFrame.value, description.value, searchString.value);">Confirm</button>
+                        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                    </div>
+
+                </div>
+            </ng-template>
+            <ng-template #delete let-c="close" let-d="dismiss">
+                <div class="modal-header" style="text-align: center;">
+                    <h4 class="modal-title">Are you sure you want to remove {{currPlan.name}}?</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
+                         <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); removePlan(searchString.value);">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+
+                </div>
+            </ng-template>
+
         </div>
     </div>
 </div>
+<br><br><br><br>

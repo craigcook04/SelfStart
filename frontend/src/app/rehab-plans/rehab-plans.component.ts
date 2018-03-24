@@ -138,20 +138,26 @@ export class RehabPlansComponent implements OnInit {
     }
     this.allExercises.splice(this.allExercises.indexOf(exerciseToBeAdded),1)
   }
-  removePlan(ID: string){
+  removePlan(searchString){
+    var ID = this.currPlan._id;
     this.rehabPlansService.removePlan(ID).subscribe(data => {
       console.log(data);
-      this.rehabPlansService.getPlans().subscribe(data => {
-        console.log(data);
-        this.total =data.total;
-        this.rehabPlans = Object.assign([], data.docs)
+     this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+          var retObj : any = data;
+          this.total = retObj.total;
+          this.rehabPlans = Object.assign([], retObj.docs);
+          this.currPlan = this.rehabPlans[0];
+      
       });
     
+    });
+    this.rehabPlansService.removeClientFromPlan(ID).subscribe(data => {
+      console.log(data);
     });
     
     
   }
-  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date, newDescription: string){
+  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date, newDescription: string, searchString){
     console.log("in the function");
     plan.name = newName;
     plan.authorName = newAuthorName;
@@ -161,9 +167,10 @@ export class RehabPlansComponent implements OnInit {
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       //window.location.reload();
-      this.rehabPlansService.getPlans().subscribe(data => {
-        console.log(data);
-        this.rehabPlans = Object.assign([], data.rehabPlans)
+      this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+          var retObj : any = data;
+          this.rehabPlans = Object.assign([], retObj.docs);
+      
       });
     
       
