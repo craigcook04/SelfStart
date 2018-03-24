@@ -44,7 +44,7 @@ export class ClientExerciseComponent implements OnInit {
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
     this.exerciseService.GetAllExercises().subscribe(data =>{
-      this.exercises = data.exercise;
+      this.exercises = data.docs;
       console.log(this.exercises);
       this.currExercise = this.exercises[0];
       console.log(this.currExercise);
@@ -108,7 +108,11 @@ export class ClientExerciseComponent implements OnInit {
     var vert = 0;
     doc.text( 30, 30, "Images:");
     this.images.forEach(image => {
-      var imgData = 'data:image/png;base64,' + image.data;
+      console.log(image.type);
+
+      if(image.type == 'PNG'){ var imgData = 'data:image/png;base64,' + image.data;}
+      if(image.type == 'JPG'){ var imgData = 'data:image/jpg;base64,' + image.data;}
+
       if(vert == 0){
         vert = 40;
       }
