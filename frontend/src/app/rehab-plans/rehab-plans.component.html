@@ -1,7 +1,3 @@
-<br>
-<br>
-
-
 <h2>Rehabilitation Plans</h2>
 <div class="input-group mb-3 searchbar" id="custom-search-input">
     <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
@@ -81,11 +77,10 @@
                 <button type="button" class="btn btn-secondary btn-sm" (click)="open(deletePlan)" style="float: right;">Delete</button>
                 <button type="button" class="btn btn-primary btn-sm" (click)="open(editPlan)" style="float: right; margin-right:10px;">Edit</button>
             </ng-template>
-
-            <ng-template #deletePlan let-c="close" let-d="dismiss">
-                <div class="modal-header" style="text-align: center;">
-                    <h4 class="modal-title">Delete plan "{{rehabPlan.name}}"</h4>
-
+            
+             <ng-template #deletePlan let-c="close" let-d="dismiss">
+                    <div class="modal-header" style = "text-align: center;">
+                        <h4 class="modal-title" >Delete "{{rehabPlan.name}}"</h4>
                     <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -98,10 +93,10 @@
                     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
                 </div>
             </ng-template>
-
-            <ng-template #editPlan let-c="close" let-d="dismiss">
-                <div class="modal-header" style="text-align: center;">
-                    <h4 class="modal-title">Edit plan "{{rehabPlan.name}}"</h4>
+           
+           <ng-template #editPlan let-c="close" let-d="dismiss">
+                    <div class="modal-header" style = "text-align: center;">
+                        <h4 class="modal-title" >Edit "{{rehabPlan.name}}"</h4>
                     <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -118,7 +113,7 @@
                         <div class="form-group row">
                             <label for="description" class="col-sm-3 col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="description" placeholder="Description" #description>
+                                <input type="text" class="form-control" id="description" placeholder="Description" value="{{rehabPlan.description}}" #description>
                             </div>
                         </div>
                         <div class="form-group row">

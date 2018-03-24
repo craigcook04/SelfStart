@@ -18,6 +18,7 @@ import {NewClientComponent} from './new-client/new-client.component';
 import{ BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import {ClientsOfTherapistComponent} from './clients-of-therapist/clients-of-therapist.component';
 import {AppointmentsComponent} from './appointments/appointments.component';
+import { PhysioHomeComponent } from './physio-home/physio-home.component';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { RecoverAccountComponent } from './recover-account/recover-account.component' ;
@@ -43,17 +44,19 @@ const routes: Routes = [
   {path: 'signup', component: NewClientComponent},
   {path: 'bookappointment', component: BookAppointmentComponent},
   {path: 'useraccounts', component:UserAccountsComponent},
-  {path: 'signup', component: NewClientComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
   {path: 'bookappointement', component: AppointmentsComponent},
+  {path: 'physiohome', component: PhysioHomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmentTest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
+
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
+
 ];
 
 @NgModule({

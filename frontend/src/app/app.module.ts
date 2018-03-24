@@ -27,7 +27,9 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule, MatDialogModule, MatButtonToggleModule, MatTableModule, MatPaginatorModule } from '@angular/material'; 
+
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule} from '@angular/material'; 
+
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -42,7 +44,9 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'angular2-moment/moment.module';
+import { PhysioHomeComponent } from './physio-home/physio-home.component';
 import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
 import { EncryptionService } from './encryption.service';
 import { LoginComponent } from './login/login.component';
@@ -53,7 +57,9 @@ import { AppointmentsService } from './appointments.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AssessmentTestComponent } from './assessment-test/assessment-test.component';
 import {AssessmentTestService} from './assessment-test.service';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { CalendarModule } from 'angular-calendar';
+import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 
@@ -77,6 +83,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     NewClientComponent,
     ClientsOfTherapistComponent,
     AppointmentsComponent,
+    PhysioHomeComponent,
     ClientExerciseComponent,
     LoginComponent,
     ForgottenPasswordComponent,
@@ -103,11 +110,18 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatSidenavModule,
     MatListModule,
     MatStepperModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTableModule,
+    
+    
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
+    CommonModule,
+    CalendarModule.forRoot(),
+    DemoUtilsModule,
     MatRadioModule,
     MatNativeDateModule,
     MatDatepickerModule,
