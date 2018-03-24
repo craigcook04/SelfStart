@@ -26,13 +26,18 @@ export class RehabPlansComponent implements OnInit {
   allExercises: Object[];
   currPlan: any;
   exercisesInCurrPlan: any =[];
-
+  total: any;
+  pageIndex:any = 0;
+  offset: number = 0;
   ngOnInit() {
     this.rehabPlansService.getPlans().subscribe(data => {
       console.log(data);
-      this.rehabPlans = Object.assign([], data.rehabPlans);
+      this.total = data.total;
+      console.log(this.total);
+      this.rehabPlans = Object.assign([], data.docs);
+      console.log(this.rehabPlans);
       this.currPlan = this.rehabPlans[0];
-     // exercisesInCurrPlan = this.currPlan.exerciseObjects;
+      this.exercisesInCurrPlan = this.currPlan.exerciseObjects;
     });
      this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
@@ -42,29 +47,22 @@ export class RehabPlansComponent implements OnInit {
     });
   }
   
-  getExercises(ID: any){
-    console.log(ID);
-    this.exercise = Object.assign([], ID.exerciseObjects);
-    
-    // this.rehabPlansService.getExercises(ID).subscribe(data => {
-    //   console.log(data);
-    //   var retObj: any = data;
-    //   this.exercise = Object.assign([], retObj.exercise);
-    // });
-    console.log(this.exercise);
-  }
   
-  searchPlans(word: string){
-     this.rehabPlansService.SearchPlans(word).subscribe(data => {
-      if(data != []) {
-        var retObj : any = data;
-        console.log(retObj);
-        this.rehabPlans = Object.assign([], retObj.rehabPlans);
-      }
+  applyFilter(filterValue: string){
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.rehabPlansService.SearchPlans(filterValue, "name", 0, 'asc' ).subscribe(data => {
+      console.log(data);
+      //this.total = (data.total);
+      var retObj : any = data;
+      this.total = retObj.total;
+      
+      this.offset = 0;
+      this.rehabPlans = Object.assign([], retObj.docs);
     });
-    window.location.reload();
   }
   
+
   createPlan(planName: string, descript: string, author: string, goalOfPlan: string, timeFrame: Date){
     var body = {
       name: planName,
@@ -79,10 +77,11 @@ export class RehabPlansComponent implements OnInit {
       console.log(data);
       //window.location.reload();
       
-    this.rehabPlansService.getPlans().subscribe(data => {
-      console.log(data);
-      this.rehabPlans = Object.assign([], data.rehabPlans)
-    });
+      this.rehabPlansService.getPlans().subscribe(data => {
+        console.log(data);
+        this.total = data.total;
+        this.rehabPlans = Object.assign([], data.docs)
+      });
     });
    
   }
@@ -111,7 +110,7 @@ export class RehabPlansComponent implements OnInit {
     this.router.navigate(['../adminhome']);
   }
   
-  addExercise( exerciseToBeAdded: any){
+  addExercise( exerciseToBeAdded: any, searchString: any){
     console.log("in comp.");
     console.log(exerciseToBeAdded);
     var flag = true;
@@ -124,14 +123,14 @@ export class RehabPlansComponent implements OnInit {
     }
     console.log(this.exercisesInCurrPlan.indexOf(exerciseToBeAdded));
     var ID = this.currPlan._id;
-    if (flag == false){
+    if (flag != false){
       this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
         var retObj: any = data;
         console.log(retObj);
-      // window.location.reload();
-        this.rehabPlansService.getPlans().subscribe(data => {
-          console.log(data);
-          this.rehabPlans = Object.assign([], data.rehabPlans)
+        this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+          var retObj : any = data;
+          this.rehabPlans = Object.assign([], retObj.docs);
+      
         });
         this.exercisesInCurrPlan.push(exerciseToBeAdded);
     
@@ -144,10 +143,10 @@ export class RehabPlansComponent implements OnInit {
       console.log(data);
       this.rehabPlansService.getPlans().subscribe(data => {
         console.log(data);
-        this.rehabPlans = Object.assign([], data.rehabPlans)
+        this.total =data.total;
+        this.rehabPlans = Object.assign([], data.docs)
       });
     
-      //window.location.reload();
     });
     
     
@@ -171,7 +170,7 @@ export class RehabPlansComponent implements OnInit {
     });
     
   }
-  removeExercise(exer: any){
+  removeExercise(exer: any, searchString: any){
     console.log("in the component")
     console.log(this.currPlan.exerciseObjects.indexOf(exer));
     this.currPlan.exerciseObjects.splice(this.currPlan.exerciseObjects.indexOf(exer),1);
@@ -180,14 +179,17 @@ export class RehabPlansComponent implements OnInit {
       console.log(data)
       //window.location.reload();
       
-      this.rehabPlansService.getPlans().subscribe(data => {
-        console.log(data);
-        this.rehabPlans = Object.assign([], data.rehabPlans)
+      this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+        var retObj : any = data;
+        this.rehabPlans = Object.assign([], retObj.docs);
+      
       });
     });
+    var flag = this.allExercises.indexOf(exer);
     this.exercisesInCurrPlan = this.currPlan.exerciseObjects;
-    this.allExercises.push(exer);
-    
+    if (flag == -1){
+      this.allExercises.push(exer);
+    }
   }
   
   viewPlan(plan:any){
@@ -205,4 +207,21 @@ export class RehabPlansComponent implements OnInit {
     
     
   } 
+  switchPage(event: any, searchString: any){
+    console.log("teting123");
+    console.log(event);
+    if (this.pageIndex<event.pageIndex){
+      this.offset+=10;
+      this.pageIndex++;
+    }
+    else{
+      this.offset-=10;
+      this.pageIndex--;
+    }
+    this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+      var retObj : any = data;
+      this.rehabPlans = Object.assign([], retObj.docs);
+      
+    });
+  }
 }
