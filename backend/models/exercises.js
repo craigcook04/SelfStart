@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
+
 var exerciseSchema = new mongoose.Schema(
     {
         name: String,
@@ -7,13 +9,14 @@ var exerciseSchema = new mongoose.Schema(
         authorName: String,
         actionSteps: String,
         location: String,
-        frequency: Number,
-        duration: Number,
+        frequency: String,
+        duration: String,
         targetDate: Date,
         multimedia: [String],
         rehabilitationPlans: {type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitationPlans'}
     }
 );
 
+exerciseSchema.plugin(mongoosePaginate);
 var Exercise = mongoose.model('Exercise', exerciseSchema);
 module.exports = Exercise;
