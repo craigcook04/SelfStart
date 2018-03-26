@@ -31,6 +31,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   isSaved: any;
   edgePage: any;
   formattedLiveDate: any;
+  currentType: any;
 
 
   constructor(private modalService: NgbModal,
@@ -38,6 +39,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
               private apptService: AppointmentsService) {}
 
   ngOnInit() {
+    this.currentType = this.apptService.getType();
+    console.log(this.currentType);
     this.isSelected = false;
     this.currentlyFilled = new Array(37);
     this.cells = new Array(37); //Create 37 time slots
@@ -84,17 +87,21 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];
         this.selectedWeek = this.currentWeek;
         
-        if(indx > 34){
-          if(indx == 35){
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+        if(this.currentType == "normal"){
+          if(indx > 34){
+            if(indx == 35){
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            }else{
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            }
           }else{
             document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
           }
         }else{
           document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-          document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-          document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
         }
       }else{
         console.log("sorry, slot is already booked by another client");

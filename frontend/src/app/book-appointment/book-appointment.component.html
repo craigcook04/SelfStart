@@ -10,8 +10,8 @@
 
         <div>       
             <div id="buttons">
-                <button class="btn btn-lg btn-outline-primary col-5" (click)="open(book)">Book An Appointment</button>
-                <button class="btn btn-lg btn-outline-primary col-6 ml-sm-2" (click)="open(initial)">Request An Initial Consultation</button>
+                <button class="btn btn-lg btn-outline-primary col-5" (click)="setType('normal'); open(book)">Book An Appointment</button>
+                <button class="btn btn-lg btn-outline-primary col-6 ml-sm-2" (click)="setType('initial'); open(initial);">Request An Initial Consultation</button>
             </div>
         </div>
     </div>

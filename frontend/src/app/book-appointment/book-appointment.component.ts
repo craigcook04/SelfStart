@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { ViewChild } from '@angular/core/';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { AppointmentsService } from '../appointments.service';
 
 const URL = "/api/image/bookappointment"
 const now = new Date();
@@ -22,12 +23,14 @@ export class BookAppointmentComponent implements OnInit {
 
   model: NgbDateStruct;
   invalidName: boolean = false;
+  type: String;
 
   @ViewChild('dp') dp: NgbDatepicker;
 
   constructor(private modalService: NgbModal,
               private router: Router,
-              private imageService: ImageService) { 
+              private imageService: ImageService,
+              private apptService: AppointmentsService) { 
               }
 
   ngOnInit() {
@@ -35,6 +38,10 @@ export class BookAppointmentComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, {size: "lg"});
+  }
+  
+  setType(t){
+    this.apptService.setType(t);
   }
 
   selectToday(){

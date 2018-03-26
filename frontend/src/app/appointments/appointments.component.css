@@ -48,6 +48,10 @@ td {
     background-color: #828282;
 }
 
+.showDate{
+    color: red;
+}
+
 /*.saveAppt{*/
 /*    margin-left: 5%;*/
 /*    margin-top: 5%;*/

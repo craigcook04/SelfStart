@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AppointmentsService {
 
+  type: any;
+
   constructor(private httpClient: HttpClient) { }
   
   GetAllAppointments(){
@@ -21,6 +23,14 @@ export class AppointmentsService {
       
       var url = '/api/appointment';
       return this.httpClient.post(url, body);
+  }
+  
+  setType(type: string){
+    this.type = type;
+  }
+  
+  getType(){
+    return this.type;
   }
 
 }

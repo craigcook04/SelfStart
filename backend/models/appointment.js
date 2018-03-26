@@ -4,6 +4,7 @@ var appointmentSchema = new mongoose.Schema(
         date: Date,
         reason: String,
         other: String,
+        type: String,
         patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
     }
 );
