@@ -28,7 +28,7 @@ import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule} from '@angular/material'; 
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule, MatExpansionModule} from '@angular/material'; 
 
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
@@ -114,8 +114,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    
-    
+    MatExpansionModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,

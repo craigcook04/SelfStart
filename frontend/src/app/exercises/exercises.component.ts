@@ -7,6 +7,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from '../image.service';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-config';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
+import { PageEvent } from '@angular/material';
 
 
 const URL = '/api/image';
@@ -24,6 +25,13 @@ export class ExercisesComponent implements OnInit {
   closeResult: string;
   images: any [];
   activated: any;
+  invalidSearchArea: boolean;
+  offset = 0;
+  length = 0;
+  pageSize = 10;
+  pageSizeOptions = [10];
+  pageEvent: PageEvent;
+
 
   @ViewChild('carousel') carousel:NgbCarousel;
   @ViewChild('dp1') dp: any;
@@ -39,8 +47,24 @@ export class ExercisesComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
       // data comes back as exercise (singular!!!!!)
-      this.exercises = Object.assign([], data.exercise);
-      console.log(this.exercises);
+      this.exercises = Object.assign([], data.docs);
+      this.length = this.exercises.length;
+    })
+  }
+
+  // setPageSizeOptions(setPageSizeOptionsInput: string) {
+  //   this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  // }
+
+  SetOffset( searchValue: string, searchArea: string, event: PageEvent){
+    this.offset = event.pageIndex;
+    this.pageSize = event.pageSize;
+
+    this.exerciseService.SearchExercises(searchValue, searchArea, this.offset * this.pageSize, this.pageSize).subscribe(data =>{
+      if(data != []){
+        var obj: any = data;
+        this.exercises = obj.docs;
+      }
     })
   }
 
@@ -48,22 +72,25 @@ export class ExercisesComponent implements OnInit {
     this.modalService.open(content, {size: "lg"});
   }
 
-  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any) {
+  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date) {
 
-    var fileNames = [String]; 
-    for(var i =0; i < media.length; i++){
-      fileNames[i] = media[i].file.name;
+    console.log(this.uploader.queue);
+
+    var fileNames = []; 
+    for(var i = 0; i < this.uploader.queue.length; i++){
+      console.log(this.uploader.queue[i].file.name);
+      fileNames[i] = this.uploader.queue[i].file.name;
     }
 
     this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, fileNames)
     .subscribe(data =>{
       //now link images to exercise
-      console.log(data.exercise._id);
 
+      console.log(fileNames);
       if(this.uploader.queue.length > 0){
         fileNames.forEach(element => {
+          console.log(element);
           this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-            console.log(data);
           })
         })
       }
@@ -72,7 +99,6 @@ export class ExercisesComponent implements OnInit {
 
   deleteExercise(id: string) {
     this.exerciseService.DeleteExercise(id).subscribe(data => {
-      console.log(data);
       
       this.exercises.forEach(element => {
         var obj: any = element;
@@ -85,45 +111,45 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media:any){
-    this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, media)
+  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, year: string, month: string, day: string){
+    
+    var fileNames = []; 
+    for(var i = 0; i < this.uploader.queue.length; i++){
+      fileNames[i] = this.uploader.queue[i].file.name;
+    }
+    
+    this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, year + "-" + month + "-" + day, fileNames)
     .subscribe(data =>{
-      console.log(data);
 
-      this.uploader.onCompleteAll = () => {
-
-        if(media.length > 1){
-          media.forEach(element => {
-            this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
-              console.log(data);
-            })
-          });
-        }
+      if(this.uploader.queue.length > 0){
+        fileNames.forEach(element => {
+          this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
+          })
+        })
       }
-      this.exercises.push(data.exercise);
-      // window.location.reload();
+      //this.exercises.push(data.exercise);
+    })
+    this.exerciseService.SearchExercises("", "", this.offset, this.pageSize).subscribe(data =>{
+      if(data != []){
+        var obj: any = data;
+        this.exercises = obj.docs;
+      }
     })
   }
 
   getExerciseImages( exercise: any ){
-    console.log(exercise);
     this.imageService.GetExerciseImage(exercise).subscribe(data =>{
-      console.log(data);
       var obj: any;
       obj = data;
       this.images = obj.images;
-      console.log(this.images[0]);
     })
   }
 
   deleteImage( image: any){
-    console.log(image);
     this.imageService.deleteImage(image).subscribe(data =>{
       
       var index = this.images.indexOf(image);
       this.images.splice(image, 1);
-
-      console.log(data);
     })
   }
 
@@ -134,8 +160,15 @@ export class ExercisesComponent implements OnInit {
     else{
       this.activated = exercise;
     }
+  }
 
-    // this.dp.navigateTo(exercise.targDate);
+  SearchExercises(searchString: string, searchArea: string){
+    this.exerciseService.SearchExercises(searchString, searchArea, this.offset, this.pageSize).subscribe(data =>{
+      if(data != []){
+        var obj: any = data;
+        this.exercises = obj.docs;
+      }
+    })
   }
 
 }

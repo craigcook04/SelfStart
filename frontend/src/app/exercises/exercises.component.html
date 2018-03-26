@@ -1,42 +1,38 @@
-
 <br>
-
-<h2>Exercises</h2>
-<br>
-<div *ngIf="invalidSearchArea" class="failedSearch">
-  Please enter a search area
-</div>
-<div class='blockContainer'>
-  <div class='left'>
-    <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value)">
-      <option value='exerciseName'>Search by...</option>
-      <option disabled='disabled'>----</option>
-      <option value="exerciseName">Exercise Name</option>
-      <option value="exerciseLocation">Location</option>
-      <option value="">Author Name</option>
-    </select>
-  </div>
-  <div class="right">
-    <div class="input-group mb-3 searchbar" id="custom-search-input">
-      <input type="text" class="form-control" placeholder="Search term" aria-label="Search for exercise here..." aria-describedby="basic-addon2" #searchValue>
-      <span class="input-group-btn">
-        <button class="btn btn-info btn-lg" type="button" location="top" ngbTooltip="Search">
-          <fa name="search"></fa>
-        </button>
-      </span>
-    </div>
-  </div>
-</div>
-<br><br>
 <br>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-<button type="button" id="addExerciseButton" class="btn btn-primary createbtn ml-sm-5" (click)="open(newmodal)">Add New Exercise</button>
-
 <div>
-  <div>
+  <mat-card class="col-lg-11" style="margin-left: auto; margin-right: auto; background-color: #F5F5F5;">
+  <div class="col-lg-10" style="margin-left: auto; margin-right: auto;">
+        <div class='row'>
+          <div class='col-sm-3'>
+            <select #searchArea class="searchdropdown" id="searchDropdown">
+              <option value='name'>Search by...</option>
+              <option disabled='disabled'>----</option>
+              <option value="name">Exercise Name</option>
+              <option value="location">Location</option>
+            </select>
+          </div>
+          <div class="col-sm-5 right">
+            <div class="input-group mb-3 searchbar" id="custom-search-input">
+              <input type="text" class="form-control" placeholder="Search Term" (keyup)="SearchExercises(searchValue.value, searchArea.value)" aria-label="Search for exercise here..." aria-describedby="basic-addon2" #searchValue>
+              <span class="input-group-btn">
+                <button class="btn btn-info btn-lg" type="button" location="top" ngbTooltip="Search">
+                  <fa name="search"></fa>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="pull-right" style="margin-left: auto;">
+                <button type="button"class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Exercise</button>              
+            </div>
+        </div>
+
       <ng-template #newmodal let-c="close" let-d="dismiss">
           <div class="modal-header">
             <h4 class="modal-title">New Exercise</h4>
@@ -71,7 +67,7 @@
             <div class="form-group row">
                 <label for="inputActSteps" class="col-sm-3 col-form-label"><b>Action Steps</b></label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputActSteps" placeholder="Action Steps" #actionSteps>
+                    <input type="text" class="form-control" id="inputActSteps" placeholder="1. List Your Steps 2. Like This" #actionSteps>
                   </div>
             </div>
             <div class="form-group row">
@@ -93,25 +89,11 @@
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputTargDate" class="col-sm-3 col-form-label"><b>Target Date</b></label>
-                <div class="col-sm-9">
-                    <div class="calFormat">
-                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targetDate>
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                            <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                          </button>
-                        </div>
-                    </div>
-                  </div>
-            </div>
-            <div class="form-group row">
               <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
               <div class="col-sm-9">
                 <label class="btn btn-block btn-file" id="inputMedia">
                   Click Here to Select File(s) for Upload&hellip;
                   <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
-                  <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
                 </label>
                 <td nowrap>
                   <button type="button" class="btn btn-success btn-s"
@@ -131,42 +113,107 @@
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, targetDate.value); c('Close click') ">Add</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, year.value, month.value, day.value); c('Close click') ">Add</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>  
           </div>
         </ng-template>
     <br><br>
-    <div *ngFor='let exercise of exercises'>
 
-          <button class="accordion left-one" (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)"> <strong>{{ exercise.name }} </strong>|| {{ exercise.description }} </button>
-      <hr>
-      <br>
-      <div *ngIf="exercise == activated" class=".col-sm-4 accordion">
-        <div class="info">
-          <br>
-          <button style = "float: right; background-color: white; color: rgb(90, 134, 228); border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(update)"><i class="material-icons">mode_edit</i></button>
-          <button style = "float: right; background-color: white; color: rgb(236, 104, 104); border:none; margin-top: none; margin-right: 2px " class =  " w3-xlarge" (click) = "open(delete)"><i  class="fa fa-trash"></i></button>
+    <div>
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, searchArea.value, $event)">
+        </mat-paginator>
+    </div>
+    <mat-accordion>
+    <mat-expansion-panel *ngFor='let exercise of exercises' (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)">
+      <mat-expansion-panel-header>
+          <mat-panel-title class="col-sm-3" style="color: #0275d8"> 
+            <h4>
+                <strong>{{ exercise.name }} </strong> 
+            </h4>
+          </mat-panel-title>
+          <mat-panel-description class="col-sm-11">
+            <b>Target Area: </b> &nbsp; {{ exercise.location }}
+          </mat-panel-description>
+      </mat-expansion-panel-header>
 
-          <p><b> Name: </b> {{ exercise.name }} </p>
-          <p><b> Description: </b> {{ exercise.description }} </p>
-          <p><b> Objectives: </b> {{ exercise.objectives }} </p>
-          <p><b> Author: </b> {{ exercise.authorName }} </p>
-          <p><b> Action Steps: </b> {{ exercise.actionSteps }} </p>
-          <p><b> Location: </b> {{ exercise.location }} </p>
-          <p><b> Sets: </b> {{ exercise.frequency }} </p>
-          <p><b> Repititions: </b> {{ exercise.duration }} </p>
-          <p><b> Target Date: </b> <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }}</time> </p>
-          <p><b> Multimedia: </b> </p>
-          <br>
-
-          <ngb-carousel *ngIf="images?.length > 0" class=".col-sm-6 carousel" #carousel>
-              <ng-template ngbSlide *ngFor="let image of images">
-                <img src="data:image/png;base64,{{image.data}}">
-              </ng-template>
+      <div>
+        <mat-list class="info" style="margin-left: auto; margin-right: auto;">
+          <div>
+            <mat-list-item class="form-group-row">
+              <div class="col-md-2">
+                  <b> Name: </b> 
+              </div>
+              <div class="col-md">
+                  {{ exercise.name }}
+              </div>
+            </mat-list-item>
+            <mat-list-item class="form-group-row">
+                <div class="col-md-2">
+                    <b> Description: </b> 
+                </div>
+                <div class="col-md">
+                    {{ exercise.description }} 
+                </div>
+            </mat-list-item>
+            <mat-list-item class="form-group-row">
+                <div class="col-md-2">
+                    <b> Objectives: </b> 
+                </div>
+                <div class="col-md">
+                    {{ exercise.objectives }}
+                </div>
+            </mat-list-item>
+            <mat-list-item class="from-group-row">
+                <div class="col-md-2">
+                    <b> Author: </b> 
+                </div>
+                <div class="col-md">
+                    {{ exercise.authorName }}
+                </div>
+            </mat-list-item>
+            <mat-list-item class="form-group-row">
+                <div class="col-md-2">
+                    <b> Action Steps: </b> 
+                </div>
+                <div class="col-md">
+                    {{ exercise.actionSteps }} 
+                </div>
+            </mat-list-item>
+            <mat-list-item class="form-group-row">
+                <div class="col-md-2">
+                    <b> Sets: </b> 
+                </div>
+                <div class="col-md-4">
+                    {{ exercise.frequency }} 
+                </div>
+                <div class="col-md-2">
+                    <b> Repititions: </b>  
+                </div>
+                <div class="col-md-4">
+                    {{ exercise.duration }}  
+                </div>
+            </mat-list-item>
+            <mat-list-item class="form-group-row">
+                <div class="col-md-2">
+                    <b> Location: </b> 
+                </div>
+                <div class="col-md">
+                    {{ exercise.location }}
+                </div>
+            </mat-list-item>
+          </div>
+        </mat-list>
+        <br>
+        <br>
+        <mat-card class="col-md-6" *ngIf="images?.length >= 1" style="margin-left: auto; margin-right: auto;">
+          <ngb-carousel *ngIf="images?.length > 0" class="carousel" #carousel>
+            <ng-template ngbSlide *ngFor="let image of images">
+              <img mat-card-image src="data:image/png;base64,{{image.data}}">
+            </ng-template>
           </ngb-carousel>
-        
-        </div>
+        </mat-card>
+      </div>
 
         <!-- when physio wants to update an exercise -->
         <ng-template #update let-c="close" let-d="dismiss">
@@ -241,21 +288,6 @@
                       </div>
                     </div>
                 </form>
-                <form id="eventForm">
-                    <div class="form-group row">
-                      <label for="inputDate" class="col-sm-3 col-form-label">Target Date</label>
-                      <div class="col-sm-9">
-                        <div class="calFormat">
-                          <input class="form-control" placeholder="yyyy-MM-dd" name="dp1" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #targDate>
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                              </button>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                </form>
                 <form>
                     <div class="form-group row">
                       <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
@@ -290,7 +322,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, targDate.value, uploader.queue); c('Close click')">Confirm</button>
+              <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, newYear.value, newMonth.value, newDay.value); c('Close click')">Confirm</button>
               <button id="modalButtons" type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 
@@ -316,29 +348,9 @@
             </div>
           </ng-template>
           <!-- End of First Modal -->
-
-          <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
-          <ng-template #delete let-c="close" let-d="dismiss">
-              <div class="modal-header">
-                <h4 class="modal-title">Delete {{ exercise.name }}</h4>
-                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p>Are you sure you wish to delete exercise <b>{{ exercise. name }}</b>. This action is cannot be undone. </p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-med" (click)="deleteExercise(exercise._id); c('Close click')">Delete</button>
-                <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>                  
-              </div>
-            </ng-template>
-            <hr>
-            
-            <!-- <button class="btn btn-primary btn-sm exercisebtn" (click)="open(delete)">Delete</button> -->
-            <!-- End of Second Modal -->
-          </div>
-    </div>
+        </mat-expansion-panel>
+  </mat-accordion>
   </div>
+</mat-card>
   
 </div>
