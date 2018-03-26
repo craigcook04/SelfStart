@@ -31,7 +31,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        AssessmentTest.find(function (error, assessmentTest) {
+        AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
             if (error) {
                 response.send(error);
             }

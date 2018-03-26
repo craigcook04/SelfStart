@@ -172,16 +172,13 @@
             <div *ngIf="q.questionCode == 'MC'">
               <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>
               <br>
-              <mat-radio-group id="question{{i}}">
                   <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
-                      <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label>
-                      <mat-radio-button class=" mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+                      <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}}) {{qcontent}}</label>
                   </div>
-              </mat-radio-group>
             </div>
             <br>
             <div *ngIf="q.questionCode == 'RA'">
-              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times"   class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
+              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
             </div>
           </div>
           <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>
