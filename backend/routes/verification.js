@@ -134,7 +134,7 @@ router.route('/:accessCode')
                     }
                     
                 });
-                
+
                 var returnEmail = `
                 <body style="background: whitesmoke; text-align: center">
                   <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
