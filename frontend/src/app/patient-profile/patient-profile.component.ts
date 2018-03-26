@@ -11,6 +11,7 @@ import * as moment from 'moment';
 })
 export class PatientProfileComponent implements OnInit {
 
+  pageInfo: string;
   closeResult: string;
   offset: number = 0;
   showSuccess: boolean;
@@ -35,6 +36,7 @@ export class PatientProfileComponent implements OnInit {
   genders: Object[];
   ascendingOrd: boolean = true;
   cannotContinue: boolean = false;
+  totalPatients: number;
 
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
@@ -52,6 +54,7 @@ export class PatientProfileComponent implements OnInit {
       this.genders = Object.assign([], retObj.gender);
     })
    console.log('hi');
+   
   }
 
   StandardPatientList() {
@@ -61,9 +64,11 @@ export class PatientProfileComponent implements OnInit {
     
     this.patientService.GetAllPatients().subscribe(data => {
       console.log(data);
+      var retObj: any = data;
       this.patients = Object.assign([], data.docs);
-      console.log('hello');
+      this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`
       console.log(this.patients);
+      this.totalPatients = retObj.total;
     });
   }
 
@@ -101,7 +106,7 @@ export class PatientProfileComponent implements OnInit {
     var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
     this.cannotContinue = false;
-
+    console.log(phoneNumber, newAddress)
     if(badFormatWithNumbers.test(firstName) || !firstName) {
       var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'red';    
       this.invalidFirstname = true;
@@ -122,6 +127,7 @@ export class PatientProfileComponent implements OnInit {
 
     if(!newAddress) {
       var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'red';
+      console.log(newAddress);
       this.invalidAddress = true;
       this.cannotContinue = true;
     }
@@ -172,18 +178,18 @@ export class PatientProfileComponent implements OnInit {
 
   }
 
-  deletePatient(ID: string, acc) {
+  deletePatient(ID: string) {
     console.log(ID);
     this.patientService.DeletePatient(ID).subscribe(data => {
       var retObj: any = data;
       if(retObj.success){
-        this.showDeleteSuccess = true;
-        this.showSuccess = false;
-        this.showFailure = false;
-        this.showCreationSuccess = false;
-        acc.activeIds = []; //close all accordian panels
+        
         this.patientService.GetAllPatients().subscribe(data => {
           this.patients = Object.assign([], data.docs);
+          this.showDeleteSuccess = true;
+          this.showSuccess = false;
+          this.showFailure = false;
+          this.showCreationSuccess = false;
         });
       }
       else { 
@@ -205,6 +211,13 @@ export class PatientProfileComponent implements OnInit {
       if(data != []) {
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
+        if(this.offset + 10 > this.totalPatients) {
+          this.pageInfo = `${this.offset} - ${this.totalPatients} of ${retObj.total}` 
+        }
+        else{
+          this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`    
+        }
+        
       }
     })
   }
@@ -318,6 +331,9 @@ export class PatientProfileComponent implements OnInit {
   
   
   NextPage(searchString: string, searchArea: string, ascvsdesc) {
+    if(this.offset + 10 > this.totalPatients) {
+      return;
+    }
     this.offset += 10;
     this.searchPatients(searchString, searchArea);
   }

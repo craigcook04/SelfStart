@@ -25,15 +25,18 @@
 </div>
 </div>
 <br> <br><br> <br> <br>
+<mat-card class="greyCard mx-auto">
 <p class='orderTag'><b>Order:</b> </p>
   <i *ngIf="!ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to ascending order">arrow_downward</i>
   <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to descending order">arrow_upward</i>
+
 
 <button class='btn btn-primary btn-sm nextpagebtn' (click)="NextPage(searchValue.value, searchArea.value);">Next Page</button>
 <button class='btn btn-primary btn-sm prevpagebtn' (click)="PreviousPage(searchValue.value, searchArea.value);">Previous Page</button>
 <button class="btn btn-alt btn-sm prevpagebtn rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">
     <i class="material-icons">refresh</i>
 </button>
+<p class="pageinfo">{{pageInfo}}</p>
 <!-- -->
 <div class='alrt' *ngIf="showSuccess">
 <p class="successMessage">Client was successfully updated</p>
@@ -60,13 +63,6 @@
           <label class="col-sm-3">{{patient.email}}</label>
           <label class="col-sm-2">{{calculateAge(patient?.DOB)}} years old</label>
           <label class="col-sm-3">{{patient?.phone}}</label>
-        <!-- 
-            <label class="col-sm-2">{{patient.familyName}}, {{patient.givenName}}</label>
-            <label class="col-sm-3">{{patient.email}}</label>
-            <label class="col-sm-2">{{calculateAge(patient?.DOB)}} years old</label>
-            <label class="col-sm-3">{{patient?.phone}}</label>
-            <fa name="plus" class="plusbtn" (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)"></fa>
-         -->
     </mat-expansion-panel-header>
       <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
       <ng-template #delete let-c="close" let-d="dismiss">
@@ -78,7 +74,7 @@
             be undone. </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id, acc); c('Close click')">Delete</button>
+          <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); c('Close click')">Delete</button>
           <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>          
         </div>
       </ng-template>
@@ -225,8 +221,8 @@
         </div>
         <div class="modal-footer">
           <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
-          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value, acc); ">Confirm</button>
-          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click'); ResetErrorMessages();">Cancel</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="ResetErrorMessages(); c('Close click'); ">Cancel</button>
           <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>  
         </div>
       </ng-template>
@@ -282,6 +278,7 @@
   </mat-expansion-panel>
 </mat-accordion>
 </div>
+</mat-card>
 <br>
 <br>
 <br>

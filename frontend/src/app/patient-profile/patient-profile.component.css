@@ -292,3 +292,15 @@ h2 {
 .plusbtn {
     font-size: 1rem;
 }
+
+
+.greyCard {
+    width: 95%;
+    background-color: lightgrey;
+}
+
+.pageinfo {
+    float: right;
+    margin-right: 1rem;
+    margin-bottom: 0.75rem;
+}
