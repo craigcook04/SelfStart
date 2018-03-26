@@ -3,6 +3,7 @@ import { PatientService } from '../patient.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { EmailService } from '../email.service'
 import * as moment from 'moment';
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-patient-profile',
@@ -38,6 +39,14 @@ export class PatientProfileComponent implements OnInit {
   cannotContinue: boolean = false;
   totalPatients: number;
 
+  // MatPaginator Inputs
+  length;
+  pageSize = 10;
+  pageSizeOptions = [10];
+
+  // MatPaginator Output
+  pageEvent: PageEvent;
+
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
               private emailService: EmailService) { }
@@ -57,6 +66,12 @@ export class PatientProfileComponent implements OnInit {
    
   }
 
+  SwitchPageEvent(pageEvent: any, searchString: string, searchArea: string) {
+    this.offset = pageEvent.pageIndex * pageEvent.pageSize;
+    console.log('hello im switching');
+    this.searchPatients(searchString, searchArea);
+  }
+
   StandardPatientList() {
     var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
     this.invalidSearchArea = false;
@@ -66,7 +81,7 @@ export class PatientProfileComponent implements OnInit {
       console.log(data);
       var retObj: any = data;
       this.patients = Object.assign([], data.docs);
-      this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`
+      this.length = retObj.total;
       console.log(this.patients);
       this.totalPatients = retObj.total;
     });
