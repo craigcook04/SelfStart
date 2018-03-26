@@ -63,7 +63,7 @@ import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +80,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     PatientProfileComponent,
     AdminHomeComponent,
     BookAppointmentComponent,
-    NewClientComponent,
     UserAccountsComponent,
     NewClientComponent,
     ClientsOfTherapistComponent,
@@ -94,7 +93,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     NotFoundComponent,
     AssessmentTestComponent,
     AssignPlanComponent,
-    CompleteAssessmentTestComponent
+    CompleteAssessmentTestComponent,
+    WelcomeHomeComponent
   ],
   imports: [
     BrowserModule,
