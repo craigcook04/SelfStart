@@ -17,6 +17,7 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.userAccountService.GetUsersWantingAPasswordReset().subscribe(data => {
+      console.log(data);
       this.resetUsers = Object.assign([], data);
     })
   }

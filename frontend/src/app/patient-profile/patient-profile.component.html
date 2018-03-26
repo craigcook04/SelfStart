@@ -52,18 +52,22 @@
 </div>
 <div class="dummyclr"></div> <!--To fix a problem that the float right buttons screws up the accordion -->
 <div class="patients">
-  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
-    <ngb-panel *ngFor="let patient of patients;">
-      <ng-template ngbPanelTitle class="mypanel" >
-        <div class="form-group row mypanel" >
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let patient of patients;">
+    <mat-expansion-panel-header (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)">
+          <i class="fa fa-user fa-sm"></i>
+          <label class="col-sm-2">{{patient.familyName}}, {{patient.givenName}}</label>
+          <label class="col-sm-3">{{patient.email}}</label>
+          <label class="col-sm-2">{{calculateAge(patient?.DOB)}} years old</label>
+          <label class="col-sm-3">{{patient?.phone}}</label>
+        <!-- 
             <label class="col-sm-2">{{patient.familyName}}, {{patient.givenName}}</label>
             <label class="col-sm-3">{{patient.email}}</label>
             <label class="col-sm-2">{{calculateAge(patient?.DOB)}} years old</label>
             <label class="col-sm-3">{{patient?.phone}}</label>
             <fa name="plus" class="plusbtn" (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)"></fa>
-        </div>
-      </ng-template>
-
+         -->
+    </mat-expansion-panel-header>
       <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
       <ng-template #delete let-c="close" let-d="dismiss">
         <div class="modal-header">
@@ -256,7 +260,6 @@
       </ng-template>
       <!-- End of Third Modal -->
 
-      <ng-template ngbPanelContent>
         <div class="info">
           <p><b>Username: </b> {{patient?.account?.userAccountName}}</p>
           <p><b>Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
@@ -276,9 +279,8 @@
 
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
         <button class="btn btn-primary btn-sm patientbtn" (click)="open(delete)">Delete</button>
-      </ng-template>
-    </ngb-panel>
-  </ngb-accordion>
+  </mat-expansion-panel>
+</mat-accordion>
 </div>
 <br>
 <br>

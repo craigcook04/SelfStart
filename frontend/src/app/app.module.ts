@@ -62,6 +62,8 @@ import { CalendarModule } from 'angular-calendar';
 import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
@@ -130,7 +132,8 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     MatRadioModule,
     MatButtonToggleModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule
   ],
   providers: [
     PatientService, 

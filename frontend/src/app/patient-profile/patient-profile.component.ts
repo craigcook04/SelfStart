@@ -60,6 +60,7 @@ export class PatientProfileComponent implements OnInit {
     this.ascendingOrd = true;
     
     this.patientService.GetAllPatients().subscribe(data => {
+      console.log(data);
       this.patients = Object.assign([], data.docs);
       console.log('hello');
       console.log(this.patients);
@@ -93,7 +94,7 @@ export class PatientProfileComponent implements OnInit {
     this.invalidEmail = false;
   }
 
-  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string, acc) {
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) {
     var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
     var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
     var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
@@ -210,6 +211,7 @@ export class PatientProfileComponent implements OnInit {
 
   HideMessage() {
     //hide all messages, if there are any
+    console.log('hide messages');
     this.showSuccess = false;
     this.showFailure = false;
     this.showDeleteSuccess = false;
