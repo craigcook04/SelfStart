@@ -21,9 +21,9 @@ export class AssignPlanComponent implements OnInit {
   displayedColumns = ['name', 'plan', 'actions'];
   dataSource: MatTableDataSource<Client>;
   offset = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
-  pageSizeOptions = [5, 10, 25, 100];
+  pageSizeOptions = [10];
   pageEvent: PageEvent;
 
 
@@ -41,20 +41,45 @@ export class AssignPlanComponent implements OnInit {
     })
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+
+    this.patientService.SearchPatientRehab(this.currPlan._id, filterValue, this.offset * this.pageSize, this.pageSize).subscribe(data =>{
+      if(data != []){
+        this.clientList = [];
+        var obj: any = data;
+        this.length = obj.docs.length;
+        obj.docs.forEach(element => {
+          this.clientList.push(createClient(element));
+        });
+        this.dataSource = new MatTableDataSource(this.clientList);
+      }
+    })
   }
 
+  SetOffset( searchValue: string, event: PageEvent){
+    this.offset = event.pageIndex;
+    this.pageSize = event.pageSize;
+
+    console.log(searchValue + "!");
+
+    this.patientService.SearchPatientRehab(this.currPlan._id, searchValue, this.offset * this.pageSize, this.pageSize).subscribe(data =>{
+      if(data != []){
+        this.clientList = [];
+        var obj: any = data;
+        this.length = obj.docs.length;
+        obj.docs.forEach(element => {
+          this.clientList.push(createClient(element));
+        });
+        this.dataSource = new MatTableDataSource(this.clientList);
+      }
+    })
+  }
+
+  //assign which plan is to be displayed in the card and get its corresponding information
   assignCurrentPlan(plan: any){
     this.currPlan = plan;
     this.patientService.GetPatientsUnderPlan(plan._id).subscribe(data =>{
+      this.clients = [];
       var obj: any = data;
       this.clients = obj.patients;
     })
@@ -62,9 +87,10 @@ export class AssignPlanComponent implements OnInit {
       console.log(data);
       this.clientList = [];
       var obj: any = data;
-      obj.patients.forEach(element => {
+      obj.docs.forEach(element => {
         this.clientList.push(createClient(element));
       });
+      this.length = this.clientList.length;
       this.dataSource = new MatTableDataSource(this.clientList);
     })
   }
@@ -90,18 +116,6 @@ export class AssignPlanComponent implements OnInit {
       obj = data;
       this.clientList.push(createClient(obj.patient));
       this.dataSource = new MatTableDataSource(this.clientList);
-    })
-  }
-
-  SetOffset( searchValue: string, searchArea: string, event: PageEvent){
-    this.offset = event.pageIndex;
-    this.pageSize = event.pageSize;
-
-    this.patientService.SearchPatient(searchValue, searchArea, this.offset, this.pageSize).subscribe(data =>{
-      if(data != []){
-        var obj: any = data;
-        this.exercises = obj.docs;
-      }
     })
   }
 

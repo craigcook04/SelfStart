@@ -89,20 +89,6 @@
                   </div>
             </div>
             <div class="form-group row">
-                <label for="inputTargDate" class="col-sm-3 col-form-label"><b>Target Date</b></label>
-                <div class="col-sm-9 row">
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputDur" placeholder="YYYY" #year>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputDur" placeholder="MM" #month>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputDur" placeholder="DD" #day>
-                        </div>
-                  </div>
-            </div>
-            <div class="form-group row">
               <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
               <div class="col-sm-9">
                 <label class="btn btn-block btn-file" id="inputMedia">
@@ -136,12 +122,12 @@
 
     <div>
         <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, searchArea.value, $event)">
-          </mat-paginator>
+        </mat-paginator>
     </div>
-    <mat-accordion class="headers-align">
+    <mat-accordion>
     <mat-expansion-panel *ngFor='let exercise of exercises' (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)">
-      <mat-expansion-panel-header class="row">
-          <mat-panel-title class="col-sm-2" style="color: #0275d8"> 
+      <mat-expansion-panel-header>
+          <mat-panel-title class="col-sm-3" style="color: #0275d8"> 
             <h4>
                 <strong>{{ exercise.name }} </strong> 
             </h4>
@@ -152,7 +138,7 @@
       </mat-expansion-panel-header>
 
       <div>
-        <mat-list class="info col-md-12" style="margin-left: auto; margin-right: auto;">
+        <mat-list class="info" style="margin-left: auto; margin-right: auto;">
           <div>
             <mat-list-item class="form-group-row">
               <div class="col-md-2">
@@ -214,14 +200,6 @@
                 </div>
                 <div class="col-md">
                     {{ exercise.location }}
-                </div>
-            </mat-list-item>
-            <mat-list-item class="form-group-row">
-                <div class="col-md-2">
-                    <b> Target Date: </b>   
-                </div>
-                <div class="col-md">
-                    <time datetime="yyyy-MM-dd"> {{ exercise.targetDate | date:'mediumDate' }} </time> 
                 </div>
             </mat-list-item>
           </div>
@@ -307,24 +285,6 @@
                       <label for="inputDur" class="col-sm-3 col-form-label">Repetitions</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="inputDur" placeholder="Duration" value="{{ exercise.duration }}" #newDur>
-                      </div>
-                    </div>
-                </form>
-                <form id="eventForm">
-                    <div class="form-group row">
-                      <label for="inputDate" class="col-sm-3 col-form-label">Target Date</label>
-                      <div class="col-sm-9">
-                          <div class="col-sm-9 row">
-                              <div class="col-sm-3">
-                                  <input type="text" class="form-control"  placeholder="YYYY" #newYear>
-                              </div>
-                              <div class="col-sm-3">
-                                  <input type="text" class="form-control" placeholder="MM" #newMonth>
-                              </div>
-                              <div class="col-sm-3">
-                                  <input type="text" class="form-control" placeholder="DD" #newDay>
-                              </div>
-                        </div>
                       </div>
                     </div>
                 </form>
