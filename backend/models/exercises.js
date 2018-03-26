@@ -11,7 +11,6 @@ var exerciseSchema = new mongoose.Schema(
         location: String,
         frequency: String,
         duration: String,
-        targetDate: Date,
         multimedia: [String],
         rehabilitationPlans: {type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitationPlans'}
     }

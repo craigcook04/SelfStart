@@ -17,7 +17,6 @@ router.route('/')
         exercise.location = request.body.location;
         exercise.frequency = request.body.frequency;
         exercise.duration = request.body.duration;
-        exercise.targetDate = request.body.targetDate;
         exercise.multimedia = request.body.multimedia;
 
         exercise.rehabilitationPlans = request.body.rehabilitationPlans; 
@@ -32,8 +31,6 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        
-        console.log(request.query.q + " " + request.query.s);
         
         var query = {};
         if(request.query.q != null || request.query.q != undefined){
@@ -64,14 +61,6 @@ router.route('/')
             
             response.send(results);
         })
-        
-        
-        
-        
-        // Exercise.find(function (error, exercises) {
-        //     if (error) response.send(error);
-        //     response.json({exercise: exercises});
-        // })
     });
 
 //fetching a specific exercise
