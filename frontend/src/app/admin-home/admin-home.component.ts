@@ -40,6 +40,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   ResetPassword(username: string) {
+    console.log('here');
     this.emailService.SendRecoveryEmail(username).subscribe(data => {
       console.log(data);
     })
