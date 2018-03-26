@@ -1,0 +1,79 @@
+h2 {
+    margin: 1em;
+}
+
+#today {
+    /*top: 90px;*/
+    float: left;
+    margin: 2em;
+    padding: 20px;
+    background-color: #F8F9FC;
+    border-color: grey;
+    border-radius: 5px 5px 5px 5px;
+}
+
+ul {
+    margin: 1em;
+    padding: 0;
+    list-style-type: none;
+}
+
+#mySidenav a {
+    position: absolute;
+    right: -100px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 180px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px 5px 5px 5px;
+}
+
+#mySidenav a:hover {
+    right: 0;
+    cursor:pointer;
+}
+
+#exercise {
+    top: 105px;
+    background-color: #4169E1;
+}
+#patient {
+    top: 165px;
+    background-color: #4169E1;
+}
+#rehabplan {
+    top: 250px;
+    background-color: #4169E1;
+}
+#test {
+    top: 335px;
+    background-color: #4169E1;
+}
+#report {
+    top: 420px;
+    background-color: #4169E1;
+}
+
+.accordion {
+    background-color: #F8F9FC;
+    border-color: grey;
+    /*color: #444;*/
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    /*text-align: left;*/
+    border: none;
+    outline: none;
+    /*margin-left: 70px;*/
+}
+.info {
+    /*margin-left: 100px;
+    width:65%*/
+}
+.active, .accordion:hover {
+    /*width:90%;*/
+    background-color: #E6E6FA;
+    border-radius: 5px 5px 5px 5px;
+}

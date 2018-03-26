@@ -18,6 +18,7 @@ import {NewClientComponent} from './new-client/new-client.component';
 import{ BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import {ClientsOfTherapistComponent} from './clients-of-therapist/clients-of-therapist.component';
 import {AppointmentsComponent} from './appointments/appointments.component';
+import { PhysioHomeComponent } from './physio-home/physio-home.component';
 import { LoginComponent } from './login/login.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 import { RecoverAccountComponent } from './recover-account/recover-account.component' ;
@@ -45,6 +46,7 @@ const routes: Routes = [
   {path: 'useraccounts', component:UserAccountsComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
   {path: 'bookappointement', component: AppointmentsComponent},
+  {path: 'physiohome', component: PhysioHomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
