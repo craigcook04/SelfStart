@@ -36,7 +36,16 @@ export class LoginComponent implements OnInit {
             //expires in 1 hour, expires takes days so 1 hour is 1/24
             this.cookieService.set('ID', retObj.userID, 1/24);
             this.cookieService.set('session', retObj1.nonce, 1/24);
-            this.router.navigate(['../home'])
+            if(retObj.role == "US") {
+              this.router.navigate(['../home'])
+            }
+            else if (retObj.role == "AD") {
+              this.router.navigate(['../adminhome'])
+            }
+            else {
+              this.router.navigate(['../physiohome'])
+            }
+            
           }
         }
         else{ 
