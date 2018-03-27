@@ -21,26 +21,33 @@ export class LoginComponent implements OnInit {
 
   Login(username: string, password: string) {
     this.showFailure = false;
-    this.userAccountsService.Login(username, password).subscribe(data => {
-      var retObj: any = data;
-      console.log(data);
-      if(retObj.success = true) {
-        if(retObj.changePass == true) {
-          var url = '../login/recover/' + retObj.userID;
-          this.router.navigate([url]);
+    this.userAccountsService.InitialConnection(username).subscribe(data => {
+        var retObj1: any = data;
+        console.log("initialConnection", data);
+        this.userAccountsService.Login(username, password, retObj1.nonce, retObj1.salt).subscribe(data => {
+        var retObj: any = data;
+        console.log(data);
+        if(retObj.success = true) {
+          if(retObj.changePass == true) {
+            var url = '../login/recover/' + retObj.userID;
+            this.router.navigate([url]);
+          }
+          else {
+            //expires in 1 hour, expires takes days so 1 hour is 1/24
+            this.cookieService.set('ID', retObj.userID, 1/24);
+            this.cookieService.set('session', retObj1.nonce);
+            this.cookieService.set('role', retObj.role, 1/24);
+            this.router.navigate(['../home'])
+          }
         }
-        else {
-          //expires in 1 hour, expires takes days so 1 hour is 1/24
-          this.cookieService.set('role', retObj.role, 1/24);
-          this.router.navigate(['../home'])
+        else{ 
+          if(retObj.incPass == true) {
+            this.showFailure = true;
+          }
         }
-      }
-      else{ 
-        if(retObj.incPass == true) {
-          this.showFailure = true;
-        }
-      }
+      })
     })
+    
   }
 
 }

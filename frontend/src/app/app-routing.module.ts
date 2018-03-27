@@ -28,10 +28,11 @@ import {AssessmentTestComponent} from './assessment-test/assessment-test.compone
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
+import { AuthGuard } from './auth.guard'
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},
   {path: 'services', component: ServicesComponent},

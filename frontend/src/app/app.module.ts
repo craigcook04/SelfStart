@@ -63,6 +63,7 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
 import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './auth.guard'
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { CookieService } from 'ngx-cookie-service';
     AppointmentsService,
     EncryptionService, 
     AssessmentTestService,
-    CookieService],
+    CookieService,
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 
