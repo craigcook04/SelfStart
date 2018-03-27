@@ -17,6 +17,7 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.userAccountService.GetUsersWantingAPasswordReset().subscribe(data => {
+      console.log(data);
       this.resetUsers = Object.assign([], data);
     })
   }
@@ -39,6 +40,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   ResetPassword(username: string) {
+    console.log('here');
     this.emailService.SendRecoveryEmail(username).subscribe(data => {
       console.log(data);
     })

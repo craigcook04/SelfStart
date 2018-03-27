@@ -22,7 +22,7 @@
   <div class="names">
     <ul>
       <li *ngFor="let user of resetUsers">
-         <span class="lefts">{{user.userAccountName}}</span> <fa class="rights check" name="check" ngbTooltip="Confirm Reset for {{user.userAccountName}}"></fa><!--<button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button> -->
+         <span class="lefts">{{user.userAccountName}}</span> <fa class="rights check" name="check" ngbTooltip="Confirm Reset for {{user.userAccountName}}" (click)="ResetPassword(user.userAccountName)"></fa><!--<button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button> -->
       </li>
     </ul>
   </div>

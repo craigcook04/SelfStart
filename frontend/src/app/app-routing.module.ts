@@ -54,7 +54,6 @@ const routes: Routes = [
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmentTest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
-
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
