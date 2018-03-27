@@ -16,7 +16,9 @@ export class RehabPlansService {
     return this.http.post('/api/rehabPlans', body);
   }
   getPlans(): any{
-      return this.http.get('/api/rehabPlans');
+      //return this.http.get('/api/rehabPlans');
+    var url = '/api/rehabPlans?s=name&sortorder=asc&offset=0';
+    return this.http.get(url);
   }
   getExercises(ID: string):  any{
     console.log("fdasfdsa");
@@ -33,8 +35,16 @@ export class RehabPlansService {
     console.log("im in the service");
     return this.http.put('api/rehabPlans/' + plan._id, plan);
   }
-  SearchPlans(word: string){
-    var url = '/api/rehabPlans/findplan/search?q=' + word;
+  SearchPlans(searchString: string, searchArea: string, offset, ascvsdesc){
+    // var url = '/api/rehabPlans/findplan/search?q=' + word;
+    // return this.http.get(url);
+    var url = '/api/rehabPlans?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
     return this.http.get(url);
   }
+  
+  removeClientFromPlan(ID: string){
+    var url = 'api/patient/unassignPlan' + ID;
+    return this.http.put(url, "");
+  }
+  
 }
