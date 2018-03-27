@@ -80,6 +80,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         this.dayIndex = day;
         // day = Number(day) - 1;
         this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
+        this.apptService.setNewDate(this.currentlyHighlighted);
         this.formattedLiveDate = moment(this.currentlyHighlighted).format("dddd, MMMM Do YYYY, h:mm a");
         //console.log(this.currentlyHighlighted);
         var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2))];

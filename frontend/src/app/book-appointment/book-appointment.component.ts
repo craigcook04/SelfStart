@@ -24,6 +24,7 @@ export class BookAppointmentComponent implements OnInit {
   model: NgbDateStruct;
   invalidName: boolean = false;
   type: String;
+  
 
   @ViewChild('dp') dp: NgbDatepicker;
 
@@ -77,6 +78,12 @@ export class BookAppointmentComponent implements OnInit {
       this.modalService.open(makeChanges, {size: 'lg'});
       return;
     }
+  }
+  
+  saveAppointment(patient, reason, other){
+    this.apptService.AddAppointment(patient, reason, other).subscribe(data => {
+      console.log(data);
+    })
   }
 
 

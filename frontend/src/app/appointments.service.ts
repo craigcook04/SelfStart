@@ -4,7 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AppointmentsService {
 
-  type: any;
+  newType: any;
+  newDate: Date;
+  newPatient: any;
+  newOther: any;
+  newReason: any;
 
   constructor(private httpClient: HttpClient) { }
   
@@ -13,11 +17,12 @@ export class AppointmentsService {
       return this.httpClient.get(url);
   }
   
-  AddAppointment(date: any, reason: string, other: string): any{
+  AddAppointment(patient: any, reason: string, other: string): any{
       var body = {
-          date: date,
+          date: this.newDate,
           reason: reason,
-          other: other
+          other: other,
+          type: this.newType
           // patient: patient
       }
       
@@ -26,11 +31,19 @@ export class AppointmentsService {
   }
   
   setType(type: string){
-    this.type = type;
+    this.newType = type;
   }
   
   getType(){
-    return this.type;
+    return this.newType;
   }
+  
+  setNewDate(date: Date){
+    this.newDate = date;
+  }
+  
+  // getDate(){
+  //   return this.newDate;
+  // }
 
 }

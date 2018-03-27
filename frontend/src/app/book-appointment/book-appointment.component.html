@@ -41,7 +41,7 @@
                     <div class="col-12"><app-appointments></app-appointments></div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 col-form-label"><strong>Description</strong></label>
+                    <label class="col-2 col-form-label" #reason><strong>Description</strong></label>
                     <div class="col-10">
                         <textarea class="form-control" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
                     </div>
@@ -70,7 +70,7 @@
                 </div>
         </div>
         <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" (click)="c('Close click')">Book Appointment</button>
+                <button type="button" class="btn btn-outline-primary" (click)="saveAppointment(name.value, reason.value, 'other'); c('Close click');">Book Appointment</button>
             <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
         </div>
 </ng-template>

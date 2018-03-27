@@ -98,12 +98,13 @@
 </mat-card>
 
 <div class="dynforms">
-  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+  <mat-accordion>
     <!-- This is the block of code that will be repeated for every form -->
-    <ngb-panel *ngFor='let form of forms'>
-      <ng-template ngbPanelTitle>
-        <span>{{ form.name }}</span>
-      </ng-template>
+    <mat-expansion-panel *ngFor='let form of forms'>
+      <mat-expansion-panel-header>
+          <label class="col-sm-2 pnter">{{form.name}}</label>
+          <label class="col-sm-3 pnter">{{form.description}}</label>
+      </mat-expansion-panel-header>
       <ng-template let-c="close" let-d="dismiss" #yousure>
           <div class="modal-header">
             <h4>Are you sure?</h4>
@@ -117,7 +118,7 @@
             <button type="button" class="btn btn-primary btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Delete</button>
             <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Do Not Delete</button>              
           </div>
-        </ng-template>
+      </ng-template>
         <!-- New Question modal -->
       <ng-template let-c="close" let-d="dismiss" #quest>
           <div class="modal-header">
@@ -161,7 +162,6 @@
           </div>
         </ng-template>
       
-      <ng-template ngbPanelContent>
         <h6><b>Name: </b>{{form.name}}</h6>
         <h6><b>Description: </b>{{form.description}}</h6>
         <h6>Questions: </h6>
@@ -192,22 +192,6 @@
             
             <!-- <h4>Questions: </h4> -->
             <div *ngFor='let question of forms;  let i = index;' class="form-group row">
-                
-              <!-- Are you sure modal -->
-              
-              <div>
-                <!-- <div *ngIf="editMode" class="dynforms">
-                  <label  [attr.for]="'ques-' + i">{{ question.questionText }}</label>
-                  <input  [attr.id]="'ques-' + i" type="text" class="form-control" placeholder="{{ question.questionText }}" #qtext>
-                  <label  [attr.for]="'ques-' + i">{{ question.helpDescription}}</label>
-                  <input  [attr.id]="'ques-' + i" type="text" class="form-control" placeholder="{{ question.helpDescription }}" #qtext>
-                </div> -->
-                <!-- <div *ngIf="!editMode" class="dynforms">
-                  <p><b>Form Name:  </b>{{ question.questionText }}</p>
-                  <p><b>Description:  </b>{{question.helpDescription}}</p>
-                  <hr>
-                </div> -->
-              </div>
               <div>
                 <div>
                   <button *ngIf="editMode" class="btn btn-primary align-bottom" (click)="open(otheryousure);"><fa class="fas float-right" name="times"></fa></button>
@@ -227,17 +211,10 @@
                   <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
                 </div>
               </ng-template>
-              
-              
             </div>
           </div>
         </form>
-
-      <!--</ng-template>-->
-          
-          
-        </ng-template>
-    </ngb-panel>
+    </mat-expansion-panel>
     <!-- End of form block -->
     
     <!-- New form modal -->
@@ -282,5 +259,5 @@
             <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
           </div>
         </ng-template>
-  </ngb-accordion>
+  </mat-accordion>
 </div>
