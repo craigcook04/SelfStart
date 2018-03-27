@@ -29,7 +29,7 @@ router.route('/')
                 userAccount.needToChangePass = false;
                 userAccount.isDisabled = false;
                 userAccount.resetRequestSent = false;
-                userAccount.userCode = "US"; //this is a user account
+                userAccount.userCode = "PH"; //this is a user account
                 console.log(userAccount.encryptedPassword);
                 UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retphysio) {
                     if(err) {
