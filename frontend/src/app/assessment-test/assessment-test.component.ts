@@ -29,7 +29,7 @@ export class AssessmentTestComponent implements OnInit {
   selectedPlan: any[];
   offset: number = 0;
   tests = new MatTableDataSource();
-  displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];
+  displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];  
  
   // var currOption = 'c';
   currOption: string = 'c';

@@ -24,11 +24,57 @@ router.route('/')
         });
     })
     .get(function (request, response) {
-        RehabPlans.find(function (error, rehabPlans) {
-            if (error) response.send(error);
-            response.json({rehabPlans: rehabPlans});
+        var query = {};
+        // if(request.query.s == "ID"){
+            
+        //     query['ID'] = Number(request.query.q);
+        // }
+        if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            var search = '^' + request.query.q;
+            var regexexp = new RegExp(search, 'i');
+            query[request.query.s] = regexexp;
+        }
+        else{
+            query = {};
+        }
+        
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
+        
+        var myparameter = request.query.s;
+        var sort ={};
+        sort[myparameter] = sortOrder;
+        var options = 
+        {
+            sort: sort,
+            //populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+            limit: 10,
+            offset: Number(request.query.offset)
+        };
+        
+        RehabPlans.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
+            }
+            
+            response.send(results);
         });
     });
+
+        
+        // RehabPlans.find(function (error, rehabPlans) {
+        //     if (error) response.send(error);
+        //     response.json({rehabPlans: rehabPlans});
+        // });
+   // });
 
 //getting a specific rehab plan
 router.route('/:rehabPlans_id')

@@ -63,6 +63,8 @@ import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,6 @@ import { CalendarComponent } from './calendar/calendar.component';
     PatientProfileComponent,
     AdminHomeComponent,
     BookAppointmentComponent,
-    NewClientComponent,
     UserAccountsComponent,
     NewClientComponent,
     ClientsOfTherapistComponent,
@@ -95,6 +96,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
     CalendarComponent
+    WelcomeHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -132,7 +134,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     MatRadioModule,
     MatButtonToggleModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule
   ],
   providers: [
     PatientService, 

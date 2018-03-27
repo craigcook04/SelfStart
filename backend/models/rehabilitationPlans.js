@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 var rehabilitationPlansSchema = new mongoose.Schema(
     {
         name: String,
@@ -13,5 +14,6 @@ var rehabilitationPlansSchema = new mongoose.Schema(
     }
 );
 
+rehabilitationPlansSchema.plugin(mongoosePaginate);
 var RehabilitationPlans = mongoose.model('RehabilitationPlans', rehabilitationPlansSchema);
 module.exports = RehabilitationPlans;
