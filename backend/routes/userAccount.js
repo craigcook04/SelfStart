@@ -262,9 +262,40 @@ router.route('/session/loggedin')
             }
             
             else{
-                response.send({authorized: true});
+                response.send({authorized: true, role: session.userType});
             }
         });
+    })
+    .get(function(request, response) {
+        Session.find(function(err, sessions) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({sessions: sessions});
+        });
+    })
+    .delete(function(request, response) {
+        Session.remove(function(err, deleted) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({deleted: deleted});
+        })
     });
 
+router.route('/session/logout/:id')
+    .delete(function(request, response) {
+        Session.findByIdAndRemove(request.route.id, function(err, deleted) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({deleted: deleted});
+        });
+    });
 module.exports = router;
