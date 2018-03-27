@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
 import { EncryptionService } from './encryption.service'
 import { CookieService } from 'ngx-cookie-service';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UserAccountsService {
@@ -47,15 +48,16 @@ export class UserAccountsService {
     return this.http.post(url, body);
   }
 
-  GetAuthorization() {
-    var url = '/api/useraccounts/session/loggedin';
+  async GetAuthorization() {
+    var url = '/api/useraccount/session/loggedin';
     var sessionCookie = this.cookieService.get('session');
     var encryptedSessionCookie = this.encryptionService.encrypt(sessionCookie);    
     var body = {
       sessionToken: encryptedSessionCookie
     }
 
-    return this.http.post(url, sessionCookie);
+    var response: any = await this.http.post(url, body).toPromise();
+    return response;
   }
 
   LoggedIn(){

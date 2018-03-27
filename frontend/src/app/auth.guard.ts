@@ -7,14 +7,19 @@ import { UserAccountsService } from './user-accounts.service'
 export class AuthGuard implements CanActivate {
   
   constructor(private userAccountService: UserAccountsService) {}
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if(this.userAccountService.LoggedIn()) {
-       this.userAccountService.GetAuthorization().subscribe(data => {
-       var retObj: any = data;
-      })
+      var isauth = await this.userAccountService.GetAuthorization();
+      if(isauth.authorized){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
-    
-    return false;
-     
+    else{
+      return false;
+    }
+
   }
 }

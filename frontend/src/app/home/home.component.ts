@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
               private cookieService: CookieService) { }
 
   ngOnInit() {
-    console.log('cookie:', this.cookieService.get('role'));
     console.log('session:', this.cookieService.get('session'));
     console.log('ID:', this.cookieService.get('ID'));
   }
