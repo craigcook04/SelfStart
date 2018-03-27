@@ -377,5 +377,29 @@ router.route('/plan/remove')
             }
         });
     });
+    
+router.route('/unassignPlan/:id')
+
+    .put(function(request,response){
+        Patient.find({"rehabPlan": request.params.id}, function(error, patients){
+           if (error){
+                console.log("Error");
+                response.send({error: error});
+           } 
+           else{
+               patients.rehabPlan = undefined;
+               patients.save(function (error) {
+                    if (error) {
+                        console.log("Error");
+                        response.send({error: error});
+                    }
+                    else {
+                        console.log("Here");
+                        response.json({success: true, patient: patients});
+                    }
+                });
+           }
+        });
+    })
 
 module.exports = router;

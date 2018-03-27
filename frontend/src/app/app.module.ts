@@ -62,6 +62,7 @@ import { CalendarModule } from 'angular-calendar';
 import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
+import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,6 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     PatientProfileComponent,
     AdminHomeComponent,
     BookAppointmentComponent,
-    NewClientComponent,
     UserAccountsComponent,
     NewClientComponent,
     ClientsOfTherapistComponent,
@@ -92,7 +92,8 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
     NotFoundComponent,
     AssessmentTestComponent,
     AssignPlanComponent,
-    CompleteAssessmentTestComponent
+    CompleteAssessmentTestComponent,
+    WelcomeHomeComponent
   ],
   imports: [
     BrowserModule,
