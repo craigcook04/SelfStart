@@ -5,6 +5,7 @@ var sessionSchema = new mongoose.Schema(
     {
         userID: String,
         nonce: String,
+        userType: String,
         opened: Date
     }
 );
