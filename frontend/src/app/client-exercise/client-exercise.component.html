@@ -14,10 +14,15 @@
 
 <div class="page">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-5 col-sm-5">
       <mat-card>
         <mat-card-content>
           <mat-list>
+            <mat-card-title style="color: #0275d8;">
+              <b>Exercises in Menu: </b>
+            </mat-card-title>
+            <mat-divider></mat-divider>
+            <br>
             <mat-list-item class="listItems" *ngFor="let exercise of exercises" (click)="getExerciseInfo(exercise)" (click)="getExerciseImages(exercise._id)">
               <button class="btn-block button">
                 <div class="row">
@@ -37,7 +42,7 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-5 col-sm-5">
       <div>
           <mat-card>
               <mat-card-title>
@@ -50,14 +55,7 @@
                   </div>
                 </div>
               </mat-card-title>
-              <mat-card-subtitle>
-                <div class="col-sm-10">
-                  <b>Target Date:</b> &nbsp;{{ currExercise?.targetDate | date:'mediumDate'}}
-                </div>
-              </mat-card-subtitle>
-              <div class="divider2">
-                  <mat-divider></mat-divider>
-              </div>
+              <mat-divider></mat-divider>
               <br>
               <mat-card-content>
                 <div class="row">
@@ -132,7 +130,7 @@
 </div>
 
 <div style="display:none" #test>
-  <h1>Self Start: &nbsp; {{ currExercise?.name }} </h1>
+  <h1 style="color: #0275d8">Self Start: &nbsp; {{ currExercise?.name }} </h1>
   <br>
   <div>
     <b>Description: </b> &nbsp; {{ currExercise?.description }}

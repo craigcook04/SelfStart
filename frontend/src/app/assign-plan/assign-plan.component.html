@@ -8,15 +8,24 @@
   <div class="row">
     <div class="col-lg-6">
       <mat-card>
+        <mat-card-title style="color: #0275d8;">
+          <b>Available Exercise Menus:</b>
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter2(searchValue.value)" placeholder="Search for Menus..." #searchValue2>
+          </mat-form-field>
         <mat-list>
+            <mat-paginator [length]="length2" [pageSize]="pageSize2" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent2 = $event" (page)="SetOffset2(searchValue2.value, $event)"></mat-paginator>
           <mat-list-item class="listItems" *ngFor="let plan of rehabPlans">
               <button class="btn-block button" (click)="assignCurrentPlan(plan)">
                   <div class="row">
                     <div class="col-sm-1">
                         <i class="fa fa-columns" style="color: #0275d8"></i> &nbsp;
                     </div>
-                    <div class="col-sm-5">
-                        <h5><b>Plan Name: </b> &nbsp; {{ plan?.name }} </h5>
+                    <div>
+                        <h5><b>Menu Name: </b> &nbsp; {{ plan?.name }} </h5>
                     </div>
                   </div>
                   <div class="divider">
@@ -38,7 +47,7 @@
               </div>
             </div>
           </mat-card-title>
-          <div class="divider2">
+          <div >
             <mat-divider></mat-divider>
           </div>
           <br>
@@ -47,7 +56,7 @@
               <div class="col-sm-2">
                 <b> Description: </b>
               </div>
-              <div class="col-sm-10 descrip">
+              <div class="col-sm-9 descrip">
                 {{ currPlan?.description }}
               </div>
             </div>
@@ -55,14 +64,14 @@
               <div class="col-sm-2">
                 <b>Goal: </b>
               </div>
-              <div class="col-sm-10">
+              <div class="col-sm-9">
                 {{ currPlan?.goal }}
               </div>
             </div>
           </mat-card-content>
           <mat-divider></mat-divider>
           <br>
-          <h6>
+          <h6 style="color: #0275d8">
             <b>Clients Currently using this Plan:</b>
           </h6>
           <mat-list class="currList">
@@ -76,8 +85,8 @@
                             <h5><b>Client: </b> &nbsp; {{ client?.familyName }}, {{ client?.givenName }} </h5>
                         </div>
                         <div class="pull-right delete">
-                            <i class="fa fa-times-circle" (click)="removePatient(client)"></i>
-                          </div>
+                          <i class="fa fa-times-circle" (click)="removePatient(client)"></i>
+                        </div>
                       </div>
                       <div class="divider">
                         <mat-divider></mat-divider>
@@ -86,12 +95,11 @@
               </mat-list-item>
             </mat-list>
             <br>
-            <br>
-            <br>
             <div>
               <mat-form-field>
-                <input matInput (keyup)="applyFilter(searchValue.value)" placeholder="Filter" #searchValue>
+                <input matInput (keyup)="applyFilter(searchValue.value)" placeholder="Search for Clients..." #searchValue>
               </mat-form-field>
+              <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, $event)"></mat-paginator>
               <mat-table [dataSource]="dataSource" class="searchList" matSort>
                   <ng-container matColumnDef="name">
                       <mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </mat-header-cell>
@@ -106,7 +114,7 @@
                     <ng-container matColumnDef="actions">
                         <mat-header-cell *matHeaderCellDef> Assign Current Plan </mat-header-cell>
                         <mat-cell *matCellDef="let row"> 
-                          <button class="btn block" mat-button (click)="assignPatientPlan(row?.id, currPlan)">
+                          <button class="btn block" color="primary" mat-raised-button (click)="assignPatientPlan(row?.id, currPlan)">
                             Assign
                           </button>
                         </mat-cell>
@@ -116,7 +124,6 @@
                     <mat-row *matRowDef="let row; columns: displayedColumns;">
                     </mat-row>
                 </mat-table>
-                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, $event)"></mat-paginator>
             </div>
             <br>
               <!-- <mat-card-footer>

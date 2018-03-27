@@ -5,19 +5,19 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <div>
-  <mat-card class="col-lg-11" style="margin-left: auto; margin-right: auto; background-color: #F5F5F5;">
-  <div class="col-lg-10" style="margin-left: auto; margin-right: auto;">
-        <div class='row'>
-          <div class='col-sm-3'>
+  <mat-card class="col-lg-11 col-md-11 col-sm-11" style="margin-left: auto; margin-right: auto; background-color: #F5F5F5;">
+  <div class="col-lg-10 col-md-10 col-sm-10" style="margin-left: auto; margin-right: auto;">
+        <div class='form-group row'>
+          <div class='col-lg-2 col-md-2 col-sm-2 float-left'>
             <select #searchArea class="searchdropdown" id="searchDropdown">
               <option value='name'>Search by...</option>
               <option disabled='disabled'>----</option>
               <option value="name">Exercise Name</option>
-              <option value="location">Location</option>
+              <option value="location">Target Area</option>
             </select>
           </div>
-          <div class="col-sm-5 right">
-            <div class="input-group mb-3 searchbar" id="custom-search-input">
+          <div class="col-lg-4 col-md-3 col-sm-2 ml-1 mt-1">
+            <div class="input-group" id="custom-search-input">
               <input type="text" class="form-control" placeholder="Search Term" (keyup)="SearchExercises(searchValue.value, searchArea.value)" aria-label="Search for exercise here..." aria-describedby="basic-addon2" #searchValue>
               <span class="input-group-btn">
                 <button class="btn btn-info btn-lg" type="button" location="top" ngbTooltip="Search">
@@ -26,11 +26,11 @@
               </span>
             </div>
           </div>
-        </div>
-        <div class="row">
-            <div class="pull-right" style="margin-left: auto;">
-                <button type="button"class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Exercise</button>              
-            </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 ml-auto float-right">
+              <div class="pull-right" style="margin-left: auto;">
+                  <button type="button"class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Exercise</button>              
+              </div>
+          </div>
         </div>
 
       <ng-template #newmodal let-c="close" let-d="dismiss">
@@ -113,7 +113,7 @@
             <!-- above is the form for creating a new exercise, below the button to save it -->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value, year.value, month.value, day.value); c('Close click') ">Add</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value); c('Close click') ">Add</button>
                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
             </div>  
           </div>
@@ -127,7 +127,7 @@
     <mat-accordion>
     <mat-expansion-panel *ngFor='let exercise of exercises' (click)="getExerciseImages(exercise._id)" (click)="uploader.clearQueue()" (click)="show(exercise)">
       <mat-expansion-panel-header>
-          <mat-panel-title class="col-sm-3" style="color: #0275d8"> 
+          <mat-panel-title class="col-sm-3" style="color: #0275d8;"> 
             <h4>
                 <strong>{{ exercise.name }} </strong> 
             </h4>
@@ -322,7 +322,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value, newDur.value, newYear.value, newMonth.value, newDay.value); c('Close click')">Confirm</button>
+              <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value); c('Close click')">Confirm</button>
               <button id="modalButtons" type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
             </div>
           </ng-template> 

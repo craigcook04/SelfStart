@@ -47,8 +47,10 @@ export class ExercisesComponent implements OnInit {
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{
       // data comes back as exercise (singular!!!!!)
-      this.exercises = Object.assign([], data.docs);
-      this.length = this.exercises.length;
+      var obj : any = data;
+      this.exercises = obj.docs;
+      console.log(obj.total);
+      this.length = data.total;
     })
   }
 
@@ -72,7 +74,7 @@ export class ExercisesComponent implements OnInit {
     this.modalService.open(content, {size: "lg"});
   }
 
-  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date) {
+  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number) {
 
     console.log(this.uploader.queue);
 
@@ -82,7 +84,7 @@ export class ExercisesComponent implements OnInit {
       fileNames[i] = this.uploader.queue[i].file.name;
     }
 
-    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, targDate, fileNames)
+    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, fileNames)
     .subscribe(data =>{
       //now link images to exercise
 
@@ -111,14 +113,14 @@ export class ExercisesComponent implements OnInit {
     })
   }
 
-  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, year: string, month: string, day: string){
+  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number){
     
     var fileNames = []; 
     for(var i = 0; i < this.uploader.queue.length; i++){
       fileNames[i] = this.uploader.queue[i].file.name;
     }
     
-    this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, year + "-" + month + "-" + day, fileNames)
+    this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, fileNames)
     .subscribe(data =>{
 
       if(this.uploader.queue.length > 0){
@@ -129,10 +131,12 @@ export class ExercisesComponent implements OnInit {
       }
       //this.exercises.push(data.exercise);
     })
-    this.exerciseService.SearchExercises("", "", this.offset, this.pageSize).subscribe(data =>{
+    this.exerciseService.SearchExercises("", "name", this.offset, this.pageSize).subscribe(data =>{
       if(data != []){
         var obj: any = data;
+        console.log(obj.total);
         this.exercises = obj.docs;
+        this.length = obj.total;
       }
     })
   }
