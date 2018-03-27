@@ -10,7 +10,9 @@ export class AuthGuard implements CanActivate {
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if(this.userAccountService.LoggedIn()) {
       var isauth = await this.userAccountService.GetAuthorization();
-      if(isauth.authorized){
+      console.log(isauth);
+      //render the component if the session token is valid and the session is given to a user
+      if(isauth.authorized && isauth.role == 'US'){
         return true;
       }
       else{
