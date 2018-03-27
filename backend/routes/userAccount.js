@@ -196,11 +196,11 @@ router.route('/account/login')
             
            if(inputPassDecrypted == hashedPassword) {
                if(user.needToChangePass == true) {
-                   response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id});
+                   response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id, role: user.userCode});
                    return;
                }
                else {
-                 response.send({success: true, changePass: false, message: "Congratulations you are now logged in"});
+                 response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode});
                  return;
                }
            }
