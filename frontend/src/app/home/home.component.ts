@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExerciseService } from '../exercise.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +9,12 @@ import { ExerciseService } from '../exercise.service';
 })
 export class HomeComponent implements OnInit {
 
-  fileToUpload: File = null;
 
-  constructor(private exerciseService: ExerciseService) { }
+  constructor(private exerciseService: ExerciseService,
+              private cookieService: CookieService) { }
 
   ngOnInit() {
+    console.log('cookie:', this.cookieService.get('role'));
   }
 
 }

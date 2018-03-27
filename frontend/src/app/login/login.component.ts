@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAccountsService } from '../user-accounts.service';
 import { Router } from '@angular/router'
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ export class LoginComponent implements OnInit {
 
   showFailure: boolean;
   constructor(private userAccountsService: UserAccountsService,
-              private router: Router) { }
+              private router: Router,
+              private cookieService: CookieService) { }
 
   ngOnInit() {
     this.showFailure = false;
@@ -28,7 +30,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate([url]);
         }
         else {
-          //router to the success screen
+          //expires in 1 hour, expires takes days so 1 hour is 1/24
+          this.cookieService.set('role', retObj.role, 1/24);
+          this.router.navigate(['../home'])
         }
       }
       else{ 

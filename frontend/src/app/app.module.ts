@@ -27,9 +27,7 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule} from '@angular/material'; 
-
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -64,6 +62,7 @@ import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -116,8 +115,6 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    
-    
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -147,7 +144,8 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     PhysiotherapistService,
     AppointmentsService,
     EncryptionService, 
-    AssessmentTestService],
+    AssessmentTestService,
+    CookieService],
   bootstrap: [AppComponent]
 })
 
