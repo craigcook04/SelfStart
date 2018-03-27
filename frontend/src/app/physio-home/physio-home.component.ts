@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
-import { CalendarEvent } from 'angular-calendar';
+/*import { CalendarEvent } from 'angular-calendar';
 import { ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { colors } from '../../demo-utils/colors';
@@ -23,14 +23,12 @@ interface Appointment {
   name: string;
   reason: string;
   other: string;
-}
+}*/
 
 @Component({
   selector: 'app-physio-home',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './physio-home.component.html',
-  styleUrls: ['./physio-home.component.css', '../../../node_modules/angular-calendar/css/angular-calendar.css'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./physio-home.component.css'],
   providers: [PhysioHomeService]
 })
 
@@ -40,9 +38,10 @@ export class PhysioHomeComponent implements OnInit {
   
   activated: any;
   appointments: any[];
+  panelOpenState: boolean = false;
   
-  view: string = 'month';
-  viewDate: Date = new Date();
+  //view: string = 'month';
+  //viewDate: Date = new Date();
   //events: CalendarEvent[] = [];
   //clickedDate: Date;
   

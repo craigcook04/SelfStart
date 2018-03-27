@@ -74,7 +74,7 @@ ul {
 }
 .active, .accordion:hover {
     /*width:90%;*/
-    background-color: #E6E6FA;
+    /*background-color: #E6E6FA;*/
     border-radius: 5px 5px 5px 5px;
 }
 
