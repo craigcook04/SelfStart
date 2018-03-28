@@ -1,9 +1,9 @@
 <div id="container">
     <br><br>
-    <h1>Select From The Options Below...</h1>
+    <h1 style="color: #0275d8; margin-left: auto; margin-right: auto; text-align: center;">Select From The Options Below...</h1>
     <hr>
     <div id="content">
-        <div id="image">
+        <div style="margin-left: auto; margin-right: auto; text-align: center;" id="image">
             <img src="../assets/images/marcotte-schedule.jpg">
         </div>
         <hr>
@@ -38,7 +38,7 @@
                     <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
                     <!--<div class="col-10"></div>-->
                         <!--<div style="overflow: auto; overflow-x:scroll;"></div>-->
-                    <div class="col-12"><app-appointments></app-appointments></div>
+                    <div><app-appointments></app-appointments></div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label"><strong>Description</strong></label>
@@ -66,6 +66,14 @@
                               <td><strong>{{ item?.file?.name }}</strong></td>
                             </tr>
                         </td>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-5 col-form-label">
+                        Please Pay Before Proceeding:
+                    </div>
+                    <div class="col-sm-5">
+                        <app-payment></app-payment>
                     </div>
                 </div>
         </div>

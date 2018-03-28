@@ -11,7 +11,7 @@ export class ExerciseService {
   constructor( private httpClient: HttpClient ) { }
 
   GetAllExercises() : any{
-    var url = '/api/exercises';
+    var url = '/api/exercises?s=name&offset=0&pageSize=10';
     return this.httpClient.get(url);
   }
 
@@ -25,7 +25,7 @@ export class ExerciseService {
     return this.httpClient.delete(url);
   }
 
-  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: any) : any {
+  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, media: any) : any {
     // body of the exercise request
     var body ={
       name: exName,
@@ -36,7 +36,6 @@ export class ExerciseService {
       location: loc,
       frequency: freq,
       duration: dur,
-      targetDate: targDate,
       multimedia: media
     }
 
@@ -44,7 +43,7 @@ export class ExerciseService {
     return this.httpClient.put(url, body);
   }
 
-  AddExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, targDate: Date, media: any) : any{
+  AddExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, media: any) : any{
     var body ={
       name: exName,
       description: descrip,
@@ -54,7 +53,6 @@ export class ExerciseService {
       location: loc,
       frequency: freq,
       duration: dur,
-      targetDate: targDate,
       multimedia: media
     }
 
@@ -62,8 +60,9 @@ export class ExerciseService {
     return this.httpClient.post(url, body);
   }
 
-  onUploadFinished( img: any ){
-    console.log(img);
+  SearchExercises(searchString: string, searchArea: string, offset, pageSize){
+    var url = '/api/exercises?q=' + searchString + '&s=' + searchArea + '&offset=' + offset + '&pageSize=' + pageSize;
+    return this.httpClient.get(url);
   }
   
 }

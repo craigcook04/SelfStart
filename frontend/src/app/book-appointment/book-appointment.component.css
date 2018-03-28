@@ -4,20 +4,6 @@
     position: relative;
 }
 
-#content {
-    float: left;
-    margin-left: auto;
-    width: 700px;
-}
-
-#image {
-    margin-left: 100px;
-    position: relative;
-    left: 0;
-    top: 50%;
-    width: 100%;
-}
-
 #buttons{
     margin-left: 25px;
     position: relative;

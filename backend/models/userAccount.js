@@ -13,7 +13,7 @@ var userAccountSchema = mongoose.Schema(
         userCode: String,
         adminUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Administrator'},
         physioUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
-        patientUser: {type: mongoose.Schema.Types.ObjectId, red: 'Patient'}
+        patientUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
     }
 );
 

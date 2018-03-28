@@ -286,15 +286,11 @@ router.route('/assign/:patient_id')
             else {
                 //save updated information of patient
                 patient.rehabPlan = request.body.rehabPlan;
-                console.log(patient.rehabPlan);
-
-                console.log(request.body);
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        console.log("Here");
                         response.json({success: true, patient: patient});
                     }
                 });
@@ -318,14 +314,46 @@ router.route('/plan/:plan_id')
 router.route('/notplan/:plan_id')
 
     .get(function (request, response) {
-        Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
-            if (error) {
-               response.send({error: error});
+        // Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
+        //     if (error) {
+        //       response.send({error: error});
+        //     }
+        //     else {
+        //       response.json({patients: patients});
+        //     }
+        // })
+        
+        let query = {};
+        if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            query = Patient.find({"rehabPlan": { "$ne": request.params.plan_id}});
+            query = query.find({ "$or": [{"givenName": { "$regex": request.query.q}}, {"familyName": {"$regex": request.query.q}}]});
+        }
+        else{
+            query = Patient.find({"rehabPlan": { "$ne": request.params.plan_id}});
+        }
+        var myparameter = request.query.s;
+        let sortOrder = 1;
+        var sort ={};
+        sort[myparameter] = sortOrder;
+        var options = 
+        {
+            sort: sort,
+            limit: 10,
+            populate: 'rehabPlan',
+            offset: Number(request.query.offset)
+        };
+        
+        Patient.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
-            else {
-               response.json({patients: patients});
-            }
-        })
+            
+            console.log(results);
+            response.send(results);
+        });
     });
     
 router.route('/plan/remove')
