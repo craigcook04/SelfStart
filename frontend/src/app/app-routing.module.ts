@@ -32,9 +32,12 @@ import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard';
 
+//Later: add gueard to the routes that need to be protected
+//to do this append ,canActivate: [something] to an object
+//ie: , canActivate: [AuthGuard]
 const routes: Routes = [
   {path: '', redirectTo: '/welcome', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},
   {path: 'services', component: ServicesComponent},
@@ -42,7 +45,7 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'manageforms', component: DynamicFormsComponent},
   {path: 'client', component: PatientProfileComponent},
-  {path: 'adminhome', component: AdminHomeComponent, canActivate: [AdminAuthGuard]},
+  {path: 'adminhome', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
   {path: 'signup', component: NewClientComponent},
