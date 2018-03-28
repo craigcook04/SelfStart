@@ -28,7 +28,7 @@ import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule} from '@angular/material'; 
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule, MatExpansionModule} from '@angular/material'; 
 
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
@@ -62,8 +62,9 @@ import { CalendarModule } from 'angular-calendar';
 import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
-import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
+import { PaymentComponent } from './payment/payment.component';
+import { PaymentService } from './payment.service';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
-    WelcomeHomeComponent
+    WelcomeHomeComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -116,8 +118,7 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    
-    
+    MatExpansionModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -147,7 +148,8 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     PhysiotherapistService,
     AppointmentsService,
     EncryptionService, 
-    AssessmentTestService],
+    AssessmentTestService,
+    PaymentService],
   bootstrap: [AppComponent]
 })
 

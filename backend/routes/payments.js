@@ -4,15 +4,25 @@
 var express = require('express');
 var router = express.Router();
 var Payment = require('../models/payments');
+var Patient = require('../models/patient');
 
 router.route('/')
 
     .post(function (request, response) {
         var payment = new Payment();
+        console.log(request.body);
+        
         payment.dayTimeStamp = request.body.dayTimeStamp;
         payment.amount = request.body.amount;
         payment.note = request.body.note;
-        payment.patient = request.body.patient;
+        var accountEmail = request.body.patient;
+        var patient;
+        
+        Patient.find({'account': accountEmail}, function(err, result){
+            if(err){ console.log(err) }
+            console.log(result);
+            patient = result;
+        })
         
         payment.save(function (error) {
             if (error) {
