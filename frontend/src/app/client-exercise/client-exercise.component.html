@@ -4,7 +4,7 @@
 
 
 <div class="jumbotron container-fluid">
- <h3 class="title">
+ <h3 class="title" style="color: #0275d8">
   Good {{ timeOfDay }}, Sam.
  </h3>
   <p class="quote">
@@ -14,45 +14,48 @@
 
 <div class="page">
   <div class="row">
-    <div class="col-lg-6">
-        <mat-list>
-          <mat-list-item class="listItems" *ngFor="let exercise of exercises" (click)="getExerciseInfo(exercise)" (click)="getExerciseImages(exercise._id)">
-            <button class="btn-block button">
-              <div class="row">
-                <div class="col-sm-1">
-                    <mat-icon svgIcon="dumbbell"></mat-icon> &nbsp;
+    <div class="col-lg-6 col-md-5 col-sm-5">
+      <mat-card>
+        <mat-card-content>
+          <mat-list>
+            <mat-card-title style="color: #0275d8;">
+              <b>Exercises in Menu: </b>
+            </mat-card-title>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-list-item class="listItems" *ngFor="let exercise of exercises" (click)="getExerciseInfo(exercise)" (click)="getExerciseImages(exercise._id)">
+              <button class="btn-block button">
+                <div class="row">
+                  <div class="col-sm-1">
+                      <mat-icon style="color: #0275d8" svgIcon="dumbbell"></mat-icon> &nbsp;
+                  </div>
+                  <div class="col-sm-7">
+                      <h5> <b>{{ exercise.name }}</b> </h5>
+                  </div>
                 </div>
-                <div class="col-sm-3">
-                    <h5> <b>{{ exercise.name }}</b> </h5>
+                <div class="divider">
+                  <mat-divider></mat-divider>
                 </div>
-                <div class="col-sm-5">
-                    <b>Target Date:</b>
-                    <time datetime="yyyy-MM-dd" class="cl-sm-5">{{ exercise.targetDate | date:'mediumDate' }}</time> 
-                </div>
-              </div>
-              <div class="divider">
-                <mat-divider></mat-divider>
-              </div>
-            </button>
-          </mat-list-item>
-        </mat-list>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-5 col-sm-5">
       <div>
           <mat-card>
               <mat-card-title class="title2">
                 <div class="row">
-                  <div class="col-sm-10">
-                    {{ currExercise?.name }}
+                  <div class="col-sm-10" style="color: #0275d8">
+                    <b> {{ currExercise?.name }} </b>
                   </div>
                   <div class="ml-sm-5 print">
                     <i class="fa fa-print" (click)="openPrint(currExercise)"></i>
                   </div>
                 </div>
               </mat-card-title>
-              <div class="divider2">
-                  <mat-divider></mat-divider>
-              </div>
+              <mat-divider></mat-divider>
               <br>
               <mat-card-content>
                 <div class="row">
@@ -77,21 +80,24 @@
                   <div class="col-sm-2">
                     <b>Repetitions: </b>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-4">
                     {{ currExercise?.duration }}
                   </div>
                   <div class="col-sm-2">
                     <b>Sets: </b>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-4">
                     {{ currExercise?.frequency }}
                   </div>
+                </div>
+                <br>
+                <div class="row">
                   <div class="col-sm-2">
                     <b>Location: </b>
                   </div>
-                  <div class="col-sm-2">
-                    {{ currExercise?.location }}
-                  </div>
+                  <div class="col-sm-4">
+                      {{ currExercise?.location }}
+                    </div>
                 </div>
                 <br>
                 <div class="row">
@@ -107,6 +113,7 @@
                 <div>
                   <br>
                   <mat-divider></mat-divider>
+                  <br>
                 </div>
                 <div #carousel>
                     <ngb-carousel *ngIf="images?.length > 0">
@@ -116,15 +123,6 @@
                       </ngb-carousel>
                 </div>
               </mat-card-content>
-              <!-- <mat-card-footer>
-                  <div class="col-sm-12">
-                      <button mat-button class="btn btn-block md" (click)="openCarousel(carousel)">
-                        <i class="fa fa-images"></i>
-                        <b>Show Exercise Images</b>
-                      </button>
-                    </div>
-                    <br>
-              </mat-card-footer> -->
             </mat-card>
       </div>
     </div>
@@ -132,7 +130,7 @@
 </div>
 
 <div style="display:none" #test>
-  <h1>Self Start: &nbsp; {{ currExercise?.name }} </h1>
+  <h1 style="color: #0275d8">Self Start: &nbsp; {{ currExercise?.name }} </h1>
   <br>
   <div>
     <b>Description: </b> &nbsp; {{ currExercise?.description }}

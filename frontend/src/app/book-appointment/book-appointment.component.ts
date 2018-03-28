@@ -35,6 +35,7 @@ export class BookAppointmentComponent implements OnInit {
               }
 
   ngOnInit() {
+    //this.payment.SetPrice(.01);
   }
 
   open(content) {
