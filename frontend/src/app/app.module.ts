@@ -63,7 +63,6 @@ import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
-import { PaymentComponent } from './payment/payment.component';
 import { PaymentService } from './payment.service';
 
 @NgModule({
@@ -95,8 +94,7 @@ import { PaymentService } from './payment.service';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
-    WelcomeHomeComponent,
-    PaymentComponent
+    WelcomeHomeComponent
   ],
   imports: [
     BrowserModule,

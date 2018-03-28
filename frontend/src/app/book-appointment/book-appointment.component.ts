@@ -7,9 +7,11 @@ import { ViewChild } from '@angular/core/';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import {MatStepperModule} from '@angular/material/stepper';
+import { PaymentService } from '../payment.service';
 
 const URL = "/api/image/bookappointment"
 const now = new Date();
+declare let paypal: any;
 
 @Component({
   selector: 'app-book-appointment',
@@ -22,12 +24,12 @@ export class BookAppointmentComponent implements OnInit {
 
   model: NgbDateStruct;
   invalidName: boolean = false;
-
-  @ViewChild('dp') dp: NgbDatepicker;
+  paymentAmount: any = '0';
 
   constructor(private modalService: NgbModal,
               private router: Router,
-              private imageService: ImageService) { 
+              private imageService: ImageService,
+              private paymentService: PaymentService) { 
               }
 
   ngOnInit() {
@@ -36,6 +38,13 @@ export class BookAppointmentComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, {size: "lg"});
+    paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+    if(content._def.references.book != null && content._def.references.book === 2){
+      this.paymentAmount = '100.00';
+    }
+    if(content._def.references.initial != null && content._def.references.initial === 2){
+      this.paymentAmount = '150.00';
+    }
   }
 
   selectToday(){
@@ -73,6 +82,54 @@ export class BookAppointmentComponent implements OnInit {
     }
   }
 
+  paypalConfig: any =  {
+    env: 'sandbox', // sandbox | production
+    // Paypal custom styling
+    style: {
+      label: 'paypal',
+      size:  'medium',    // small | medium | large | responsive
+      shape: 'rect',     // pill | rect
+      color: 'blue',     // gold | blue | silver | black
+      tagline: false    
+  },
+    // PayPal Client IDs - replace with your own
+    client: {
+      sandbox: 'ASewACzIceIwQug016WZc-thKQg4RWSSY_eZFOjAzKB9bu3Cw2u0CogzKktitI8jQ7AJN3zmuyrXAxRP',
+      production: ''
+    },
+    // Show the buyer a 'Pay Now' button in the checkout flow
+    commit: true,
+    // payment() is called when the button is clicked
+    payment: (data, actions) => {
+    // Make a call to the REST api to create the payment
+      return actions.payment.create({
+        payment: {
+          transactions: [{ amount: { total: this.paymentAmount, currency: 'CAD' }}]
+        }
+      });
+    },
+    // onAuthorize() is called when the buyer approves the payment
+    onAuthorize: (data, actions) => {
+      // Make a call to the REST api to execute the payment
+      return actions.payment.execute().then((data) => {
+        this.StorePayment(data);
+      })
+    },
 
+    onError: function(err, actions){
+      if (err === 'INSTRUMENT_DECLINED') {
+        window.alert("They Payment Method Was Declined, Please Try Again.");
+        actions.restart();
+      }
+      console.log(err);
+      actions.restart();
+    }
+}
+
+StorePayment(data: any){
+  this.paymentService.StorePayment(data).subscribe(data => {
+    console.log(data);
+  })
+}
 
 }

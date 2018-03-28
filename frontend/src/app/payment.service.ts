@@ -11,14 +11,10 @@ export class PaymentService {
       dayTimeStamp: paypalObj.create_time,
       amount: paypalObj.transactions[0].amount.total,
       note: "Paypal ID is: " + paypalObj.id,
-      patient: paypalObj.payer.email
+      patient: paypalObj.payer.payer_info.email
     }
     var url = '/api/payments'
     return this.httpClient.post(url, body);
-  }
-
-  StorePaymentSync( paypalObj: any ){
-   console.log(paypalObj + "!!!!!"); 
   }
 
 }
