@@ -233,6 +233,7 @@ router.route('/account/initial')
             var encryptedNonce = user.encrypt(nonce);
             session.nonce = user.decrypt(encryptedNonce);
             session.opened = new Date();
+            session.userType = user.userCode;
             
             session.save(function(err) {
                 if(err) {
@@ -241,9 +242,60 @@ router.route('/account/initial')
                 }
                 
                 response.send({nonce: nonce, salt: user.salt});
-            })
+            });
             
-        })
+        });
+    });
+    
+router.route('/session/loggedin')
+    .post(function(request, response) {
+        var user = new UserAccount();
+        var decryptedSessionToken = user.decrypt(request.body.sessionToken);
+        Session.findOne({'nonce': decryptedSessionToken}, function(err, session) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            console.log('session token and open session' , decryptedSessionToken, session);
+            if(!session || session == null) {
+                response.send({authorized: false});
+            }
+            
+            else{
+                response.send({authorized: true, role: session.userType});
+            }
+        });
     })
+    .get(function(request, response) {
+        Session.find(function(err, sessions) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({sessions: sessions});
+        });
+    })
+    .delete(function(request, response) {
+        Session.remove(function(err, deleted) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({deleted: deleted});
+        })
+    });
 
+router.route('/session/logout/:id')
+    .delete(function(request, response) {
+        Session.findByIdAndRemove(request.route.id, function(err, deleted) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({deleted: deleted});
+        });
+    });
 module.exports = router;

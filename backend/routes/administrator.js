@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 var Administrator = require('../models/administrator');
 var UserAccount = require('../models/userAccount');
+const crypto = require('crypto');
 
 router.route('/')
 
@@ -17,13 +18,16 @@ router.route('/')
         administrator.email = request.body.email;
         administrator.dateHired = request.body.dateHired;
         administrator.dateFinished = request.body.dateFinished;
-        administrator.account = request.body.account;
-        administrator.forms = request.body.forms;
         
         var userAccount = new UserAccount();
         userAccount.userAccountName = request.body.username;
-        userAccount.encryptedPassword = request.body.encryptedPassword;
-        userAccount.salt = request.body.salt;
+        var hashedPass = userAccount.hash(request.body.password);
+        var salt = crypto.randomBytes(16).toString('base64');
+        var saltAndHashedPass = hashedPass + salt;
+        var HashedSaltAndPass = userAccount.hash(saltAndHashedPass);
+        var encryptedPassword = userAccount.encrypt(HashedSaltAndPass);
+        userAccount.encryptedPassword = encryptedPassword;
+        userAccount.salt = salt;
         userAccount.needToChangePass = false;
         userAccount.isDisabled = false;
         userAccount.resetRequestSent = false;
@@ -66,7 +70,7 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Administrator.find(function (error, administrator) {
+        Administrator.find().populate('account').exec(function (error, administrator) {
             if (error) {
                 response.send(error);
             }
