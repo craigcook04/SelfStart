@@ -8,7 +8,6 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import * as jsPDF from 'jspdf';
-import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
