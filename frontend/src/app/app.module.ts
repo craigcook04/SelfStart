@@ -133,7 +133,8 @@ import { PaymentService } from './payment.service';
     MatRadioModule,
     MatButtonToggleModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule
   ],
   providers: [
     PatientService, 
