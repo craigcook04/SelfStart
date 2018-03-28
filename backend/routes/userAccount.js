@@ -289,7 +289,7 @@ router.route('/session/loggedin')
 
 router.route('/session/logout/:id')
     .delete(function(request, response) {
-        Session.findByIdAndRemove(request.route.id, function(err, deleted) {
+        Session.findByIdAndRemove(request.params.id, function(err, deleted) {
             if(err) {
                 response.send(err);
                 return;
@@ -297,5 +297,14 @@ router.route('/session/logout/:id')
             
             response.send({deleted: deleted});
         });
+        // console.log(request.params.id);
+        // Session.findById(request.params.id, function(err, refresh) {
+        //     console.log(refresh);
+        //     refresh.resetTTL();
+        //     refresh.save(function(err) {
+        //         console.log('done');
+        //         response.send('done');
+        //     })
+        // })
     });
 module.exports = router;
