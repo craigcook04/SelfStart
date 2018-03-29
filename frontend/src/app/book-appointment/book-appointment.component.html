@@ -72,16 +72,6 @@
                         </td>
                     </div>
                 </div>
-                <!-- <mat-divider></mat-divider>
-                <br>
-                <div class="form-group row">
-                    <div class="col-sm-5 col-form-label">
-                        Please Pay Before Proceeding:
-                    </div>
-                    <div class="col-sm-5">
-                        <app-payment></app-payment>
-                    </div>
-                </div> -->
         </div>
         <div class="modal-footer">
             <div class="float-left">
@@ -367,8 +357,7 @@
                 </div>
             </ng-template>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary" [disabled]="check3.checked != true" (click)="sendInitialInfoSheet(makeChanges)" (click)="c('Close click')">Book Initial Consultation</button>
-            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+                <div id="paypal-button-container"></div>
         </div>
         </ng-template>
 

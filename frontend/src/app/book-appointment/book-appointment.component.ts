@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ViewChild } from '@angular/core/';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { PaymentService } from '../payment.service';
 
 const URL = "/api/image/bookappointment"
@@ -22,9 +22,9 @@ export class BookAppointmentComponent implements OnInit {
 
   public uploader:FileUploader = new FileUploader({url: URL});
 
-  model: NgbDateStruct;
   invalidName: boolean = false;
   paymentAmount: any = '0';
+  currContent: any;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -33,54 +33,44 @@ export class BookAppointmentComponent implements OnInit {
               }
 
   ngOnInit() {
-    //this.payment.SetPrice(.01);
   }
 
   open(content) {
-    this.modalService.open(content, {size: "lg"});
+    this.currContent = this.modalService.open(content, {size: "lg"});
+    console.log(this.currContent);
     paypal.Button.render(this.paypalConfig, '#paypal-button-container');
     if(content._def.references.book != null && content._def.references.book === 2){
-      this.paymentAmount = '100.00';
+      this.paymentAmount = '0.01';
     }
     if(content._def.references.initial != null && content._def.references.initial === 2){
-      this.paymentAmount = '150.00';
+      this.paymentAmount = '0.02';
     }
   }
 
-  selectToday(){
-    this.model = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
-  }
+  // sendInitialInfoSheet(makeChanges){
 
-  determineAge(){
-    console.log("HERE");
-    var age = document.querySelector('dp').innerHTML;
-    console.log(age);
-  }
+  //   var name: any = document.querySelector('inputName');
+  //   name = name.value;
 
-  sendInitialInfoSheet(makeChanges){
+  //   //regex commands for input validation
+  //   var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+  //   var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+  //   var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+  //   var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //   var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+  //   var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
 
-    var name: any = document.querySelector('inputName');
-    name = name.value;
+  //   if(badFormat.test(name) || !name){
+  //     var nameBox = document.getElementById('inputName').style.borderColor = "red";
+  //     this.invalidName = true;
+  //     cannotContinue = true;
+  //   }
 
-    //regex commands for input validation
-    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
-    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
-    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
-    var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
-
-    if(badFormat.test(name) || !name){
-      var nameBox = document.getElementById('inputName').style.borderColor = "red";
-      this.invalidName = true;
-      cannotContinue = true;
-    }
-
-    if(cannotContinue){
-      this.modalService.open(makeChanges, {size: 'lg'});
-      return;
-    }
-  }
+  //   if(cannotContinue){
+  //     this.modalService.open(makeChanges, {size: 'lg'});
+  //     return;
+  //   }
+  // }
 
   paypalConfig: any =  {
     env: 'sandbox', // sandbox | production
@@ -119,16 +109,14 @@ export class BookAppointmentComponent implements OnInit {
     onError: function(err, actions){
       if (err === 'INSTRUMENT_DECLINED') {
         window.alert("They Payment Method Was Declined, Please Try Again.");
-        actions.restart();
       }
       console.log(err);
-      actions.restart();
     }
 }
 
 StorePayment(data: any){
   this.paymentService.StorePayment(data).subscribe(data => {
-    console.log(data);
+    this.currContent.close();
   })
 }
 
