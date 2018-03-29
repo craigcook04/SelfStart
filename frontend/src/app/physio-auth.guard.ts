@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UserAccountsService } from './user-accounts.service';
 
 
 @Injectable()
 export class PhysioAuthGuard implements CanActivate {
-  constructor(private userAccountService: UserAccountsService) {}
+  constructor(private userAccountService: UserAccountsService, private router: Router) {}
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot){
       if(this.userAccountService.LoggedIn()) {
         var isauth = await this.userAccountService.GetAuthorization();
@@ -16,11 +16,11 @@ export class PhysioAuthGuard implements CanActivate {
           return true;
         }
         else{
-          return false;
+          this.router.navigate(['../unauthorized']);
         }
       }
       else{
-        return false;
+        this.router.navigate(['../unauthorized']);        
       }
   }
 }

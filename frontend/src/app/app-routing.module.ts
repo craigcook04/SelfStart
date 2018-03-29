@@ -31,6 +31,7 @@ import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard';
+import {UnauthorizedComponent } from './unauthorized/unauthorized.component'
 
 //Later: add gueard to the routes that need to be protected
 //to do this append ,canActivate: [something] to an object
@@ -58,10 +59,11 @@ const routes: Routes = [
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
   {path: 'client/exercises', component: ClientExerciseComponent},
-  {path: 'assessmentTest', component: AssessmentTestComponent},
+  {path: 'assessmenttest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
+  {path: '/unauthorized', component: UnauthorizedComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 
 ];

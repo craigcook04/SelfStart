@@ -69,6 +69,7 @@ import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard'
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentService } from './payment.service';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { PaymentService } from './payment.service';
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
     WelcomeHomeComponent,
-    PaymentComponent
+    PaymentComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
