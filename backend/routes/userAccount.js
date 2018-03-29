@@ -183,7 +183,7 @@ router.route('/account/login')
                return;
            }
            
-           if(user == null ){
+           if(user == null){
                response.send({success: false, message: "This username doesnt exist"});
                return;
            }
@@ -225,6 +225,11 @@ router.route('/account/initial')
                 response.send(err);
                 return;
             }
+            
+            if(user == null ){
+               response.send({success: false, message: "This username doesnt exist"});
+               return;
+           }
             
             var nonce = crypto.randomBytes(32).toString('base64');
             console.log(nonce);
