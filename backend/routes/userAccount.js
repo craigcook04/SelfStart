@@ -4,7 +4,9 @@
 var express = require('express');
 var router = express.Router();
 var UserAccount = require('../models/userAccount');
-var ResetEmail = require('../models/resetEmail');
+var Session  = require('../models/session');
+const crypto = require('crypto');
+
 router.route('/')
 
     .post(function (request, response) {
@@ -181,36 +183,133 @@ router.route('/account/login')
                return;
            }
            
-           if(user == null ){
+           if(user == null){
                response.send({success: false, message: "This username doesnt exist"});
                return;
            }
-           
-           console.log(request.body.password);
-           var hashedpass = user.hash(request.body.password);
-           var PassAndSalt = hashedpass + user.salt;
-           var hashedSaltPlusPass = user.hash(PassAndSalt);
-           var inputPassEncryped = user.encrypt(hashedSaltPlusPass);
-           var inputPassDecrypted = user.decrypt(inputPassEncryped);
+
+           var inputPassDecrypted = user.decrypt(request.body.encryptedpass);
            var hashedPassword = user.decrypt(user.encryptedPassword);
-            
-           if(inputPassDecrypted == hashedPassword) {
-               if(user.needToChangePass == true) {
-                   response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id});
-                   return;
+           var sentDecryptedNonce = user.decrypt(request.body.encryptednonce);
+           Session.findOne({'nonce': sentDecryptedNonce}, function(err, session) {
+               if(err) {
+                   response.send(err);
                }
-               else {
-                 response.send({success: true, changePass: false, message: "Congratulations you are now logged in"});
-                 return;
-               }
-           }
-           
-           else {
-               response.send({success: false, incPass: true, message: "Password is incorrect"});
-               return;
-           }
+               console.log(session);
+               
+               if(inputPassDecrypted == hashedPassword && session.userID == user._id) {
+                  if(user.needToChangePass == true) {
+                          response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id, role: user.userCode});
+                          return;
+                   }
+                   else {
+                         response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
+                         return;
+                   }
+                }
+                   
+                else {
+                      response.send({success: false, incPass: true, message: "Password is incorrect"});
+                      return;
+                }
+           });
+       
 
        });
     });
+    
+router.route('/account/initial')
+    .post(function(request, response) {
+        UserAccount.findOne({'userAccountName': request.body.username}, function(err, user) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(user == null ){
+               response.send({success: false, message: "This username doesnt exist"});
+               return;
+           }
+            
+            var nonce = crypto.randomBytes(32).toString('base64');
+            console.log(nonce);
+            var session = new Session();
+            session.userID = user._id;
+            var encryptedNonce = user.encrypt(nonce);
+            session.nonce = user.decrypt(encryptedNonce);
+            session.opened = new Date();
+            session.userType = user.userCode;
+            
+            session.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({nonce: nonce, salt: user.salt});
+            });
+            
+        });
+    });
+    
+router.route('/session/loggedin')
+    .post(function(request, response) {
+        var user = new UserAccount();
+        var decryptedSessionToken = user.decrypt(request.body.sessionToken);
+        Session.findOne({'nonce': decryptedSessionToken}, function(err, session) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            console.log('session token and open session' , decryptedSessionToken, session);
+            if(!session || session == null) {
+                response.send({authorized: false});
+            }
+            
+            else{
+                response.send({authorized: true, role: session.userType});
+            }
+        });
+    })
+    .get(function(request, response) {
+        Session.find(function(err, sessions) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({sessions: sessions});
+        });
+    })
+    .delete(function(request, response) {
+        Session.remove(function(err, deleted) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({deleted: deleted});
+        })
+    });
 
+router.route('/session/logout/:id')
+    .delete(function(request, response) {
+        Session.findByIdAndRemove(request.params.id, function(err, deleted) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({deleted: deleted});
+        });
+        // console.log(request.params.id);
+        // Session.findById(request.params.id, function(err, refresh) {
+        //     console.log(refresh);
+        //     refresh.resetTTL();
+        //     refresh.save(function(err) {
+        //         console.log('done');
+        //         response.send('done');
+        //     })
+        // })
+    });
 module.exports = router;

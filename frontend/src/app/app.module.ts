@@ -63,6 +63,10 @@ import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './auth.guard'
+import { PhysioAuthGuard } from './physio-auth.guard';
+import { AdminAuthGuard } from './admin-auth.guard'
 import { PaymentService } from './payment.service';
 
 @NgModule({
@@ -116,7 +120,6 @@ import { PaymentService } from './payment.service';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatExpansionModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -147,6 +150,10 @@ import { PaymentService } from './payment.service';
     AppointmentsService,
     EncryptionService, 
     AssessmentTestService,
+    CookieService,
+    AuthGuard,
+    PhysioAuthGuard,
+    AdminAuthGuard,
     PaymentService],
   bootstrap: [AppComponent]
 })

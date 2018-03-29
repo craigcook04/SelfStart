@@ -1,25 +1,23 @@
 <div class="center">
   <h1>Welcome! Please log in here</h1>
-
-  <h4>Enter your credentials to log in</h4>
 </div>
 <br>
 <br>
 <mat-card class="assessTest">
-  <div class="form-group row">
+  <div class="form-group row usandpass">
     <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
     <div class="col-sm-9">
       <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
     </div> 
   </div>
-  <div class="form-group row">
+  <div class="form-group row usandpass">
     <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
     <div class="col-sm-9">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password>
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" (keyup.enter)="Login(username.value, password.value)" #password>
     </div> 
   </div>
   <div *ngIf="showFailure" class="dangeralrt">
-      <p class="failureMessage">Request was unsuccessful, please try again later</p>
+      <p class="failureMessage">The username or password you entered is incorrect</p>
   </div>
   <br> 
   <hr>

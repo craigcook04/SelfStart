@@ -41,6 +41,9 @@ router.route('/')
         userAccount.encryptedPassword = request.body.encryptedPassword;
         userAccount.salt = request.body.salt;
         userAccount.needToChangePass = false;
+        userAccount.isDisabled = false;
+        userAccount.resetRequestSent = false;
+        userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {
