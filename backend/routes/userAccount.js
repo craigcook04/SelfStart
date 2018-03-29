@@ -171,21 +171,27 @@ router.route('/account/reset')
                 return;
                 
             }
-            console.log('hello');
+            
+            if(user.resetRequestSent) {
+                //this user has already requested a password reset request
+                response.send({success: false, alreadySent: true, message: 'A password reset request has already been sent'});
+                return;
+            }
+        
             user.needToChangePass = true;
             user.save(function(err) {
                 if(err) {
                     response.send(err);
                     return;
                 }
-                console.log(user);
+                
                 response.send({success: true, message: "A reset request has been sent to the admin"});
             });
         });
     })
     .get(function(request, response) {
         //get all accounts requesting to have their account reset
-        UserAccount.find({'needToChangePass': true}, function(err, users) {
+        UserAccount.find({'needToChangePass': true, 'resetRequestSent': false}, function(err, users) {
             if(err) {
                 response.send(err);
                 return;

@@ -111,6 +111,7 @@ router.route('/forgotten')
               var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
               var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
               useraccount.encryptedPassword = inputPassEncrypted;
+              useraccount.resetRequestSent = true;
               useraccount.save(function(err) {
                   if(err) {
                       response.send(err);
@@ -119,9 +120,9 @@ router.route('/forgotten')
               });
 
               var emailBody = `
-              <h4>Hello, please click the link below to reset your password </h4>
-              <p>Your temporary password is ${newPassword} </p>
-              <p>Please use this new password to log in to your account</p> 
+              <h4>Hello, please follow the folowing instructions to recover your account </h4>
+              <p>We have assigned your account a temporary password to be used to log in to your account.</p> 
+              <p>Your temporary password is ${newPassword}. </p>
               <p>Upon logging in, you will be prompted to enter a new password. Once you have entered your new password, your account will be updated accordingly</p>
               <h5>Thank you for using Self Start </h5>
               `;
