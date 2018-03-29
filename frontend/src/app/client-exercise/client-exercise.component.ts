@@ -43,11 +43,10 @@ export class ClientExerciseComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.exerciseService.GetAllExercises().subscribe(data =>{
-      this.exercises = data.exercise;
-      console.log(this.exercises);
+    this.exerciseService.SearchExercises("", "name", 0, 25).subscribe(data =>{
+      var obj: any = data;
+      this.exercises = obj.docs;
       this.currExercise = this.exercises[0];
-      console.log(this.currExercise);
       this.getExerciseImages(this.currExercise._id, this.currExercise.name);
     })
   }
@@ -61,6 +60,7 @@ export class ClientExerciseComponent implements OnInit {
   }
 
   getExerciseInfo(exercise: any){
+    if(exercise.actionSteps == null || exercise.actionSteps == undefined){ return; }
     this.currExercise = exercise;
     var steps = exercise.actionSteps.split(/[0-9]+\./g);
     console.log(steps);
@@ -73,9 +73,10 @@ export class ClientExerciseComponent implements OnInit {
     this.images = null;
     this.imageService.GetExerciseImage(id).subscribe(data=>{
       var obj: any = data;
-      //this.exerciseImages.push({firstTime: false, exerciseId: id, images: obj.images})
       this.images = obj.images;
-
+      this.images.forEach(element=>{
+        console.log(element.type);
+      })
     })
   }
 
@@ -108,14 +109,17 @@ export class ClientExerciseComponent implements OnInit {
     var vert = 0;
     doc.text( 30, 30, "Images:");
     this.images.forEach(image => {
-      var imgData = 'data:image/png;base64,' + image.data;
+
+      if(image.type === 'PNG' || image.type === "png"){ var imgData = 'data:image/png;base64,' + image.data;}
+      if(image.type === 'JPG' || image.type === "jpg"){ var imgData = 'data:image/jpg;base64,' + image.data;}
+
       if(vert == 0){
         vert = 40;
       }
       else{
         vert = 140;
       }
-      doc.addImage(imgData, 'PNG', 30, vert, 100, 100);
+      doc.addImage(imgData, 'PNG', 50, vert, 100, 100);
     });
 
     doc.save(exercise.name + '.pdf');

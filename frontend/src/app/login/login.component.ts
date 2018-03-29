@@ -20,9 +20,22 @@ export class LoginComponent implements OnInit {
   }
 
   Login(username: string, password: string) {
-    this.showFailure = false;
+
+    if(!username || !password) {
+      var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';    
+      this.showFailure = true;
+      return;      
+    }
+    
+    var cityBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';        
     this.userAccountsService.InitialConnection(username).subscribe(data => {
         var retObj1: any = data;
+        if(retObj1.success == false) {
+            this.showFailure = true;
+            var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';    
+            return;
+        }
+
         console.log("initialConnection", data);
         this.userAccountsService.Login(username, password, retObj1.nonce, retObj1.salt).subscribe(data => {
         var retObj: any = data;
@@ -50,7 +63,9 @@ export class LoginComponent implements OnInit {
         else{ 
           if(retObj.incPass == true) {
             this.showFailure = true;
+            var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';                
           }
+          
         }
       })
     })

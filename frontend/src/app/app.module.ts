@@ -27,7 +27,9 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule} from '@angular/material'; 
+
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule, MatExpansionModule} from '@angular/material'; 
+
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -60,12 +62,13 @@ import { CalendarModule } from 'angular-calendar';
 import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
-import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard'
+import { PaymentComponent } from './payment/payment.component';
+import { PaymentService } from './payment.service';
 
 @NgModule({
   declarations: [
@@ -96,7 +99,8 @@ import { AdminAuthGuard } from './admin-auth.guard'
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
-    WelcomeHomeComponent
+    WelcomeHomeComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -151,7 +155,8 @@ import { AdminAuthGuard } from './admin-auth.guard'
     CookieService,
     AuthGuard,
     PhysioAuthGuard,
-    AdminAuthGuard],
+    AdminAuthGuard,
+    PaymentService],
   bootstrap: [AppComponent]
 })
 
