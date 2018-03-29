@@ -95,7 +95,7 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
-    CalendarComponent
+    CalendarComponent,
     WelcomeHomeComponent
   ],
   imports: [

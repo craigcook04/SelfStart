@@ -1,9 +1,14 @@
-<div id=today>
+<!--<h4>Welcome, Stephanie</h4>-->
+<br>
+<div class="alert alert-info">
+  <h4>Welcome Stephanie</h4>
+</div>
+<!--<div id=section>
   <h4>Your Appointments</h4>
   <hr>
   <div *ngFor = "let appt of appointments">
     <br>
-    <button class="accordion"  (click)="show(appt)"><b>{{appt.date | date:'medium' }}</b></button>
+    <button class="accordion"  (click)="show(appt)"><b>{{appt.date | date:'medium'}}</b></button>
     <div *ngIf = "appt == activated">
       <div class="info">
         <hr>
@@ -15,40 +20,39 @@
     </div>
   </div>
   <br>
-</div>
+</div>-->
 <br><br>
-<!--<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Personal data
-      </mat-panel-title>
-      <mat-panel-description>
-        Type your name and age
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+<h5>Your Appointments for {{today}}</h5>
+<div *ngFor = "let appt of appointments">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{appt.patient}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{appt.date | date:'shortTime'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p><b>Reason:  </b>{{appt.reason}}</p>
+      <p><b>Other:  </b>{{appt.other}}</p>
+    </mat-expansion-panel>
+    <!--<mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Self aware panel
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>-->
+  </mat-accordion>
+</div>
 
-    <mat-form-field>
-      <input matInput placeholder="First name">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Age">
-    </mat-form-field>
-  </mat-expansion-panel>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Self aware panel
-      </mat-panel-title>
-      <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
-</mat-accordion>-->
+<br>
 <button class="button" style="vertical-align:middle" (click)="goToCalendar()"><span>Monthly Calendar</span></button>
 <div id="mySidenav" class="sidenav">
   <a id=exercise (click)="goToExercises()">Manage Exercises</a>

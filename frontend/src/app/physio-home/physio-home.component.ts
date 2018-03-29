@@ -53,6 +53,7 @@ export class PhysioHomeComponent implements OnInit {
   //items: Array<CalendarEvent<{ time: any }>> = [];
   
   ngOnInit() {
+    var today = new Date();
     this.appointments = [];
      this.physioHomeService.getAppointments().subscribe(data =>{
       console.log(data);
