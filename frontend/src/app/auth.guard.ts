@@ -15,13 +15,18 @@ export class AuthGuard implements CanActivate {
       if(isauth.authorized && isauth.role == 'US'){
         return true;
       }
-      else{
-        return false;
+      else if(isauth.authorized && isauth.role == "PH"){
+        this.router.navigate(['../physio/wrongaccount']);
+      }
+      else if(isauth.authorized && isauth.role == "AD") {
+        this.router.navigate(['../admin/wrongaccount']);
+      }
+      else {
+        this.router.navigate(['../unauthorized']);
       }
     }
     else{
       this.router.navigate(['../unauthorized']);
-      
     }
 
   }

@@ -15,6 +15,9 @@ export class PhysioAuthGuard implements CanActivate {
         if(isauth.authorized && isauth.role == 'PH'){
           return true;
         }
+        else if(isauth.authorized && isauth.role == "AD") {
+          this.router.navigate(['../admin/wrongaccount']);
+        }
         else{
           this.router.navigate(['../unauthorized']);
         }

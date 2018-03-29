@@ -70,6 +70,7 @@ import { AdminAuthGuard } from './admin-auth.guard'
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     CompleteAssessmentTestComponent,
     WelcomeHomeComponent,
     PaymentComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    WrongAccountComponent
   ],
   imports: [
     BrowserModule,
