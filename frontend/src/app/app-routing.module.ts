@@ -30,7 +30,7 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},

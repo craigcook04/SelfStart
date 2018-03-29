@@ -1,0 +1,13 @@
+.title {
+    color: #0275d8;
+    margin: 0.5em;
+}
+
+.card-body {
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+.card-header {
+    text-align: center;
+}
