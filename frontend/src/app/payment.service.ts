@@ -6,12 +6,12 @@ export class PaymentService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  StorePayment(paypalObj: any): any{
+  StorePayment(paypalObj: any, patientID: string): any{
     var body = {
       dayTimeStamp: paypalObj.create_time,
       amount: paypalObj.transactions[0].amount.total,
       note: "Paypal ID is: " + paypalObj.id,
-      patient: paypalObj.payer.payer_info.email
+      patient: patientID
     }
     var url = '/api/payments'
     return this.httpClient.post(url, body);

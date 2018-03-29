@@ -8,6 +8,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDatepicker, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MatStepperModule } from '@angular/material/stepper';
 import { PaymentService } from '../payment.service';
+import { CookieService } from 'ngx-cookie-service';
 
 const URL = "/api/image/bookappointment"
 const now = new Date();
@@ -29,10 +30,13 @@ export class BookAppointmentComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private router: Router,
               private imageService: ImageService,
-              private paymentService: PaymentService) { 
+              private paymentService: PaymentService,
+              private cookieService: CookieService) { 
               }
 
   ngOnInit() {
+    this.cookieService.set('ID', "5ab0007926bba10fad373816");
+    console.log(this.cookieService.getAll());
   }
 
   open(content) {
@@ -85,6 +89,7 @@ export class BookAppointmentComponent implements OnInit {
     // PayPal Client IDs - replace with your own
     client: {
       sandbox: 'ASewACzIceIwQug016WZc-thKQg4RWSSY_eZFOjAzKB9bu3Cw2u0CogzKktitI8jQ7AJN3zmuyrXAxRP',
+      //this is where Stephanie's paypal will go
       production: ''
     },
     // Show the buyer a 'Pay Now' button in the checkout flow
@@ -115,7 +120,8 @@ export class BookAppointmentComponent implements OnInit {
 }
 
 StorePayment(data: any){
-  this.paymentService.StorePayment(data).subscribe(data => {
+  this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
+    console.log(data);
     this.currContent.close();
   })
 }
