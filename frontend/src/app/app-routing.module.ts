@@ -28,9 +28,15 @@ import {AssessmentTestComponent} from './assessment-test/assessment-test.compone
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
+import { AuthGuard } from './auth.guard'
+import { PhysioAuthGuard } from './physio-auth.guard';
+import { AdminAuthGuard } from './admin-auth.guard';
 
+//Later: add gueard to the routes that need to be protected
+//to do this append ,canActivate: [something] to an object
+//ie: , canActivate: [AuthGuard]
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},
