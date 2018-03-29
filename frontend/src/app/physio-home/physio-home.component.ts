@@ -33,12 +33,12 @@ interface Appointment {
 })
 
 export class PhysioHomeComponent implements OnInit {
-
-  constructor(private router: Router, private physioHomeService: PhysioHomeService) { }
   
   activated: any;
   appointments: any[];
   panelOpenState: boolean = false;
+  
+  constructor(private router: Router, private physioHomeService: PhysioHomeService) { }
   
   //view: string = 'month';
   //viewDate: Date = new Date();
@@ -53,7 +53,7 @@ export class PhysioHomeComponent implements OnInit {
   //items: Array<CalendarEvent<{ time: any }>> = [];
   
   ngOnInit() {
-    var today = new Date();
+    
     this.appointments = [];
      this.physioHomeService.getAppointments().subscribe(data =>{
       console.log(data);
