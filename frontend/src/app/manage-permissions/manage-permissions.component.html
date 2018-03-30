@@ -78,7 +78,7 @@
                             <h6><b>Area: </b> &nbsp; {{permission.permissionArea}}</h6>
                         </div>
                         <div class="pull-right delete">
-                          <i class="fa fa-times-circle" (click)="removePatient(client)"></i>
+                          <i class="fa fa-times-circle" (click)="RemovePermission(permission)"></i>
                         </div>
                       </div>
                         <mat-divider></mat-divider>
@@ -87,9 +87,30 @@
             </mat-list>
             <br>
             <div>
-              <mat-form-field>
-                <input matInput (keyup)="applyFilter(searchValue.value)" placeholder="Search for Clients..." #searchValue>
-              </mat-form-field>
+                <mat-table [dataSource]="dataSource" class="searchList" matSort>
+                    <ng-container matColumnDef="code">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Permission Code </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row?.code}} </mat-cell>
+                      </ng-container>
+                  
+                      <ng-container matColumnDef="area">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Permission Area </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{ row?.area }} </mat-cell>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="actions">
+                          <mat-header-cell *matHeaderCellDef> Assign Permission </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> 
+                            <button class="btn block" color="primary" mat-raised-button (click)="AssignPermission(row)">
+                              Assign
+                            </button>
+                          </mat-cell>
+                        </ng-container>
+                  
+                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;">
+                      </mat-row>
+                  </mat-table>
             </div>
             <br>
       </mat-card>

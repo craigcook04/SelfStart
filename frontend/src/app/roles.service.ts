@@ -17,4 +17,13 @@ export class RolesService {
 
     return this.http.get(url);
   }
+
+  UpdateRolePermissions(id: string, newRoles: any) {
+    var url = "/api/role/updateperm/" + id;
+    var body = {
+      permissions: newRoles
+    }
+
+    return this.http.put(url, body);
+  }
 }
