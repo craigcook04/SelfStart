@@ -5,23 +5,39 @@ var express = require('express');
 var router = express.Router();
 var Payment = require('../models/payments');
 var Patient = require('../models/patient');
+// var Session = require('../models/session');
+
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
 
 router.route('/')
 
     .post(function (request, response) {
         var payment = new Payment();
-        console.log(request.body);
         
         payment.dayTimeStamp = request.body.dayTimeStamp;
         payment.amount = request.body.amount;
         payment.note = request.body.note;
-        var accountEmail = request.body.patient;
-        var patient;
-        
-        Patient.find({'account': accountEmail}, function(err, result){
-            if(err){ console.log(err) }
-            console.log(result);
-            patient = result;
+        let patient = Patient.findOne({"_id": request.body.patient}, function(err, foundYou){
+            if(err){
+                response.send({success: false});
+            }
+            payment.patient = foundYou;
         })
         
         payment.save(function (error) {

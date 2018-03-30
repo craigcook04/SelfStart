@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -27,9 +27,7 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule, MatExpansionModule} from '@angular/material'; 
-
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -63,8 +61,14 @@ import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
-import { PaymentComponent } from './payment/payment.component';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './auth.guard'
+import { PhysioAuthGuard } from './physio-auth.guard';
+import { AdminAuthGuard } from './admin-auth.guard'
 import { PaymentService } from './payment.service';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { WrongAccountComponent } from './wrong-account/wrong-account.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -96,9 +100,12 @@ import { PaymentService } from './payment.service';
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
     WelcomeHomeComponent,
-    PaymentComponent
+    UnauthorizedComponent,
+    WrongAccountComponent,
+    WelcomeHomeComponent
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
@@ -118,7 +125,6 @@ import { PaymentService } from './payment.service';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatExpansionModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -149,8 +155,13 @@ import { PaymentService } from './payment.service';
     AppointmentsService,
     EncryptionService, 
     AssessmentTestService,
+    CookieService,
+    AuthGuard,
+    PhysioAuthGuard,
+    AdminAuthGuard,
     PaymentService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ NO_ERRORS_SCHEMA ]
 })
 
 export class AppModule { }

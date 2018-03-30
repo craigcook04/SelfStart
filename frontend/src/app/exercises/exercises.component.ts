@@ -5,7 +5,6 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from '../image.service';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-config';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 import { PageEvent } from '@angular/material';
 
@@ -15,8 +14,7 @@ const URL = '/api/image';
 @Component({
   selector: 'app-exercises',
   templateUrl: './exercises.component.html',
-  styleUrls: ['./exercises.component.css'],
-  providers: [NgbDatepickerConfig]
+  styleUrls: ['./exercises.component.css']
 })
 export class ExercisesComponent implements OnInit {
 
@@ -31,18 +29,17 @@ export class ExercisesComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions = [10];
   pageEvent: PageEvent;
+  noPause = true;
 
 
   @ViewChild('carousel') carousel:NgbCarousel;
-  @ViewChild('dp1') dp: any;
 
   public uploader:FileUploader = new FileUploader({url: URL});
 
   constructor( private exerciseService: ExerciseService, 
                private modalService: NgbModal,
                private router: Router,
-               private imageService: ImageService,
-               private dateConfig: NgbDatepickerConfig) { }
+               private imageService: ImageService) { }
 
   ngOnInit() {
     this.exerciseService.GetAllExercises().subscribe(data =>{

@@ -28,9 +28,17 @@ import {AssessmentTestComponent} from './assessment-test/assessment-test.compone
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
+import { AuthGuard } from './auth.guard'
+import { PhysioAuthGuard } from './physio-auth.guard';
+import { AdminAuthGuard } from './admin-auth.guard';
+import {UnauthorizedComponent } from './unauthorized/unauthorized.component'
+import { WrongAccountComponent } from './wrong-account/wrong-account.component'
 
+//Later: add gueard to the routes that need to be protected
+//to do this append ,canActivate: [something] to an object
+//ie: , canActivate: [AuthGuard]
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},
@@ -52,10 +60,13 @@ const routes: Routes = [
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
   {path: 'client/exercises', component: ClientExerciseComponent},
-  {path: 'assessmentTest', component: AssessmentTestComponent},
+  {path: 'assessmenttest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
+  {path: 'unauthorized', component: UnauthorizedComponent},
+  {path: 'admin/wrongaccount', component: WrongAccountComponent},
+  {path: 'physio/wrongaccount', component: WrongAccountComponent},  
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 
 ];

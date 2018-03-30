@@ -6,6 +6,25 @@ var router = express.Router();
 var Patient = require('../models/patient');
 var UserAccount = require('../models/userAccount');
 var ResetEmail = require('../models/resetEmail');
+// var Session = require('../models/session');
+
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
 
 //generic route for fetching all patients
 
@@ -41,6 +60,9 @@ router.route('/')
         userAccount.encryptedPassword = request.body.encryptedPassword;
         userAccount.salt = request.body.salt;
         userAccount.needToChangePass = false;
+        userAccount.isDisabled = false;
+        userAccount.resetRequestSent = false;
+        userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {

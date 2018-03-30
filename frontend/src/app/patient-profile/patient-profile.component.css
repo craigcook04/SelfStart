@@ -44,10 +44,6 @@ h2 {
     margin: 1em;
 }
 
-.patientbtn {
-    margin-left: 1em;
-    margin-bottom: 1em;
-}
 
 .info {
     margin: 1em;
@@ -204,11 +200,6 @@ h2 {
     margin-left: 1rem;
  }
 
- .orderTag{
-     margin-left: 2.5rem;
-     margin-bottom: -1.5rem;
- }
-
  .arrows {
      cursor: pointer;
      display: inline-block;
@@ -298,7 +289,7 @@ h2 {
 
 .greyCard {
     width: 95%;
-    background-color: lightgrey;
+    background-color: #f5f5f5;
 }
 
 .pageinfo {
@@ -315,4 +306,49 @@ h2 {
 
 .pnter {
     cursor: pointer;
+}
+
+#wrapper {
+    font-size: 16px;
+}
+#leftcolumn {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 1%;
+}
+
+#rightcolumn {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 15%;
+}
+
+.patientbtn {
+    float: left;
+    margin-left: 8%;
+}
+
+.breaker {
+    width: 100%;
+    margin-top: -0.5%;
+    padding-top: -1%;
+    border-color: #0275d8;
+}
+
+.personicon {
+    color: #0275d8;
+}
+
+.infob {
+    color:#0275d8;
+}
+
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+    color: #0275d8;
+}
+
+.orderTag{
+    margin-left: 2.5rem;
+    margin-bottom: -1.5rem;
+    color: black;
 }

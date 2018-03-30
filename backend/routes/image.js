@@ -1,9 +1,27 @@
-var express = require('express');
+ var express = require('express');
 var router = express.Router();
 var Image = require('../models/image');
 var fs  = require('fs');
 var multer = require('multer');
+// var Session = require('../models/session');
 
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
 
 router.route('/')
 
@@ -31,7 +49,7 @@ router.route('/')
         Image.find(function (error, exercises) {
             if (error) response.send(error);
             response.json({exercise: exercises});
-        });
+        }).sort({name: 1});
     })
     
 //make delete to clear up database
@@ -59,13 +77,12 @@ router.route('/setid')
 
     .put(function(request, response){
         
-        console.log(request.body);
         Image.findOne({name: request.body.image}, {lean: true}, function(error, image){
-            
             if(error){
                 response.send({error: error});
             }
             else{
+                
                 image.update({exercise: request.body._id}, function(error, place){
                     if(error){ console.log("I didn't work")}
                     console.log("I worked");
