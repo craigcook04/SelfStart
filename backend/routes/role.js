@@ -156,5 +156,31 @@ router.route('/permission/:permission_id')
             response.send({deleted: deleted});
         });
     });
+    
+router.route('/updateperm/:role_id')
+    .put(function(request, response) {
+        Role.findById(request.params.role_id, function(err, role) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(role == null) {
+                response.send({success: false, message: 'there was a problem retrieving the role'});
+                return;
+            }
+            
+            //this route takes a full list of permissions and updates the given role's permissions to be it
+            role.permission = request.body.permissions;
+            role.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({success: true, message: 'role has been successfully updated'});
+            })
+        })
+    })
 
 module.exports = router;
