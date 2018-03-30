@@ -38,15 +38,7 @@
 <!--<mat-sidenav-content style="background-color: white;">-->
 <br><br>
 
-<!--<div class="input-group mb-3 searchbar" id="custom-search-input">-->
-<!--  <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>-->
-<!--  <span class="input-group-btn">-->
 
-<!--<button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">-->
-<!--  <fa name="search"></fa>-->
-<!--</button>-->
-<!--</span>-->
-<!--</div>-->
 <br>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -100,7 +92,7 @@
               <div class="form-group row">
                 <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputPassword" placeholder="Password" #newPatientPassword>
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" #newPatientPassword>
                 </div>
               </div>
               <div class="form-group row">
@@ -255,7 +247,7 @@
           <p class='orderTag'><b>Additional Options:</b></p>
           <i *ngIf="!ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to ascending order">arrow_downward</i>
           <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to descending order">arrow_upward</i>
-          <i class="material-icons rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">refresh</i>
+          <i class="material-icons rfrshicon" ngbTooltip="Refresh list" (click)="StandardPhysioList()">refresh</i>
 
           <mat-paginator class="myPaginator" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="SwitchPageEvent($event, searchValue.value, searchArea.value);">
           </mat-paginator>
@@ -530,7 +522,7 @@
               <div class="form-group row">
                 <label for="inputPhysioPassword" class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputPhysioPassword" placeholder="Password" #newPhysioPassword>
+                  <input type="password" class="form-control" id="inputPhysioPassword" placeholder="Password" #newPhysioPassword>
                 </div>
               </div>
               <div class="form-group row">
@@ -542,12 +534,7 @@
                   </div>
                 </div>
               </div>
-              <!--<div class="form-group row">-->
-              <!--  <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
-              <!--  <div class="col-sm-9">-->
-              <!--    <input type="text" class="form-control" id="inputPhysioPatientID" placeholder="Patient ID" #newPatientID>-->
-              <!--  </div>-->
-              <!--</div>-->
+          
               <div class="form-group row">
                 <label for="inputPhysioEmail" class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
@@ -665,9 +652,9 @@
         <br><br><br>
         <mat-card class="greyCard mx-auto">
           <p class='orderTag'><b>Additional Options:</b></p>
-          <i *ngIf="!ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to ascending order">arrow_downward</i>
-          <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to descending order">arrow_upward</i>
-          <i class="material-icons rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">refresh</i>
+          <i *ngIf="!ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPhysio(searchValue1.value, searchArea1.value)" ngbTooltip="Change to ascending order">arrow_downward</i>
+          <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPhysio(searchValue1.value, searchArea1.value)" ngbTooltip="Change to descending order">arrow_upward</i>
+          <i class="material-icons rfrshicon" ngbTooltip="Refresh list" (click)="StandardPhysioList()">refresh</i>
 
           <mat-paginator class="myPaginator" [length]="length1" [pageSize]="pageSize1" [pageSizeOptions]="pageSizeOptions1" (page)="SwitchPageEventPhysio($event, searchValue1.value, searchArea1.value);">
           </mat-paginator>
@@ -689,16 +676,7 @@
                   <p><b>Email:  </b> {{patient?.email}}
                     <fa name="envelope" class="emailer" ngbTooltip="send email" (click)="open(emailModal)"></fa>
                   </p>
-                  <!--<p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>-->
-                  <!--<p><b>Age: </b> {{calculateAge(patient?.DOB)}} years old</p>-->
-                  <!--<p><b>Gender:  </b> {{patient?.gender?.name}}</p>-->
-                  <!--<p><b>Address: </b> {{patient?.address}}</p>-->
-                  <!--<p><b>Postal Code:  </b> {{patient?.postalCode}}</p>-->
-                  <!--<p><b>Phone Number:  </b> {{patient?.phone}} <i class="material-icons copyicon" ngbTooltip="copy phone number" (click)="CopyToClipboard(patient.phone)">description</i></p>-->
-                  <!--<p><b>Country:  </b> {{patient?.country?.name}} </p>-->
-                  <!--<p><b>Province:  </b> {{patient?.province?.name}} </p>-->
-                  <!--<p><b>City:  </b> {{patient?.city?.name}} </p>-->
-                  <!--<input type='text' class='dummy' id="dummyInput" value='{{patient.phone}}' #getPhoneNumber/>-->
+         
                 </div>
 
                 <button class="btn btn-primary btn-sm patientbtn" (click)="open(editPhysio)">Edit</button>
@@ -763,20 +741,33 @@
                           </div>
                         </div>
                       </div>
-                      <!--<div class="form-group row">-->
-                      <!--  <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>-->
-                      <!--  <div class="col-sm-9">-->
-                      <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>-->
-                      <!--  </div>-->
-                      <!--</div>-->
-                      <!--<div class="form-group row">-->
-                      <!--  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>-->
-                      <!--  <div class="col-sm-9">-->
-                      <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateFinished  | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>-->
-                      <!--  </div>-->
-                      <!--</div>-->
+               
                 
-
+                     <ng-template #emailModal let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Email {{patient.familyName}}, {{patient.givenName}}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">To: </label>
+                      <p class="toemail">{{patient.email}}</p>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputSubject" class="col-sm-3 col-form-label">Subject: </label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputSubject" placeholder="Subject" #emailSubject>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="Emailbody" class="col-form-label tobody">Body: </label>
+                      <textarea class="form-control myta" rows="5" id="emailBody" #emailBody> </textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Send</button>
+                    <button type="button" class="btn btn-primary btn-med" (click)="SendEmail(patient.email, emailSubject.value, emailBody.value); c('Close click')">Send</button>
+                  </div>
+                </ng-template>
                     </form>
 
                   </div>

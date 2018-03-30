@@ -45,6 +45,7 @@ export class UserAccountsComponent implements OnInit {
   showDeleteSuccess: boolean;
   showFailure: boolean;
   emailSuccess: boolean;
+  ascendingOrd: boolean = true;
   
   invalidFirstname: boolean = false;
   invalidLastname: boolean = false;
@@ -68,6 +69,7 @@ export class UserAccountsComponent implements OnInit {
   
   ngOnInit() {
     this.content = false;
+    this.ascendingOrd = true;
     this.patientService.GetAllPatients().subscribe(data => {
       console.log(data);
       this.length = data.total;
@@ -121,25 +123,7 @@ export class UserAccountsComponent implements OnInit {
     this.modalService.open(content, {size: 'lg'});
   }
    updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) {
-  //   console.log(newAddress, newProvince);
-  // //this.showSuccess = true;
-  //   this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
-  //     console.log(data);
-  //     //reload the list of patients
-  //     this.patientService.GetAllPatients().subscribe(data => {
-  //       this.clients = Object.assign([], data.docs);
-  //       console.log(data);
-  //     });
-  //     this.activated = null;
-  //     if(data.success) {
-  //       //the update was successful
-  //       //this.showSuccess = true;
-  //     }
-  //     else{
-  //       //it was not successfuls
-  //       //this.showFailure = true;
-  //     }
-  //   });
+
     var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
     var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
     var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
@@ -221,15 +205,8 @@ export class UserAccountsComponent implements OnInit {
   }
   updatePhysio(firstName: string, lastName: string, email:string, ID: string, dateHired: string, dateFinished: string, _id: string){
     
-    // console.log("in component");
-    // this.physiotherapistService.updatePhysio(givenName, familyName, email, ID, dateHired, dateFinished, _id).subscribe (data =>{
-    //   console.log(data);
-    //   this.physiotherapistService.getTherapists().subscribe(data => {
-    //     this.therapists = Object.assign([], data.physiotherapist);
-    //   });  
-    //   this.activated = null;
-    // });
-     var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+  
+    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
     var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
     var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
     var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -324,27 +301,7 @@ export class UserAccountsComponent implements OnInit {
   }
 
   NewPatient(makeChanges,successfulModal) {
-    //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
-    //needs to have the same encrytion as the one in sign up
-    // this.newClientService.CreateClient(newUserName, newPassword, lastName, firstName, email, DOB, newGender, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newAddress, "none").subscribe(data => {
-    //   var retObj: any = data;
-    //   if(retObj.success) {
-    //     this.showCreationSuccess = true;
-    //     this.newClientService.SendToVerification(retObj.patient._id, email,firstName,lastName).subscribe(data => {
-    //       console.log(data);
-    //     });
-    //   }
-    //   else{
-    //     this.showFailure = true;
-    //   }
-
-    //   //reload the new patient list
-    //   this.patientService.GetAllPatients().subscribe(data => {
-    //     this.length = data.total;
-    //     this.clients = Object.assign([], data.docs);
-    //     console.log(this.clients);
-    //   });
-    // })
+ 
     var username: any = document.getElementById('inputUsername');
     username = username.value;
     var password: any = document.getElementById('inputPassword');
@@ -507,15 +464,6 @@ export class UserAccountsComponent implements OnInit {
   newPhysio(makeChanges,successfulModal){
     
     
-    // this.physiotherapistService.createPhysio(newPhysioFirstName, newPhysioLastName, newPhysioEmail, newPhysioHired, newPhysioFinshed, newPhysioUserName, newPhysioPassword ).subscribe(data => {
-    //   var retObj: any = data;
-    //   //reload the new patient list
-    //   this.physiotherapistService.getTherapists().subscribe(data => {
-    //     this.therapists = Object.assign([], data.physiotherapist);
-    //     console.log(this.therapists);
-    //   });
-    // });
-    
     var username: any = document.getElementById('inputPhysioUsername');
     username = username.value;
     var password: any = document.getElementById('inputPhysioPassword');
@@ -552,20 +500,10 @@ export class UserAccountsComponent implements OnInit {
     // postalCode = postalCode.value;
     var gender: any = document.getElementById('inputPhysioGender');   
     gender = gender.value;
-    // var country: any = document.getElementById('inputCountry'); 
-    // country = country.value;
-    // var province: any = document.getElementById('inputProvince');   
-    // province = province.value;
-    // var city: any = document.getElementById('inputCity'); 
-    // city = city.value;
+ 
      var email: any = document.getElementById('inputPhysioEmail');
      email = email.value;
-    // var phone: any = document.getElementById('inputPhoneNumber');
-    // phone = phone.value;
-    // var others: any = document.getElementById('inputOthers');
-    // others = others.value;
-    // var address: any = document.getElementById('inputAddress');
-    //address = address.value;
+  
     this.ResetErrorMessages();
     //var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -630,19 +568,6 @@ export class UserAccountsComponent implements OnInit {
     }
 
 
-    // if(!postalCode || !address) {
-    //   var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'red';
-    //   var addressBox = document.getElementById('inputAddress').style.borderColor = 'red';
-    //   //this.invalidPostalCode = true;
-    //   this.cannotContinue = true;
-    // }
-
-    
-    // if(!validPhoneNumber.test(phone)){
-    //   var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
-    //   //this.invalidPhoneNumber = true;
-    //   this. cannotContinue = true;
-    // }
     if(!emailFormat.test(email)) {
       var emailBox = document.getElementById('inputPhysioEmail').style.borderColor = 'red';
       //this.invalidEmail = true;
@@ -655,15 +580,6 @@ export class UserAccountsComponent implements OnInit {
       //this.invalidGender = true;
       this.cannotContinue = true;
     }
-
-    //if country is "badvalue" than a selection wasn't chosen
-    // if(country == "badvalue") {
-    //   var countryBox = document.getElementById('inputCountry').style.borderColor = 'red';    
-    //   var provinceBox = document.getElementById('inputProvince').style.borderColor = 'red';    
-    //   var cityBox = document.getElementById('inputCity').style.borderColor = 'red';    
-    //   //this.invalidCountry = true;
-    //   this.cannotContinue = true;
-    // }
 
     //if this if statement is triggered, there are errors in the code
     if(this.cannotContinue) {
@@ -780,11 +696,11 @@ export class UserAccountsComponent implements OnInit {
    HideMessage() {
     //hide all messages, if there are any
     console.log('hide messages');
-    // this.showSuccess = false;
-    // this.showFailure = false;
-    // this.showDeleteSuccess = false;
-    // this.showCreationSuccess = false;
-    // this.emailSuccess = false;
+    this.showSuccess = false;
+    this.showFailure = false;
+    this.showDeleteSuccess = false;
+    this.showCreationSuccess = false;
+    this.emailSuccess = false;
   }
    SwitchPageEvent(pageEvent: any, searchString: string, searchArea: string) {
     this.offset = pageEvent.pageIndex * pageEvent.pageSize;
@@ -799,12 +715,12 @@ export class UserAccountsComponent implements OnInit {
 
    searchPatients(searchString: string, searchArea: string) {
     var ascvsdesc = 'asc';
-    // if(this.ascendingOrd == true) {
-    //   ascvsdesc = 'asc';
-    // }
-    // else {
-    //   ascvsdesc = 'desc';
-    // }
+    if(this.ascendingOrd == true) {
+      ascvsdesc = 'asc';
+    }
+    else {
+      ascvsdesc = 'desc';
+    }
     this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
@@ -821,7 +737,13 @@ export class UserAccountsComponent implements OnInit {
     })
   }
   searchPhysio(searchString: string, searchArea: string){
-    var ascvsdesc = 'asc';
+    var ascvsdesc;
+    if(this.ascendingOrd == true) {
+      ascvsdesc = 'asc';
+    }
+    else {
+      ascvsdesc = 'desc';
+    }
     console.log(searchString, searchArea);
      // }
     this.physiotherapistService.SearchPhysio(searchString, searchArea, this.physioOffset, ascvsdesc).subscribe(data => {
@@ -869,6 +791,23 @@ export class UserAccountsComponent implements OnInit {
       this.totalPatients = retObj.total;
     });
   }
+  
+  
+   StandardPhysioList() {
+    var searchAreaBox = document.getElementById('searchDropdown').style.borderColor = 'rgba(0,0,0,.15)';
+    //this.invalidSearchArea = false;
+    //this.ascendingOrd = true;
+    
+    this.physiotherapistService.getTherapists().subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.length1 = retObj.total;
+      this.therapists = Object.assign([], data.docs);
+      //this.length = retObj.total;
+      //console.log(this.patients);
+      //this.totalPatients = retObj.total;
+    });
+  }
   ResetErrorMessages() {
     //Reset all the error messages. Then new ones will be shown if some still exist
     // var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'rgba(0,0,0,.15)';  
@@ -900,6 +839,9 @@ export class UserAccountsComponent implements OnInit {
   }
   success(newmodal){
     newmodal.dismiss();
+  }
+  ChangeOrder() {
+    this.ascendingOrd = !this.ascendingOrd;
   }
 
 
