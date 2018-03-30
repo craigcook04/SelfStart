@@ -19,6 +19,9 @@
   <div *ngIf="showFailure" class="dangeralrt">
       <p class="failureMessage">The username or password you entered is incorrect</p>
   </div>
+  <div *ngIf="userIsDisabled" class="dangeralrt">
+      <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
+  </div>
   <br> 
   <hr>
   <mat-card-actions>
