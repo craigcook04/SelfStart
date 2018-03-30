@@ -11,7 +11,7 @@ import { AppointmentsService } from '../appointments.service';
 import { PaymentService } from '../payment.service';
 import { CookieService } from 'ngx-cookie-service';
 
-const URL = "/api/image/bookappointment"
+const URL = "/api/image/bookappointment";
 const now = new Date();
 declare let paypal: any;
 
