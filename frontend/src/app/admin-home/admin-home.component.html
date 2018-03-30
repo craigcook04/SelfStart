@@ -22,9 +22,20 @@
   <div class="names">
     <ul>
       <li *ngFor="let user of resetUsers">
-         <span class="lefts">{{user.userAccountName}}</span> <fa class="rights check" name="check" ngbTooltip="Confirm Reset for {{user.userAccountName}}" (click)="ResetPassword(user.userAccountName)"></fa><!--<button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button> -->
+         <span class="lefts">{{user.userAccountName}}</span> <fa class="rights check" name="check" ngbTooltip="Confirm Reset for {{user.userAccountName}}" (click)="ResetPassword(user.userAccountName, resetModal)"></fa><!--<button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button> -->
       </li>
     </ul>
+    <ng-template #resetModal let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          Reset Password Email Sent
+        </div>
+        <div class="modal-body">
+          An email has been successfully sent to {{user.userAccountName}} so that they are able to recover their account
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
+        </div>
+      </ng-template>
   </div>
   </div>
   <br><br>

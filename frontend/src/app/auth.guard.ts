@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UserAccountsService } from './user-accounts.service'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   
-  constructor(private userAccountService: UserAccountsService) {}
+  constructor(private userAccountService: UserAccountsService, private router: Router) {}
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if(this.userAccountService.LoggedIn()) {
       var isauth = await this.userAccountService.GetAuthorization();
@@ -15,12 +15,18 @@ export class AuthGuard implements CanActivate {
       if(isauth.authorized && isauth.role == 'US'){
         return true;
       }
-      else{
-        return false;
+      else if(isauth.authorized && isauth.role == "PH"){
+        this.router.navigate(['../physio/wrongaccount']);
+      }
+      else if(isauth.authorized && isauth.role == "AD") {
+        this.router.navigate(['../admin/wrongaccount']);
+      }
+      else {
+        this.router.navigate(['../unauthorized']);
       }
     }
     else{
-      return false;
+      this.router.navigate(['../unauthorized']);
     }
 
   }

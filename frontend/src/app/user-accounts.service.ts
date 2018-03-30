@@ -71,4 +71,15 @@ export class UserAccountsService {
     return true;
   }
 
+  LogOut(nonce: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': nonce
+      })
+    };
+    //This route is to log out
+    var url = "/api/useraccount/session/logout"
+    return this.http.delete(url, httpOptions);
+  }
+
 }
