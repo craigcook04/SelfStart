@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserAccountsService } from '../user-accounts.service';
 import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   showFailure: boolean;
   constructor(private userAccountsService: UserAccountsService,
               private router: Router,
-              private cookieService: CookieService) { }
+              private cookieService: CookieService,
+              private appComponent: AppComponent) { }
 
   ngOnInit() {
     this.showFailure = false;
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
       this.showFailure = true;
       return;      
     }
-    
+
     var cityBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';        
     this.userAccountsService.InitialConnection(username).subscribe(data => {
         var retObj1: any = data;
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
           if(retObj.changePass == true) {
             var url = '../login/recover/' + retObj.userID;
             this.router.navigate([url]);
+            this.appComponent.alterLoginState();
           }
           else {
             //expires in 1 hour, expires takes days so 1 hour is 1/24
