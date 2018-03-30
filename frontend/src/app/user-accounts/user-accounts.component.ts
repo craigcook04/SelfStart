@@ -721,7 +721,7 @@ export class UserAccountsComponent implements OnInit {
     else {
       ascvsdesc = 'desc';
     }
-    this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
+    this.patientService.SearchPatient(searchString, searchArea, 0, ascvsdesc).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
         this.length = retObj.total;
@@ -732,6 +732,7 @@ export class UserAccountsComponent implements OnInit {
         else{
           this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`    
         }
+        this.offset = 0;
         
       }
     })
@@ -746,7 +747,7 @@ export class UserAccountsComponent implements OnInit {
     }
     console.log(searchString, searchArea);
      // }
-    this.physiotherapistService.SearchPhysio(searchString, searchArea, this.physioOffset, ascvsdesc).subscribe(data => {
+    this.physiotherapistService.SearchPhysio(searchString, searchArea, 0, ascvsdesc).subscribe(data => {
       console.log(data);
       if(data != []) {
         var retObj : any = data;
@@ -758,6 +759,7 @@ export class UserAccountsComponent implements OnInit {
         else{
           this.pageInfo = `${this.physioOffset} - ${this.physioOffset + 10} of ${retObj.total}`    
         }
+        this.physioOffset = 0;
         
       }
     })
