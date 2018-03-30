@@ -67,12 +67,55 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Physiotherapist.find(function (error, physiotherapist) {
-            if (error) {
-                response.send(error);
+        // Physiotherapist.find(function (error, physiotherapist) {
+        //     if (error) {
+        //         response.send(error);
+        //     }
+            
+        //     response.json({physiotherapist: physiotherapist});
+        // });
+         var query = {};
+        if(request.query.s == "ID"){
+            
+            query['ID'] = Number(request.query.q);
+        }
+        else if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            var search = '^' + request.query.q;
+            var regexexp = new RegExp(search, 'i');
+            query[request.query.s] = regexexp;
+        }
+        else{
+            query = {};
+        }
+        
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
+        
+        var myparameter = request.query.s;
+        var sort ={};
+        sort[myparameter] = sortOrder;
+        var options = 
+        {
+            sort: sort,
+            populate: [{path: 'account', select: 'userAccountName'}],
+            limit: 10,
+            offset: Number(request.query.offset)
+        };
+        
+        Physiotherapist.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
             
-            response.json({physiotherapist: physiotherapist});
+            response.send(results);
         });
     });
 
@@ -115,10 +158,10 @@ router.route('/:physiotherapist_id')
 
                 physiotherapist.save(function (error) {
                     if (error) {
-                        response.send({error: error});
+                        response.send({success: false, error: error});
                     }
                     else {
-                        response.json({physiotherapist: physiotherapist});
+                        response.json({success: true, physiotherapist: physiotherapist});
                     }
                 });
             }

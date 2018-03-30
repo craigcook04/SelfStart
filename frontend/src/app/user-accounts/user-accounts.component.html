@@ -500,119 +500,147 @@
         <br>
         <br><br><br>
 
-        <!--<ng-template #newPhysiomodal let-c="close" let-d="dismiss">-->
+        <ng-template #newPhysiomodal let-c="close" let-d="dismiss">
 
 
-        <!--  <div class="modal-header">-->
-        <!--    <h4 class="modal-title">New Client</h4>-->
-        <!--  </div>-->
-        <!--  <div class="modal-body">-->
-        <!--    <form>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <input type="text" class="form-control" id="inputPhysioFirstName" placeholder="First Name" #newPhysioFirstName>-->
-        <!--        </div>-->
-        <!--      </div>-->
+          <div class="modal-header">
+            <h4 class="modal-title">New Physiotherapist</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group row">
+                <label for="inputPhysioFirstName" class="col-sm-3 col-form-label">First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputPhysioFirstName" placeholder="First Name" #newPhysioFirstName>
+                </div>
+              </div>
 
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <input type="text" class="form-control" id="inputPhysioLastName" placeholder="Last Name" #newPhysioLastName>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <input type="text" class="form-control" id="inputPhysioUsername" placeholder="User Name" #newPhysioUserName>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <input type="text" class="form-control" id="inputPhysioPassword" placeholder="Password" #newPhysioPassword>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <input type="text" class="form-control" id="inputPhysioPatientID" placeholder="Patient ID" #newPatientID>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <input type="text" class="form-control" id="inputPhysioEmail" placeholder="Email" #newPhysioEmail>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputDOB" class="col-sm-3 col-form-label">Date Of Birth</label>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputPhysioyearDOB" placeholder="yyyy" #yearDOB>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputPhysiomonthDOB" placeholder="mm" #monthDOB>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputPhysiodayDOB" placeholder="dd" #dayDOB>-->
-        <!--        </div>-->
-        <!-- <input matInput [matDatepicker]="picker" class="dontshow" #datepick>
-        <!--    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-        <!--    <mat-datepicker class="dateinput" #picker></mat-datepicker> -->
-        <!--      </div>-->
-        <!-- <div class="form-group row">-->
-        <!--        <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputyearDateHired" placeholder="yyyy" #yearDOB>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputmonthDateHired" placeholder="mm" #monthDOB>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputdayDateHired" placeholder="dd" #dayDOB>-->
-        <!--        </div>-->
-        <!-- <input matInput [matDatepicker]="picker" class="dontshow" #datepick>
-        <!--    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-        <!--    <mat-datepicker class="dateinput" #picker></mat-datepicker> -->
-        <!--      </div>-->
-        <!--             <div class="form-group row">-->
-        <!--        <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputyearDateFinished" placeholder="yyyy" #yearDOB>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputmonthDateFinished" placeholder="mm" #monthDOB>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-3">-->
-        <!--          <input class="form-control dateinput" id="inputdayDateFinished" placeholder="dd" #dayDOB>-->
-        <!--        </div>-->
-        <!-- <input matInput [matDatepicker]="picker" class="dontshow" #datepick>
-        <!--    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-        <!--    <mat-datepicker class="dateinput" #picker></mat-datepicker> -->
-        <!--      </div>-->
-        <!--      <div class="form-group row">-->
-        <!--        <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>-->
-        <!--        <div class="col-sm-9">-->
-        <!--          <select #newPatientGender class="mydropdown">-->
-        <!--              <option value="badvalue">Please select a gender</option>-->
-        <!--              <option disabled="disabled">----</option>-->
-        <!--              <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>-->
-        <!--          </select>-->
-        <!--        </div>-->
+              <div class="form-group row">
+                <label for="inputPhysioLastName" class="col-sm-3 col-form-label">Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputPhysioLastName" placeholder="Last Name" #newPhysioLastName>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPhysioUserame" class="col-sm-3 col-form-label">User Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputPhysioUsername" placeholder="User Name" #newPhysioUserName>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPhysioPassword" class="col-sm-3 col-form-label">Password</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputPhysioPassword" placeholder="Password" #newPhysioPassword>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputPhysioRepeatPassword" class="col-sm-3 col-form-label">*Repeat Password: </label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" id="inputPhysioRepeatPassword" placeholder="Repeat Password" #repeatPassword required>
+                  <div class="invalInput" *ngIf="invalidPassword">
+                    Please fix the password fields so that they match
+                  </div>
+                </div>
+              </div>
+              <!--<div class="form-group row">-->
+              <!--  <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
+              <!--  <div class="col-sm-9">-->
+              <!--    <input type="text" class="form-control" id="inputPhysioPatientID" placeholder="Patient ID" #newPatientID>-->
+              <!--  </div>-->
+              <!--</div>-->
+              <div class="form-group row">
+                <label for="inputPhysioEmail" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputPhysioEmail" placeholder="Email" #newPhysioEmail>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputDOB" class="col-sm-3 col-form-label">Date Of Birth</label>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputPhysioyearDOB" placeholder="yyyy" #yearDOB>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputPhysiomonthDOB" placeholder="mm" #monthDOB>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputPhysiodayDOB" placeholder="dd" #dayDOB>
+                </div>
 
-        <!--    </form>-->
-        <!--    </div>-->
-        <!--    <div class="modal-footer">-->
-        <!--      <button type="button" class="btn btn-primary btn-sm" (click)="newPhysio(newPhysioFirstName.value, newPhysioLastName.value,  newPhysioEmail.value, newPhysioHired.value, newPhysioFinished.value, newPhysioUserName.value, newPhysioPassword.value); c('Close click')">Confirm</button>-->
-        <!--      <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>-->
-        <!--    </div>-->
-        <!--</ng-template>-->
+              </div>
+              <div class="form-group row">
+                <label for="inputYearHired" class="col-sm-3 col-form-label">Date Hired</label>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputYearHired" placeholder="yyyy" #yearHired>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputMonthHired" placeholder="mm" #monthHired>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputDayHired" placeholder="dd" #dayHired>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label for="inputYearFinished" class="col-sm-3 col-form-label">Date Finished</label>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputYearFinished" placeholder="yyyy" #yearDOB>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputMonthFinished" placeholder="mm" #monthDOB>
+                </div>
+                <div class="col-sm-3">
+                  <input class="form-control dateinput" id="inputDayFinished" placeholder="dd" #dayDOB>
+                </div>
+
+              </div>
+              <div class="form-group row">
+                <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+                <div class="col-sm-9">
+                  <select #newPatientGender class="mydropdown" id="inputPhysioGender">
+                      <option value="badvalue">Please select a gender</option>
+                      <option disabled="disabled">----</option>
+                      <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm" (click)="newPhysio(makeChanges1, successfulModal1);">Confirm</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+            <button class="hddn" (click)="c('Close click')" id='closeBtn2'></button>
+          </div>
+        </ng-template>
+        <ng-template #makeChanges1 let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Error in Required Fields</h4>
+          </div>
+          <div class="modal-body">
+            <p>There are errors in some of the required fields. Please go through and fix them. </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-med" (click)="c('Close click'); ">OK</button>
+          </div>
+        </ng-template>
+        <ng-template #successfulModal1 let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Welcome!</h4>
+          </div>
+          <div class="modal-body">
+            <p>You have successfully created an account! Please click on the link that was sent to your email to verify your account and start using the website </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-med" (click)="c('Close click'); ">OK</button>
+          </div>
+        </ng-template>
         <div *ngIf="invalidSearchArea" class="failedSearch">
           Please enter a search area
         </div>
         <div class='blockContainer'>
           <div class='left'>
-            <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value)">
+            <select #searchArea1 class="searchdropdown" id="searchDropdown">
                   <option value='familyName'>Search by...</option>
                   <option disabled='disabled'>----</option>
                   <option value="givenName">First Name</option>
@@ -623,9 +651,9 @@
           </div>
           <div class="right">
             <div class="input-group mb-3 searchbar" id="custom-search-input">
-              <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+              <input type="text" class="form-control" (keyup.enter)="searchPhysio(searchValue1.value, searchArea1.value)" placeholder="Search term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue1>
               <span class="input-group-btn">
-                    <button class="btn btn-info btn-lg" type="button" (click)="searchPatients(searchValue.value, searchArea.value)"  location="top" ngbTooltip="Search">
+                    <button class="btn btn-info btn-lg" type="button" (click)="searchPhysio(searchValue1.value, searchArea1.value)"  location="top" ngbTooltip="Search">
                       <fa name="search"></fa>
                     </button>
                   </span>
@@ -641,7 +669,7 @@
           <i *ngIf="ascendingOrd" class="material-icons arrows" (click)="ChangeOrder(); searchPatients(searchValue.value, searchArea.value)" ngbTooltip="Change to descending order">arrow_upward</i>
           <i class="material-icons rfrshicon" ngbTooltip="Refresh list" (click)="StandardPatientList()">refresh</i>
 
-          <mat-paginator class="myPaginator" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="SwitchPageEvent($event, searchValue.value, searchArea.value);">
+          <mat-paginator class="myPaginator" [length]="length1" [pageSize]="pageSize1" [pageSizeOptions]="pageSizeOptions1" (page)="SwitchPageEventPhysio($event, searchValue1.value, searchArea1.value);">
           </mat-paginator>
           <div class="patients">
 
@@ -651,86 +679,113 @@
                   <i class="fa fa-user fa-sm"></i>
                   <label class="col-sm-2 pnter">{{patient.familyName}}, {{patient.givenName}}</label>
                   <label class="col-sm-3 pnter">{{patient.email}}</label>
-                  <label class="col-sm-2 pnter">{{calculateAge(patient?.DOB)}} years old</label>
+                  <!--<label class="col-sm-2 pnter">{{calculateAge(patient?.DOB)}} years old</label>-->
                   <!--<label class="col-sm-3 pnter">{{patient?.phone}}</label>-->
                 </mat-expansion-panel-header>
+                <div class="info">
+                  <p><b>Username: </b> {{patient?.account?.userAccountName}}</p>
+                  <p><b>Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
+                  <p><b>Patient ID:  </b> {{patient?.ID}}</p>
+                  <p><b>Email:  </b> {{patient?.email}}
+                    <fa name="envelope" class="emailer" ngbTooltip="send email" (click)="open(emailModal)"></fa>
+                  </p>
+                  <!--<p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>-->
+                  <!--<p><b>Age: </b> {{calculateAge(patient?.DOB)}} years old</p>-->
+                  <!--<p><b>Gender:  </b> {{patient?.gender?.name}}</p>-->
+                  <!--<p><b>Address: </b> {{patient?.address}}</p>-->
+                  <!--<p><b>Postal Code:  </b> {{patient?.postalCode}}</p>-->
+                  <!--<p><b>Phone Number:  </b> {{patient?.phone}} <i class="material-icons copyicon" ngbTooltip="copy phone number" (click)="CopyToClipboard(patient.phone)">description</i></p>-->
+                  <!--<p><b>Country:  </b> {{patient?.country?.name}} </p>-->
+                  <!--<p><b>Province:  </b> {{patient?.province?.name}} </p>-->
+                  <!--<p><b>City:  </b> {{patient?.city?.name}} </p>-->
+                  <!--<input type='text' class='dummy' id="dummyInput" value='{{patient.phone}}' #getPhoneNumber/>-->
+                </div>
 
-                <!--    <ng-template #deletePhysio let-c="close" let-d="dismiss">-->
-                <!--      <div class="modal-header">-->
-                <!--        <h4 class="modal-title">Delete {{x.familyName}}, {{x.givenName}}</h4>-->
-                <!--      </div>-->
-                <!--      <div class="modal-body">-->
-                <!--        <p>Are you sure you wish to delete therapist <b>{{x.familyName}}, {{x.givenName}}</b>. This action is cannot be undone. </p>-->
-                <!--      </div>-->
-                <!--      <div class="modal-footer">-->
-                <!--        <button type="button" class="btn btn-primary btn-med" (click)="deletePhysio1(x._id); c('Close click')">Delete</button>-->
-                <!--        <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>-->
-                <!--      </div>-->
-                <!--    </ng-template>-->
-                <!--<ng-template #editPhysio let-c="close" let-d="dismiss">-->
-                <!--  <div class="modal-header">-->
-                <!--    <h4 class="modal-title">Update {{x.familyName}}, {{x.givenName}}</h4>-->
-                <!--  </div>-->
-                <!--  <div class="modal-body">-->
-                <!--    <form>-->
-                <!--      <div class="form-group row">-->
-                <!--        <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>-->
-                <!--        <div class="col-sm-9">-->
-                <!--          <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{x.givenName}}" #newFirstNamePhysio>-->
-                <!--        </div>-->
-                <!--      </div>-->
-                <!--      <div class="form-group row">-->
-                <!--        <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>-->
-                <!--        <div class="col-sm-9">-->
-                <!--          <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{x.familyName}}" #newLastNamePhysio>-->
-                <!--        </div>-->
-                <!--      </div>-->
-                <!--      <div class="form-group row">-->
-                <!--        <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
-                <!--        <div class="col-sm-9">-->
-                <!--          <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{x.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified" #physioID>-->
-                <!--        </div>-->
-                <!--      </div>-->
-                <!--      <div class="form-group row">-->
-                <!--        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>-->
-                <!--        <div class="col-sm-9">-->
-                <!--          <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{x.email}}" #newEmailPhysio>-->
-                <!--        </div>-->
-                <!--      </div>-->
-                <!--      <div class="form-group row">-->
-                <!--        <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>-->
-                <!--        <div class="col-sm-9">-->
-                <!--          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>-->
-                <!--        </div>-->
-                <!--      </div>-->
-                <!--      <div class="form-group row">-->
-                <!--        <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>-->
-                <!--        <div class="col-sm-9">-->
-                <!--          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateFinished  | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>-->
-                <!--        </div>-->
-                <!--      </div>-->
-                <!-- <div class="form-group row">
-            <!--      <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>-->
-                <!--      <div class="col-sm-9">-->
-                <!--          <div class="calFormat">-->
-                <!--            <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>-->
-                <!--              <div class="input-group-append">-->
-                <!--                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
-                <!--                  <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
-                <!--                </button>-->
-                <!--              </div>-->
-                <!--          </div>-->
-                <!--      </div>-->
-                <!--  </div> -->
+                <button class="btn btn-primary btn-sm patientbtn" (click)="open(editPhysio)">Edit</button>
+                <button class="btn btn-primary btn-sm patientbtn" (click)="open(deletePhysio)">Delete</button>
+                <ng-template #deletePhysio let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you wish to delete therapist <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot be undone. </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-med" (click)="deletePhysio1(patient._id); c('Close click')">Delete</button>
+                    <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
+                  </div>
+                </ng-template>
+                <ng-template #editPhysio let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group row">
+                        <label for="inputFirstName2" class="col-sm-3 col-form-label">First Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputFirstName2" placeholder="First Name" value="{{patient.givenName}}" #newFirstNamePhysio>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputLastName2" class="col-sm-3 col-form-label">Last Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputLastName2" placeholder="Last Name" value="{{patient.familyName}}" #newLastNamePhysio>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPatientID2" class="col-sm-3 col-form-label">Patient ID</label>
+                        <div class="col-sm-9">
+                          <input type="text" readonly class="form-control" id="inputPatientID2" placeholder="Patient ID" value="{{patient.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified" #physioID>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail2" class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputEmail2" placeholder="Email" value="{{patient.email}}" #newEmailPhysio>
+                        </div>
+                      </div>
+                       <div class="form-group row">
+                        <label for="inputDateHired2" class="col-sm-3 col-form-label">Date Hired</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputDateHired2" placeholder="yyyy/MM/dd" value="{{patient.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>
+                          <div *ngIf='invalidFirstName' class='invalInput'>
+                            Please enter a valid Date of Birth
+                          </div>
+                        </div>
+                      </div>
+                       <div class="form-group row">
+                        <label for="inputDateFinished2" class="col-sm-3 col-form-label">DateFinished</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputDateFinished2" placeholder="yyyy/MM/dd" value="{{patient.dateFinished | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>
+                          <div *ngIf='invalidFirstName' class='invalInput'>
+                            Please enter a valid Date of Birth
+                          </div>
+                        </div>
+                      </div>
+                      <!--<div class="form-group row">-->
+                      <!--  <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>-->
+                      <!--  <div class="col-sm-9">-->
+                      <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>-->
+                      <!--  </div>-->
+                      <!--</div>-->
+                      <!--<div class="form-group row">-->
+                      <!--  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>-->
+                      <!--  <div class="col-sm-9">-->
+                      <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateFinished  | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>-->
+                      <!--  </div>-->
+                      <!--</div>-->
+                
 
-                <!--    </form>-->
+                    </form>
 
-                <!--  </div>-->
-                <!--  <div class="modal-footer">-->
-                <!--    <button type="button" class="btn btn-primary btn-sm" (click)="updatePhysio(newFirstNamePhysio.value, newLastNamePhysio.value, newEmailPhysio.value, physioID.value, newDateHiredPhysio.value, newDateFinishedPhysio.value, x._id); c('Close click')">Confirm</button>-->
-                <!--    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>-->
-                <!--  </div>-->
-                <!--</ng-template>-->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="updatePhysio(newFirstNamePhysio.value, newLastNamePhysio.value, newEmailPhysio.value, physioID.value, newDateHiredPhysio.value, newDateFinishedPhysio.value, patient._id);">Confirm</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                    <button class="hddn" (click)="c('Close click')" id='closeBtn1'></button>
+                  </div>
+                </ng-template>
 
                 <!--  </div>-->
                 <!--<hr>-->

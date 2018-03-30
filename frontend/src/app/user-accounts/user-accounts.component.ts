@@ -31,6 +31,7 @@ export class UserAccountsComponent implements OnInit {
   pageInfo: string;
   closeResult: string;
   offset: number = 0;
+  physioOffset:number = 0;
   therapists: Object[];
   content: boolean;
   activated: any;
@@ -61,6 +62,10 @@ export class UserAccountsComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions = [10];
   
+  length1;//tempory change this
+  pageSize1 = 10;
+  pageSizeOptions1 = [10];
+  
   ngOnInit() {
     this.content = false;
     this.patientService.GetAllPatients().subscribe(data => {
@@ -72,13 +77,15 @@ export class UserAccountsComponent implements OnInit {
       // console.log(this.patients);
     });
      this.patientService.GetGenders().subscribe(data => {
+       
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     });
   
     this.physiotherapistService.getTherapists().subscribe(data =>{
+      this.length1 = data.total;
       var retObj: any = data;
-      this.therapists = Object.assign([], data.physiotherapist);
+      this.therapists = Object.assign([], data.docs);
     });
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
@@ -212,15 +219,79 @@ export class UserAccountsComponent implements OnInit {
 
 
   }
-  updatePhysio(givenName: string, familyName: string, email:string, ID: string, dateHired: string, dateFinished: string, _id: string){
+  updatePhysio(firstName: string, lastName: string, email:string, ID: string, dateHired: string, dateFinished: string, _id: string){
     
-    console.log("in component");
-    this.physiotherapistService.updatePhysio(givenName, familyName, email, ID, dateHired, dateFinished, _id).subscribe (data =>{
+    // console.log("in component");
+    // this.physiotherapistService.updatePhysio(givenName, familyName, email, ID, dateHired, dateFinished, _id).subscribe (data =>{
+    //   console.log(data);
+    //   this.physiotherapistService.getTherapists().subscribe(data => {
+    //     this.therapists = Object.assign([], data.physiotherapist);
+    //   });  
+    //   this.activated = null;
+    // });
+     var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+    this.cannotContinue = false;
+    //console.log(phoneNumber, newAddress)
+    if(badFormatWithNumbers.test(firstName) || !firstName) {
+      var firstnameBox = document.getElementById('inputFirstName2').style.borderColor = 'red';    
+      this.invalidFirstname = true;
+      this.cannotContinue = true;
+    }
+
+    if(badFormatWithNumbers.test(lastName) || !lastName) {
+      var firstnameBox = document.getElementById('inputLastName2').style.borderColor = 'red';    
+      this.invalidLastname = true;
+      this.cannotContinue = true;
+    }
+
+    if(!dateHired) {
+      var DOBBox = document.getElementById('inputDateHired2').style.borderColor = 'red';
+      this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+     if(!dateFinished) {
+      var DOBBox = document.getElementById('inputDateFinished2').style.borderColor = 'red';
+      this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+
+    if(!emailFormat.test(email)) {
+      var emailBox = document.getElementById('inputEmail2').style.borderColor = 'red';
+      this.invalidEmail = true;
+      this.cannotContinue = true;
+    }
+
+    if(this.cannotContinue) {
+      //user cannot continue until changes have been fixed
+      return;
+    }
+
+    this.showSuccess = true;
+    this.physiotherapistService.updatePhysio(firstName, lastName, email, ID, dateHired, dateFinished, _id).subscribe (data =>{
       console.log(data);
+      var retObj: any = data;
+      //reload the list of patients
       this.physiotherapistService.getTherapists().subscribe(data => {
-        this.therapists = Object.assign([], data.physiotherapist);
-      });  
-      this.activated = null;
+        this.length1 = data.total;
+        this.therapists = Object.assign([], data.docs);
+        console.log(data);
+      });
+      var closebtn: any= document.getElementById('closeBtn1');
+      if(retObj.success) {
+        //the update was successful
+        this.showSuccess = true;
+        var closebtn: any= document.getElementById('closeBtn1');
+        this.ResetErrorMessages();
+        closebtn.click();
+      }
+      else{
+        //it was not successful
+        this.showFailure = true;
+      }
     });
   }
   viewClients(id: string){
@@ -433,14 +504,212 @@ export class UserAccountsComponent implements OnInit {
   }
 
   
-  newPhysio(newPhysioFirstName: string, newPhysioLastName: string,  newPhysioEmail: string, newPhysioHired: string, newPhysioFinshed: string, newPhysioUserName: string, newPhysioPassword: string){
-    this.physiotherapistService.createPhysio(newPhysioFirstName, newPhysioLastName, newPhysioEmail, newPhysioHired, newPhysioFinshed, newPhysioUserName, newPhysioPassword ).subscribe(data => {
+  newPhysio(makeChanges,successfulModal){
+    
+    
+    // this.physiotherapistService.createPhysio(newPhysioFirstName, newPhysioLastName, newPhysioEmail, newPhysioHired, newPhysioFinshed, newPhysioUserName, newPhysioPassword ).subscribe(data => {
+    //   var retObj: any = data;
+    //   //reload the new patient list
+    //   this.physiotherapistService.getTherapists().subscribe(data => {
+    //     this.therapists = Object.assign([], data.physiotherapist);
+    //     console.log(this.therapists);
+    //   });
+    // });
+    
+    var username: any = document.getElementById('inputPhysioUsername');
+    username = username.value;
+    var password: any = document.getElementById('inputPhysioPassword');
+    password = password.value;
+    var repeatPassword: any = document.getElementById('inputPhysioRepeatPassword');
+    repeatPassword = repeatPassword.value;
+    var firstName: any = document.getElementById('inputPhysioFirstName');  
+    firstName = firstName.value;
+    var lastName: any = document.getElementById('inputPhysioLastName');  
+    lastName = lastName.value;
+    var yearDOB: any = document.getElementById('inputPhysioyearDOB');
+    yearDOB = yearDOB.value;
+    var monthDOB: any = document.getElementById('inputPhysiomonthDOB');
+    monthDOB = monthDOB.value;
+    var dayDOB: any = document.getElementById('inputPhysiodayDOB');
+    dayDOB = dayDOB.value;
+    
+    var yearHired: any = document.getElementById('inputYearHired');
+    yearHired = yearHired.value;
+    var monthHired: any = document.getElementById('inputMonthHired');
+    monthHired = monthHired.value;
+    var dayHired: any = document.getElementById('inputDayHired');
+    dayHired = dayHired.value;
+    
+    var yearFinished: any = document.getElementById('inputYearFinished');
+    yearFinished = yearFinished.value;
+    var monthFinished: any = document.getElementById('inputMonthFinished');
+    monthFinished = monthFinished.value;
+    var dayFinished: any = document.getElementById('inputDayFinished');
+    dayFinished = dayFinished.value;
+    
+    
+    // var postalCode: any = document.getElementById('inputPostalCode');
+    // postalCode = postalCode.value;
+    var gender: any = document.getElementById('inputPhysioGender');   
+    gender = gender.value;
+    // var country: any = document.getElementById('inputCountry'); 
+    // country = country.value;
+    // var province: any = document.getElementById('inputProvince');   
+    // province = province.value;
+    // var city: any = document.getElementById('inputCity'); 
+    // city = city.value;
+     var email: any = document.getElementById('inputPhysioEmail');
+     email = email.value;
+    // var phone: any = document.getElementById('inputPhoneNumber');
+    // phone = phone.value;
+    // var others: any = document.getElementById('inputOthers');
+    // others = others.value;
+    // var address: any = document.getElementById('inputAddress');
+    //address = address.value;
+    this.ResetErrorMessages();
+    //var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
+    if(password != repeatPassword || !password || !repeatPassword){
+      //error in this case, handle it and let the user know they made a mistake
+      var passwordBox = document.getElementById('inputPhysioPassword').style.borderColor = 'red';
+      var repeatPasswordBox = document.getElementById('inputPhysioRepeatPassword').style.borderColor = 'red';
+      //this.invalidPassword = true;
+      this.cannotContinue = true;
+    }
+
+    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+
+    if(badFormat.test(username) || !username) {
+      //username contains an illegal character
+      var usernameBox = document.getElementById('inputPhysioUsername').style.borderColor = 'red';
+      //this.invalidUsername = true;
+      this.cannotContinue = true;
+    }
+    
+    if(badFormatWithNumbers.test(firstName) || !firstName) {
+      var firstnameBox = document.getElementById('inputPhysioFirstName').style.borderColor = 'red';    
+      //this.invalidFirstname = true;
+      this.cannotContinue = true;
+    }
+
+    if(badFormatWithNumbers.test(lastName) || !lastName) {
+      var firstnameBox = document.getElementById('inputPhysioLastName').style.borderColor = 'red';    
+      //this.invalidLastname = true;
+      this.cannotContinue = true;
+    }
+
+    var DOB = yearDOB + '/' + monthDOB + '/' + dayDOB;
+    console.log(DOB);
+    if(!DOB) {
+      var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'red';
+      var DOBBox2 = document.getElementById('inputmonthDOB').style.borderColor = 'red';
+      var DOBBox = document.getElementById('inputdayDOB').style.borderColor = 'red';
+      //this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+    var dateHired = yearHired + '/' + monthHired + '/' + dayHired;
+    console.log(dateHired);
+    if(!dateHired) {
+      var DOBBox = document.getElementById('inputYearHired').style.borderColor = 'red';
+      var DOBBox2 = document.getElementById('inputMonthHired').style.borderColor = 'red';
+      var DOBBox = document.getElementById('inputDayHired').style.borderColor = 'red';
+      //this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+    var dateFinished = yearFinished + '/' + monthFinished + '/' + dayFinished;
+    console.log(DOB);
+    if(!dateFinished) {
+      var DOBBox = document.getElementById('inputYearFinished').style.borderColor = 'red';
+      var DOBBox2 = document.getElementById('inputMonthFinished').style.borderColor = 'red';
+      var DOBBox = document.getElementById('inputDayFinished').style.borderColor = 'red';
+      //this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+
+
+    // if(!postalCode || !address) {
+    //   var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'red';
+    //   var addressBox = document.getElementById('inputAddress').style.borderColor = 'red';
+    //   //this.invalidPostalCode = true;
+    //   this.cannotContinue = true;
+    // }
+
+    
+    // if(!validPhoneNumber.test(phone)){
+    //   var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
+    //   //this.invalidPhoneNumber = true;
+    //   this. cannotContinue = true;
+    // }
+    if(!emailFormat.test(email)) {
+      var emailBox = document.getElementById('inputPhysioEmail').style.borderColor = 'red';
+      //this.invalidEmail = true;
+      this.cannotContinue = true;
+    }
+
+    //if gender is "badvalue" than a selection wasn't chosen
+    if(gender == "badvalue") {
+      var firstnameBox = document.getElementById('inputPhysioGender').style.borderColor = 'red';    
+      //this.invalidGender = true;
+      this.cannotContinue = true;
+    }
+
+    //if country is "badvalue" than a selection wasn't chosen
+    // if(country == "badvalue") {
+    //   var countryBox = document.getElementById('inputCountry').style.borderColor = 'red';    
+    //   var provinceBox = document.getElementById('inputProvince').style.borderColor = 'red';    
+    //   var cityBox = document.getElementById('inputCity').style.borderColor = 'red';    
+    //   //this.invalidCountry = true;
+    //   this.cannotContinue = true;
+    // }
+
+    //if this if statement is triggered, there are errors in the code
+    if(this.cannotContinue) {
+      this.modalService.open(makeChanges, {size: 'lg'});
+      //stepper.reset();
+      return;
+    }
+
+    document.body.style.cursor = "wait";
+
+
+    var hashPassword = this.encryptionService.hash(password);
+    var salt = this.encryptionService.GenSalt();
+    var hashWithSalt = hashPassword + salt;
+    var hashedPassAndSalt = this.encryptionService.hash(hashWithSalt);
+    var encryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
+
+    //this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
+    this.physiotherapistService.createPhysio(firstName, lastName, email, dateHired, dateFinished, username, encryptedPassword, salt ).subscribe(data => {
+      console.log(data);
       var retObj: any = data;
-       //reload the new patient list
+      if(retObj.success == true) {
+        // this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
+        //   console.log(data);
+        //   document.body.style.cursor = 'default';
+        //   this.modalService.open(successfulModal);
+        // });
+        var closebtn: any= document.getElementById('closeBtn2');
+        this.ResetErrorMessages();
+        closebtn.click();
+        this.modalService.open(successfulModal),{size: 'lg'};
+      }
+      else {
+        //the user will be shown an error in the creation problem along the lines of there being a server problem.
+        //stepper.reset();
+        var usernameBox = document.getElementById('inputPhysioUsername').style.borderColor = 'red';
+        //this.invalidUsername = true;
+      }
       this.physiotherapistService.getTherapists().subscribe(data => {
-        this.therapists = Object.assign([], data.physiotherapist);
-        console.log(this.therapists);
-      });
+          // console.log(data);
+          this.length1 = data.total;
+          // this.clients = Object.assign([], data.docs)
+          // console.log(this.clients);
+          var retObj: any = data;
+          this.therapists = Object.assign([], data.docs);
+        });
     });
     
   }
@@ -496,7 +765,9 @@ export class UserAccountsComponent implements OnInit {
     this.physiotherapistService.deletePhysioTherapist(id).subscribe(data =>{
       var retObj: any = data;
        this.physiotherapistService.getTherapists().subscribe(data => {
-          this.therapists = Object.assign([], data.physiotherapist);
+          this.length1 = data.total;
+          //this.physioOffset = 0;
+          this.therapists = Object.assign([], data.docs);
         });
       
       
@@ -520,6 +791,11 @@ export class UserAccountsComponent implements OnInit {
     console.log('hello im switching');
     this.searchPatients(searchString, searchArea);
   }
+   SwitchPageEventPhysio(pageEvent: any, searchString: string, searchArea: string) {
+    this.physioOffset = pageEvent.pageIndex * pageEvent.pageSize;
+    console.log('hello im switching');
+    this.searchPhysio(searchString, searchArea);
+  }
 
    searchPatients(searchString: string, searchArea: string) {
     var ascvsdesc = 'asc';
@@ -539,6 +815,26 @@ export class UserAccountsComponent implements OnInit {
         }
         else{
           this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`    
+        }
+        
+      }
+    })
+  }
+  searchPhysio(searchString: string, searchArea: string){
+    var ascvsdesc = 'asc';
+    console.log(searchString, searchArea);
+     // }
+    this.physiotherapistService.SearchPhysio(searchString, searchArea, this.physioOffset, ascvsdesc).subscribe(data => {
+      console.log(data);
+      if(data != []) {
+        var retObj : any = data;
+        this.length1 = retObj.total;
+        this.therapists = Object.assign([], retObj.docs);
+        if(this.physioOffset + 10 > this.length1) {
+          this.pageInfo = `${this.physioOffset} - ${this.length1} of ${retObj.total}` 
+        }
+        else{
+          this.pageInfo = `${this.physioOffset} - ${this.physioOffset + 10} of ${retObj.total}`    
         }
         
       }
