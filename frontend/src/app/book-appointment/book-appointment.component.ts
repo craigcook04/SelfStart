@@ -31,6 +31,8 @@ export class BookAppointmentComponent implements OnInit {
   @ViewChild('dp') dp: NgbDatepicker;
   paymentAmount: any = '0';
   currContent: any;
+  render1: boolean = false;
+  render2: boolean = false;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -45,6 +47,7 @@ export class BookAppointmentComponent implements OnInit {
     console.log(this.cookieService.getAll());
   }
 
+<<<<<<< HEAD
   open(content) {
 
     this.currContent = this.modalService.open(content, {size: "lg"});
@@ -82,9 +85,26 @@ export class BookAppointmentComponent implements OnInit {
       var nameBox = document.getElementById('inputName').style.borderColor = "red";
       this.invalidName = true;
       cannotContinue = true;
+=======
+  open(content: any, value: any) {
+    content.show();
+    console.log(value);
+    if(value === '0.01'){
+      this.paymentAmount = value;
+      this.currContent = "bookModal";
+>>>>>>> 19f766f1c55462dad7f55b42b42c2e8c9ee87b93
     }
-    if(content._def.references.initial != null && content._def.references.initial === 2){
-      this.paymentAmount = '0.02';
+    if(value === '0.02'){
+      this.paymentAmount = value;
+      this.currContent = "initialModal";
+    }
+    if(this.render1 === false && this.currContent === "bookModal"){
+      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+      this.render1 = true;
+    }
+    if(this.render2 === false && this.currContent === "initialModal"){
+      paypal.Button.render(this.paypalConfig, '#paypal-button-container2');
+      this.render1 = true;
     }
   }
   //   if(badFormat.test(name) || !name){
@@ -179,7 +199,7 @@ export class BookAppointmentComponent implements OnInit {
 StorePayment(data: any){
   this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
     console.log(data);
-    this.currContent.close();
+    this.currContent.hide();
   })
 }
 

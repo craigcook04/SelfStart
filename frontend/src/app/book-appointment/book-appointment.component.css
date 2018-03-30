@@ -1,8 +1,25 @@
+.card-body {
+    text-align: center;
+    padding-bottom: 1em;
+}
 
+.buttons {
+    text-align: center;
+    
+}
+
+.title {
+    text-align: center;
+}
+/* 
 #scrollable{
     overflow-y: visible;
     overflow-x: hidden;
-}
+} */
+
+/* body.modal-open {
+    overflow: hidden;
+} */
 
 /* .durationDropdown {
     height: 44px;
