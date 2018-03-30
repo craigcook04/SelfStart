@@ -1,0 +1,23 @@
+.title {
+    color: #0275d8;
+    margin: 0.5em;
+}
+
+.col-3 {
+    padding: 1em;
+    margin: auto 5px;
+    background-color: rgba(2, 117, 216, 0.3);
+}
+
+.display-12 {
+    padding-bottom: 1em;
+    border-bottom: solid rgba(0, 0, 0, 0.1) 1px;
+}
+
+.content {
+    padding: 1em;
+}
+
+.below {
+    margin-top: 2em;
+}
