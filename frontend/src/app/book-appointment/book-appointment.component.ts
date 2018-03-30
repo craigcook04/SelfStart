@@ -26,6 +26,8 @@ export class BookAppointmentComponent implements OnInit {
   invalidName: boolean = false;
   paymentAmount: any = '0';
   currContent: any;
+  render1: boolean = false;
+  render2: boolean = false;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -41,14 +43,22 @@ export class BookAppointmentComponent implements OnInit {
 
   open(content: any, value: any) {
     content.show();
-    this.currContent = content;
+    console.log(value);
     if(value === '0.01'){
-      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
       this.paymentAmount = value;
+      this.currContent = "bookModal";
     }
     if(value === '0.02'){
-      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
       this.paymentAmount = value;
+      this.currContent = "initialModal";
+    }
+    if(this.render1 === false && this.currContent === "bookModal"){
+      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+      this.render1 = true;
+    }
+    if(this.render2 === false && this.currContent === "initialModal"){
+      paypal.Button.render(this.paypalConfig, '#paypal-button-container2');
+      this.render1 = true;
     }
   }
 
