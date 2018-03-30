@@ -32,6 +32,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   edgePage: any;
   formattedLiveDate: any;
   currentType: any;
+  reHighlight: any[];
 
   //NOTE: 1.5 hours for initial assessmengt and 1 hour for regular appointment
 
@@ -87,6 +88,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         //console.log(this.currentlyHighlighted);
         var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))];
         this.previouslyHighlighted = highlighted;
+        this.reHighlight = highlighted;
         this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))];
         this.selectedWeek = this.currentWeek;
         
@@ -163,6 +165,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         //console.log(this.currentlyHighlighted);
         var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)),  ("slot"+day+(indx+5))];
         this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)),  ("slot"+day+(indx+5))];
+        this.reHighlight = highlighted;
         this.selectedWeek = this.currentWeek;
         if(this.previouslyHighlighted[0] == "slot035" || this.previouslyHighlighted[0] == "slot135" || this.previouslyHighlighted[0] == "slot235" || this.previouslyHighlighted[0] == "slot335" ||this.previouslyHighlighted[0] == "slot435" ||this.previouslyHighlighted[0] ==  "slot535" ||this.previouslyHighlighted[0] == "slot635" 
         || this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"
@@ -382,15 +385,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           
           
           if(this.currentType == "normal"){
-            if((timeCount-1) > 33){
-              if((timeCount-1) == 34){
+            if((timeCount) > 33){
+              if((timeCount) == 34){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
-                if(!(this.isStart) && this.currentWeek == this.selectedWeek){
-                  
-                }
-              }else if((timeCount-1) == 35){
+              }else if((timeCount) == 35){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
               }else{
@@ -403,25 +403,25 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
                 document.getElementById(takenSlot[3]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
             }
           }else{
-           if((timeCount-1) > 31){
-              if((timeCount-1) == 32){
+           if((timeCount) > 31){
+              if((timeCount) == 32){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[3]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[4]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                }
-               else if((timeCount-1) == 33){
+               else if((timeCount) == 33){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[3]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                }
-              else if((timeCount-1) == 34){
+              else if((timeCount) == 34){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
-              }else if((timeCount-1) == 35){
+              }else if((timeCount) == 35){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
               }else{
@@ -438,17 +438,61 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           }
           
           
-          
-          
-          
+
           if(!(this.isStart) && (this.currentWeek == this.selectedWeek)){
-            
-            document.getElementById(this.currentlyFilled[0]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
-            document.getElementById(this.currentlyFilled[1]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
-            document.getElementById(this.currentlyFilled[2]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
-            document.getElementById(this.currentlyFilled[3]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
-            document.getElementById(this.currentlyFilled[4]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
-            document.getElementById(this.currentlyFilled[5]).setAttribute("class", "btn btn-sm sel chooseTime disabled");
+            //this is for setting the currently selected
+            if(this.currentType == "normal"){
+              if((this.timeIndex) > 33){
+                if((this.timeIndex) == 34){
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }else if((this.timeIndex) == 35){
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }else{
+                document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }
+              }else{
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              }
+            }else{
+            if((this.timeIndex) > 31){
+                if((this.timeIndex) == 32){
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }
+                else if((this.timeIndex) == 33){
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }
+                else if((this.timeIndex) == 34){
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }else if((this.timeIndex) == 35){
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }else{
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                }
+              }else{
+                document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[5]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              }
+            }
           }
           
           //this used to be used for the ave functionality that was removed and combined into one step

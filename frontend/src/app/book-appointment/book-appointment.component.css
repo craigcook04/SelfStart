@@ -17,7 +17,7 @@
     overflow-x: hidden;
 }
 
-.durationDropdown {
+/* .durationDropdown {
     height: 44px;
     padding: 3px;
     padding-left: 0px;
@@ -33,4 +33,4 @@
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     margin-left: 2.5rem;
     margin-top: 2px;
-}
+} */
