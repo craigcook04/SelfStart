@@ -344,7 +344,7 @@ h2 {
 }
 
 ::ng-deep .specific-class > .mat-expansion-indicator:after {
-    color: white;
+    color: #0275d8;
 }
 
 .orderTag{

@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
-import { ExerciseService } from '../exercise.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,6 +7,9 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import * as jsPDF from 'jspdf';
+import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from '../patient.service';
+import { RehabPlansService } from '../rehab-plans.service';
 
 
 @Component({
@@ -27,15 +29,22 @@ export class ClientExerciseComponent implements OnInit {
   } [];
   timeOfDay: string;
   currSteps: string [];
+  client: any;
+  clientID: any;
+  clientName: any;
+  clientPlan: any;
+  noPause = true;
 
   @ViewChild('test') test: ElementRef;
   @ViewChild('test2') test2: ElementRef;
   
-  constructor( private exerciseService: ExerciseService, 
-               private router: Router,
+  constructor( private router: Router,
                private imageService: ImageService,
                private iconRegistry: MatIconRegistry,
-               private sanitizer: DomSanitizer) {
+               private sanitizer: DomSanitizer,
+               private cookieService: CookieService,
+               private patientService: PatientService,
+               private planService: RehabPlansService) {
                  iconRegistry.addSvgIcon(
                     'dumbbell',
                     sanitizer.bypassSecurityTrustResourceUrl('../assets/images/dumbbell.svg'));
@@ -43,10 +52,15 @@ export class ClientExerciseComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.exerciseService.SearchExercises("", "name", 0, 25).subscribe(data =>{
+    this.clientID = this.cookieService.get('ID');
+    this.client = this.patientService.GetPatientInfo(this.clientID).subscribe(data =>{
       var obj: any = data;
-      this.exercises = obj.docs;
+      obj = obj.patient;
+      this.client = obj;
+      this.clientPlan = obj.rehabPlan;
+      this.exercises = this.clientPlan.exerciseObjects;
       this.currExercise = this.exercises[0];
+      this.getExerciseInfo(this.currExercise);
       this.getExerciseImages(this.currExercise._id, this.currExercise.name);
     })
   }
@@ -63,10 +77,8 @@ export class ClientExerciseComponent implements OnInit {
     if(exercise.actionSteps == null || exercise.actionSteps == undefined){ return; }
     this.currExercise = exercise;
     var steps = exercise.actionSteps.split(/[0-9]+\./g);
-    console.log(steps);
     this.currSteps = steps;
     this.currSteps.shift();
-    console.log(this.currSteps);
   }
 
   getExerciseImages(id: string, name:string){
@@ -74,9 +86,6 @@ export class ClientExerciseComponent implements OnInit {
     this.imageService.GetExerciseImage(id).subscribe(data=>{
       var obj: any = data;
       this.images = obj.images;
-      this.images.forEach(element=>{
-        console.log(element.type);
-      })
     })
   }
 

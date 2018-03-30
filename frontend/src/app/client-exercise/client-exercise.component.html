@@ -4,8 +4,8 @@
 
 
 <div class="jumbotron container-fluid">
- <h3 class="title" style="color: #0275d8">
-  Good {{ timeOfDay }}, Sam.
+ <h3 *ngIf="client" class="title" style="color: #0275d8">
+  Good {{ timeOfDay }}, {{ client?.givenName }}.
  </h3>
   <p class="quote">
     Fix the system, fix the pain. That starts here, select an exercise...
@@ -19,7 +19,7 @@
         <mat-card-content>
           <mat-list>
             <mat-card-title style="color: #0275d8;">
-              <b>Exercises in Menu: </b>
+              <b>Exercises in {{ clientPlan?.name }}: </b>
             </mat-card-title>
             <mat-divider></mat-divider>
             <br>
@@ -115,10 +115,10 @@
                   <mat-divider></mat-divider>
                   <br>
                 </div>
-                <div #carousel>
+                <div (pause)="!noPause" #carousel>
                     <ngb-carousel *ngIf="images?.length > 0">
                         <ng-template ngbSlide *ngFor="let image of images">
-                          <img mat-card-image src="data:image/png;base64,{{image.data}}">
+                          <img on-mouseover="nopause = !noPause" style="max-height: 600px" mat-card-image src="data:image/png;base64,{{image.data}}">
                         </ng-template>
                       </ngb-carousel>
                 </div>

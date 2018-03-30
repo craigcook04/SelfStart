@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -67,10 +67,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard'
-import { PaymentComponent } from './payment/payment.component';
 import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -101,12 +101,17 @@ import { WrongAccountComponent } from './wrong-account/wrong-account.component';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
+<<<<<<< HEAD
     WelcomeHomeComponent,
     PaymentComponent,
     UnauthorizedComponent,
     WrongAccountComponent
+=======
+    WelcomeHomeComponent
+>>>>>>> 9a06b457c008c809c8a8e676d6b8d42e91f132da
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
@@ -161,7 +166,8 @@ import { WrongAccountComponent } from './wrong-account/wrong-account.component';
     PhysioAuthGuard,
     AdminAuthGuard,
     PaymentService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ NO_ERRORS_SCHEMA ]
 })
 
 export class AppModule { }
