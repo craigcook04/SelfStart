@@ -27,9 +27,7 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule, MatExpansionModule} from '@angular/material'; 
-
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -68,6 +66,8 @@ import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard'
 import { PaymentService } from './payment.service';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
@@ -99,6 +99,9 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
+    WelcomeHomeComponent,
+    UnauthorizedComponent,
+    WrongAccountComponent,
     WelcomeHomeComponent
   ],
   imports: [

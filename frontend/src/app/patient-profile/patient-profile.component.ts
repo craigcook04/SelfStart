@@ -237,7 +237,6 @@ export class PatientProfileComponent implements OnInit {
 
   HideMessage() {
     //hide all messages, if there are any
-    console.log('hide messages');
     this.showSuccess = false;
     this.showFailure = false;
     this.showDeleteSuccess = false;
