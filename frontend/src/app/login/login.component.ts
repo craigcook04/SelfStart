@@ -12,6 +12,7 @@ import { AppComponent } from '../app.component';
 export class LoginComponent implements OnInit {
 
   showFailure: boolean;
+  userIsDisabled: boolean;
   constructor(private userAccountsService: UserAccountsService,
               private router: Router,
               private cookieService: CookieService,
@@ -68,7 +69,10 @@ export class LoginComponent implements OnInit {
             this.showFailure = true;
             var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';                
           }
-          
+          if(retObj.isDisabled) {
+            this.userIsDisabled = true;
+            var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';                            
+          }
         }
       })
     })
