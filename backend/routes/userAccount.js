@@ -6,6 +6,26 @@ var router = express.Router();
 var UserAccount = require('../models/userAccount');
 var Session  = require('../models/session');
 const crypto = require('crypto');
+// var Session = require('../models/session');
+
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
+
 
 router.route('/')
 
@@ -151,21 +171,27 @@ router.route('/account/reset')
                 return;
                 
             }
-            console.log('hello');
+            
+            if(user.resetRequestSent) {
+                //this user has already requested a password reset request
+                response.send({success: false, alreadySent: true, message: 'A password reset request has already been sent'});
+                return;
+            }
+        
             user.needToChangePass = true;
             user.save(function(err) {
                 if(err) {
                     response.send(err);
                     return;
                 }
-                console.log(user);
+                
                 response.send({success: true, message: "A reset request has been sent to the admin"});
             });
         });
     })
     .get(function(request, response) {
         //get all accounts requesting to have their account reset
-        UserAccount.find({'needToChangePass': true}, function(err, users) {
+        UserAccount.find({'needToChangePass': true, 'resetRequestSent': false}, function(err, users) {
             if(err) {
                 response.send(err);
                 return;
@@ -202,10 +228,15 @@ router.route('/account/login')
                           response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id, role: user.userCode});
                           return;
                    }
-                   else {
+                   else if(user.isDisabled) {
+                       response.send({success: false, isDisabled: true, message: "User account is disabled"});
+                       return;
+                   }
+                   else{
                          response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
                          return;
                    }
+                   
                 }
                    
                 else {
@@ -289,17 +320,17 @@ router.route('/session/loggedin')
             }
             
             response.send({deleted: deleted});
-        })
+        });
     });
 
-router.route('/session/logout/:id')
+router.route('/session/logout')
     .delete(function(request, response) {
-        Session.findByIdAndRemove(request.params.id, function(err, deleted) {
+        Session.remove({nonce: request.header('Authorization')}, function(err, deleted) {
             if(err) {
                 response.send(err);
                 return;
             }
-            
+            console.log(deleted);
             response.send({deleted: deleted});
         });
         // console.log(request.params.id);

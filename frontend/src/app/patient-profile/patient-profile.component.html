@@ -59,12 +59,13 @@
 <mat-accordion>
   <mat-expansion-panel *ngFor="let patient of patients;">
     <mat-expansion-panel-header (click)="HideMessage(); GetProvinces(patient?.country?._id); GetCities(patient?.province?._id)">
-          <i class="fa fa-user fa-sm"></i>
+          <i class="fa fa-user fa-sm personicon"></i>
           <label class="col-sm-2 pnter">{{patient.familyName}}, {{patient.givenName}}</label>
           <label class="col-sm-3 pnter">{{patient.email}}</label>
           <label class="col-sm-2 pnter">{{calculateAge(patient?.DOB)}} years old</label>
           <label class="col-sm-3 pnter">{{patient?.phone}}</label>
     </mat-expansion-panel-header>
+    <hr class="breaker">
       <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
       <ng-template #delete let-c="close" let-d="dismiss">
         <div class="modal-header">
@@ -257,25 +258,31 @@
       </ng-template>
       <!-- End of Third Modal -->
 
-        <div class="info">
-          <p><b>Username: </b> {{patient?.account?.userAccountName}}</p>
-          <p><b>Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
-          <p><b>Patient ID:  </b> {{patient?.ID}}</p>
-          <p><b>Email:  </b> {{patient?.email}} <fa name="envelope" class="emailer" ngbTooltip="send email" (click)="open(emailModal)"></fa></p>
-          <p><b>Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
-          <p><b>Age: </b> {{calculateAge(patient?.DOB)}} years old</p>
-          <p><b>Gender:  </b> {{patient?.gender?.name}}</p>
-          <p><b>Address: </b> {{patient?.address}}</p>
-          <p><b>Postal Code:  </b> {{patient?.postalCode}}</p> 
-          <p><b>Phone Number:  </b> {{patient?.phone}}   <i class="material-icons copyicon" ngbTooltip="copy phone number" (click)="CopyToClipboard(patient.phone)">description</i></p>
-          <p><b>Country:  </b> {{patient?.country?.name}} </p>
-          <p><b>Province:  </b> {{patient?.province?.name}} </p>
-          <p><b>City:  </b> {{patient?.city?.name}} </p>
-          <input type='text' class='dummy' id="dummyInput" value='{{patient.phone}}' #getPhoneNumber/>
-        </div>
-
-        <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
-        <button class="btn btn-primary btn-sm patientbtn" (click)="open(delete)">Delete</button>
+        <div class="info" id="wrapper">
+          <div id="leftcolumn">
+            <p><b class="infob">Username: </b> {{patient?.account?.userAccountName}}</p>
+            <p><b class="infob">Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
+            <p><b class="infob">Patient ID:  </b> {{patient?.ID}}</p>
+            <p><b class="infob">Email:  </b> {{patient?.email}} <fa name="envelope" class="emailer" ngbTooltip="send email" (click)="open(emailModal)"></fa></p>
+            <p><b class="infob">Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
+            <p><b class="infob">Age: </b> {{calculateAge(patient?.DOB)}} years old</p>
+            <p><b class="infob">Gender:  </b> {{patient?.gender?.name}}</p>
+          </div>
+          
+          <div id="rightcolumn">
+            <p><b class="infob">Address: </b> {{patient?.address}}</p>
+            <p><b class="infob">Postal Code:  </b> {{patient?.postalCode}}</p> 
+            <p><b class="infob">Phone Number:  </b> {{patient?.phone}}   <i class="material-icons copyicon" ngbTooltip="copy phone number" (click)="CopyToClipboard(patient.phone)">description</i></p>
+            <p><b class="infob">Country:  </b> {{patient?.country?.name}} </p>
+            <p><b class="infob">Province:  </b> {{patient?.province?.name}} </p>
+            <p><b class="infob">City:  </b> {{patient?.city?.name}} </p>
+            <input type='text' class='dummy' id="dummyInput" value='{{patient.phone}}' #getPhoneNumber/>
+          </div>
+        </div>  
+        <mat-action-row>
+            <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
+            <button class="btn btn-primary btn-sm patientbtn" (click)="open(delete)">Delete</button>   
+        </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 </div>
