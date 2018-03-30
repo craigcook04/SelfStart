@@ -39,15 +39,16 @@ export class BookAppointmentComponent implements OnInit {
     console.log(this.cookieService.getAll());
   }
 
-  open(content) {
-    this.currContent = this.modalService.open(content, {size: "lg"});
-    console.log(this.currContent);
-    paypal.Button.render(this.paypalConfig, '#paypal-button-container');
-    if(content._def.references.book != null && content._def.references.book === 2){
-      this.paymentAmount = '0.01';
+  open(content: any, value: any) {
+    content.show();
+    this.currContent = content;
+    if(value === '0.01'){
+      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+      this.paymentAmount = value;
     }
-    if(content._def.references.initial != null && content._def.references.initial === 2){
-      this.paymentAmount = '0.02';
+    if(value === '0.02'){
+      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+      this.paymentAmount = value;
     }
   }
 
@@ -122,7 +123,7 @@ export class BookAppointmentComponent implements OnInit {
 StorePayment(data: any){
   this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
     console.log(data);
-    this.currContent.close();
+    this.currContent.hide();
   })
 }
 
