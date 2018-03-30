@@ -1,18 +1,18 @@
-<div id="container">
+<div style="margin-left: auto; margin-right: auto; text-align: center;" class="col-lg-6 col-md-6 col-sm-6">
     <br><br>
-    <h1 style="color: #0275d8; margin-left: auto; margin-right: auto; text-align: center;">Select From The Options Below...</h1>
-    <hr>
-    <div id="content">
-        <div style="margin-left: auto; margin-right: auto; text-align: center;" id="image">
-            <img src="../assets/images/marcotte-schedule.jpg">
+    <h1 style="color: #0275d8;">Select From The Options Below...</h1>
+    <mat-divider></mat-divider>
+    <br>
+    <div>
+        <div id="image">
+            <img class="col-lg-8 col-md-8 col-sm-8" src="../assets/images/marcotte-schedule.jpg">
         </div>
-        <hr>
-
-        <div>       
-            <div id="buttons">
-                <button class="btn btn-lg btn-outline-primary col-5" (click)="open(book)">Book An Appointment</button>
-                <button class="btn btn-lg btn-outline-primary col-6 ml-sm-2" (click)="open(initial)">Request An Initial Consultation</button>
-            </div>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="row" style="margin: 0 auto; text-align: center;">
+            <button class="btn btn-lg btn-outline-primary col-lg-4" (click)="open(book)">Appointment</button>
+            <button class="btn btn-lg btn-outline-primary col-lg-4" (click)="open(initial)">Initial Consultation</button>
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
                     <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
                     <!--<div class="col-10"></div>-->
                         <!--<div style="overflow: auto; overflow-x:scroll;"></div>-->
-                    <div><app-appointments></app-appointments></div>
+                    <div class="col-sm-12"><app-appointments></app-appointments></div>
                 </div>
                 <div class="form-group row">
                     <label class="col-2 col-form-label"><strong>Description</strong></label>
@@ -54,31 +54,30 @@
                             <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
                         </label>
                         <td nowrap>
-                            <button type="button" class="btn btn-success btn-s"
-                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                              <span class="glyphicon glyphicon-upload"></span> Upload all
-                            </button>
-                            <button type="button" class="btn btn-danger btn-m col-sm-10"
-                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                              <span class="glyphicon glyphicon-trash"></span> Remove all
-                            </button>
+                            <div class="row">
+                                <div class="col-md-offset-5" style="margin: 0 auto;">
+                                    <button type="button" class="btn btn-success"
+                                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload all
+                                    </button>
+                                    <button type="button" class="btn btn-danger"
+                                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove all
+                                    </button>
+                                </div>
+                            </div>
                             <tr *ngFor="let item of uploader.queue">
                               <td><strong>{{ item?.file?.name }}</strong></td>
                             </tr>
                         </td>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-5 col-form-label">
-                        Please Pay Before Proceeding:
-                    </div>
-                    <div class="col-sm-5">
-                        <app-payment></app-payment>
-                    </div>
-                </div>
         </div>
         <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" (click)="c('Close click')">Book Appointment</button>
+            <div class="float-left">
+                To Proceed, Click the PayPal button..
+            </div>
+            <div id="paypal-button-container"></div>
             <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
         </div>
 </ng-template>
@@ -358,8 +357,7 @@
                 </div>
             </ng-template>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary" [disabled]="check3.checked != true" (click)="sendInitialInfoSheet(makeChanges)" (click)="c('Close click')">Book Initial Consultation</button>
-            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+                <div id="paypal-button-container"></div>
         </div>
         </ng-template>
 

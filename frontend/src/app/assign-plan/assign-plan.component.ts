@@ -65,7 +65,7 @@ export class AssignPlanComponent implements OnInit {
             console.log(data);
             this.rehabPlans = [];
             var obj: any = data;
-            this.length = obj.total;
+            this.length2 = obj.total;
             this.rehabPlans = obj.docs;
           }
         })
@@ -117,7 +117,7 @@ export class AssignPlanComponent implements OnInit {
       obj.docs.forEach(element => {
         this.clientList.push(createClient(element));
       });
-      this.length = this.clientList.length;
+      this.length = obj.total;
       this.dataSource = new MatTableDataSource(this.clientList);
     })
   }
