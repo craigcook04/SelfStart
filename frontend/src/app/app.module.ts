@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -68,6 +68,7 @@ import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard'
 import { PaymentService } from './payment.service';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { PaymentService } from './payment.service';
     WelcomeHomeComponent
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
@@ -155,7 +157,8 @@ import { PaymentService } from './payment.service';
     PhysioAuthGuard,
     AdminAuthGuard,
     PaymentService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ NO_ERRORS_SCHEMA ]
 })
 
 export class AppModule { }
