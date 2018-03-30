@@ -228,10 +228,15 @@ router.route('/account/login')
                           response.send({success: true, changePass: true, message: "You need to update your password", userID: user._id, role: user.userCode});
                           return;
                    }
-                   else {
+                   else if(user.isDisabled) {
+                       response.send({success: false, isDisabled: true, message: "User account is disabled"});
+                       return;
+                   }
+                   else{
                          response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
                          return;
                    }
+                   
                 }
                    
                 else {
@@ -315,17 +320,17 @@ router.route('/session/loggedin')
             }
             
             response.send({deleted: deleted});
-        })
+        });
     });
 
-router.route('/session/logout/:id')
+router.route('/session/logout')
     .delete(function(request, response) {
-        Session.findByIdAndRemove(request.params.id, function(err, deleted) {
+        Session.remove({nonce: request.header('Authorization')}, function(err, deleted) {
             if(err) {
                 response.send(err);
                 return;
             }
-            
+            console.log(deleted);
             response.send({deleted: deleted});
         });
         // console.log(request.params.id);
