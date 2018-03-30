@@ -403,6 +403,18 @@ router.route('/unassignPlan/:id')
                 });
            }
         });
+    });
+    
+router.route('/patientinfo/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+            if(err){
+                response.send(err)
+            }
+            
+            response.send({patient: patient});
+        })
     })
 
 module.exports = router;
