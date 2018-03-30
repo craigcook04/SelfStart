@@ -11,8 +11,8 @@
         <mat-divider></mat-divider>
         <br>
         <div class="row" style="margin: 0 auto; text-align: center;">
-            <button class="btn btn-lg btn-outline-primary col-lg-4" (click)="open(book)">Appointment</button>
-            <button class="btn btn-lg btn-outline-primary col-lg-4" (click)="open(initial)">Initial Consultation</button>
+            <button class="btn btn-lg btn-outline-primary col-lg-4" (click)="setType('normal'); open(book)">Appointment</button>
+            <button class="btn btn-lg btn-outline-primary col-lg-4" (click)="setType('initial'); open(initial)">Initial Consultation</button>
         </div>
     </div>
 </div>

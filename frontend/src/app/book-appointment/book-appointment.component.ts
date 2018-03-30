@@ -35,7 +35,7 @@ export class BookAppointmentComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private router: Router,
               private imageService: ImageService,
-              private apptService: AppointmentsService, 
+              private apptService: AppointmentsService,
               private paymentService: PaymentService,
               private cookieService: CookieService) { 
               }
@@ -46,6 +46,7 @@ export class BookAppointmentComponent implements OnInit {
   }
 
   open(content) {
+
     this.currContent = this.modalService.open(content, {size: "lg"});
     console.log(this.currContent);
     paypal.Button.render(this.paypalConfig, '#paypal-button-container');
@@ -58,28 +59,24 @@ export class BookAppointmentComponent implements OnInit {
     this.apptService.setType(t);
   }
 
-  selectToday(){
-    this.model = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
-  }
-
   determineAge(){
     console.log("HERE");
     var age = document.querySelector('dp').innerHTML;
     console.log(age);
   }
 
-  sendInitialInfoSheet(makeChanges){
+  // sendInitialInfoSheet(makeChanges){
 
-    var name: any = document.querySelector('inputName');
-    name = name.value;
+  //   var name: any = document.querySelector('inputName');
+  //   name = name.value;
 
-    //regex commands for input validation
-    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
-    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
-    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
-    var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
+  //   //regex commands for input validation
+  //   var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+  //   var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+  //   var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+  //   var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //   var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+  //   var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
 
     if(badFormat.test(name) || !name){
       var nameBox = document.getElementById('inputName').style.borderColor = "red";
@@ -90,6 +87,20 @@ export class BookAppointmentComponent implements OnInit {
       this.paymentAmount = '0.02';
     }
   }
+  //   if(badFormat.test(name) || !name){
+  //     var nameBox = document.getElementById('inputName').style.borderColor = "red";
+  //     this.invalidName = true;
+  //     cannotContinue = true;
+  //   this.currContent = this.modalService.open(content, {size: "lg"});
+  //   console.log(this.currContent);
+  //   paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+  //   if(content._def.references.book != null && content._def.references.book === 2){
+  //     this.paymentAmount = '0.01';
+  //   }
+  //   if(content._def.references.initial != null && content._def.references.initial === 2){
+  //     this.paymentAmount = '0.02';
+  //   }
+  // }
   
   saveAppointment(patient, reason, other){
     this.apptService.AddAppointment(patient, reason, other).subscribe(data => {
