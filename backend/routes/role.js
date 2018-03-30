@@ -179,8 +179,8 @@ router.route('/updateperm/:role_id')
                 }
                 
                 response.send({success: true, message: 'role has been successfully updated'});
-            })
-        })
-    })
+            });
+        });
+    });
 
 module.exports = router;
