@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
-import { EncryptionService } from './encryption.service'
+import { EncryptionService } from './encryption.service';
 import { CookieService } from 'ngx-cookie-service';
 import 'rxjs/add/operator/toPromise';
 

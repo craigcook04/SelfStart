@@ -352,3 +352,7 @@ h2 {
     margin-bottom: -1.5rem;
     color: black;
 }
+
+#updateModal {
+    overflow-y: auto;
+}

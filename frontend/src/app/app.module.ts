@@ -70,6 +70,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { RolesService } from './roles.service';
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import { ManagePermissionsComponent } from './manage-permissions/manage-permissi
     AuthGuard,
     PhysioAuthGuard,
     AdminAuthGuard,
-    PaymentService],
+    PaymentService,
+    RolesService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
