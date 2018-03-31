@@ -40,7 +40,7 @@ import { ManagePermissionsComponent} from './manage-permissions/manage-permissio
 //ie: , canActivate: [AuthGuard]
 const routes: Routes = [
   {path: '', redirectTo: '/welcome', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},
   {path: 'services', component: ServicesComponent},
