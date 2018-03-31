@@ -62,6 +62,8 @@ router.route('/')
         userAccount.needToChangePass = false;
         userAccount.isDisabled = false;
         userAccount.resetRequestSent = false;
+        userAccount.dateRegistered = new Date();
+        userAccount.lastLoggedIn = new Date();
         userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
@@ -204,6 +206,8 @@ router.route('/:patient_id')
                 patient.familyName = request.body.familyName;
                 patient.givenName = request.body.givenName;
                 patient.email = request.body.email;
+                patient.dateRegistered = new Date();
+                patient.lastLoggedIn = new Date();
                 var myDate = new Date(request.body.DOB);
                 patient.DOB = myDate;
                 patient.postalCode = request.body.postalCode;
