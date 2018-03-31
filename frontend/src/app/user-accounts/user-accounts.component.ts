@@ -432,7 +432,7 @@ export class UserAccountsComponent implements OnInit {
     var hashedPassAndSalt = this.encryptionService.hash(hashWithSalt);
     var encryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
 
-    this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
+    this.newClientService.CreateClientFromAdmin(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
 
       console.log(data);
       var retObj: any = data;
@@ -598,15 +598,11 @@ export class UserAccountsComponent implements OnInit {
     var encryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
 
     //this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
-    this.physiotherapistService.createPhysio(firstName, lastName, email, dateHired, dateFinished, username, encryptedPassword, salt ).subscribe(data => {
+    this.physiotherapistService.createPhysiobyAdmin(firstName, lastName, email, dateHired, dateFinished, username, encryptedPassword, salt ).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
-        // this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
-        //   console.log(data);
-        //   document.body.style.cursor = 'default';
-        //   this.modalService.open(successfulModal);
-        // });
+        
         var closebtn: any= document.getElementById('closeBtn2');
         this.ResetErrorMessages();
         closebtn.click();
@@ -721,7 +717,7 @@ export class UserAccountsComponent implements OnInit {
     else {
       ascvsdesc = 'desc';
     }
-    this.patientService.SearchPatient(searchString, searchArea, 0, ascvsdesc).subscribe(data => {
+    this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
       if(data != []) {
         var retObj : any = data;
         this.length = retObj.total;
@@ -732,7 +728,7 @@ export class UserAccountsComponent implements OnInit {
         else{
           this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`    
         }
-        this.offset = 0;
+        //this.offset = 0;
         
       }
     })
@@ -747,7 +743,7 @@ export class UserAccountsComponent implements OnInit {
     }
     console.log(searchString, searchArea);
      // }
-    this.physiotherapistService.SearchPhysio(searchString, searchArea, 0, ascvsdesc).subscribe(data => {
+    this.physiotherapistService.SearchPhysio(searchString, searchArea, this.physioOffset, ascvsdesc).subscribe(data => {
       console.log(data);
       if(data != []) {
         var retObj : any = data;
@@ -759,7 +755,7 @@ export class UserAccountsComponent implements OnInit {
         else{
           this.pageInfo = `${this.physioOffset} - ${this.physioOffset + 10} of ${retObj.total}`    
         }
-        this.physioOffset = 0;
+       // this.physioOffset = 0;
         
       }
     })

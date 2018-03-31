@@ -196,4 +196,63 @@ router.route('/:physiotherapist_id')
         );
     });
 
+
+router.route('/admincreated')
+
+     .post(function (request, response) {
+        var physiotherapist = new Physiotherapist();
+        physiotherapist.ID = request.body.ID;
+        physiotherapist.familyName = request.body.familyName;
+        physiotherapist.givenName = request.body.givenName;
+        physiotherapist.email = request.body.email;
+        var myDate = new Date(request.body.dateHired);
+        physiotherapist.dateHired = myDate;
+        var myDate1 = new Date(request.body.dateFinished);
+        physiotherapist.dateFinished = myDate1;
+        physiotherapist.account = request.body.account;
+        physiotherapist.treatments = request.body.treatments;
+        
+        var userAccount = new UserAccount();
+                userAccount.userAccountName = request.body.username;
+                userAccount.encryptedPassword = request.body.encryptedPassword;
+                userAccount.salt = request.body.salt;
+                userAccount.needToChangePass = true;
+                userAccount.isDisabled = false;
+                userAccount.resetRequestSent = false;
+                userAccount.userCode = "PH"; //this is a user account
+                console.log(userAccount.encryptedPassword);
+                UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retphysio) {
+                    if(err) {
+                        response.send(err);
+                        return;
+                    }
+                    
+                    console.log(retphysio.length);
+                    
+                    if(retphysio.length != 0) {
+                        //someone with this username already exists
+                        response.send({success: false, message: "Please choose a different username"});
+                        return;
+                    }
+                
+                    userAccount.save(function(err, userAccount) {
+                        if(err){
+                            response.send(err);
+                            return;
+                        }
+                        //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
+                        physiotherapist.account = userAccount._id;
+                        
+                        physiotherapist.save(function (error) {
+                        if (error) {
+                            response.send(error);
+                            console.log(error);
+                            return;
+                        }
+                        
+                        response.json({success: true, physio: physiotherapist});
+                    });
+                    });
+                });
+    })
 module.exports = router;

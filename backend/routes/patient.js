@@ -392,5 +392,77 @@ router.route('/unassignPlan/:id')
            }
         });
     })
+    
+    
+    
+router.route('/admincreated')
+
+    .post(function (request, response) {
+        var patient = new Patient();
+        patient.ID = request.body.ID;
+        patient.familyName = request.body.familyName;
+        patient.givenName = request.body.givenName;
+        patient.email = request.body.email;
+        patient.physioId = request.body.physioId;
+        var myDate = new Date(request.body.DOB);
+        patient.DOB = myDate;
+        patient.postalCode = request.body.postalCode;
+        patient.phone = request.body.phone;
+        patient.maritalStatus = request.body.maritalStatus;
+        patient.healthCardNumber = request.body.healthCardNumber;
+        patient.occupation = request.body.occupation;
+        patient.others = request.body.others;
+        patient.account = request.body.account;
+        patient.payment = request.body.payment;
+        patient.country = request.body.country;
+        patient.province = request.body.province;
+        patient.city = request.body.city;
+        patient.gender = request.body.gender;
+        patient.appointment = request.body.appointment;
+        patient.address = request.body.address;
+        patient.verified = false;
+        
+        var userAccount = new UserAccount();
+        userAccount.userAccountName = request.body.username;
+        userAccount.encryptedPassword = request.body.encryptedPassword;
+        userAccount.salt = request.body.salt;
+        userAccount.needToChangePass = true;
+        console.log(userAccount.encryptedPassword);
+        UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            console.log(retpatient.length);
+            
+            if(retpatient.length != 0) {
+                //someone with this username already exists
+                response.send({success: false, message: "Please choose a different username"});
+                return;
+            }
+        
+            userAccount.save(function(err, userAccount) {
+                if(err){
+                    response.send(err);
+                    return;
+                }
+                //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
+                patient.account = userAccount._id;
+                
+                patient.save(function (error) {
+                if (error) {
+                    response.send(error);
+                    console.log(error);
+                    return;
+                }
+                
+                response.json({success: true, patient: patient});
+            });
+            });
+        })
+        
+    })
+
 
 module.exports = router;

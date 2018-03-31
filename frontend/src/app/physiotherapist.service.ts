@@ -36,6 +36,23 @@ export class PhysiotherapistService {
       }
       return this.http.post(url, body);
   }
+  
+  createPhysiobyAdmin(newPhysioFirstName: string, newPhysioLastName: string, newPhysioEmail: string, newPhysioHired: string, newPhysioFinished: string, newPhysioUserName: string, newPhysioPassword: string, salt: string ): any{
+      var url = "/api/physiotherapist/admincreated";
+      var body = {
+          username: newPhysioUserName,
+          encryptedPassword: newPhysioPassword,
+          ID: 0,
+          dateHired: newPhysioHired,
+          dateFinished: newPhysioFinished,
+          email: newPhysioEmail,
+          givenName: newPhysioFirstName,
+          familyName: newPhysioLastName,
+          salt: salt
+          
+      }
+      return this.http.post(url, body);
+  }
   deletePhysioTherapist(ID: string){
        var url = '/api/physiotherapist/' + ID;
        return this.http.delete(url);
