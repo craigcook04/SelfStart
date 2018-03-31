@@ -53,18 +53,27 @@ export class LoginComponent implements OnInit {
             //expires in 1 hour, expires takes days so 1 hour is 1/24
             this.cookieService.set('ID', retObj.userID, 1/24);
             this.cookieService.set('session', retObj1.nonce, 1/24);
+            this.cookieService.set('role', retObj.role, 1/24);
+
             if(retObj.role == "US") {
-              this.router.navigate(['../home'])
+              this.router.navigate(['../home']);
+              this.appComponent.alterLoginState();
+              this.appComponent.toggleToClient();
             }
             else if (retObj.role == "AD") {
-              this.router.navigate(['../adminhome'])
+              this.router.navigate(['../adminhome']);
+              this.appComponent.alterLoginState();
+              this.appComponent.toggleToAdmin();
             }
             else {
-              this.router.navigate(['../physiohome'])
+              this.router.navigate(['../physiohome']);
+              this.appComponent.alterLoginState();
+              this.appComponent.toggleToPhysio();
             }
           }
         }
         else{ 
+
           if(retObj.incPass == true) {
             this.showFailure = true;
             var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';                
