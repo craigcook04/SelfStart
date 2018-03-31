@@ -46,89 +46,75 @@
 <br>
 <br>
 
-<router-outlet></router-outlet>
-
-<br>
+<div style="min-height: 100vh;">
+    <router-outlet></router-outlet>
+</div>
 <!--Footer-->
-<footer class="page-footer font-small indigo pt-0">
+<footer class="footer" style=" background-color: #3f51b5; -webkit-box-shadow: 0px -4px 3px rgba(50, 50, 50, 0.75);-moz-box-shadow: 0px -4px 3px rgba(50, 50, 50, 0.75);box-shadow: 0px -4px 3px rgba(50, 50, 50, 0.75);">
 
     <!--Footer Links-->
     <div class="container">
-
+        <br>
         <!--Grid row-->
-        <div class="row pt-5 mb-3 text-center d-flex justify-content-center">
-
+        <div class="row pt-4 mb-3 text-center d-flex justify-content-center">
             <!--Grid column-->
             <div class="col-md-2 mb-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <a class="nav-link" [routerLink]="['about']">About</a>
+                    <a class="nav-link" [routerLink]="['about']" style="color: white;">About</a>
                 </h6>
             </div>
             <!--Grid column-->
-
             <!--Grid column-->
             <div class="col-md-2 mb-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <a class="nav-link" [routerLink]="['howitworks']">How it Works</a>
+                    <a class="nav-link" [routerLink]="['howitworks']" style="color: white;">How it Works</a>
                 </h6>
             </div>
             <!--Grid column-->
-
             <!--Grid column-->
             <div class="col-md-2 mb-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <a class="nav-link" [routerLink]="['services']">Services</a>
+                    <a class="nav-link" [routerLink]="['services']" style="color: white;">Services</a>
                 </h6>
             </div>
             <!--Grid column-->
-
             <!--Grid column-->
             <div class="col-md-2 mb-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <a class="nav-link" [routerLink]="['faq']">FAQ</a>
+                    <a class="nav-link" [routerLink]="['faq']" style="color: white;">FAQ</a>
                 </h6>
             </div>
             <!--Grid column-->
-
             <!--Grid column-->
             <div class="col-md-2 mb-3">
                 <h6 class="text-uppercase font-weight-bold">
-                    <a class="nav-link" [routerLink]="['contact']">Contact</a>
+                    <a class="nav-link" [routerLink]="['contact']" style="color: white;">Contact</a>
                 </h6>
             </div>
             <!--Grid column-->
-
         </div>
         <!--Grid row-->
-
         <hr class="rgba-white-light" style="margin: 0 15%;">
-
-        <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
-
         <!--Grid row-->
-        <div class="row pb-3">
-
+        <div class="row pb-2">
             <!--Grid column-->
             <div class="col-md-12">
 
                 <div class="mb-5 flex-center">
-                    <img style="filter: brightness(0) invert(1); position: relative; top: -3px" src='../assets/images/logo.png' width='100' height='50'>
+                    <img style="filter: brightness(0) invert(1); position: relative;" src='../assets/images/logo.png' width='100' height='50'>
                 </div>
             </div>
             <!--Grid column-->
         </div>
         <!--Grid row-->
-
     </div>
     <!--/Footer Links-->
-
     <!--Copyright-->
-    <div class="footer-copyright py-3 text-center">
-        © 2018 Copyright:
-        <a href="https://mdbootstrap.com/material-design-for-bootstrap/"> Loop Solutions Inc.</a>
+    <div class="footer-copyright text-center" style="margin-top: 10px; background-color: #3949ab">
+        <b style="color: white; ">© 2018 Copyright:</b>
+        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" style="color: white; "> Loop Solutions Inc.</a>
     </div>
     <!--/Copyright-->
-
 </footer>
 <!--/Footer-->
 

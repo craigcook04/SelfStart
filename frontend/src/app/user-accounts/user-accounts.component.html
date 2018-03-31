@@ -1,619 +1,598 @@
-<br>
-<mat-sidenav-container class="example-container">
+<mat-sidenav-container style="min-height: 100vh;">
     
-    <mat-sidenav #sidenav mode="side" opened="true" class="example-sidenav">
-        
-        <!--<p style = "color: white; margin-left:10px;">client List</p>-->
-        <!--<br>-->
-        
-        <mat-nav-list>
-          <mat-divider></mat-divider>
-          <br><br>
-          <mat-list-item>
-            <p style = "color:white;">Admin Dashboard</p>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../']">Dashboard</button>
           </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:white;">Client List</p></mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:white;">Exercise Library</p>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Manage User Accounts</button>
           </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:white;">Forms</p>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item><p style = "color:white;">Admin</p></mat-list-item>
-          <mat-divider></mat-divider>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../manageforms']">Manage Dynamic Forms</button></mat-list-item>
         </mat-nav-list>
     </mat-sidenav>
 
 
 
-
-<mat-sidenav-content style = "background-color: white;">
-  <br><br>
-  
-<div class="input-group mb-3 searchbar" id="custom-search-input">
-    <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
-    <span class="input-group-btn">
-
-    <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
-      <fa name="search"></fa>
-    </button>
-    </span>
-</div>
-<br>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-  
-<div class ="tab">
-   
-     
-      <h1>User Accounts</h1>
-      <br>
-  <!--<mat-sidenav-container>-->
-  <!--<mat-sidenav>Start</mat-sidenav>-->
-  <!--<mat-sidenav position="end">End</mat-sidenav>-->
-  <!--<section>Main</section>-->
-
-<ngb-tabset>
-   
-   
-  <ngb-tab title="Clients">
-       <ng-template ngbTabContent>
-           <br><br>
-           <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
-           
-           <br>
-           <br><br><br>
-<!-- Beginning of New Client Modal -->
-<ng-template #newmodal let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title">New Client</h4>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group row">
-        <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPatientFirstName>
+<mat-sidenav-content>
+    <mat-card style="margin-left: auto; margin-right: auto; min-height: 75vh;" class="col-11">
+        <div class="input-group mb-3 searchbar" id="custom-search-input">
+            <input type="text" class="form-control" (keyup.enter)="searchPlans(searchValue.value)" placeholder="Search for plans here..." aria-label="Search for plans here..." aria-describedby="basic-addon2" #searchValue>
+            <span class="input-group-btn">
+        
+            <button class="btn btn-info btn-lg" type="button" (click)="searchPlans(searchValue.value)"  location="top" ngbTooltip="Search">
+              <fa name="search"></fa>
+            </button>
+            </span>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPatientLastName>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputUsernameName" placeholder="User Name" #newPatientUserName>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputLastName" placeholder="Password" #newPatientPassword>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPatientEmail>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>
-        </div>
-      </div>
-      <!-- <div class="form-group row">
-          <label for="inputTargDate" class="col-sm-3 col-form-label">Date of Birth</label>
-          <div class="col-sm-9">
-              <div class="calFormat">
-                <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                      <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                    </button>
-                  </div>
-              </div>
-          </div>
-      </div> -->
-      <div class="form-group row">
-        <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
-        <div class="col-sm-9">
-          <select #newPatientGender class="mydropdown">
-              <option value="badvalue">Please select a gender</option>
-              <option disabled="disabled">----</option>
-              <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-          <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="inputAddress" placeholder="Address" #newPatientAddress>
-          </div>
-        </div>
-      <div class="form-group row">
-        <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #newPatientPostalCode>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #newPatientPhoneNumber>
-        </div>
-      </div>
-      <!--<div class="form-group row">-->
-      <!--  <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>-->
-      <!--  <div class="col-sm-9">-->
-      <!--    <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" #newPatientMaritalStatus>-->
-      <!--  </div>-->
-      <!--</div>-->
-      <!--<div class="form-group row">-->
-      <!--  <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>-->
-      <!--  <div class="col-sm-9">-->
-      <!--    <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" #newPatientHealthCardNumber>-->
-      <!--  </div>-->
-      <!--</div>-->
-      <!--<div class="form-group row">-->
-      <!--  <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>-->
-      <!--  <div class="col-sm-9">-->
-      <!--    <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #newPatientOccupation>-->
-      <!--  </div>-->
-      <!--</div>-->
-      <div class="form-group row">
-        <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputOthers" placeholder="Others" #newPatientOthers>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
-        <div class="col-sm-9">
-          <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
-            <option value="badvalue">Please select a country</option>
-            <option disabled="disabled">----</option>    
-            <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
-        <div class="col-sm-9">
-          <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
-                <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
-        <div class="col-sm-9">
-          <select #newPatientCity class="mydropdown">
-                <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
-              </select>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value,  newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value, newPatientAddress.value); c('Close click')">Confirm</button>
-    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-  </div>
-</ng-template>
-           <div *ngFor = "let patient of clients">
-    
-                <button class="accordion"  (click) = "show(patient)" >{{patient.givenName}}</button>
-                <div *ngIf = "patient == activated">
-                    <hr>
-                    <br>
-                    
-                    <div class="info">
-                      <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(edit)"><i class="material-icons">mode_edit</i></button>
-                      <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px " class =  " w3-xlarge" (click) = "open(delete)"><i  class="fa fa-trash"></i></button>
-                      <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
-                      <p><b>Patient ID:  </b> {{patient.ID}}</p>
-                      <p><b>Email:  </b> {{patient.email}}</p>
-                      <p><b>Date of Birth:  </b> {{patient.DOB}}</p>
-                      <p><b>Gender:  </b> {{patient.gender.name}}</p>
-                      <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
-                      <p><b>Phone Number:  </b> {{patient.phone}}</p>
-                      <!--<p><b>Marital Status:  </b> {{client.maritalStatus}}</p>-->
-                      <!--<p><b>Health Card Number:  </b> {{client.healthCardNumber}}</p>-->
-                      <!--<p><b>Occupation:  </b> {{client.occupation}}</p>-->
-                      
-                      <p><b>Address:  </b> {{patient.address}} </p>
-                      
-                      <p><b>Country:  </b> {{patient.country.name}} </p>
-                      <p><b>Province:  </b> {{patient.province.name}} </p>
-                      <p><b>City:  </b> {{patient.city.name}} </p>
-                      
-                    </div>
-                    <ng-template #edit let-c="close" let-d="dismiss">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <div class="form-group row">
-                            <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
-                            <div class="col-sm-9">
-                              <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
-                            </div>
-                          </div>
-            <!-- <div class="form-group row">
-                  <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
-                  <div class="col-sm-9">
-                      <div class="calFormat">
-                        <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                              <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                            </button>
-                          </div>
-                      </div>
-                  </div>
-              </div> -->
-                          <div class="form-group row">
-                            <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
-                            <div class="col-sm-9">
-                              <select #newGender class="mydropdown">
-                                <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
-                                <option disabled="disabled">----</option>
-                                <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                              <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
-                              <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputAddress" placeholder="Address" value = "{{patient.address}}" #newAddress>
-                              </div>
-                            </div>
-                          <div class="form-group row">
-                            <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
-                            </div>
-                          </div>
-                           <div class="form-group row">
-                            <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputOthers" placeholder="Other" value="{{patient.others}}" #newOthers>
-                            </div>
-                          </div>
-                         
-                          <div class="form-group row">
-                            <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
-                            <div class="col-sm-9">
-                              <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value)">
-                                <option value="{{patient.country._id}}">{{patient.country.name}}</option>
-                                <option disabled="disabled">----</option>
-                                <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
-                            <div class="col-sm-9">
-                              <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
-                                <option value="{{patient.province._id}}">{{patient.province.name}}</option>
-                                <option disabled="disabled">----</option>
-                                <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
-                            <div class="col-sm-9">
-                              <select #newCity class="mydropdown">
-                                <option value="{{patient.city._id}}">{{patient.city.name}}</option>
-                                <option disabled="disabled">----</option>
-                                <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
-                              </select>
-                            </div>
-                          </div>
-                        </form>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); c('Close click')">Confirm</button>
-                        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-                      </div>
-                    </ng-template>
-                    <ng-template #delete let-c="close" let-d="dismiss">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>Are you sure you wish to delete client <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot
-                        be undone. </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); c('Close click')">Delete</button>
-                        <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
-                      </div>
-                    </ng-template>
-                  </div>
-                  <hr>
-    
-                </div>
-               
-                
-              </ng-template>
-            </ngb-tab>
-  
-    <ngb-tab title="Physio Therapists">
-       <ng-template ngbTabContent>
-         <br><br>
-         <button type="button" class="btn btn-primary createbtn" (click)="open(newPhysiomodal)">Add New Physiotherapist</button>
-         
-         <ng-template #newPhysiomodal let-c="close" let-d="dismiss">
- 
- 
-            <div class="modal-header">
-              <h4 class="modal-title">New Client</h4>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group row">
-                  <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPhysioFirstName>
-                  </div>
-                </div>
-              
-                <div class="form-group row">
-                  <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPhysioLastName>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputLastName" placeholder="User Name" #newPhysioUserName>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputLastName" placeholder="Password" #newPhysioPassword>
-                  </div>
-                </div>
-      <!--<div class="form-group row">-->
-      <!--  <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
-      <!--  <div class="col-sm-9">-->
-      <!--    <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>-->
-      <!--  </div>-->
-      <!--</div>-->
-                <div class="form-group row">
-                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPhysioEmail>
-                  </div>
-                </div>
-      <!--<div class="form-group row">-->
-      <!--  <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>-->
-      <!--  <div class="col-sm-9">-->
-      <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>-->
-      <!--  </div>-->
-      <!--</div>-->
-                <div class="form-group row">
-                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioHired>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioFinished>
-                  </div>
-                </div>
-                <!--<div class="form-group row">-->
-                <!--  <label for="inputTargDate" class="col-sm-3 col-form-label">Date Hired</label>-->
-                <!--  <div class="col-sm-9">-->
-                <!--    <div class="calFormat">-->
-                <!--      <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPhysioHired>-->
-                <!--      <div class="input-group-append">-->
-                <!--        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
-                <!--          <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
-                <!--        </button>-->
-                <!--      </div>-->
-                <!--    </div>-->
-                <!--  </div>-->
-                <!--</div> -->
-                <!--<div class="form-group row">-->
-                <!--  <label for="inputTargDate" class="col-sm-3 col-form-label">Date Finished</label>-->
-                <!--  <div class="col-sm-9">-->
-                <!--    <div class="calFormat">-->
-                <!--      <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="d1p" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPhysioFinished>-->
-                <!--      <div class="input-group-append">-->
-                <!--        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
-                <!--          <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
-                <!--        </button>-->
-                <!--      </div>-->
-                <!--    </div>-->
-                <!--  </div>-->
-                <!--</div> -->
-      <!--<div class="form-group row">-->
-      <!--  <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>-->
-      <!--  <div class="col-sm-9">-->
-      <!--    <select #newPatientGender class="mydropdown">-->
-      <!--        <option value="badvalue">Please select a gender</option>-->
-      <!--        <option disabled="disabled">----</option>-->
-      <!--        <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>-->
-      <!--    </select>-->
-      <!--  </div>-->
-              
-              </form>
-              </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary btn-sm" (click)="newPhysio(newPhysioFirstName.value, newPhysioLastName.value,  newPhysioEmail.value, newPhysioHired.value, newPhysioFinished.value, newPhysioUserName.value, newPhysioPassword.value); c('Close click')">Confirm</button>
-                  <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-                </div>
-            </ng-template>
-           
-            <br>
-            <br><br><br>
-            <div *ngFor = "let x of therapists">
-              <br>
-              <button class="accordion"  (click) = "showPhysio(x)" >{{x.givenName}}</button>
-           
-              <div *ngIf = "x == activated">
-                  <hr>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        
                      
-                  <div class="info">
-                      <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(editPhysio)"><i class="material-icons">mode_edit</i></button>
-                      <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge" (click) = "open(deletePhysio)"><i  class="fa fa-trash"></i></button>
-                      <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
-                      <p><b>Patient ID:  </b> {{x.dateHired | date: 'yyyy-MM-dd'}}</p>
-                      <p><b>Email:  </b> {{x.email}}</p>
-                      <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
-                      <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->
-                      <!--<p><b>Postal Code:  </b> {{patient.postalCode}}</p>-->
-                      <!--<p><b>Phone Number:  </b> {{patient.phone}}</p>-->
-                      <!--<p><b>Marital Status:  </b> {{client.maritalStatus}}</p>-->
-                      <!--<p><b>Health Card Number:  </b> {{client.healthCardNumber}}</p>-->
-                      <!--<p><b>Occupation:  </b> {{client.occupation}}</p>-->
-                      <!--<p><b>Country:  </b> {{patient.country.name}} </p>-->
-                      <!--<p><b>Province:  </b> {{patient.province.name}} </p>-->
-                      <!--<p><b>City:  </b> {{patient.city.name}} </p>-->
-                      <button type="button" class="btn btn-primary createbtn" (click) = "viewClients(x._id);">View {{x.givenName}}'s Clients</button>
-                      <!--<button type="button" class="btn btn-primary createbtn"></button>-->
-                    </div>
-                    <ng-template #deletePhysio let-c="close" let-d="dismiss">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Delete {{x.familyName}}, {{x.givenName}}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>Are you sure you wish to delete therapist <b>{{x.familyName}}, {{x.givenName}}</b>. This action is cannot
-                        be undone. </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-med" (click)="deletePhysio1(x._id); c('Close click')">Delete</button>
-                        <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
-                      </div>
-                    </ng-template>
-                    <ng-template #editPhysio let-c="close" let-d="dismiss">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Update {{x.familyName}}, {{x.givenName}}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <div class="form-group row">
-                            <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{x.givenName}}" #newFirstNamePhysio>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{x.familyName}}" #newLastNamePhysio>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
-                            <div class="col-sm-9">
-                              <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{x.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified" #physioID>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{x.email}}" #newEmailPhysio>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateFinished  | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>
-                            </div>
-                          </div>
-            <!-- <div class="form-group row">
-                  <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
-                  <div class="col-sm-9">
-                      <div class="calFormat">
-                        <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                              <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                            </button>
-                          </div>
-                      </div>
-                  </div>
-              </div> -->
-                        
-                        </form>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" (click)="updatePhysio(newFirstNamePhysio.value, newLastNamePhysio.value, newEmailPhysio.value, physioID.value, newDateHiredPhysio.value, newDateFinishedPhysio.value, x._id); c('Close click')">Confirm</button>
-                        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-                      </div>
-                    </ng-template>
-                   
-              </div>
-              <hr> 
+        <h1>User Accounts</h1>
+        <br>
+        <div class ="tab">
+        <mat-card>
+          <ngb-tabset>
+              <ngb-tab title="Clients">
+                  <ng-template ngbTabContent>
+                      <br><br>
+                      <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>
+                      
+                      <br> <br> <br>
+           <!-- Beginning of New Client Modal -->
+           <ng-template #newmodal let-c="close" let-d="dismiss">
+             <div class="modal-header">
+               <h4 class="modal-title">New Client</h4>
+             </div>
+             <div class="modal-body">
+               <form>
+                 <div class="form-group row">
+                   <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPatientFirstName>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPatientLastName>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputUsernameName" placeholder="User Name" #newPatientUserName>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputLastName" placeholder="Password" #newPatientPassword>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPatientEmail>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>
+                   </div>
+                 </div>
+                 <!-- <div class="form-group row">
+                     <label for="inputTargDate" class="col-sm-3 col-form-label">Date of Birth</label>
+                     <div class="col-sm-9">
+                         <div class="calFormat">
+                           <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPatientBirthDate>
+                             <div class="input-group-append">
+                               <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                 <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                               </button>
+                             </div>
+                         </div>
+                     </div>
+                 </div> -->
+                 <div class="form-group row">
+                   <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+                   <div class="col-sm-9">
+                     <select #newPatientGender class="mydropdown">
+                         <option value="badvalue">Please select a gender</option>
+                         <option disabled="disabled">----</option>
+                         <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                     </select>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                     <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
+                     <div class="col-sm-9">
+                       <input type="text" class="form-control" id="inputAddress" placeholder="Address" #newPatientAddress>
+                     </div>
+                   </div>
+                 <div class="form-group row">
+                   <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" #newPatientPostalCode>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #newPatientPhoneNumber>
+                   </div>
+                 </div>
+                 <!--<div class="form-group row">-->
+                 <!--  <label for="inputMaritalStatus" class="col-sm-3 col-form-label">Marital Status</label>-->
+                 <!--  <div class="col-sm-9">-->
+                 <!--    <input type="text" class="form-control" id="inputMaritalStatus" placeholder="Marital Status" #newPatientMaritalStatus>-->
+                 <!--  </div>-->
+                 <!--</div>-->
+                 <!--<div class="form-group row">-->
+                 <!--  <label for="inputHealthCard" class="col-sm-3 col-form-label">Health Card Number</label>-->
+                 <!--  <div class="col-sm-9">-->
+                 <!--    <input type="text" class="form-control" id="inputHealthCard" placeholder="Health Card Number" #newPatientHealthCardNumber>-->
+                 <!--  </div>-->
+                 <!--</div>-->
+                 <!--<div class="form-group row">-->
+                 <!--  <label for="inputOccupation" class="col-sm-3 col-form-label">Occupation</label>-->
+                 <!--  <div class="col-sm-9">-->
+                 <!--    <input type="text" class="form-control" id="inputOccupation" placeholder="Occupation" #newPatientOccupation>-->
+                 <!--  </div>-->
+                 <!--</div>-->
+                 <div class="form-group row">
+                   <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+                   <div class="col-sm-9">
+                     <input type="text" class="form-control" id="inputOthers" placeholder="Others" #newPatientOthers>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+                   <div class="col-sm-9">
+                     <select #newPatientCountry class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+                       <option value="badvalue">Please select a country</option>
+                       <option disabled="disabled">----</option>    
+                       <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+                     </select>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
+                   <div class="col-sm-9">
+                     <select #newPatientProvince class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+                           <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+                     </select>
+                   </div>
+                 </div>
+                 <div class="form-group row">
+                   <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
+                   <div class="col-sm-9">
+                     <select #newPatientCity class="mydropdown">
+                           <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+                         </select>
+                   </div>
+                 </div>
+               </form>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(newPatientFirstName.value, newPatientLastName.value, newPatientID.value, newPatientEmail.value, newPatientBirthDate.value, newPatientPostalCode.value, newPatientPhoneNumber.value,  newPatientOthers.value, newPatientCountry.value, newPatientProvince.value, newPatientCity.value, newPatientGender.value, newPatientUserName.value, newPatientPassword.value, newPatientAddress.value); c('Close click')">Confirm</button>
+               <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+             </div>
+           </ng-template>
+                      <div *ngFor = "let patient of clients">
+               
+                           <button class="accordion"  (click) = "show(patient)" >{{patient.givenName}}</button>
+                           <div *ngIf = "patient == activated">
+                               <hr>
+                               <br>
+                               
+                               <div class="info">
+                                 <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(edit)"><i class="material-icons">mode_edit</i></button>
+                                 <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px " class =  " w3-xlarge" (click) = "open(delete)"><i  class="fa fa-trash"></i></button>
+                                 <p><b>Name:  </b> {{patient.familyName}}, {{patient.givenName}}</p>
+                                 <p><b>Patient ID:  </b> {{patient.ID}}</p>
+                                 <p><b>Email:  </b> {{patient.email}}</p>
+                                 <p><b>Date of Birth:  </b> {{patient.DOB}}</p>
+                                 <p><b>Gender:  </b> {{patient.gender.name}}</p>
+                                 <p><b>Postal Code:  </b> {{patient.postalCode}}</p>
+                                 <p><b>Phone Number:  </b> {{patient.phone}}</p>
+                                 <!--<p><b>Marital Status:  </b> {{client.maritalStatus}}</p>-->
+                                 <!--<p><b>Health Card Number:  </b> {{client.healthCardNumber}}</p>-->
+                                 <!--<p><b>Occupation:  </b> {{client.occupation}}</p>-->
+                                 
+                                 <p><b>Address:  </b> {{patient.address}} </p>
+                                 
+                                 <p><b>Country:  </b> {{patient.country.name}} </p>
+                                 <p><b>Province:  </b> {{patient.province.name}} </p>
+                                 <p><b>City:  </b> {{patient.city.name}} </p>
+                                 
+                               </div>
+                               <ng-template #edit let-c="close" let-d="dismiss">
+                                 <div class="modal-header">
+                                   <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                   <form>
+                                     <div class="form-group row">
+                                       <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified">
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
+                                       </div>
+                                     </div>
+                       <!-- <div class="form-group row">
+                             <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
+                             <div class="col-sm-9">
+                                 <div class="calFormat">
+                                   <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
+                                     <div class="input-group-append">
+                                       <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                         <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                       </button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div> -->
+                                     <div class="form-group row">
+                                       <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+                                       <div class="col-sm-9">
+                                         <select #newGender class="mydropdown">
+                                           <option value="{{patient.gender._id}}">{{patient.gender.name}}</option>
+                                           <option disabled="disabled">----</option>
+                                           <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
+                                         </select>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                         <label for="inputAddress" class="col-sm-3 col-form-label">Address:</label>
+                                         <div class="col-sm-9">
+                                           <input type="text" class="form-control" id="inputAddress" placeholder="Address" value = "{{patient.address}}" #newAddress>
+                                         </div>
+                                       </div>
+                                     <div class="form-group row">
+                                       <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" #newPhoneNumber>
+                                       </div>
+                                     </div>
+                                      <div class="form-group row">
+                                       <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputOthers" placeholder="Other" value="{{patient.others}}" #newOthers>
+                                       </div>
+                                     </div>
+                                    
+                                     <div class="form-group row">
+                                       <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+                                       <div class="col-sm-9">
+                                         <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value)">
+                                           <option value="{{patient.country._id}}">{{patient.country.name}}</option>
+                                           <option disabled="disabled">----</option>
+                                           <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
+                                         </select>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
+                                       <div class="col-sm-9">
+                                         <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
+                                           <option value="{{patient.province._id}}">{{patient.province.name}}</option>
+                                           <option disabled="disabled">----</option>
+                                           <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
+                                         </select>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
+                                       <div class="col-sm-9">
+                                         <select #newCity class="mydropdown">
+                                           <option value="{{patient.city._id}}">{{patient.city.name}}</option>
+                                           <option disabled="disabled">----</option>
+                                           <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+                                         </select>
+                                       </div>
+                                     </div>
+                                   </form>
+           
+                                 </div>
+                                 <div class="modal-footer">
+                                   <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); c('Close click')">Confirm</button>
+                                   <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                                 </div>
+                               </ng-template>
+                               <ng-template #delete let-c="close" let-d="dismiss">
+                                 <div class="modal-header">
+                                   <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                   <p>Are you sure you wish to delete client <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot
+                                   be undone. </p>
+                                 </div>
+                                 <div class="modal-footer">
+                                   <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); c('Close click')">Delete</button>
+                                   <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
+                                 </div>
+                               </ng-template>
+                             </div>
+                             <hr>
+               
+                           </div>
+                          
+                           
+                         </ng-template>
+                       </ngb-tab>
+             
+               <ngb-tab title="Physio Therapists">
+                  <ng-template ngbTabContent>
+                    <br><br>
+                    <button type="button" class="btn btn-primary createbtn" (click)="open(newPhysiomodal)">Add New Physiotherapist</button>
+                    
+                    <ng-template #newPhysiomodal let-c="close" let-d="dismiss">
             
-            </div>
-       
-         </ng-template>
-      </ngb-tab>  
-  
-</ngb-tabset>
-
-</div>
+            
+                       <div class="modal-header">
+                         <h4 class="modal-title">New Client</h4>
+                       </div>
+                       <div class="modal-body">
+                         <form>
+                           <div class="form-group row">
+                             <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #newPhysioFirstName>
+                             </div>
+                           </div>
+                         
+                           <div class="form-group row">
+                             <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #newPhysioLastName>
+                             </div>
+                           </div>
+                           <div class="form-group row">
+                             <label for="inputLastName" class="col-sm-3 col-form-label">User Name</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputLastName" placeholder="User Name" #newPhysioUserName>
+                             </div>
+                           </div>
+                           <div class="form-group row">
+                             <label for="inputLastName" class="col-sm-3 col-form-label">Password</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputLastName" placeholder="Password" #newPhysioPassword>
+                             </div>
+                           </div>
+                 <!--<div class="form-group row">-->
+                 <!--  <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>-->
+                 <!--  <div class="col-sm-9">-->
+                 <!--    <input type="text" class="form-control" id="inputPatientID" placeholder="Patient ID" #newPatientID>-->
+                 <!--  </div>-->
+                 <!--</div>-->
+                           <div class="form-group row">
+                             <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputEmail" placeholder="Email" #newPhysioEmail>
+                             </div>
+                           </div>
+                 <!--<div class="form-group row">-->
+                 <!--  <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>-->
+                 <!--  <div class="col-sm-9">-->
+                 <!--    <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPatientBirthDate>-->
+                 <!--  </div>-->
+                 <!--</div>-->
+                           <div class="form-group row">
+                             <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioHired>
+                             </div>
+                           </div>
+                           <div class="form-group row">
+                             <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
+                             <div class="col-sm-9">
+                               <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" #newPhysioFinished>
+                             </div>
+                           </div>
+                           <!--<div class="form-group row">-->
+                           <!--  <label for="inputTargDate" class="col-sm-3 col-form-label">Date Hired</label>-->
+                           <!--  <div class="col-sm-9">-->
+                           <!--    <div class="calFormat">-->
+                           <!--      <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPhysioHired>-->
+                           <!--      <div class="input-group-append">-->
+                           <!--        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
+                           <!--          <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
+                           <!--        </button>-->
+                           <!--      </div>-->
+                           <!--    </div>-->
+                           <!--  </div>-->
+                           <!--</div> -->
+                           <!--<div class="form-group row">-->
+                           <!--  <label for="inputTargDate" class="col-sm-3 col-form-label">Date Finished</label>-->
+                           <!--  <div class="col-sm-9">-->
+                           <!--    <div class="calFormat">-->
+                           <!--      <input class="form-control" yearRange="1918:2019" placeholder="yyyy-mm-dd" name="d1p" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newPhysioFinished>-->
+                           <!--      <div class="input-group-append">-->
+                           <!--        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">-->
+                           <!--          <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>-->
+                           <!--        </button>-->
+                           <!--      </div>-->
+                           <!--    </div>-->
+                           <!--  </div>-->
+                           <!--</div> -->
+                 <!--<div class="form-group row">-->
+                 <!--  <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>-->
+                 <!--  <div class="col-sm-9">-->
+                 <!--    <select #newPatientGender class="mydropdown">-->
+                 <!--        <option value="badvalue">Please select a gender</option>-->
+                 <!--        <option disabled="disabled">----</option>-->
+                 <!--        <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>-->
+                 <!--    </select>-->
+                 <!--  </div>-->
+                         
+                         </form>
+                         </div>
+                           <div class="modal-footer">
+                             <button type="button" class="btn btn-primary btn-sm" (click)="newPhysio(newPhysioFirstName.value, newPhysioLastName.value,  newPhysioEmail.value, newPhysioHired.value, newPhysioFinished.value, newPhysioUserName.value, newPhysioPassword.value); c('Close click')">Confirm</button>
+                             <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                           </div>
+                       </ng-template>
+                      
+                       <br>
+                       <br><br><br>
+                       <div *ngFor = "let x of therapists">
+                         <br>
+                         <button class="accordion"  (click) = "showPhysio(x)" >{{x.givenName}}</button>
+                      
+                         <div *ngIf = "x == activated">
+                             <hr>
+                                
+                             <div class="info">
+                                 <button style = "float: right; background-color: white; border:none; margin-top:4px; margin-left: 2px;" class =  "w3-xlarge" (click) = "open(editPhysio)"><i class="material-icons">mode_edit</i></button>
+                                 <button style = "float: right; background-color: white; border:none; margin-top: none; margin-right: 2px; " class =  " w3-xlarge" (click) = "open(deletePhysio)"><i  class="fa fa-trash"></i></button>
+                                 <p><b>Name:  </b> {{x.familyName}}, {{x.givenName}}</p>
+                                 <p><b>Patient ID:  </b> {{x.dateHired | date: 'yyyy-MM-dd'}}</p>
+                                 <p><b>Email:  </b> {{x.email}}</p>
+                                 <!--<p><b>Date of Birth:  </b> {{patient.DOB}}</p>-->
+                                 <!--<p><b>Gender:  </b> {{patient.gender.name}}</p>-->
+                                 <!--<p><b>Postal Code:  </b> {{patient.postalCode}}</p>-->
+                                 <!--<p><b>Phone Number:  </b> {{patient.phone}}</p>-->
+                                 <!--<p><b>Marital Status:  </b> {{client.maritalStatus}}</p>-->
+                                 <!--<p><b>Health Card Number:  </b> {{client.healthCardNumber}}</p>-->
+                                 <!--<p><b>Occupation:  </b> {{client.occupation}}</p>-->
+                                 <!--<p><b>Country:  </b> {{patient.country.name}} </p>-->
+                                 <!--<p><b>Province:  </b> {{patient.province.name}} </p>-->
+                                 <!--<p><b>City:  </b> {{patient.city.name}} </p>-->
+                                 <button type="button" class="btn btn-primary createbtn" (click) = "viewClients(x._id);">View {{x.givenName}}'s Clients</button>
+                                 <!--<button type="button" class="btn btn-primary createbtn"></button>-->
+                               </div>
+                               <ng-template #deletePhysio let-c="close" let-d="dismiss">
+                                 <div class="modal-header">
+                                   <h4 class="modal-title">Delete {{x.familyName}}, {{x.givenName}}</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                   <p>Are you sure you wish to delete therapist <b>{{x.familyName}}, {{x.givenName}}</b>. This action is cannot
+                                   be undone. </p>
+                                 </div>
+                                 <div class="modal-footer">
+                                   <button type="button" class="btn btn-primary btn-med" (click)="deletePhysio1(x._id); c('Close click')">Delete</button>
+                                   <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Delete</button>
+                                 </div>
+                               </ng-template>
+                               <ng-template #editPhysio let-c="close" let-d="dismiss">
+                                 <div class="modal-header">
+                                   <h4 class="modal-title">Update {{x.familyName}}, {{x.givenName}}</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                   <form>
+                                     <div class="form-group row">
+                                       <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{x.givenName}}" #newFirstNamePhysio>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{x.familyName}}" #newLastNamePhysio>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{x.ID}}" placement="left" ngbTooltip="The patient's ID cannot be modified" #physioID>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{x.email}}" #newEmailPhysio>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputDOB" class="col-sm-3 col-form-label">Date Hired</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateHired  | date: 'yyyy-MM-dd'}}" #newDateHiredPhysio>
+                                       </div>
+                                     </div>
+                                     <div class="form-group row">
+                                       <label for="inputDOB" class="col-sm-3 col-form-label">Date Finished</label>
+                                       <div class="col-sm-9">
+                                         <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{x.dateFinished  | date: 'yyyy-MM-dd'}}" #newDateFinishedPhysio>
+                                       </div>
+                                     </div>
+                       <!-- <div class="form-group row">
+                             <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
+                             <div class="col-sm-9">
+                                 <div class="calFormat">
+                                   <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
+                                     <div class="input-group-append">
+                                       <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                         <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                                       </button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div> -->
+                                   
+                                   </form>
+           
+                                 </div>
+                                 <div class="modal-footer">
+                                   <button type="button" class="btn btn-primary btn-sm" (click)="updatePhysio(newFirstNamePhysio.value, newLastNamePhysio.value, newEmailPhysio.value, physioID.value, newDateHiredPhysio.value, newDateFinishedPhysio.value, x._id); c('Close click')">Confirm</button>
+                                   <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                                 </div>
+                               </ng-template>
+                              
+                         </div>
+                         <hr> 
+                       
+                       </div>
+                  
+                    </ng-template>
+                 </ngb-tab>
+          </ngb-tabset>
+        </mat-card>  
+        </div>
+    </mat-card>
 </mat-sidenav-content>
 </mat-sidenav-container>
 
