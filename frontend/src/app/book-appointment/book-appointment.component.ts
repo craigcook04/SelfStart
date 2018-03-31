@@ -11,6 +11,7 @@ import { AppointmentsService } from '../appointments.service';
 import { PaymentService } from '../payment.service';
 import { CookieService } from 'ngx-cookie-service';
 
+
 const URL = "/api/image/bookappointment";
 const now = new Date();
 declare let paypal: any;
@@ -25,7 +26,7 @@ export class BookAppointmentComponent implements OnInit {
   public uploader:FileUploader = new FileUploader({url: URL});
 
   invalidName: boolean = false;
-  type: String;
+  type: any;
   
 
   @ViewChild('dp') dp: NgbDatepicker;
@@ -39,24 +40,23 @@ export class BookAppointmentComponent implements OnInit {
               private imageService: ImageService,
               private apptService: AppointmentsService,
               private paymentService: PaymentService,
-              private cookieService: CookieService) { 
-              }
+              private cookieService: CookieService) {}
 
   ngOnInit() {
     this.cookieService.set('ID', "5ab0007926bba10fad373816");
     console.log(this.cookieService.getAll());
   }
 
-<<<<<<< HEAD
-  open(content) {
+  // open(content) {
 
-    this.currContent = this.modalService.open(content, {size: "lg"});
-    console.log(this.currContent);
-    paypal.Button.render(this.paypalConfig, '#paypal-button-container');
-    if(content._def.references.book != null && content._def.references.book === 2){
-      this.paymentAmount = '0.01';
-    this.modalService.open(content, {size: "lg"});
-  }
+  //   this.currContent = this.modalService.open(content, {size: "lg"});
+  //   console.log(this.currContent);
+  //   paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+  //   if(content._def.references.book != null && content._def.references.book === 2){
+  //     this.paymentAmount = '0.01';
+  //   this.modalService.open(content, {size: "lg"});
+  //   }
+  // }
   
   setType(t){
     this.apptService.setType(t);
@@ -68,35 +68,21 @@ export class BookAppointmentComponent implements OnInit {
     console.log(age);
   }
 
-  // sendInitialInfoSheet(makeChanges){
 
-  //   var name: any = document.querySelector('inputName');
-  //   name = name.value;
-
-  //   //regex commands for input validation
-  //   var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
-  //   var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
-  //   var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-  //   var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  //   var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
-  //   var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
-
-    if(badFormat.test(name) || !name){
-      var nameBox = document.getElementById('inputName').style.borderColor = "red";
-      this.invalidName = true;
-      cannotContinue = true;
-=======
   open(content: any, value: any) {
     content.show();
     console.log(value);
     if(value === '0.01'){
       this.paymentAmount = value;
       this.currContent = "bookModal";
->>>>>>> 19f766f1c55462dad7f55b42b42c2e8c9ee87b93
+      this.type = "normal";
+      this.apptService.setType(this.type);
     }
     if(value === '0.02'){
       this.paymentAmount = value;
       this.currContent = "initialModal";
+      this.type = "initial";
+      this.apptService.setType(this.type);
     }
     if(this.render1 === false && this.currContent === "bookModal"){
       paypal.Button.render(this.paypalConfig, '#paypal-button-container');
@@ -106,52 +92,15 @@ export class BookAppointmentComponent implements OnInit {
       paypal.Button.render(this.paypalConfig, '#paypal-button-container2');
       this.render1 = true;
     }
+    
+    //console.log(this.type); - RIGHT TYPE HERE
   }
-  //   if(badFormat.test(name) || !name){
-  //     var nameBox = document.getElementById('inputName').style.borderColor = "red";
-  //     this.invalidName = true;
-  //     cannotContinue = true;
-  //   this.currContent = this.modalService.open(content, {size: "lg"});
-  //   console.log(this.currContent);
-  //   paypal.Button.render(this.paypalConfig, '#paypal-button-container');
-  //   if(content._def.references.book != null && content._def.references.book === 2){
-  //     this.paymentAmount = '0.01';
-  //   }
-  //   if(content._def.references.initial != null && content._def.references.initial === 2){
-  //     this.paymentAmount = '0.02';
-  //   }
-  // }
-  
+
   saveAppointment(patient, reason, other){
     this.apptService.AddAppointment(patient, reason, other).subscribe(data => {
       console.log(data);
     })
   }
-
-  // sendInitialInfoSheet(makeChanges){
-
-  //   var name: any = document.querySelector('inputName');
-  //   name = name.value;
-
-  //   //regex commands for input validation
-  //   var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
-  //   var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
-  //   var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-  //   var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  //   var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
-  //   var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
-
-  //   if(badFormat.test(name) || !name){
-  //     var nameBox = document.getElementById('inputName').style.borderColor = "red";
-  //     this.invalidName = true;
-  //     cannotContinue = true;
-  //   }
-
-  //   if(cannotContinue){
-  //     this.modalService.open(makeChanges, {size: 'lg'});
-  //     return;
-  //   }
-  // }
 
   paypalConfig: any =  {
     env: 'sandbox', // sandbox | production
@@ -162,7 +111,7 @@ export class BookAppointmentComponent implements OnInit {
       shape: 'rect',     // pill | rect
       color: 'blue',     // gold | blue | silver | black
       tagline: false    
-  },
+    },
     // PayPal Client IDs - replace with your own
     client: {
       sandbox: 'ASewACzIceIwQug016WZc-thKQg4RWSSY_eZFOjAzKB9bu3Cw2u0CogzKktitI8jQ7AJN3zmuyrXAxRP',
@@ -194,13 +143,13 @@ export class BookAppointmentComponent implements OnInit {
       }
       console.log(err);
     }
-}
+  }
 
-StorePayment(data: any){
-  this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
-    console.log(data);
-    this.currContent.hide();
-  })
-}
-
+  StorePayment(data: any){
+    this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
+      console.log(data);
+      this.currContent.hide();
+    })
+  }
+  
 }

@@ -31,7 +31,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   isSaved: any;
   edgePage: any;
   formattedLiveDate: any;
-  currentType: any;
+  currentType: string;
   reHighlight: any[];
 
   //NOTE: 1.5 hours for initial assessmengt and 1 hour for regular appointment
@@ -41,8 +41,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
               private apptService: AppointmentsService) {}
 
   ngOnInit() {
-    this.currentType = this.apptService.getType();
-    console.log(this.currentType);
+    //this.currentType = this.apptService.getType(); - TO EARLY TO GET?
+    //console.log(this.currentType);
     this.isSelected = false;
     this.currentlyFilled = new Array(37);
     this.cells = new Array(37); //Create 37 time slots
@@ -62,8 +62,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   
   //this gets called when a time slot is clicked
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
+    this.currentType = this.apptService.getType();
     var notTaken = true;
-    
+    //console.log(this.currentType);
     
     //make sure they havnt selected more than one date
     if(!(this.isSelected)){
@@ -95,7 +96,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         if(this.currentType == "normal"){
           if(indx > 33){
             if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm danger-color chooseTime");
               document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
               document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
             }else if(indx == 35){
@@ -110,7 +111,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
             document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
           }
-        }else{
+        }else if(this.currentType == 'initial'){
          if(indx > 31){
             if(indx == 32){
               document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
@@ -229,7 +230,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
             document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
           }
-        }else{
+        }else if(this.currentType == 'initial'){
          if(indx > 31){
             if(indx == 32){
               document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
@@ -394,7 +395,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[1]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
               }else{
-               document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
+                document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
               }
             }else{
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
@@ -402,7 +403,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
                 document.getElementById(takenSlot[2]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                 document.getElementById(takenSlot[3]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
             }
-          }else{
+          }else if(this.currentType  == 'initial'){
            if((timeCount) > 31){
               if((timeCount) == 32){
                 document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
@@ -459,7 +460,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
                   document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
                   document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
               }
-            }else{
+            }else if(this.currentType == 'initial'){
             if((this.timeIndex) > 31){
                 if((this.timeIndex) == 32){
                   document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
