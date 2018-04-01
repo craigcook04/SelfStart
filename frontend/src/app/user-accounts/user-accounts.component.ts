@@ -440,6 +440,10 @@ export class UserAccountsComponent implements OnInit {
         this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
           console.log(data);
           document.body.style.cursor = 'default';
+          
+          var closebtn: any= document.getElementById('closeBtn0');
+          this.ResetErrorMessages();
+          closebtn.click();
           this.modalService.open(successfulModal);
         });
       }

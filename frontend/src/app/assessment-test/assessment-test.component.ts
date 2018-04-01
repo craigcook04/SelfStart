@@ -94,6 +94,7 @@ export class AssessmentTestComponent implements OnInit {
     this.showDrop = true;
   }
   changeSA(){
+    console.log("fdasfdsa");
     this.type = "Short Answer";
     this.shortAnswer =true;
     this.multipleChoice = false;
@@ -365,6 +366,25 @@ export class AssessmentTestComponent implements OnInit {
       this.offset -= 10;
     }
     this.searchPatients(searchString, searchArea);
+  }
+  moveUp(q: any){
+    var index = this.questions.indexOf(q);
+    console.log(index);
+    if (index!=0){
+      var temp = this.questions[index-1];
+      this.questions[index-1] = q;
+      this.questions[index] = temp;
+    }
+  }
+  moveDown(q:any){
+    var index = this.questions.indexOf(q);
+    console.log(index);
+    if (index!=this.questions.length - 1){
+      var temp = this.questions[index+1];
+      this.questions[index+1] = q;
+      this.questions[index] = temp;
+    }
+    
   }
 
 }
