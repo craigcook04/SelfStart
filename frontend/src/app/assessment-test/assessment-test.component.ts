@@ -31,6 +31,10 @@ export class AssessmentTestComponent implements OnInit {
   tests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];  
  
+ 
+  length = 20;
+  pageSize = 10;
+  pageSizeOptions = [10];
   // var currOption = 'c';
   currOption: string = 'c';
   
@@ -385,6 +389,31 @@ export class AssessmentTestComponent implements OnInit {
       this.questions[index] = temp;
     }
     
+  }
+  deleteOption(opt:any, Q:any){
+    var index = this.questions.indexOf(Q);
+    var indexOpt = this.questions[index].questionContent.indexOf(opt);
+    if (this.questions[index].questionContent.length > 2){
+      this.questions[index].questionContent.splice(indexOpt,1);
+    }
+  }
+  updateQuestion(Q: any){
+    var index = this.questions.indexOf(Q);
+    var temp:any = document.getElementById('inputQuestionText');
+    this.questions[index].questionText = temp.value;
+    
+    if (this.questions[index].questionContent != null){
+      for (var i=0; i<this.questions[index].questionContent.length; i++){
+        var opt:any  = document.getElementById(i.toString());
+        console.log(opt.value);
+        this.questions[index].questionContent[i] = opt.value;
+      }
+    }
+    
+  }
+  addOptionInEdit(Q: any){
+    var index = this.questions.indexOf(Q);
+    this.questions[index].questionContent.push("");
   }
 
 }
