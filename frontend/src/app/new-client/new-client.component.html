@@ -218,8 +218,8 @@
                   <button type="button" class="btn btn-primary btn-med" (click)="c('Close click'); GoHome()">OK</button>        
                 </div>
             </ng-template>
-            <button class="btn btn-secondary btn-sm stepperbtn" (click)="stepper.reset(); ResetErrorMessages()">Reset</button> 
-            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="createClient(makeChanges, successfulModal, stepper)">Confirm</button> 
+            <button class="btn btn-secondary btn-sm stepperbtn" (click)="stepper.reset()">Reset</button> 
+            <button type="submit" class="btn btn-primary btn-sm stepperbtn" (click)="createClient(makeChanges, successfulModal, stepper)">Confirm</button>          
         </mat-step>
       </mat-vertical-stepper>  
   </form>
