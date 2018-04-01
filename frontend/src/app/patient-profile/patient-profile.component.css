@@ -3,6 +3,14 @@
     margin-right: 2.5em;
 }
 
+body {
+    overflow-y:hidden;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 .emailer {
     cursor: pointer;
 }
@@ -351,4 +359,9 @@ h2 {
     margin-left: 2.5rem;
     margin-bottom: -1.5rem;
     color: black;
+}
+
+.mymodal {
+    overflow-x: hidden;
+    overflow-y: auto;
 }

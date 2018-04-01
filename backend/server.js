@@ -42,7 +42,7 @@ var userAccount = require('./routes/userAccount');
 var image = require('./routes/image');
 var emailRoute = require('./routes/email');
 var verifyRoute = require('./routes/verification');
-
+var roleRoute = require('./routes/role');
 
 
 //middleware for developement only --be sure to delete before release
@@ -84,7 +84,7 @@ app.use('/api/useraccount', userAccount);
 app.use('/api/image', image);
 app.use('/api/email', emailRoute);
 app.use('/api/temp', verifyRoute);
-
+app.use('/api/role', roleRoute);
 
 
 var port = 8082;        // set our port

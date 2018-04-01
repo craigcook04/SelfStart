@@ -95,6 +95,8 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { RolesService } from './roles.service';
 
 @NgModule({
   declarations: [
@@ -128,7 +130,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,
-    WelcomeHomeComponent
+    WelcomeHomeComponent,
+    ManagePermissionsComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -186,7 +189,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     AuthGuard,
     PhysioAuthGuard,
     AdminAuthGuard,
-    PaymentService],
+    PaymentService,
+    RolesService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

@@ -39,6 +39,7 @@ router.route('/')
         physiotherapist.dateFinished = myDate1;
         physiotherapist.account = request.body.account;
         physiotherapist.treatments = request.body.treatments;
+         
         
         var userAccount = new UserAccount();
                 userAccount.userAccountName = request.body.username;
@@ -48,6 +49,8 @@ router.route('/')
                 userAccount.isDisabled = false;
                 userAccount.resetRequestSent = false;
                 userAccount.userCode = "PH"; //this is a user account
+                userAccount.dateRegistered = new Date();
+                userAccount.lastLoggedIn = new Date();
                 console.log(userAccount.encryptedPassword);
                 UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retphysio) {
                     if(err) {
