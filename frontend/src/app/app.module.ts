@@ -97,6 +97,8 @@ import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { RolesService } from './roles.service';
 
 @NgModule({
   declarations: [
@@ -131,8 +133,12 @@ import { TransactionsComponent } from './transactions/transactions.component';
     UnauthorizedComponent,
     WrongAccountComponent,
     WelcomeHomeComponent,
+<<<<<<< HEAD
     ClientHomeComponent,
     TransactionsComponent
+=======
+    ManagePermissionsComponent
+>>>>>>> 981552f1fe04f59dbec7ae7547c183df773f394a
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -192,7 +198,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     AuthGuard,
     PhysioAuthGuard,
     AdminAuthGuard,
-    PaymentService],
+    PaymentService,
+    RolesService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

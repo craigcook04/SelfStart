@@ -34,6 +34,7 @@ import { AdminAuthGuard } from './admin-auth.guard';
 import {UnauthorizedComponent } from './unauthorized/unauthorized.component'
 import { WrongAccountComponent } from './wrong-account/wrong-account.component'
 import { ClientHomeComponent } from './client-home/client-home.component';
+import { ManagePermissionsComponent} from './manage-permissions/manage-permissions.component';
 
 //Later: add gueard to the routes that need to be protected
 //to do this append ,canActivate: [something] to an object
@@ -69,8 +70,8 @@ const routes: Routes = [
   {path: 'admin/wrongaccount', component: WrongAccountComponent},
   {path: 'physio/wrongaccount', component: WrongAccountComponent},  
   {path: 'client/home', component: ClientHomeComponent},
+  {path: 'managepermissions', component: ManagePermissionsComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
-
 ];
 
 @NgModule({

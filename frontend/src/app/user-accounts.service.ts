@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
-import { EncryptionService } from './encryption.service'
+import { EncryptionService } from './encryption.service';
 import { CookieService } from 'ngx-cookie-service';
 import 'rxjs/add/operator/toPromise';
 
@@ -71,7 +71,7 @@ export class UserAccountsService {
     return true;
   }
 
-  LogOut(nonce: string) {
+  LogOut(nonce: string) {  
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': nonce
@@ -80,6 +80,17 @@ export class UserAccountsService {
     //This route is to log out
     var url = "/api/useraccount/session/logout"
     return this.http.delete(url, httpOptions);
+  }
+
+  RefreshSession() {
+    var session = this.cookieService.get('session');
+    var encryptedSessionToken = this.encryptionService.encrypt(session);        
+    var url = "/api/useraccount/session/refresh";
+    var body = {
+      session: encryptedSessionToken
+    }
+
+    return this.http.put(url, body);
   }
 
 }
