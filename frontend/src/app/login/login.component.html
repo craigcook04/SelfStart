@@ -22,16 +22,18 @@
   <div *ngIf="userIsDisabled" class="dangeralrt">
       <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
   </div>
-  <br> 
+  <div style="margin-top: 3rem;">
+    <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
+    <p class="cont">||</p>
+    <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
+  </div>
   <hr>
-  <mat-card-actions>
-      <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
-      <p class="cont">||</p>
-      <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
+
+  <mat-card-actions align="end">
       <span flex></span>
       <div class="btns">
-      <button class="btn btn-sm btn-primary rightside" (click)="Login(username.value, password.value)">Login</button>
-      <button class="btn btn-sm btn-secondary rightside">Cancel</button>
+      <button class="btn btn-sm btn-primary" (click)="Login(username.value, password.value)">Login</button>
+      <button class="btn btn-sm btn-secondary">Cancel</button>
       </div>
   </mat-card-actions>
 
