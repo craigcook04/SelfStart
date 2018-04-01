@@ -52,7 +52,7 @@ router.route('/')
     .get(function (request, response) {
         AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
             if (error) {
-                response.send(error);
+                response.send({error: error});
             }
             
             response.json({assessmentTest: assessmentTest});
@@ -115,7 +115,7 @@ router.route('/client/completed')
     .put(function(request, response) {
         AssessmentTest.findById(request.body.assessmentID, function(error, assessmentTest) {
             if(error){
-                response.send(error);
+                response.send({error: error});
                 return;
             }
             
@@ -129,11 +129,11 @@ router.route('/client/completed')
             assessmentTest.dateCompleted = new Date();
             assessmentTest.save(function(err) {
                 if(err) {
-                    response.send(err);
+                    response.send({error: err});
                     return;
                 }
                 
-                response.send({assessmentTest: assessmentTest, success: true});
+                response.json({assessmentTest: assessmentTest, success: true});
             });
         });
     });

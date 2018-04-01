@@ -429,10 +429,21 @@ router.route('/patientinfo/:id')
     .get(function(request, response){
         Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
             if(err){
-                response.send(err)
+                response.send({error: err})
             }
             
             response.send({patient: patient});
+        })
+    })
+    
+router.route('/patient/appointments/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('appointment', 'account').exec(function(err, patient){
+            if(err){
+                response.send({error: err})
+            }
+            response.send({patient: patient});   
         })
     })
 

@@ -114,7 +114,7 @@ router.route('/:rehabPlans_id')
                 response.send({error: error});
             }
             else {
-
+                
                 //save updated info of the rehab plan
                 rehabPlans.name = request.body.name;
                 rehabPlans.description = request.body.description;
@@ -178,12 +178,47 @@ router.route('/findplan/search')
         .sort({name: 1})
         .exec(function(error, plans) {
             if (error) {
-                response.send(error);
+                response.send({error: error});
             }
             
             response.json({rehabPlans: plans});
             
         });
     });
+    
+router.route('/assignTest/:id')
+
+    .put(function(request, response){
+        RehabPlans.findOne({"_id": request.params.id}, function(error, rehabPlan){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            rehabPlan.assessmentTest = request.body.assesmentTest;
+            rehabPlan.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                
+                response.json({rehabPlan: rehabPlan});
+            })
+        })
+    })
+    
+router.route('/gettest/:id')
+
+    .get(function(request, response){
+        RehabPlans.findOne({"_id": request.params.id}).populate('assessmentTests').exec(function(err, plan){
+            if(err) { 
+                response.send({error: err}); 
+                return;
+            }
+            
+            response.json({rehabPlan: test});
+        })
+    })
     
 module.exports = router;
