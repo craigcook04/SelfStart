@@ -95,6 +95,7 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ClientHomeComponent } from './client-home/client-home.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,
-    WelcomeHomeComponent
+    WelcomeHomeComponent,
+    ClientHomeComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

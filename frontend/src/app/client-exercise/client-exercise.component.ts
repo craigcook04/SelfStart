@@ -31,7 +31,6 @@ export class ClientExerciseComponent implements OnInit {
   currSteps: string [];
   client: any;
   clientID: any;
-  clientName: any;
   clientPlan: any;
   noPause = true;
 
