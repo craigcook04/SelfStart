@@ -95,6 +95,8 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { RolesService } from './roles.service';
 
@@ -131,7 +133,8 @@ import { RolesService } from './roles.service';
     UnauthorizedComponent,
     WrongAccountComponent,
     WelcomeHomeComponent,
-    ManagePermissionsComponent
+    ManagePermissionsComponent,
+    ClientHomeComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -170,6 +173,8 @@ import { RolesService } from './roles.service';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
     MatTooltipModule
   ],
   providers: [

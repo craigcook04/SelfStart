@@ -187,6 +187,7 @@ router.route('/:patient_id')
         Patient.findById(request.params.patient_id, function (error, patient) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({patient: patient});
@@ -227,6 +228,7 @@ router.route('/:patient_id')
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({success: true, patient: patient});
@@ -260,6 +262,7 @@ router.route('/findpatient/search')
         .exec(function(error, patients) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({patients: patients});
@@ -403,15 +406,26 @@ router.route('/unassignPlan/:id')
 router.route('/patientinfo/:id')
 
     .get(function(request, response){
-        Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+        Patient.findOne({"account": request.params.id}).populate('rehabPlan').exec(function(err, patient){
             if(err){
-                response.send(err)
+                response.send({error: err});
+                return;
             }
             
             response.send({patient: patient});
         })
     })
     
+router.route('/patient/appointments/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('appointment', 'account').exec(function(err, patient){
+            if(err){
+                response.send({error: err})
+            }
+            response.send({patient: patient});   
+        })
+    })
     
     
 router.route('/admincreated')

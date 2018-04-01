@@ -1,62 +1,118 @@
-<div class="center">
-  <h2>
-    Hello Sam! Please fill out the following assessment test
-  </h2>
-  <h4>
-    This will be used to judge your progression through the treatment
-  </h4>
-</div>
-<br> <br>
-<mat-card *ngIf="assessmentTest" class="assessTest">
-  <mat-card-title>
-  <p><b>Name: </b> <span>{{assessmentTest.name}}</span></p>
-</mat-card-title>
-<mat-card-subtitle>
-  <p><b>Description: </b> <span>{{assessmentTest.description}} </span></p>
-</mat-card-subtitle>
-  <hr>
-  <mat-card-content>
-  <div *ngFor="let q of assessmentTestQuestions; let i = index">
-    <div *ngIf="q.questionCode == 'SA'">
-      <p><b>{{i + 1}}) {{q.questionText}}</b></p>
-      <label>Response:</label>
-      <textarea class="form-control myta" rows="5" id="question{{i}}" value="{{q.answer}}"> </textarea>
-    </div>
-    <div *ngIf="q.questionCode == 'MC'">
-      <p><b>{{i + 1}}) {{q.questionText}}</b></p>
-      <br>
-      <mat-radio-group id="question{{i}}">
-          <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row-inline mcchoices">
-              <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
-              <mat-radio-button class="mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+            <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
+            </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercise Menu</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../bookappointment']">Book Appointment</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Complete Assessment</button>
+          </mat-list-item>
+          <br>
+          <!-- <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Upload Photos</button>
+          </mat-list-item>
+          <br> -->
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Transactions</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Settings</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+            <br>
+            <div style="margin-top: -10px;">
+                <h3 *ngIf="client" class="title" style="color: #0275d8">
+                    Good {{ timeOfDay }}<a *ngIf="client">, {{ client?.givenName }}.</a>
+                 </h3>
+                 <p *ngIf="assessmentTest" class="quote">
+                   Looks like you've got a test to complete, please fill out the following...
+                 </p>
+                 <p *ngIf="!assessmentTest" class="quote">
+                    You've not been assigned an assessment test, check back soon!
+                 </p>
+            </div>
           </div>
-      </mat-radio-group>
-    </div>
-    <br>
-    <div *ngIf="q.questionCode == 'RA'">
-      <p><b>{{i + 1}}) {{q.questionText}}</b></p>    
-      <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
-          <ng-template let-fill="fill" let-index="index">
-            <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
-          </ng-template>
-      </ngb-rating> 
-    </div>
-  </div>
-
-  <ng-template #confirm let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Please Confirm Action</h4>
-      </div>
-      <div class="modal-body">
-        <p>Please confirm whether you would like to submit your response for assessment test <b> {{assessmentTest.name}}</b>. Once this assessment test has been
-          submitted, this action cannot be undone.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-med" (click)="SubmitAnswers(); c('Close click')">OK</button>     
-        <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>   
-      </div>
-  </ng-template>
-  <button class="btn btn-sm btn-primary" (click)="Open(confirm)">Submit</button>
-</mat-card-content>
-</mat-card>
+      <mat-card style="min-height: 100vh;" class="col-11 page">
+            <br>
+            <mat-card *ngIf="assessmentTest" class="assessTest">
+              <mat-card-title>
+              <p><b>Name: </b> <span>{{assessmentTest.name}}</span></p>
+            </mat-card-title>
+            <mat-card-subtitle>
+              <p><b>Description: </b> <span>{{assessmentTest.description}} </span></p>
+            </mat-card-subtitle>
+              <hr>
+              <mat-card-content>
+              <div *ngFor="let q of assessmentTestQuestions; let i = index">
+                <div *ngIf="q.questionCode == 'SA'">
+                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>
+                  <label>Response:</label>
+                  <textarea class="form-control myta" rows="5" id="question{{i}}" value="{{q.answer}}"> </textarea>
+                </div>
+                <div *ngIf="q.questionCode == 'MC'">
+                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>
+                  <br>
+                  <mat-radio-group id="question{{i}}">
+                      <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row-inline mcchoices">
+                          <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
+                          <mat-radio-button class="mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+                      </div>
+                  </mat-radio-group>
+                </div>
+                <br>
+                <div *ngIf="q.questionCode == 'RA'">
+                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>    
+                  <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
+                      <ng-template let-fill="fill" let-index="index">
+                        <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
+                      </ng-template>
+                  </ngb-rating> 
+                </div>
+              </div>
+            
+              <ng-template #confirm let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Please Confirm Action</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Please confirm whether you would like to submit your response for assessment test <b> {{assessmentTest.name}}</b>. Once this assessment test has been
+                      submitted, this action cannot be undone.
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-med" (click)="SubmitAnswers(); c('Close click')">OK</button>     
+                    <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>   
+                  </div>
+              </ng-template>
+              <button class="btn btn-sm btn-primary" (click)="Open(confirm)">Submit</button>
+            </mat-card-content>
+            </mat-card>
+      </mat-card>
+    </mat-sidenav-content>
+</mat-sidenav-container>

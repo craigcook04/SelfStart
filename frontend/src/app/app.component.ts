@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, AfterViewInit } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { UserAccountsService } from './user-accounts.service';
+
 
 @Component({
   selector: 'app-root',

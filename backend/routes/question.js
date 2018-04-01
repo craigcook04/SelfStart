@@ -48,6 +48,7 @@ router.route('/')
         Question.find({form: request.query.form}, function (error, question) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({question: question});
@@ -62,6 +63,7 @@ router.route('/:question_id')
         Question.findById(request.params.question_id, function (error, question) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({question: question});
@@ -86,6 +88,7 @@ router.route('/:question_id')
                 question.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({question: question});
@@ -111,6 +114,7 @@ router.route('/form/:form_id')
         Question.find({form: request.params.form_id}, function (error, question) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({question: question});
