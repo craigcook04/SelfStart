@@ -74,10 +74,7 @@ export class AppComponent {
   }
 
   logout() {
-    this.showLogin = true;
-    this.isAdmin= false;
-    this.isClient = false;
-    this.isPhysio = false;
+    
     var session = this.cookieService.get('session');
     this.cookieService.delete('ID');
     this.cookieService.delete('session');
@@ -87,9 +84,13 @@ export class AppComponent {
         console.log(data);
     });
     document.body.style.cursor = "wait";    
-    let router2 = this.router
+    let router2 = this.router;
     setTimeout(function() { 
-      document.body.style.cursor = "default";      
+      document.body.style.cursor = "default";     
+      this.showLogin = true;
+      this.isAdmin= false;
+      this.isClient = false;
+      this.isPhysio = false; 
       router2.navigate(['./welcome']);
     }, 1500);
     
