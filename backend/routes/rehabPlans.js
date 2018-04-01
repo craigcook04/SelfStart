@@ -101,6 +101,7 @@ router.route('/:rehabPlans_id')
         RehabPlans.findById(request.params.rehabPlans_id, function (error, rehabPlans) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({rehabPlans: rehabPlans});
@@ -129,6 +130,7 @@ router.route('/:rehabPlans_id')
                 rehabPlans.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({rehabPlans: rehabPlans});
@@ -162,6 +164,7 @@ router.route('/:rehabPlans_id/addEx')
                 rehabPlans.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({rehabPlans: rehabPlans});
@@ -179,6 +182,7 @@ router.route('/findplan/search')
         .exec(function(error, plans) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             
             response.json({rehabPlans: plans});
@@ -195,14 +199,14 @@ router.route('/assignTest/:id')
                 return;
             }
             
-            rehabPlan.assessmentTest = request.body.assesmentTest;
+            rehabPlan.assessmentTests = request.body.assessmentTests;
             rehabPlan.save(function(err){
                 if(err){
                     response.send({error: err});
                     return;
                 }
                 
-                
+                console.log(rehabPlan.assessmentTests);
                 response.json({rehabPlan: rehabPlan});
             })
         })
@@ -217,7 +221,7 @@ router.route('/gettest/:id')
                 return;
             }
             
-            response.json({rehabPlan: test});
+            response.json({rehabPlan: plan});
         })
     })
     

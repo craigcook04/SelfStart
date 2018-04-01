@@ -43,6 +43,7 @@ router.route('/')
         assessmentTest.save(function (error) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({assessmentTest: assessmentTest});
@@ -53,6 +54,7 @@ router.route('/')
         AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             
             response.json({assessmentTest: assessmentTest});
@@ -67,6 +69,7 @@ router.route('/:assessment_id')
         AssessmentTest.findById(request.params.assessment_id, function (error, assessmentTest) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({assessmentTest: assessmentTest});
@@ -78,6 +81,7 @@ router.route('/:assessment_id')
         AssessmentTest.findById(request.params.assessment_id, function (error, assessmentTest) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             else {
                 
@@ -92,6 +96,7 @@ router.route('/:assessment_id')
                 assessmentTest.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({assessmentTest: assessmentTest});
@@ -137,5 +142,25 @@ router.route('/client/completed')
             });
         });
     });
+    
+router.route('/putquestions/:id')
+
+    .put(function(request, response){
+        AssessmentTest.findByID(request.params.id, function(error, assessmentTest){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            assessmentTest.questions = request.body.questions;
+            assessmentTest.save(function(err){
+                if(error){
+                    response.send({error: err})
+                    return;
+                }
+                response.json({test: assessmentTest});
+            })
+        })
+    })
 
 module.exports = router;
