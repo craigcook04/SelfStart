@@ -13,10 +13,14 @@ export class PhysiotherapistService {
   
   
   getTherapists(): any{
-      var url = 'api/physiotherapist';
+      var url = 'api/physiotherapist?s=familyName&sortorder=asc&offset=0';
       return this.http.get(url);
   }
-  createPhysio(newPhysioFirstName: string, newPhysioLastName: string, newPhysioEmail: string, newPhysioHired: string, newPhysioFinished: string, newPhysioUserName: string, newPhysioPassword: string ): any{
+   SearchPhysio(searchString: string, searchArea: string, offset, ascvsdesc) {
+    var url = '/api/physiotherapist?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
+    return this.http.get(url);
+  }
+  createPhysio(newPhysioFirstName: string, newPhysioLastName: string, newPhysioEmail: string, newPhysioHired: string, newPhysioFinished: string, newPhysioUserName: string, newPhysioPassword: string, salt: string ): any{
       var url = "/api/physiotherapist";
       var body = {
           username: newPhysioUserName,
@@ -26,7 +30,25 @@ export class PhysiotherapistService {
           dateFinished: newPhysioFinished,
           email: newPhysioEmail,
           givenName: newPhysioFirstName,
-          familyName: newPhysioLastName
+          familyName: newPhysioLastName,
+          salt: salt
+          
+      }
+      return this.http.post(url, body);
+  }
+  
+  createPhysiobyAdmin(newPhysioFirstName: string, newPhysioLastName: string, newPhysioEmail: string, newPhysioHired: string, newPhysioFinished: string, newPhysioUserName: string, newPhysioPassword: string, salt: string ): any{
+      var url = "/api/physiotherapist/admincreated";
+      var body = {
+          username: newPhysioUserName,
+          encryptedPassword: newPhysioPassword,
+          ID: 0,
+          dateHired: newPhysioHired,
+          dateFinished: newPhysioFinished,
+          email: newPhysioEmail,
+          givenName: newPhysioFirstName,
+          familyName: newPhysioLastName,
+          salt: salt
           
       }
       return this.http.post(url, body);
