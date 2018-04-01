@@ -12,13 +12,9 @@ import { UserAccountsService } from './user-accounts.service';
 export class AppComponent {
   title = 'app';
   showLogin: boolean;
-<<<<<<< HEAD
-
-=======
   isClient;
   isPhysio;
   isAdmin
->>>>>>> 981552f1fe04f59dbec7ae7547c183df773f394a
   constructor(private router: Router,
               private cookieService: CookieService,
               private userAccountsService: UserAccountsService) 
