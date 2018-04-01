@@ -52,6 +52,7 @@ export class ClientExerciseComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
+    this.cookieService.set('ID', "5ab0007926bba10fad373816");
     this.clientID = this.cookieService.get('ID');
     this.client = this.patientService.GetPatientInfo(this.clientID).subscribe(data =>{
       var obj: any = data;

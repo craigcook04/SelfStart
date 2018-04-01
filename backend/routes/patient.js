@@ -60,6 +60,9 @@ router.route('/')
         userAccount.encryptedPassword = request.body.encryptedPassword;
         userAccount.salt = request.body.salt;
         userAccount.needToChangePass = false;
+        userAccount.isDisabled = false;
+        userAccount.resetRequestSent = false;
+        userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {
@@ -391,6 +394,18 @@ router.route('/unassignPlan/:id')
                 });
            }
         });
+    });
+    
+router.route('/patientinfo/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+            if(err){
+                response.send(err)
+            }
+            
+            response.send({patient: patient});
+        })
     })
     
     
@@ -427,6 +442,9 @@ router.route('/admincreated')
         userAccount.encryptedPassword = request.body.encryptedPassword;
         userAccount.salt = request.body.salt;
         userAccount.needToChangePass = true;
+        userAccount.isDisabled = false;
+        userAccount.resetRequestSent = false;
+        userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
             if(err) {
