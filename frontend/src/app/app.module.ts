@@ -133,7 +133,8 @@ import { RolesService } from './roles.service';
     UnauthorizedComponent,
     WrongAccountComponent,
     WelcomeHomeComponent,
-    ManagePermissionsComponent
+    ManagePermissionsComponent,
+    ClientHomeComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
