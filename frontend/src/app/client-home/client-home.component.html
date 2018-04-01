@@ -12,19 +12,14 @@
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']">
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Book Appointment</button>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../bookappointment']">Book Appointment</button>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../']">Complete Assessment</button>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../completetest']">Complete Assessment</button>
           </mat-list-item>
           <br>
-          <!-- <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Upload Photos</button>
-          </mat-list-item>
-          <br> -->
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
             <button class="btn-primary btn-block" mat-raised-button style="color:white;">Transactions</button>
@@ -56,7 +51,7 @@
           </div>
         </div>
 
-        <div class="page col-11">
+        <div style="min-height: 100vh;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
                 <div class="row">
@@ -91,7 +86,7 @@
                                       Reset Password Email Sent
                                     </div>
                                     <div class="modal-body">
-                                      An email has been successfully sent to {{user.userAccountName}} so that they are able to recover their account
+                                      An email has been successfully sent to {{ user.userAccountName }} so that they are able to recover their account
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
@@ -112,7 +107,9 @@
                             <div class="btn-block">
                               <div class="row">
                                   <div class="col">
-                                      <h6><b> Been a Member for: </b></h6>
+                                    <mat-card-subtitle>
+                                        <h6><b> Been a Member for: </b></h6>
+                                    </mat-card-subtitle>
                                     </div>
                                     <div class="col">
                                       <h4><b> 8 months </b></h4>
@@ -127,7 +124,9 @@
                             <div class="btn-block">
                               <div class="row">
                                   <div class="col">
-                                      <h6><b> Your Last Login: </b></h6>
+                                      <mat-card-subtitle>
+                                          <h6><b> Your Last Login: </b></h6>
+                                      </mat-card-subtitle>
                                     </div>
                                     <div class="col">
                                       <h4><b> Yesterday </b></h4>
@@ -142,10 +141,12 @@
                             <div class="btn-block">
                               <div class="row">
                                   <div class="col">
-                                      <h6><b> Your Movement Master is: </b></h6>
+                                      <mat-card-subtitle>
+                                          <h6><b> Your Movement Master is: </b></h6>
+                                        </mat-card-subtitle>
                                     </div>
                                     <div class="col">
-                                        <h4> <b> Stephanie Marcotte </b></h4>
+                                        <h4> <b> Stephanie </b></h4>
                                     </div>
                                   </div>
                                   <div class="divider">
@@ -157,7 +158,9 @@
                             <div class="btn-block">
                               <div class="row">
                                   <div class="col">
-                                      <h6><b> These are just for: </b></h6>
+                                      <mat-card-subtitle>
+                                          <h6><b> These are just for: </b></h6>
+                                        </mat-card-subtitle>
                                     </div>
                                     <div class="col">
                                       <h4> <b> SHOW </b></h4>
@@ -174,18 +177,100 @@
                   <mat-card class="col-6">
                     <div>
                       <mat-card-title>
-                        <b>Complete an Assesment Test</b>
+                        <div class="row">
+                          <div class="col-10">
+                              <b style="color: #0275d8;">Complete an Assesment Test</b>
+                          </div>
+                          <div *ngIf="currTest" style="text-align: right;" class="col justify-content-end">
+                              <button (click)="openSnackBar()" mat-mini-fab color="warn">1</button>
+                          </div>
+                        </div>
                       </mat-card-title>
+                      <mat-card-subtitle *ngIf="currTest" style="text-align: center;">
+                        <div class="row justify-content-center">
+                          <div class="col-8 row">
+                            <div class="col form-inline justify-content-center">
+                                <b> Test Name: </b><h4> &nbsp;  {{ currTest?.name}} </h4>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-8">
+                              ({{ currTest?.description }})
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <button class="btn btn-block btn-info" [routerLink]="['../completetest']"> Begin Assessment Test</button>
+                            </div>
+                        </div>
+                      </mat-card-subtitle>
+                      <mat-card-subtitle *ngIf="!currTest">
+                          <div>
+                              <p><b>No assigned assessment tests, at this time, check back soon!</b></p>
+                          </div>
+                      </mat-card-subtitle>
+                    </div>
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                    <div>
+                      <mat-card-title>
+                        <b style="color: #0275d8;"> Your Assigned Exercise Menu: </b> {{ currPlan?.name }}
+                      </mat-card-title>
+                      <mat-list *ngIf="currPlan">
+                          <mat-list-item>
+                              <div style="top: -30px;" class="btn-block">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <mat-card-subtitle>
+                                            <h6> <b> Description: </b> </h6>
+                                        </mat-card-subtitle>
+                                      </div>
+                                      <div class="col-4">
+                                        <b> {{ currPlan?.description }} </b>
+                                      </div>
+                                    </div>
+                                    <div class="divider">
+                                      <mat-divider></mat-divider>
+                                    </div>
+                                </div>
+                          </mat-list-item>
+                          <mat-list-item>
+                              <div style="top: -30px;" class="btn-block">
+                                  <div class="row">
+                                      <div class="col-4">
+                                          <mat-card-subtitle>
+                                            <h6> <b>Number of Exercises: </b></h6>
+                                          </mat-card-subtitle>
+                                        </div>
+                                        <div class="col-4">
+                                          <b> {{ currPlan?.exerciseObjects.length }} </b>
+                                      </div>
+                                    </div>
+                                    <div class="divider">
+                                    <mat-divider></mat-divider>
+                                    </div>
+                              </div>
+                          </mat-list-item>
+                      </mat-list>
+                      <div *ngIf="!currPlan">
+                          <p><b>No Plan is currently assigned. Speak with your Physiotherapist!</b></p>
+                      </div>
                     </div>
                     <br>
                     <mat-divider></mat-divider>
                     <div>
-                      Menu 
-                    </div>
-                    <br>
-                    <mat-divider></mat-divider>
-                    <div>
-                      Progress
+                      <br>
+                      <mat-card-title>
+                        <b style="color: #0275d8;">Your Progress</b>
+                      </mat-card-title>
+                      <br>
+                      <div class="btn-block justify-content-center">
+                        <mat-progress-bar mode="determinate" [value]="currProgress"></mat-progress-bar>
+                      </div>
+                      <br>
                     </div>
                   </mat-card>    
                 </div>

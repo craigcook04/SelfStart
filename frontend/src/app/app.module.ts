@@ -96,6 +96,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +131,8 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     UnauthorizedComponent,
     WrongAccountComponent,
     WelcomeHomeComponent,
-    ClientHomeComponent
+    ClientHomeComponent,
+    TransactionsComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -169,6 +171,8 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
     MatTooltipModule
   ],
   providers: [
