@@ -18,8 +18,14 @@ export class PatientService {
     var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
     return this.http.get(url);
   }
+
   getPhysioPatients(id: string){
     var url = "/api/patient/physiotherapist/" + id;
+    return this.http.get(url);
+  }
+
+  GetPatientByPatientID(patientID: string) {
+    var url = '/api/patient/' + patientID;
     return this.http.get(url);
   }
 
