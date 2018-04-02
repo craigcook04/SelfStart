@@ -61,6 +61,7 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -95,6 +96,12 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { RolesService } from './roles.service';
+import { SettingsComponent } from './settings/settings.component';
+import { GenerateReportComponent } from './generate-report/generate-report.component';
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +135,12 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,
-    WelcomeHomeComponent
+    WelcomeHomeComponent,
+    ManagePermissionsComponent,
+    ClientHomeComponent,
+    TransactionsComponent,
+    SettingsComponent,
+    GenerateReportComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -150,7 +162,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -167,7 +178,16 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
-    MatTooltipModule
+<<<<<<< HEAD
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatTabsModule,
+    NgbModalModule
+=======
+    MatTooltipModule,
+    MatSnackBarModule
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
   ],
   providers: [
     PatientService, 
@@ -186,7 +206,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     AuthGuard,
     PhysioAuthGuard,
     AdminAuthGuard,
-    PaymentService],
+    PaymentService,
+    RolesService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

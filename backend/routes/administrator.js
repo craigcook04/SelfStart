@@ -50,6 +50,8 @@ router.route('/')
         userAccount.needToChangePass = false;
         userAccount.isDisabled = false;
         userAccount.resetRequestSent = false;
+        userAccount.dateRegistered = new Date();
+        userAccount.lastLoggedIn = new Date();
         userAccount.userCode = "AD"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retadmin) {
@@ -152,6 +154,23 @@ router.route('/:administrator_id')
                 }
             }
         );
+    });
+    
+router.route('/getadmin/:userid')
+    .get(function(request, response) {
+        Administrator.findOne({'account': request.params.userid}, function(err, admin) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(admin == null) {
+                response.send({success: false, admin: admin});
+                return;
+            }
+            
+            response.send({success: true, admin: admin});
+        });
     });
 
 module.exports = router;

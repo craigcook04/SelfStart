@@ -130,7 +130,7 @@ export class NewClientComponent implements OnInit {
     this.newUsername = false;
   }
 
-  createClient(makeChanges,successfulModal, stepper) {
+  createClient(makeChanges, successModal, stepper) {
     //because of the scoping rules of the md-step, the values of the text boxes need to be retrieved with javascript
     //need to retrieve all the textboxes and extract their values
     var username: any = document.getElementById('inputUsername');
@@ -204,7 +204,7 @@ export class NewClientComponent implements OnInit {
 
     var DOB = yearDOB + '/' + monthDOB + '/' + dayDOB;
     console.log(DOB);
-    if(!DOB) {
+    if(DOB == "//") {
       var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'red';
       var DOBBox2 = document.getElementById('inputmonthDOB').style.borderColor = 'red';
       var DOBBox = document.getElementById('inputdayDOB').style.borderColor = 'red';
@@ -249,7 +249,7 @@ export class NewClientComponent implements OnInit {
 
     //if this if statement is triggered, there are errors in the code
     if(cannotContinue) {
-      this.modalService.open(makeChanges, {size: 'lg'});
+      this.modalService.open(makeChanges,  {size: 'lg'})
       stepper.reset();
       return;
     }
@@ -271,7 +271,7 @@ export class NewClientComponent implements OnInit {
         this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
           console.log(data);
           document.body.style.cursor = 'default';
-          this.modalService.open(successfulModal);
+          this.modalService.open(successModal, {size: 'lg'})
         })
       }
       else {

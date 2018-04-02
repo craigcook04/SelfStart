@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
         console.log("initialConnection", data);
         this.userAccountsService.Login(username, password, retObj1.nonce, retObj1.salt).subscribe(data => {
         var retObj: any = data;
-        console.log(data);
-        if(retObj.success = true) {
+        console.log("returned", data);
+        if(retObj.success == true) {
           if(retObj.changePass == true) {
             var url = '../login/recover/' + retObj.userID;
             this.router.navigate([url]);
@@ -53,18 +53,28 @@ export class LoginComponent implements OnInit {
             //expires in 1 hour, expires takes days so 1 hour is 1/24
             this.cookieService.set('ID', retObj.userID, 1/24);
             this.cookieService.set('session', retObj1.nonce, 1/24);
+            this.cookieService.set('role', retObj.role, 1/24);
+
             if(retObj.role == "US") {
-              this.router.navigate(['../home'])
+              this.router.navigate(['../client/home']);
+              this.appComponent.alterLoginState();
+              this.appComponent.toggleToClient();
             }
+
             else if (retObj.role == "AD") {
-              this.router.navigate(['../adminhome'])
+              this.router.navigate(['../admin/home']);
+              this.appComponent.alterLoginState();
+              this.appComponent.toggleToAdmin();
             }
             else {
-              this.router.navigate(['../physiohome'])
+              this.router.navigate(['../physiohome']);
+              this.appComponent.alterLoginState();
+              this.appComponent.toggleToPhysio();
             }
           }
         }
         else{ 
+
           if(retObj.incPass == true) {
             this.showFailure = true;
             var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';                

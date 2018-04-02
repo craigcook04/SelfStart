@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
-import { EncryptionService } from './encryption.service'
+import { EncryptionService } from './encryption.service';
 import { CookieService } from 'ngx-cookie-service';
 import 'rxjs/add/operator/toPromise';
 
@@ -71,7 +71,7 @@ export class UserAccountsService {
     return true;
   }
 
-  LogOut(nonce: string) {
+  LogOut(nonce: string) {  
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': nonce
@@ -80,6 +80,39 @@ export class UserAccountsService {
     //This route is to log out
     var url = "/api/useraccount/session/logout"
     return this.http.delete(url, httpOptions);
+  }
+
+  RefreshSession() {
+    var session = this.cookieService.get('session');
+    var encryptedSessionToken = this.encryptionService.encrypt(session);        
+    var url = "/api/useraccount/session/refresh";
+    var body = {
+      session: encryptedSessionToken
+    }
+
+    return this.http.put(url, body);
+  }
+
+<<<<<<< HEAD
+  SetAppointmentCounter(id: string, appoint: number, initial: number){
+    var body = {
+      appointment: appoint,
+      initial: initial
+    }
+
+    var url = '/api/useraccount/appointments/' + id;
+    return this.http.put(url, body);
+  }
+
+  GetInfoDates(id: string){
+    var url = '/api/useracccount/getdates/' + id;
+=======
+  GetAdminByUserID() {
+    var userID = this.cookieService.get('ID');
+    var url = '/api/administrator/getadmin/' + userID;
+
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
+    return this.http.get(url);
   }
 
 }

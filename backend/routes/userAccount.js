@@ -117,30 +117,22 @@ router.route('/account/change')
                 }
                 
                 if(useraccount == {} || useraccount == null) {
-                    response.send("couldn't find the account");
+                    response.send({sucess: false, message: "couldn't find the account"});
                     return;
                 }
                 
-                console.log(useraccount.encryptedPassword);
-                var hashedpass = useraccount.hash(request.body.temppassword);
-                var PassAndSalt = hashedpass + useraccount.salt;
-                var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
-                var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
-                var inputPassDecrypted = useraccount.decrypt(inputPassEncrypted);
+                console.log("temp",request.body.encryptedTempPassword)
+                console.log("me", useraccount.encryptedPassword);
+                var inputPassDecrypted = useraccount.decrypt(request.body.encryptedTempPassword);
                 var hashedPassword = useraccount.decrypt(useraccount.encryptedPassword);
-                console.log(inputPassDecrypted, hashedPassword);
                 if(inputPassDecrypted == hashedPassword) {
                     console.log('hello');
-                    var newPassHash = useraccount.hash(request.body.password);
-                    var newPashAndSalt = newPassHash + useraccount.salt;
-                    var newhashedSaltPlusPass = useraccount.hash(newPashAndSalt);
-                    var newinputPassEncrypted = useraccount.encrypt(newhashedSaltPlusPass);
-                    useraccount.encryptedPassword = newinputPassEncrypted;
+                    useraccount.encryptedPassword = request.body.newEncryptedPassword;
                     useraccount.needToChangePass = false;
                 }
                 
                 else{
-                    response.send({success: false, message: "Temporary password is not correct"});
+                    response.send({success: false, incTempPass: true, message: "Temporary password is not correct"});
                     return;
                 }
                 
@@ -213,7 +205,8 @@ router.route('/account/login')
                response.send({success: false, message: "This username doesnt exist"});
                return;
            }
-
+           console.log(user);
+           user.lastLoggedIn = new Date();
            var inputPassDecrypted = user.decrypt(request.body.encryptedpass);
            var hashedPassword = user.decrypt(user.encryptedPassword);
            var sentDecryptedNonce = user.decrypt(request.body.encryptednonce);
@@ -325,22 +318,114 @@ router.route('/session/loggedin')
 
 router.route('/session/logout')
     .delete(function(request, response) {
+        console.log('getting here');
         Session.remove({nonce: request.header('Authorization')}, function(err, deleted) {
+            if(err) {
+                console.log('wut');
+                response.send(err);
+                return;
+            }
+            console.log("deleted:", deleted);
+            response.send({deleted: deleted});
+        });
+        // console.log(request.params.id);
+        
+    });
+    
+router.route('/session/refresh')
+    .put(function(request, response) {
+        var user = new UserAccount();
+        var decryptedSessionToken = user.decrypt(request.body.session);
+        Session.findOne({nonce: decryptedSessionToken}, function(err, refresh) {
             if(err) {
                 response.send(err);
                 return;
             }
-            console.log(deleted);
-            response.send({deleted: deleted});
+            
+            if(refresh == null) {
+                response.send({success: false, message: 'could not find session'});
+                return;
+            }
+            
+            refresh.resetTTL();
+            refresh.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                response.send({success: true, message: "session has been successfully updated"});
+            });
         });
-        // console.log(request.params.id);
-        // Session.findById(request.params.id, function(err, refresh) {
-        //     console.log(refresh);
-        //     refresh.resetTTL();
-        //     refresh.save(function(err) {
-        //         console.log('done');
-        //         response.send('done');
-        //     })
-        // })
     });
+<<<<<<< HEAD
+
+router.route('/appointments/:id')
+    
+    .get(function(request, response) {
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({account: account});
+        })
+    })
+    
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            console.log(request.body);
+            
+            account.numbAppoint += request.body.appointment;
+            account.numbInitial += request.body.initial;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.send({account: account});
+            })
+        })
+    });
+
+router.route('/getdates/:id')
+
+    .get(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({account});
+        })
+    })
+    
+    
+
+=======
+    
+router.route('/account/getsalt/:id')
+    .get(function(request, response) {
+        console.log('hi')
+        UserAccount.findById(request.params.id, function(error, userAccount) {
+            if(error) {
+                response.send(error);
+                return;
+            }
+            
+            if(userAccount == null) {
+                response.send({success: false, message: 'couldnt find account'});
+                return;
+            }
+            
+            response.send({success: true, salt: userAccount.salt});
+        });
+    });
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
 module.exports = router;

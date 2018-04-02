@@ -67,7 +67,9 @@
     </mat-expansion-panel-header>
     <hr class="breaker">
       <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
-      <ng-template #delete let-c="close" let-d="dismiss">
+      <div mdbModal #deleteModal="mdb-modal" class="modal fade mymodal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg mymodal" role="document">
+      <div class="modal-content mymodal">
         <div class="modal-header">
           <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
         </div>
@@ -76,18 +78,22 @@
             be undone. </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); c('Close click')">Delete</button>
-          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>          
+          <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); deleteModal.hide();" data-dismiss="modal" mdbRippleRadius>Delete</button>
+          <button type="button" class="btn btn-secondary btn-med" (click)="deleteModal.hide();" data-dismiss="modal" mdbRippleRadius>Cancel</button>          
         </div>
-      </ng-template>
+      </div>
+      </div>
+      </div>
       <!-- End of First Modal -->
 
       <!-- The Second modal which will be brought up when the physiotherapist wants to update the patient-->
-      <ng-template #update let-c="close" let-d="dismiss" id="updateModal">
+      <div mdbModal #updateModal="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="updateModal">
+        <div class="modal-dialog modal-lg mymodal" role="document">
+        <div class="modal-content mymodal">
         <div class="modal-header">
           <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body mymodal">
           <form>
             <div class="form-group row">
               <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
@@ -132,19 +138,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="form-group row">
-                  <label for="inputTargDate" class="col-sm-3 col-form-label"><b>DOB</b></label>
-                  <div class="col-sm-9">
-                      <div class="calFormat">
-                        <input class="form-control" value="{{patient.DOB | date: 'yyyy-MM-dd'}}" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #newBirthDate>
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                              <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
-                            </button>
-                          </div>
-                      </div>
-                  </div>
-              </div> -->
             <div class="form-group row">
               <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
               <div class="col-sm-9">
@@ -221,17 +214,21 @@
           </form>
 
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer mymodal">
           <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
           <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>
-          <button type="button" class="btn btn-secondary btn-sm" (click)="ResetErrorMessages(); c('Close click'); ">Cancel</button>
-          <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>  
+          <button type="button" class="btn btn-secondary btn-sm" (click)="ResetErrorMessages(); updateModal.hide();" mdbRippleRadius>Cancel</button>
+          <button class="hddn" data-dismiss="modal" (click)="updateModal.hide()" mdbRippleRadius id='closeBtn'></button>  
         </div>
-      </ng-template>
+      </div>
+      </div>
+      </div>
       <!-- End of Second Modal -->
  
       <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
-      <ng-template #emailModal let-c="close" let-d="dismiss">
+      <div mdbModal #emailModal="mdb-modal" class="modal fade mymodal" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg mymodal" role="document">
+        <div class="modal-content mymodal">
         <div class="modal-header">
           <h4 class="modal-title">Email {{patient.familyName}}, {{patient.givenName}}</h4>
         </div>
@@ -252,10 +249,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do Not Send</button>
-          <button type="button" class="btn btn-primary btn-med" (click)="SendEmail(patient.email, emailSubject.value, emailBody.value); c('Close click')">Send</button>          
+          <button type="button" class="btn btn-primary btn-med" (click)="SendEmail(patient.email, emailSubject.value, emailBody.value); emailModal.hide()" data-dismiss="modal" mdbRippleRadius>Send</button>  
+          <button type="button" class="btn btn-secondary btn-med" (click)="emailModal.hide()" data-dismiss="modal" mdbRippleRadius>Do Not Send</button>        
         </div>
-      </ng-template>
+      </div>
+      </div>
+      </div>
       <!-- End of Third Modal -->
 
         <div class="info" id="wrapper">
@@ -263,7 +262,7 @@
             <p><b class="infob">Username: </b> {{patient?.account?.userAccountName}}</p>
             <p><b class="infob">Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
             <p><b class="infob">Patient ID:  </b> {{patient?.ID}}</p>
-            <p><b class="infob">Email:  </b> {{patient?.email}} <fa name="envelope" class="emailer" ngbTooltip="send email" (click)="open(emailModal)"></fa></p>
+            <p><b class="infob">Email:  </b> {{patient?.email}} <fa name="envelope" class="emailer" ngbTooltip="send email" data-toggle="modal" data-target="#emailModal" (click)="emailModal.show()" mdbRippleRadius></fa></p>
             <p><b class="infob">Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
             <p><b class="infob">Age: </b> {{calculateAge(patient?.DOB)}} years old</p>
             <p><b class="infob">Gender:  </b> {{patient?.gender?.name}}</p>
@@ -280,8 +279,8 @@
           </div>
         </div>  
         <mat-action-row>
-            <button class="btn btn-primary btn-sm patientbtn" (click)="open(update)">Edit</button>
-            <button class="btn btn-primary btn-sm patientbtn" (click)="open(delete)">Delete</button>   
+            <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#updateModal" (click)="updateModal.show()" mdbRippleRadius>Edit</button>
+            <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="deleteModal.show()" mdbRippleRadius>Delete</button>   
         </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

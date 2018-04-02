@@ -11,9 +11,13 @@ var userAccountSchema = mongoose.Schema(
         isDisabled: Boolean, 
         resetRequestSent: Boolean, 
         userCode: String,
+        dateRegistered: Date,
+        lastLoggedIn: Date,
         adminUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Administrator'},
         physioUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
-        patientUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
+        patientUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
+        numbAppoint: Number,
+        numbInitial: Number
     }
 );
 

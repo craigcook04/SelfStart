@@ -9,7 +9,7 @@ var assessmentTestSchema = new mongoose.Schema({
     dateCompleted: Date,
     creator: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
     //belongsTo: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
-    questions: [],
+    questions: [], 
     belongsTo: {type: mongoose.Schema.Types.ObjectId, ref: 'RehabilitationPlans'}
     
     

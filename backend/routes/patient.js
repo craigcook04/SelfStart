@@ -62,6 +62,8 @@ router.route('/')
         userAccount.needToChangePass = false;
         userAccount.isDisabled = false;
         userAccount.resetRequestSent = false;
+        userAccount.dateRegistered = new Date();
+        userAccount.lastLoggedIn = new Date();
         userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
@@ -185,6 +187,7 @@ router.route('/:patient_id')
         Patient.findById(request.params.patient_id, function (error, patient) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({patient: patient});
@@ -212,17 +215,16 @@ router.route('/:patient_id')
                 patient.healthCardNumber = request.body.healthCardNumber;
                 patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
-                patient.payment = request.body.payment;
                 patient.country = request.body.country;
                 patient.province = request.body.province;
                 patient.city = request.body.city;
                 patient.gender = request.body.gender;
                 patient.address = request.body.address;
 
-                console.log(request.body);
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({success: true, patient: patient});
@@ -256,6 +258,7 @@ router.route('/findpatient/search')
         .exec(function(error, patients) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({patients: patients});
@@ -399,15 +402,26 @@ router.route('/unassignPlan/:id')
 router.route('/patientinfo/:id')
 
     .get(function(request, response){
-        Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+        Patient.findOne({"account": request.params.id}).populate('rehabPlan').exec(function(err, patient){
             if(err){
-                response.send(err)
+                response.send({error: err});
+                return;
             }
             
             response.send({patient: patient});
         })
     })
     
+router.route('/patient/appointments/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('appointment', 'account').exec(function(err, patient){
+            if(err){
+                response.send({error: err})
+            }
+            response.send({patient: patient});   
+        })
+    })
     
     
 router.route('/admincreated')
@@ -477,10 +491,35 @@ router.route('/admincreated')
                 
                 response.json({success: true, patient: patient});
             });
-            });
-        })
+        });
+    });
         
-    })
+<<<<<<< HEAD
+    });
 
+=======
+});
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
 
+router.route('/getclient/:userid')
+    .get(function(request, response) {
+        var options = 
+        {
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+        };
+        var query = {'account': request.params.userid};
+        Patient.paginate(query, options, function(err, client) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(client == null) {
+                response.send({success: true, message: 'could not find client'});
+                return;
+            }
+            
+            response.send({success: true, client: client});
+        });
+    });
 module.exports = router;
