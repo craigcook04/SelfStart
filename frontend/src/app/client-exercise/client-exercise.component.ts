@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
-import { ExerciseService } from '../exercise.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,6 +7,9 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import * as jsPDF from 'jspdf';
+import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from '../patient.service';
+import { RehabPlansService } from '../rehab-plans.service';
 
 
 @Component({
@@ -27,15 +29,21 @@ export class ClientExerciseComponent implements OnInit {
   } [];
   timeOfDay: string;
   currSteps: string [];
+  client: any;
+  clientID: any;
+  clientPlan: any;
+  noPause = true;
 
   @ViewChild('test') test: ElementRef;
   @ViewChild('test2') test2: ElementRef;
   
-  constructor( private exerciseService: ExerciseService, 
-               private router: Router,
+  constructor( private router: Router,
                private imageService: ImageService,
                private iconRegistry: MatIconRegistry,
-               private sanitizer: DomSanitizer) {
+               private sanitizer: DomSanitizer,
+               private cookieService: CookieService,
+               private patientService: PatientService,
+               private planService: RehabPlansService) {
                  iconRegistry.addSvgIcon(
                     'dumbbell',
                     sanitizer.bypassSecurityTrustResourceUrl('../assets/images/dumbbell.svg'));
@@ -43,11 +51,16 @@ export class ClientExerciseComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.exerciseService.GetAllExercises().subscribe(data =>{
-      this.exercises = data.exercise;
-      console.log(this.exercises);
+    this.cookieService.set('ID', "5ab0007926bba10fad373817");
+    this.clientID = this.cookieService.get('ID');
+    this.client = this.patientService.GetPatientInfo(this.clientID).subscribe(data =>{
+      var obj: any = data;
+      obj = obj.patient;
+      this.client = obj;
+      this.clientPlan = obj.rehabPlan;
+      this.exercises = this.clientPlan.exerciseObjects;
       this.currExercise = this.exercises[0];
-      console.log(this.currExercise);
+      this.getExerciseInfo(this.currExercise);
       this.getExerciseImages(this.currExercise._id, this.currExercise.name);
     })
   }
@@ -61,21 +74,18 @@ export class ClientExerciseComponent implements OnInit {
   }
 
   getExerciseInfo(exercise: any){
+    if(exercise.actionSteps == null || exercise.actionSteps == undefined){ return; }
     this.currExercise = exercise;
     var steps = exercise.actionSteps.split(/[0-9]+\./g);
-    console.log(steps);
     this.currSteps = steps;
     this.currSteps.shift();
-    console.log(this.currSteps);
   }
 
   getExerciseImages(id: string, name:string){
     this.images = null;
     this.imageService.GetExerciseImage(id).subscribe(data=>{
       var obj: any = data;
-      //this.exerciseImages.push({firstTime: false, exerciseId: id, images: obj.images})
       this.images = obj.images;
-
     })
   }
 
@@ -108,14 +118,17 @@ export class ClientExerciseComponent implements OnInit {
     var vert = 0;
     doc.text( 30, 30, "Images:");
     this.images.forEach(image => {
-      var imgData = 'data:image/png;base64,' + image.data;
+
+      if(image.type === 'PNG' || image.type === "png"){ var imgData = 'data:image/png;base64,' + image.data;}
+      if(image.type === 'JPG' || image.type === "jpg"){ var imgData = 'data:image/jpg;base64,' + image.data;}
+
       if(vert == 0){
         vert = 40;
       }
       else{
         vert = 140;
       }
-      doc.addImage(imgData, 'PNG', 30, vert, 100, 100);
+      doc.addImage(imgData, 'PNG', 50, vert, 100, 100);
     });
 
     doc.save(exercise.name + '.pdf');

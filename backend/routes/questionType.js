@@ -4,6 +4,25 @@
 var express = require('express');
 var router = express.Router();
 var QuestionType = require('../models/questionType');
+// var Session = require('../models/session');
+
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
 
 router.route('/')
 
@@ -14,6 +33,7 @@ router.route('/')
         questionType.save(function (error) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({questionType: questionType});
@@ -24,6 +44,7 @@ router.route('/')
         QuestionType.find(function (error, questionType) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({questionType: questionType});
@@ -38,6 +59,7 @@ router.route('/:questionType_id')
         QuestionType.findById(request.params.questionType_id, function (error, questionType) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({questionType: questionType});
@@ -49,6 +71,7 @@ router.route('/:questionType_id')
         QuestionType.findById(request.params.questionType_id, function (error, questionType) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             else {
                 
@@ -59,6 +82,7 @@ router.route('/:questionType_id')
                 questionType.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({questionType: questionType});
@@ -84,6 +108,7 @@ router.route('/type/:typeName')
         QuestionType.find({name: request.params.typeName}, function (error, questionType) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({questionType: questionType});

@@ -3,6 +3,25 @@
 var express = require('express');
 var router = express.Router();
 var Exercise = require('../models/exercises');
+// var Session = require('../models/session');
+
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
 
 router.route('/')
 
@@ -32,10 +51,36 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        Exercise.find(function (error, exercises) {
-            if (error) response.send(error);
-            response.json({exercise: exercises});
-        }).sort({name: 1});
+            
+            var query = {};
+            if(request.query.q != null || request.query.q != undefined){
+                var search = request.query.q;
+                var regexexp = new RegExp(search, 'i');
+                query[request.query.s] = regexexp;
+            }
+            else{
+                query = {};
+            }
+            
+            var parameter = request.query.s;
+            var sortOrder = 1;
+            var sort =  {};
+            sort[parameter] = sortOrder;
+            var options = {
+                sort: sort,
+                limit: request.query.pageSize,
+                offset: Number(request.query.offset)
+            };
+            
+            Exercise.paginate(query, options, function(err, results){
+                if(err){
+                    console.log(err);
+                    response.send(err);
+                    return;
+                 }
+                
+                response.send(results);
+            });
     });
 
 //fetching a specific exercise
@@ -89,9 +134,12 @@ router.route('/:exercise_id')
     .delete(function (request, response) {
         Exercise.findByIdAndRemove(request.params.exercise_id,
             function (error, deleted) {
-                if (!error) {
-                    response.json({exercise: deleted});
+                if (error) {
+                    response.send(error);
+                    return;
                 }
+                
+                response.json({exercise: deleted});
             }
         );
     });
@@ -103,6 +151,7 @@ router.route('/rehabPlan/:rehabPlans_id')
         Exercise.find({"rehabilitationPlans": request.params.rehabPlans_id}, function (error, exercise) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({exercise: exercise});

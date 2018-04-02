@@ -29,23 +29,33 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { AuthGuard } from './auth.guard'
+import { PhysioAuthGuard } from './physio-auth.guard';
+import { AdminAuthGuard } from './admin-auth.guard';
+import {UnauthorizedComponent } from './unauthorized/unauthorized.component'
+import { WrongAccountComponent } from './wrong-account/wrong-account.component'
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { ManagePermissionsComponent} from './manage-permissions/manage-permissions.component';
 
+//Later: add gueard to the routes that need to be protected
+//to do this append ,canActivate: [something] to an object
+//ie: , canActivate: [AuthGuard]
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'howitworks', component: HowItWorksComponent},
   {path: 'services', component: ServicesComponent},
   {path: 'faq', component: FaqComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'manageforms', component: DynamicFormsComponent},
+  {path: 'admin/manageforms', component: DynamicFormsComponent},
   {path: 'client', component: PatientProfileComponent},
-  {path: 'adminhome', component: AdminHomeComponent},
+  {path: 'admin', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
   {path: 'signup', component: NewClientComponent},
-  {path: 'bookappointment', component: BookAppointmentComponent},
-  {path: 'useraccounts', component:UserAccountsComponent},
+  {path: 'client/bookappointment', component: BookAppointmentComponent},
+  {path: 'admin/useraccounts', component:UserAccountsComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
   {path: 'bookappointement', component: AppointmentsComponent},
   {path: 'physiohome', component: PhysioHomeComponent},
@@ -53,13 +63,18 @@ const routes: Routes = [
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
   {path: 'client/exercises', component: ClientExerciseComponent},
-  {path: 'assessmentTest', component: AssessmentTestComponent},
+  {path: 'assessmenttest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
   {path: 'completetest', component: CompleteAssessmentTestComponent},
   {path: 'calendar', component: CalendarComponent},
+  {path: 'client/completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
+  {path: 'unauthorized', component: UnauthorizedComponent},
+  {path: 'admin/wrongaccount', component: WrongAccountComponent},
+  {path: 'physio/wrongaccount', component: WrongAccountComponent},  
+  {path: 'client/home', component: ClientHomeComponent},
+  {path: 'managepermissions', component: ManagePermissionsComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
-
 ];
 
 @NgModule({

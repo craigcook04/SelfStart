@@ -122,7 +122,7 @@ export class PatientService {
   }
 
   GetPatientsNotUnderPlan(id: string){
-    var url ='/api/patient/notplan/' + id;
+    var url ='/api/patient/notplan/' + id + '/?&offset=0';
     return this.http.get(url);
   }
 
@@ -132,6 +132,21 @@ export class PatientService {
     }
     var url = '/api/patient/plan/remove';
     return this.http.put(url, body);
+  }
+
+  SearchPatientRehab(id: string, searchString: string, offset, pageSize){
+    var url = '/api/patient/notplan/'+ id + '/?q=' + searchString + '&offset=' + offset + '&pageSize=' + pageSize;
+    return this.http.get(url);
+  }
+
+  GetPatientInfo(id: string){
+    var url = '/api/patient/patientinfo/' + id;
+    return this.http.get(url);
+  }
+
+  GetPatientApppointments(id: string){
+    var url = '/api/patient/patient/appointments/' + id;
+    return this.http.get(url);
   }
 
 }

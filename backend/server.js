@@ -9,7 +9,6 @@ var http = require('http');
 var https = require('https');
 var fs = require('fs');
 const crypto = require('crypto');
-
 var sslOptions = {
     key: "temporarykey",
     cert: "temporarycertificate"
@@ -18,6 +17,8 @@ var sslOptions = {
 var app = express();                 // define our app using express
 
 var connection = mongoose.connect('mongodb://localhost:27017/startUp');
+
+
 
 //linking variables to the files of the routes
 var exercises = require('./routes/exercises');
@@ -41,7 +42,7 @@ var userAccount = require('./routes/userAccount');
 var image = require('./routes/image');
 var emailRoute = require('./routes/email');
 var verifyRoute = require('./routes/verification');
-
+var roleRoute = require('./routes/role');
 
 
 //middleware for developement only --be sure to delete before release
@@ -49,6 +50,7 @@ app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
+    //This is where I want to check the session token to ensure that they can send requests to the database
     next();
 });
 
@@ -82,7 +84,7 @@ app.use('/api/useraccount', userAccount);
 app.use('/api/image', image);
 app.use('/api/email', emailRoute);
 app.use('/api/temp', verifyRoute);
-
+app.use('/api/role', roleRoute);
 
 
 var port = 8082;        // set our port
@@ -90,17 +92,17 @@ var port = 8082;        // set our port
 // =============================================================================
 
 
-
 // ROUTES
 // ======================================
 var router = express.Router();
-
 
 router.use(function(req, res, next){
    // do logging
    console.log("I'm the middle man");
    next();
 });
+
+
 
 app.use(cors());
 
@@ -117,6 +119,6 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-//https.createServer(sslOptions, app).listen(8443);
+//https.createServer(sslOptions, app).listen(844)
 https.createServer(app).listen(8443);
 console.log('Magic happens on port ' + port);

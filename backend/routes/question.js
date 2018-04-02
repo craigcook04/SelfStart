@@ -4,6 +4,25 @@
 var express = require('express');
 var router = express.Router();
 var Question = require('../models/question');
+// var Session = require('../models/session');
+
+// router.use(function(req, res, next){
+//   // do logging
+//   Session.findOne(req.params.token, function(err, session) {
+//       if(err) {
+//           res.send(err);
+//           return;
+//       }
+//       if(session == null) {
+//         res.status(401).send({error: "Unauthorized to access this content"});
+//         return;
+//       }
+//       else{
+//           //the user has a valid session token
+//           next();
+//       }
+//   });
+// });
 
 router.route('/')
 
@@ -29,6 +48,7 @@ router.route('/')
         Question.find({form: request.query.form}, function (error, question) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({question: question});
@@ -43,6 +63,7 @@ router.route('/:question_id')
         Question.findById(request.params.question_id, function (error, question) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({question: question});
@@ -67,6 +88,7 @@ router.route('/:question_id')
                 question.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({question: question});
@@ -92,6 +114,7 @@ router.route('/form/:form_id')
         Question.find({form: request.params.form_id}, function (error, question) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({question: question});

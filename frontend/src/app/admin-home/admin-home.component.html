@@ -1,39 +1,176 @@
-<br><br>
 
-  <div class="col" style = "left:10px">
-    <div ngbDropdown class="d-inline-block">
-      <button style= left:10px; class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>What would you like to do?</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button class="dropdown-item" (click) = "goToExercises()">Edit Exercises</button>
-        <button class="dropdown-item" (click) = "gotToPatients()">Edit Client Profiles</button>
-        <button class="dropdown-item" (click) = "goToDynamicForm()">Edit Dynamic Forms</button>
-        <button class="dropdown-item" (click) = "goToRehabPlans()">Edit Rehabilitation Plans</button>
-        <!--<button class="dropdown-item">Edit Dynamic Forms</button>-->
-        
-      </div>
-    </div>
-  </div>
+<mat-sidenav-container style="min-height: 100vh;">
+            <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+                <mat-nav-list style="top: -10px;">
+                  <mat-list-item [routerLinkActive]="['active']">
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" >Dashboard</button>
+                  </mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']">
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['useraccounts']">Manage User Accounts</button>
+                  </mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']" >
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['manageforms']">Manage Dynamic Forms</button></mat-list-item>
+                </mat-nav-list>
+            </mat-sidenav>
 
-  <br>
-  <br>
-  <div class="resetPass">
-  <h4>Password Reset Requests</h4>
-  <hr>
-  <div class="names">
-    <ul>
-      <li *ngFor="let user of resetUsers">
-         <span class="lefts">{{user.userAccountName}}</span> <fa class="rights check" name="check" ngbTooltip="Confirm Reset for {{user.userAccountName}}" (click)="ResetPassword(user.userAccountName)"></fa><!--<button class="btn btn-sm btn-primary" (click)="ResetPassword(user.userAccountName)">Confirm Password Reset Request</button> -->
-      </li>
-    </ul>
-  </div>
-  </div>
-  <br><br>
-<div class = 'jumbotron' style = "left:10px">
-        <h1>Welcome Administrator</h1>
-        <br><br>
-        <h2>What do you want to do today?</h2>
-        <br>
-</div>
-
-
-
+          <mat-sidenav-content style="min-height:100vh;">
+              <div>
+                  <mat-card class="col-11" style="margin-left: auto; margin-right: auto;">
+                        <mat-card-title style="text-align: center;">
+                          <h3><b>Welcome Administrator,</b></h3>
+                          <h5>What would you like to do today?</h5>
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            <div class="col">
+                                <!-- <div ngbDropdown class="d-inline-block">
+                                  <button style= left:10px; class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>What would you like to do?</button>
+                                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button class="dropdown-item" (click) = "goToExercises()">Edit Exercises</button>
+                                    <button class="dropdown-item" (click) = "gotToPatients()">Edit Client Profiles</button>
+                                    <button class="dropdown-item" (click) = "goToDynamicForm()">Edit Dynamic Forms</button>
+                                    <button class="dropdown-item" (click) = "goToRehabPlans()">Edit Rehabilitation Plans</button>
+                                  </div>
+                                </div> -->
+                            </div>
+                        </mat-card-subtitle>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <mat-card-content>
+                          <div class="row">
+                              <mat-card class="col-6">
+                                  <div>
+                                      <div class="resetPass">
+                                          <h4><b>Password Reset Requests</b></h4>
+                                          <hr>
+                                          <div class="names">
+                                              <ul>
+                                                <li *ngFor="let user of resetUsers">
+                                                   <span class="lefts">{{user.userAccountName}}</span> 
+                                                   <fa class="rights check" name="check" matTooltip="Confirm Reset for {{ user?.userAccountName }}" (click)="ResetPassword(user.userAccountName, resetModal)"></fa>
+                                                </li>
+                                              </ul>
+                                              <ng-template #resetModal let-c="close" let-d="dismiss">
+                                                  <div class="modal-header">
+                                                    Reset Password Email Sent
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    An email has been successfully sent to {{user.userAccountName}} so that they are able to recover their account
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
+                                                  </div>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                  </div>
+                                  <br>
+                                  <mat-divider></mat-divider>
+                                  <br>
+                                  <div>
+                                    <mat-card-title style="color: #0275d8;">
+                                      <b>System Statistics:</b>
+                                    </mat-card-title>
+                                    <mat-list>
+                                      <mat-list-item>
+                                          <div class="btn-block">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6><b> Number of Registered Physios: </b></h6>
+                                                  </div>
+                                                  <div class="col">
+                                                    <h4><b> {{ currPhysios }} </b></h4>
+                                                  </div>
+                                                </div>
+                                                <div class="divider">
+                                                  <mat-divider></mat-divider>
+                                                </div>
+                                            </div>
+                                      </mat-list-item>
+                                      <mat-list-item>
+                                          <div class="btn-block">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6><b> Number of Registered Clients: </b></h6>
+                                                  </div>
+                                                  <div class="col">
+                                                    <h4><b> {{ currPatients }} </b></h4>
+                                                  </div>
+                                                </div>
+                                                <div class="divider">
+                                                  <mat-divider></mat-divider>
+                                                </div>
+                                            </div>
+                                      </mat-list-item>
+                                      <mat-list-item>
+                                          <div class="btn-block">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6><b> Number of Unique Exercises: </b></h6>
+                                                  </div>
+                                                  <div class="col">
+                                                      <h4> <b> {{ currExercises }} </b></h4>
+                                                  </div>
+                                                </div>
+                                                <div class="divider">
+                                                  <mat-divider></mat-divider>
+                                                </div>
+                                            </div>
+                                      </mat-list-item>
+                                      <mat-list-item>
+                                          <div class="btn-block">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6><b> Number of Exercise Menus: </b></h6>
+                                                  </div>
+                                                  <div class="col">
+                                                    <h4> <b> {{ currPlans }} </b></h4>
+                                                  </div>
+                                                </div>
+                                                <div class="divider">
+                                                  <mat-divider></mat-divider>
+                                                </div>
+                                            </div>
+                                      </mat-list-item>
+                                    </mat-list>
+                                  </div>
+                              </mat-card>
+                              <mat-card class="col-6">
+                                <div>
+                                  <mat-card-title style="color: #0275d8;">
+                                    <b>Physio's Currently in the System</b>
+                                  </mat-card-title>
+                                  <div style="overflow-y: auto;">
+                                      <mat-list>
+                                          <mat-list-item class="listItems" *ngFor="let physio of physioList">
+                                              <div class="btn-block">
+                                                  <div class="row">
+                                                    <div class="col-1">
+                                                        <i class="fa fa-user-md" style="color: #0275d8"></i>
+                                                    </div>
+                                                    <div class="col-3">
+                                                      <h5><b> {{ physio?.givenName }} {{ physio?.familyName}} </b></h5>
+                                                    </div>
+                                                    <div class="col">
+                                                      <b>Date Hired: </b> {{ physio?.dateHired | date:'mediumDate' }}
+                                                    </div>
+                                                  </div>
+                                                  <div class="divider">
+                                                    <mat-divider></mat-divider>
+                                                  </div>
+                                              </div>
+                                          </mat-list-item>
+                                      </mat-list>
+                                  </div>
+                                </div>
+                              </mat-card>
+                          </div>
+                        </mat-card-content>
+                  </mat-card>
+                  <br>
+                </div>    
+        </mat-sidenav-content>
+</mat-sidenav-container>

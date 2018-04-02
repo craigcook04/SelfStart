@@ -1,263 +1,288 @@
-<h2>Manage Forms</h2>
+<mat-sidenav-container style="min-height: 100vh;">
 
-<button class="btn btn-primary createbtn" (click)="openEditor=true">New Form</button>
-<mat-card *ngIf="openEditor" class="formEditor">
-  <mat-card-title>
-    New Form Information
-  </mat-card-title>
-  <form>
-      <div class="form-group row">
-        <label for="inputFormName" class="col-sm-3 col-form-label">Form Name</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputFormName" placeholder="Name" #newFormName>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputFormDescrip" class="col-sm-3 col-form-label">Description</label>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputFormDescrip" placeholder="Description" #newFormDescrip>
-        </div>
-      </div>
-    </form>
-
-    <h4 *ngIf="questions?.length > 0">
-      Questions: 
-    </h4>
-    <div *ngFor="let q of questions; let i = index">
-        <div *ngIf="q.questionCode == 'SA'">
-          <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}</p>
-        </div>
-        <div *ngIf="q.questionCode == 'MC'">
-          <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}</p>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../']">Dashboard</button>
+          </mat-list-item>
           <br>
-          <mat-radio-group id="question{{i}}">
-              <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
-                  <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label>
-                  <mat-radio-button class=" mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
-              </div>
-          </mat-radio-group>
-        </div>
-        <br>
-        <div *ngIf="q.questionCode == 'RA'">
-          <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}}</p>    
-        </div>
-      </div>
-    <hr>
-    <div *ngIf="showDrop" ngbDropdown>
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{type}}</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
-            <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
-            <button class="dropdown-item" (click)="changeRA();">Rating</button>
-        </div>
-        <br><br>
-    </div>
-    
-    <div *ngIf="shortAnswer">
-        <p><b>Enter Your Short Answer Question</b></p>
-        <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-        <br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();">Save Question</button>
-        <br><br>
-    </div>
-    <div *ngIf="multipleChoice">
-        <p><b>Enter Your Multiple Choice Question</b></p>
-        <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." #newMAQuestion>
-        <br><br>
-        <div class="form-group row">
-            <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
-            <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...."  #newOption>
-        </div>
-        <div class="form-group row">
-            <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
-            <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." #newOption1>
-        </div>
-        <div *ngFor="let option of options" class="form-group row">
-            <label class="col-sm-3 col-form-label">{{option}})</label>
-            <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...."  #newOption2>
-        </div>
-        <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" >Save Question</button>
-        <button type="button" class="btn btn-primary createbtn" (click)="addOption();">Add Option</button>
-        <br><br>
-    </div>
-    <div *ngIf="rating">
-        <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
-        <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." #newRAQuestion>
-        <br><br>
-        <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();">Save Question</button>
-        <br><br>
-    </div>
-    <button class="btn btn-sm btn-primary" (click)="showDrop=true">Add Question</button>
-    <br>
-    <hr>
-    <mat-card-actions align="end">
-      <button class="btn btn-sm btn-primary sve" (click)="SaveDynamicForm(newFormName.value, newFormDescrip.value)">Save Form</button>
-      <button class="btn btn-sm btn-secondary cncl" (click)="CancelNewForm()">Cancel</button>
-    </mat-card-actions>
-</mat-card>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../useraccounts']">Manage User Accounts</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Manage Dynamic Forms</button></mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
 
-<div class="dynforms">
-  <mat-accordion>
-    <!-- This is the block of code that will be repeated for every form -->
-    <mat-expansion-panel *ngFor='let form of forms'>
-      <mat-expansion-panel-header>
-          <label class="col-sm-2 pnter">{{form.name}}</label>
-          <label class="col-sm-3 pnter">{{form.description}}</label>
-      </mat-expansion-panel-header>
-      <ng-template let-c="close" let-d="dismiss" #yousure>
-          <div class="modal-header">
-            <h4>Are you sure?</h4>
-          </div>
-          <div class="modal-body">
-              <p>Are you sure you wish to delete form <b>{{form.name}}</b>. This action is cannot
-                be undone. 
-              </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Delete</button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Do Not Delete</button>              
-          </div>
-      </ng-template>
-        <!-- New Question modal -->
-      <ng-template let-c="close" let-d="dismiss" #quest>
-          <div class="modal-header">
-            <h4 class="modal-title">Create a new Question</h4>
-            
-          </div>
-          <div class="modal-body">
-              <form>
-                <div class="form-group row">
-                  <label for="inputQuestionText" class="col-4 col-form-label">Question Text</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputFormName" placeholder="What would you like to ask?" #newQuestionName>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputQuestionDescrip" class="col-4 col-form-label">Help Description</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputQuestionDescrip" placeholder="Enter Help Description..." #newQuestionDescrip>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputOrder" class="col-4 col-form-label">Order</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="inputQuestionOrder" placeholder="Order" #newQuestionOrder>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-4 col-form-label" for="inlineFormCustomSelect">Type</label>
-                  <select #chosenType [(ngModel)]="selectedType" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" [ngModelOptions]="{standalone: true}" #newQuestionType>
-                    <option >Choose...</option>
-                    <option disabled="disabled">----</option>
-                    <option *ngFor="let type of types" value="{{type._id}}" >{{ type.name }}</option>
-                  </select>
-                </div>
-               
-              </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="createQuestion(newQuestionName.value, newQuestionDescrip.value, newQuestionOrder.value, form._id, chosenType.value); c('Close click')">Confirm</button>
-            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>         
-          </div>
-        </ng-template>
+  <mat-sidenav-content>
+    <mat-card style="margin-left: auto; margin-right: auto; min-height: 75vh;" class="col-11">
+      <h2>Manage Forms</h2>
       
-        <h6><b>Name: </b>{{form.name}}</h6>
-        <h6><b>Description: </b>{{form.description}}</h6>
-        <h6>Questions: </h6>
-        <div *ngFor="let q of form?.questions; let i = index" class="qs">
-            <div *ngIf="q.questionCode == 'SA'">
-              <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}        <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions, form.name, form.description)"></fa></p>
-            </div>
-            <div *ngIf="q.questionCode == 'MC'">
-              <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>
-              <br>
-                  <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
-                      <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}}) {{qcontent}}</label>
-                  </div>
-            </div>
-            <br>
-            <div *ngIf="q.questionCode == 'RA'">
-              <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
-            </div>
-          </div>
-          <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>
+      <button class="btn btn-primary createbtn" (click)="openEditor=true">New Form</button>
+      <mat-card *ngIf="openEditor" class="formEditor">
+        <mat-card-title>
+          New Form Information
+        </mat-card-title>
         <form>
-          <div >
-            <!-- <button class="btn btn-success formbtns" (click)="open(quest, form._id)">New Question</button>
-            <button class="btn btn-primary formbtns" (click)="open(yousure); onForm=true;">Delete Form</button>
-            <button *ngIf="!editMode" class="btn btn-primary align-bottom formbtns" (click)="switchMode()">Edit Form</button>
-            <button *ngIf="editMode" class="btn btn-primary align-bottom formbtns" (click)="open(edityousure); switchMode();">Save</button>
-            <button *ngIf="editMode" class="btn btn-secondary align-bottom formbtns" (click)="switchMode();">Cancel</button> -->
-            
-            <!-- <h4>Questions: </h4> -->
-            <div *ngFor='let question of forms;  let i = index;' class="form-group row">
-              <div>
-                <div>
-                  <button *ngIf="editMode" class="btn btn-primary align-bottom" (click)="open(otheryousure);"><fa class="fas float-right" name="times"></fa></button>
-                </div>
+            <div class="form-group row">
+              <label for="inputFormName" class="col-sm-3 col-form-label">Form Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputFormName" placeholder="Name" #newFormName>
               </div>
-              
-              <!-- second are you sure modal -->
-              <ng-template let-c="close" let-d="dismiss" #otheryousure>
+            </div>
+            <div class="form-group row">
+              <label for="inputFormDescrip" class="col-sm-3 col-form-label">Description</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputFormDescrip" placeholder="Description" #newFormDescrip>
+              </div>
+            </div>
+          </form>
+      
+          <h4 *ngIf="questions?.length > 0">
+            Questions: 
+          </h4>
+          <div *ngFor="let q of questions; let i = index">
+              <div *ngIf="q.questionCode == 'SA'">
+                <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}</p>
+              </div>
+              <div *ngIf="q.questionCode == 'MC'">
+                <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}</p>
+                <br>
+                <mat-radio-group id="question{{i}}">
+                    <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
+                        <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label>
+                        <mat-radio-button class=" mcchoices" value="{{qcontent}}" id="question{{i}}{{j}}" (click)="RadioButtonClicked(qcontent, i)">{{qcontent}}</mat-radio-button>
+                    </div>
+                </mat-radio-group>
+              </div>
+              <br>
+              <div *ngIf="q.questionCode == 'RA'">
+                <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}}</p>    
+              </div>
+            </div>
+          <hr>
+          <div *ngIf="showDrop" ngbDropdown>
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{type}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
+                  <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
+                  <button class="dropdown-item" (click)="changeRA();">Rating</button>
+              </div>
+              <br><br>
+          </div>
+          
+          <div *ngIf="shortAnswer">
+              <p><b>Enter Your Short Answer Question</b></p>
+              <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+              <br>
+              <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();">Save Question</button>
+              <br><br>
+          </div>
+          <div *ngIf="multipleChoice">
+              <p><b>Enter Your Multiple Choice Question</b></p>
+              <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." #newMAQuestion>
+              <br><br>
+              <div class="form-group row">
+                  <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
+                  <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...."  #newOption>
+              </div>
+              <div class="form-group row">
+                  <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
+                  <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." #newOption1>
+              </div>
+              <div *ngFor="let option of options" class="form-group row">
+                  <label class="col-sm-3 col-form-label">{{option}})</label>
+                  <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...."  #newOption2>
+              </div>
+              <br><br>
+              <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" >Save Question</button>
+              <button type="button" class="btn btn-primary createbtn" (click)="addOption();">Add Option</button>
+              <br><br>
+          </div>
+          <div *ngIf="rating">
+              <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
+              <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." #newRAQuestion>
+              <br><br>
+              <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();">Save Question</button>
+              <br><br>
+          </div>
+          <button class="btn btn-sm btn-primary" (click)="showDrop=true">Add Question</button>
+          <br>
+          <hr>
+          <mat-card-actions align="end">
+            <button class="btn btn-sm btn-primary sve" (click)="SaveDynamicForm(newFormName.value, newFormDescrip.value)">Save Form</button>
+            <button class="btn btn-sm btn-secondary cncl" (click)="CancelNewForm()">Cancel</button>
+          </mat-card-actions>
+      </mat-card>
+      
+      <div class="dynforms">
+        <mat-accordion>
+          <!-- This is the block of code that will be repeated for every form -->
+          <mat-expansion-panel *ngFor='let form of forms'>
+            <mat-expansion-panel-header>
+                <label class="col-sm-2 pnter">{{form.name}}</label>
+                <label class="col-sm-3 pnter">{{form.description}}</label>
+            </mat-expansion-panel-header>
+            <ng-template let-c="close" let-d="dismiss" #yousure>
+                <div class="modal-header">
+                  <h4>Are you sure?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete form <b>{{form.name}}</b>. This action is cannot
+                      be undone. 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-sm align-left" (click)="deleteForm(form._id); c('Close click')">Delete</button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Do Not Delete</button>              
+                </div>
+            </ng-template>
+              <!-- New Question modal -->
+            <ng-template let-c="close" let-d="dismiss" #quest>
+                <div class="modal-header">
+                  <h4 class="modal-title">Create a new Question</h4>
+                  
+                </div>
+                <div class="modal-body">
+                    <form>
+                      <div class="form-group row">
+                        <label for="inputQuestionText" class="col-4 col-form-label">Question Text</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputFormName" placeholder="What would you like to ask?" #newQuestionName>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputQuestionDescrip" class="col-4 col-form-label">Help Description</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputQuestionDescrip" placeholder="Enter Help Description..." #newQuestionDescrip>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputOrder" class="col-4 col-form-label">Order</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="inputQuestionOrder" placeholder="Order" #newQuestionOrder>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-4 col-form-label" for="inlineFormCustomSelect">Type</label>
+                        <select #chosenType [(ngModel)]="selectedType" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" [ngModelOptions]="{standalone: true}" #newQuestionType>
+                          <option >Choose...</option>
+                          <option disabled="disabled">----</option>
+                          <option *ngFor="let type of types" value="{{type._id}}" >{{ type.name }}</option>
+                        </select>
+                      </div>
+                     
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" (click)="createQuestion(newQuestionName.value, newQuestionDescrip.value, newQuestionOrder.value, form._id, chosenType.value); c('Close click')">Confirm</button>
+                  <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>         
+                </div>
+              </ng-template>
+            
+              <h6><b>Name: </b>{{form.name}}</h6>
+              <h6><b>Description: </b>{{form.description}}</h6>
+              <h6>Questions: </h6>
+              <div *ngFor="let q of form?.questions; let i = index" class="qs">
+                  <div *ngIf="q.questionCode == 'SA'">
+                    <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}        <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions, form.name, form.description)"></fa></p>
+                  </div>
+                  <div *ngIf="q.questionCode == 'MC'">
+                    <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>
+                    <br>
+                        <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
+                            <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}}) {{qcontent}}</label>
+                        </div>
+                  </div>
+                  <br>
+                  <div *ngIf="q.questionCode == 'RA'">
+                    <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
+                  </div>
+                </div>
+                <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>
+              <form>
+                <div >
+                  <!-- <button class="btn btn-success formbtns" (click)="open(quest, form._id)">New Question</button>
+                  <button class="btn btn-primary formbtns" (click)="open(yousure); onForm=true;">Delete Form</button>
+                  <button *ngIf="!editMode" class="btn btn-primary align-bottom formbtns" (click)="switchMode()">Edit Form</button>
+                  <button *ngIf="editMode" class="btn btn-primary align-bottom formbtns" (click)="open(edityousure); switchMode();">Save</button>
+                  <button *ngIf="editMode" class="btn btn-secondary align-bottom formbtns" (click)="switchMode();">Cancel</button> -->
+                  
+                  <!-- <h4>Questions: </h4> -->
+                  <div *ngFor='let question of forms;  let i = index;' class="form-group row">
+                    <div>
+                      <div>
+                        <button *ngIf="editMode" class="btn btn-primary align-bottom" (click)="open(otheryousure);"><fa class="fas float-right" name="times"></fa></button>
+                      </div>
+                    </div>
+                    
+                    <!-- second are you sure modal -->
+                    <ng-template let-c="close" let-d="dismiss" #otheryousure>
+                      <div class="modal-header">
+                        <h4 class="modal-title">Are you sure?</h4>
+                      </div>
+                      <div class="modal-body">
+                          <p> <b>This action cannot be undone!</b> </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm align-left" (click)="c('Close click'); deleteQuestion(question._id, form._id); ">Confirm</button>
+                        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </form>
+          </mat-expansion-panel>
+          <!-- End of form block -->
+          
+          <!-- New form modal -->
+            <ng-template let-c="close" let-d="dismiss" #create>
+              <div class="modal-header">
+                <h4 class="modal-title">Create a new form</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                    <div class="form-group row">
+                      <label for="inputFormName" class="col-sm-3 col-form-label">Form Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFormName" placeholder="Name" #newFormName>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputFormDescrip" class="col-sm-3 col-form-label">Description</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputFormDescrip" placeholder="Description" #newFormDescrip>
+                      </div>
+                    </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm align-left" (click)="createNewForm(newFormName.value, newFormDescrip.value); c('Close click')">Create</button>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
+              </div>
+            </ng-template>
+            <!-- are you sure for the edit function -->
+            <ng-template let-c="close" let-d="dismiss" #edityousure>
                 <div class="modal-header">
                   <h4 class="modal-title">Are you sure?</h4>
                 </div>
                 <div class="modal-body">
-                    <p> <b>This action cannot be undone!</b> </p>
+                    <p> <b>Are you sure you would like to save?</b> </p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary btn-sm align-left" (click)="c('Close click'); deleteQuestion(question._id, form._id); ">Confirm</button>
+                  <button type="button" class="btn btn-primary btn-sm align-left" (click)="updateQuestion(question._id, qtext.value, question.helpDescription, question.order, question.form, question.questionType);">Confirm</button>
                   <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
                 </div>
               </ng-template>
-            </div>
-          </div>
-        </form>
-    </mat-expansion-panel>
-    <!-- End of form block -->
-    
-    <!-- New form modal -->
-      <ng-template let-c="close" let-d="dismiss" #create>
-        <div class="modal-header">
-          <h4 class="modal-title">Create a new form</h4>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-              <div class="form-group row">
-                <label for="inputFormName" class="col-sm-3 col-form-label">Form Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputFormName" placeholder="Name" #newFormName>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="inputFormDescrip" class="col-sm-3 col-form-label">Description</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="inputFormDescrip" placeholder="Description" #newFormDescrip>
-                </div>
-              </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm align-left" (click)="createNewForm(newFormName.value, newFormDescrip.value); c('Close click')">Create</button>
-          <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
-        </div>
-      </ng-template>
-      <!-- are you sure for the edit function -->
-      <ng-template let-c="close" let-d="dismiss" #edityousure>
-          <div class="modal-header">
-            <h4 class="modal-title">Are you sure?</h4>
-          </div>
-          <div class="modal-body">
-              <p> <b>Are you sure you would like to save?</b> </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-sm align-left" (click)="updateQuestion(question._id, qtext.value, question.helpDescription, question.order, question.form, question.questionType);">Confirm</button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>              
-          </div>
-        </ng-template>
-  </mat-accordion>
-</div>
+        </mat-accordion>
+      </div>
+    </mat-card>
+    <br>
+  </mat-sidenav-content>
+</mat-sidenav-container>

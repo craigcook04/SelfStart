@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -27,24 +27,48 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule} from '@angular/material'; 
-
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
 import { ImageService } from './image.service';
-import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'angular2-moment/moment.module';
 import { PhysioHomeComponent } from './physio-home/physio-home.component';
 import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
@@ -65,6 +89,18 @@ import { CompleteAssessmentTestComponent } from './complete-assessment-test/comp
 import { CalendarComponent } from './calendar/calendar.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './auth.guard'
+import { PhysioAuthGuard } from './physio-auth.guard';
+import { AdminAuthGuard } from './admin-auth.guard'
+import { PaymentService } from './payment.service';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { WrongAccountComponent } from './wrong-account/wrong-account.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { RolesService } from './roles.service';
 
 @NgModule({
   declarations: [
@@ -97,8 +133,15 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     CompleteAssessmentTestComponent,
     CalendarComponent,
     WelcomeHomeComponent
+    WelcomeHomeComponent,
+    UnauthorizedComponent,
+    WrongAccountComponent,
+    WelcomeHomeComponent,
+    ManagePermissionsComponent,
+    ClientHomeComponent
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
@@ -118,8 +161,6 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    
-    
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -135,7 +176,10 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     MatButtonToggleModule,
     MatPaginatorModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [
     PatientService, 
@@ -149,8 +193,15 @@ import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
     PhysiotherapistService,
     AppointmentsService,
     EncryptionService, 
-    AssessmentTestService],
-  bootstrap: [AppComponent]
+    AssessmentTestService,
+    CookieService,
+    AuthGuard,
+    PhysioAuthGuard,
+    AdminAuthGuard,
+    PaymentService,
+    RolesService],
+  bootstrap: [AppComponent],
+  schemas: [ NO_ERRORS_SCHEMA ]
 })
 
 export class AppModule { }
