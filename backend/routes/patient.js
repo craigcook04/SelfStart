@@ -103,37 +103,6 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        
-        //TO DO: SEARCH BY USERNAME
-        // if(request.query.s == 'username') {
-        //     //if the query string isn't null, set the query to search for the query string
-        //     var search = '^' + request.query.q;
-        //     var regexexp = new RegExp(search, 'i');
-        //     var query = {givenName: regexexp};
-        //     UserAccount.find({username: regexexp}, function(err, user) {
-        //         if(err) {
-        //             response.send(err);
-        //             return;
-        //         }
-        //         else if(user == null) {
-        //             response.send({docs: null});
-        //             return;
-        //         }
-        //         else {
-        //             var options = 
-        //             {
-        //                 sort: sort,
-        //                 populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
-        //                 limit: 10,
-        //                 offset: Number(request.query.offset)
-        //             };
-                    
-        //             query = { : { $elemMatch:  } }
-                    
-        //         }
-        //     })
-        // }
-        
         var query = {};
         if(request.query.s == "ID"){
             
@@ -184,7 +153,7 @@ router.route('/')
 router.route('/:patient_id')
 
     .get(function (request, response) {
-        Patient.findById(request.params.patient_id, function (error, patient) {
+        Patient.findById(request.params.patient_id).populate({path: 'account', select: 'userAccountName'}).populate('country').populate('province').populate('city').populate('rehabPlan').exec(function (error, patient) {
             if (error) {
                response.send({error: error});
                return;
@@ -493,13 +462,8 @@ router.route('/admincreated')
             });
         });
     });
-        
-<<<<<<< HEAD
-    });
-
-=======
 });
->>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
+
 
 router.route('/getclient/:userid')
     .get(function(request, response) {
@@ -518,7 +482,7 @@ router.route('/getclient/:userid')
                 response.send({success: true, message: 'could not find client'});
                 return;
             }
-            
+            console.log(client);
             response.send({success: true, client: client});
         });
     });
