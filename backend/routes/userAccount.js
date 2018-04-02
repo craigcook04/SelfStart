@@ -125,7 +125,6 @@ router.route('/account/change')
                 console.log("me", useraccount.encryptedPassword);
                 var inputPassDecrypted = useraccount.decrypt(request.body.encryptedTempPassword);
                 var hashedPassword = useraccount.decrypt(useraccount.encryptedPassword);
-                console.log("compare", inputPassDecrypted, "ollllldldldldldld", hashedPassword);
                 if(inputPassDecrypted == hashedPassword) {
                     console.log('hello');
                     useraccount.encryptedPassword = request.body.newEncryptedPassword;
