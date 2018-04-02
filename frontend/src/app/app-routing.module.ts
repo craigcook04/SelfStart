@@ -28,6 +28,7 @@ import {AssessmentTestComponent} from './assessment-test/assessment-test.compone
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
+import { CalendarComponent } from './calendar/calendar.component';
 import { AuthGuard } from './auth.guard'
 import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard';
@@ -58,7 +59,7 @@ const routes: Routes = [
   {path: 'client/bookappointment', component: BookAppointmentComponent},
   {path: 'admin/useraccounts', component:UserAccountsComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
-  {path: 'bookappointement', component: AppointmentsComponent},
+  {path: 'bookappointment', component: AppointmentsComponent},
   {path: 'physiohome', component: PhysioHomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
@@ -66,6 +67,8 @@ const routes: Routes = [
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmenttest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
+  {path: 'completetest', component: CompleteAssessmentTestComponent},
+  {path: 'calendar', component: CalendarComponent},
   {path: 'client/completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
   {path: 'unauthorized', component: UnauthorizedComponent},
