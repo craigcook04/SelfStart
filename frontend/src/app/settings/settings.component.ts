@@ -62,9 +62,9 @@ export class SettingsComponent implements OnInit {
       })
     }
     else if(url.includes('client')) {
+      this.isClient = true;        
       this.patientService.GetPatient().subscribe(data => {
         console.log(data);
-        this.isClient = true;  
         var retObj: any = data;
         this.patient = retObj.client.docs[0];
         console.log("yo", retObj.client.docs[0])

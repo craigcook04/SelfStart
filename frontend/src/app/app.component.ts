@@ -25,6 +25,9 @@ export class AppComponent {
                 }
                 else {
                   this.showLogin = true;
+                  this.isAdmin = false;
+                  this.isClient = false;
+                  this.isPhysio = false;
                 }
                 this.CheckRole();
               }
