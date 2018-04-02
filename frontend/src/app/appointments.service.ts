@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as moment from 'moment';
+
 
 @Injectable()
 export class AppointmentsService {
 
   newType: any;
-  newDate: Date;
+  newDate: any;
   newPatient: any;
   newOther: any;
   newReason: any;
@@ -18,6 +20,7 @@ export class AppointmentsService {
   }
   
   AddAppointment(patient: any, reason: string, other: string): any{
+    
       var body = {
           date: this.newDate,
           reason: reason,
@@ -40,8 +43,8 @@ export class AppointmentsService {
     return this.newType;
   }
   
-  setNewDate(date: Date){
-    this.newDate = date;
+  setNewDate(date: any){
+    this.newDate = moment(date).format("MMMM Do YYYY, h:mm:ss a");
   }
   
   // getDate(){
