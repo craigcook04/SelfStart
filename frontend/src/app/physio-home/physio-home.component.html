@@ -1,7 +1,66 @@
-<br>
+<mat-sidenav-container style="min-height: 100vh;">
+<mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+                <mat-nav-list style="top: -10px;">
+                  <mat-list-item [routerLinkActive]="['active']">
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" >Dashboard</button>
+                  </mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']">
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToCalendar()">Calendar</button>
+                  </mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']" >
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToPatients()">Client Profiles</button></mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']" >
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToExercises()">Exercises</button></mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']" >
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToRehabPlans()">Rehabilitation Plans</button></mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']" >
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToTests()">Assessment Tests</button></mat-list-item>
+                  <br>
+                  <mat-divider class="dividers"></mat-divider>
+                  <mat-list-item [routerLinkActive]="['active']" >
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToReports()">Client Reports</button></mat-list-item>
+                </mat-nav-list>
+            </mat-sidenav>
+  <h3 style="margin:1em; float:middle;">
+    <b>Good Morning!</b>
+  </h3>
+  <br>
+  <mat-card-title>
+    <h4 style="color: #0275d8;"><b>Your Appointments for Today:</b></h4>
+  </mat-card-title>
+  <mat-card-content>
+  <div id="list" *ngFor = "let appt of appointments">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{appt.patient}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{appt.date | date:'shortTime'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p style="font-size: 16px;"><b style="color: #0275d8;">Reason:  </b>{{appt.reason}}</p>
+        <p style="font-size: 16px;"><b style="color: #0275d8;">Other:  </b>{{appt.other}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  </mat-card-content>
+</mat-sidenav-container>
+<!--<br>
 <div id="title" class="alert alert-info">
   <h4>Welcome</h4>
-</div>
+</div>-->
 
 <!--<div id=section>
   <h4>Your Appointments</h4>
@@ -22,9 +81,9 @@
   <br>
 </div>-->
 
-<br>
-<h5>Your Appointments for Today:</h5>
- <!--| date:'longDate'-->
+<!--<br>
+<h5 style="color: #0275d8;"><b>Your Appointments for Today:</b></h5>
+ {{today | date:'longDate'}}
 <br>
 <div id="list" *ngFor = "let appt of appointments">
   <mat-accordion>
@@ -41,9 +100,9 @@
       <p><b>Other:  </b>{{appt.other}}</p>
     </mat-expansion-panel>
   </mat-accordion>
-</div>
+</div>-->
 
-<br>
+<!--<br>
 <button class="button" style="vertical-align:middle" (click)="goToCalendar()"><span>Calendar</span></button>
 <div id="mySidenav" class="sidenav">
   <a id=exercise (click)="goToExercises()">Manage Exercises</a>
@@ -51,4 +110,4 @@
   <a id=rehabplan (click)="goToRehabPlans()">Manage Rehabilitation Plans</a>
   <a id=test (click)="goToTests()">Manage Assessment Tests</a>
   <a id=report (click)="goToReports()">Generate Client Reports</a>
-</div>
+</div>-->

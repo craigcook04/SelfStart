@@ -37,7 +37,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
-  MatExpansionModule,
+  //MatExpansionModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -132,7 +132,6 @@ import { RolesService } from './roles.service';
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
     CalendarComponent,
-    WelcomeHomeComponent
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,

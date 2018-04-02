@@ -59,11 +59,6 @@ export class CalendarComponent implements OnInit {
   }
   
   events: CalendarEvent[] = [
-    {
-      title: "Stephanie Pereira",
-      color: colors.blue,
-      start: new Date()
-    }
   ];
 
   eventClicked({ event }: { event: CalendarEvent }): void {

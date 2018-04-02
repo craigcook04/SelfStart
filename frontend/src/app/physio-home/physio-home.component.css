@@ -1,18 +1,20 @@
-h4 {
-    margin: 1em;
+.dividers{
+    margin-top: -20px;
 }
 
-h5 {
-    margin: 0.25em;
+h4 {
+    margin: 1em;
+    margin-left: 1.5em;
 }
 
 #title {
-    width: 90%;
+    width: 100%;
     padding: 20px;
 }
 
 #list {
-    width: 90%;
+    width: 80%;
+    margin-left: 2em;
 }
 
 #section {

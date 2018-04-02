@@ -74,11 +74,11 @@ export class PhysioHomeComponent implements OnInit {
   goToCalendar(){
     this.router.navigate(['../calendar']);
   }
-  goToExercises(){
-    this.router.navigate(['../exercises']);
-  }
   goToPatients(){
     this.router.navigate(['../client']);
+  }
+  goToExercises(){
+    this.router.navigate(['../exercises']);
   }
   goToRehabPlans(){
     this.router.navigate(['../rehabplans']);

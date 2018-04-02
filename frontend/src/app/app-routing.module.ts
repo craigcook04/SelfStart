@@ -57,7 +57,7 @@ const routes: Routes = [
   {path: 'client/bookappointment', component: BookAppointmentComponent},
   {path: 'admin/useraccounts', component:UserAccountsComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
-  {path: 'bookappointement', component: AppointmentsComponent},
+  {path: 'bookappointment', component: AppointmentsComponent},
   {path: 'physiohome', component: PhysioHomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
