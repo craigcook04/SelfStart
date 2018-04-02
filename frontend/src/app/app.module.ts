@@ -101,6 +101,7 @@ import { RolesService } from './roles.service';
 import { SettingsComponent } from './settings/settings.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -136,9 +137,10 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     WrongAccountComponent,
     WelcomeHomeComponent,
     ManagePermissionsComponent,
+    ClientHomeComponent,
+    TransactionsComponent,
     SettingsComponent,
     GenerateReportComponent,
-    ClientHomeComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -160,7 +162,6 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -177,8 +178,16 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
+<<<<<<< HEAD
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatTabsModule,
+    NgbModalModule
+=======
     MatTooltipModule,
     MatSnackBarModule
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
   ],
   providers: [
     PatientService, 

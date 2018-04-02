@@ -15,7 +15,9 @@ var userAccountSchema = mongoose.Schema(
         lastLoggedIn: Date,
         adminUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Administrator'},
         physioUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Physiotherapist'},
-        patientUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
+        patientUser: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
+        numbAppoint: Number,
+        numbInitial: Number
     }
 );
 
