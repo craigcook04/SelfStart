@@ -37,24 +37,21 @@ export class AdminHomeComponent implements OnInit {
     })
     this.physioService.getTherapists().subscribe(data =>{
       let obj: any = data;
-      this.physioList = obj.physiotherapist;
-      this.currPhysios = this.physioList.length;
-      console.log(this.currPhysios);
+      console.log(data);
+      this.physioList = obj.docs;
+      this.currPhysios = obj.total;
     })
     this.exerciseService.GetAllExercises().subscribe(data => {
       let obj: any = data;
       this.currExercises = obj.total;
-      console.log(this.currExercises);
     })
     this.clientService.GetAllPatients().subscribe(data =>{
       let obj: any = data;
       this.currPatients = obj.total;
-      console.log(this.currPatients);
     })
     this.rehabPlanService.getPlans().subscribe(data =>{
       let obj: any = data;
       this.currPlans = obj.total;
-      console.log(this.currPlans);
     })
   }
   

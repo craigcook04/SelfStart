@@ -357,6 +357,58 @@ router.route('/session/refresh')
             });
         });
     });
+<<<<<<< HEAD
+
+router.route('/appointments/:id')
+    
+    .get(function(request, response) {
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({account: account});
+        })
+    })
+    
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            console.log(request.body);
+            
+            account.numbAppoint += request.body.appointment;
+            account.numbInitial += request.body.initial;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.send({account: account});
+            })
+        })
+    });
+
+router.route('/getdates/:id')
+
+    .get(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({account});
+        })
+    })
+    
+    
+
+=======
     
 router.route('/account/getsalt/:id')
     .get(function(request, response) {
@@ -375,4 +427,5 @@ router.route('/account/getsalt/:id')
             response.send({success: true, salt: userAccount.salt});
         });
     });
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
 module.exports = router;
