@@ -397,6 +397,19 @@ router.route('/appointments/:id')
                 response.send({account: account});
             })
         })
+    });
+
+router.route('/getdates/:id')
+
+    .get(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({account});
+        })
     })
     
     
