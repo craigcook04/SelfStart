@@ -404,8 +404,7 @@ router.route('/getdates/:id')
             response.send({account});
         })
     })
-    
-    
+
 router.route('/account/getsalt/:id')
     .get(function(request, response) {
         console.log('hi')
