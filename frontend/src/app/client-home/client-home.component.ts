@@ -29,7 +29,7 @@ export class ClientHomeComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
+    //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
