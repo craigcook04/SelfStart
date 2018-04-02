@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var AssessmentTest = require('../models/assessmentTest');
+var CompletedAssessment = require('../models/completedAssessmentTest');
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -161,6 +162,21 @@ router.route('/putquestions/:id')
                 response.json({test: assessmentTest});
             })
         })
+    });
+    
+router.route('/getresults/:id')
+    
+    .get(function (request, response){
+        console.log("Here");
+       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}), function(error, tests){
+           if(error){
+               response.send({error: error});
+               return;
+           }
+           
+           if(tests === null || tests === undefined){ console.log("None")};
+           response.send({completedTests: tests});
+       }
     })
 
 module.exports = router;

@@ -357,7 +357,6 @@ router.route('/session/refresh')
             });
         });
     });
-<<<<<<< HEAD
 
 router.route('/appointments/:id')
     
@@ -407,9 +406,6 @@ router.route('/getdates/:id')
     })
     
     
-
-=======
-    
 router.route('/account/getsalt/:id')
     .get(function(request, response) {
         console.log('hi')
@@ -427,5 +423,5 @@ router.route('/account/getsalt/:id')
             response.send({success: true, salt: userAccount.salt});
         });
     });
->>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
+
 module.exports = router;
