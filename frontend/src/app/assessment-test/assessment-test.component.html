@@ -3,8 +3,8 @@
 <!--</p>-->
 <br><br>
 <br>
-<button (click)="enable();">New Test</button>
-<button (click)="showTable();">Manage</button>
+<button type="button" class="btn btn-secondary createbtn" (click)="enable();">New Test</button>
+<button type="button" class="btn btn-secondary createbtn" (click)="showTable();">Manage</button>
 
 <!--<mat-sidenav-container class="example-container">-->
 
@@ -157,11 +157,11 @@
                                             <div class="col-sm-9">
                                                 <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteOption(options,question)"></i>
                                                 <input type="text" class="form-control" id="{{question.questionContent.indexOf(options)}}" value="{{options}}" placeholder="option" #editOption>
-                                                
+
                                             </div>
                                         </li>
                                     </ol>
-                                <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(question);" style="margin-left: 2em; float: left;" *ngIf = "question.questionCode == 'MC'">Add Option</button>
+                                    <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(question);" style="margin-left: 2em; float: left;" *ngIf="question.questionCode == 'MC'">Add Option</button>
                                 </div>
 
                             </form>
@@ -261,7 +261,7 @@
 
         <ng-template #askIfAssign let-c="close" let-d="dismiss">
             <div class="modal-header">
-                <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
+                <h4 class="modal-title">Would you like to save this plan to a specific plan?</h4>
             </div>
             <div class="modal-body">
                 <p>Assigning a test to a rehab plan allows that patient who is assigned to that plan to answer the questions on this test. Is that something you would like to do?</p>
@@ -321,6 +321,15 @@
             <br>
             <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.name}}</h5>
         </div>
+        <br><br>
+        <div>
+            <h5>Based on these results, how do you feel the Client is progressing out of 10 </h5>
+            <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
+                <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100" (click)="SendBack(index)">&#9733;</span>
+                </ng-template>
+            </ngb-rating>
+        </div>
         <br><br><br>
         <ol>
             <li *ngFor="let question of selectedPlan.questions">
@@ -336,7 +345,7 @@
 
         <br><br>
 
-        <button class="btn btn-primary createbtn" (click)="showTable();">Assign Followup</button>
+        <button class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp();">Assign Followup</button>
         <button class="btn btn-primary createbtn" (click)="showTable();">Close Treatment</button>
 
     </mat-card>

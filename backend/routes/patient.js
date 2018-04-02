@@ -494,12 +494,9 @@ router.route('/admincreated')
         });
     });
         
-<<<<<<< HEAD
+
     });
 
-=======
-});
->>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
 
 router.route('/getclient/:userid')
     .get(function(request, response) {

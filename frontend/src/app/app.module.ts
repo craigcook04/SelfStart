@@ -178,16 +178,11 @@ import { TransactionsComponent } from './transactions/transactions.component';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
-<<<<<<< HEAD
     MatProgressBarModule,
     MatSnackBarModule,
     MatTooltipModule,
     MatTabsModule,
-    NgbModalModule
-=======
-    MatTooltipModule,
-    MatSnackBarModule
->>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
+    MatProgressBarModule
   ],
   providers: [
     PatientService, 

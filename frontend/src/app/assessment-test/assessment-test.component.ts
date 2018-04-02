@@ -4,6 +4,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { PatientService } from '../patient.service';
 import {RehabPlansService} from '../rehab-plans.service'
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-assessment-test',
@@ -28,6 +29,7 @@ export class AssessmentTestComponent implements OnInit {
   clients: any[];
   selectedPlan: any[];
   offset: number = 0;
+  physioRating: number =0;
   pageInfo: string;
   tests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];  
@@ -42,7 +44,10 @@ export class AssessmentTestComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
-              private patientService: PatientService, private rehabPlanService: RehabPlansService) { }
+              private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig) {
+                this.config.max = 10;
+                
+              }
               
   
 
@@ -249,7 +254,7 @@ export class AssessmentTestComponent implements OnInit {
    
    this.rehabPlanService.getPlans().subscribe(data => {
      console.log(data);
-     this.clients = Object.assign([], data.rehabPlans);
+     this.clients = Object.assign([], data.docs);
      console.log(this.clients);
    });
    this.showPatients = true;
@@ -443,4 +448,13 @@ export class AssessmentTestComponent implements OnInit {
       }
     });
   }
+  SendBack(index: any){
+    console.log(index);
+    this.physioRating = index;
+  }
+  assignFollowUp(){
+    //this.patientService.
+  }
+  
+  
 }
