@@ -323,6 +323,9 @@
         </div>
         <br><br>
         <div>
+            <h5>Enter some comments on the test results</h5>
+            <br>
+            <input type = "text" #physioComments><br><br>
             <h5>Based on these results, how do you feel the Client is progressing out of 10 </h5>
             <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
                 <ng-template let-fill="fill" let-index="index">
@@ -345,7 +348,7 @@
 
         <br><br>
 
-        <button class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp();">Assign Followup</button>
+        <button class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments.value);">Assign Followup</button>
         <button class="btn btn-primary createbtn" (click)="showTable();">Close Treatment</button>
 
     </mat-card>

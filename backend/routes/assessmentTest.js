@@ -226,5 +226,31 @@ router.route('/getresults/:id')
            response.send({completedTests: tests});
        }
     })
+router.route('/completedTests')
+
+    .post(function(request,response){
+        var completedAssessment = new CompletedAssessment();
+        completedAssessment.name = request.body.name;
+        completedAssessment.description = request.body.description;
+        completedAssessment.completed = true;
+        completedAssessment.dateCompleted = request.body.dateCompleted;
+        completedAssessment.dateCreated = request.body.dateCreated;
+        completedAssessment.questions = request.body.questions;
+        completedAssessment.physioRate = request.body.physioRate;
+        completedAssessment.physioDescription = request.body.physioDescription;
+        completedAssessment.patient =request.body.patient;
+        
+        completedAssessment.save(function (error) {
+            if (error) {
+                response.send(error);
+                return;
+            }
+            
+            response.json({completedAssessment: completedAssessment});
+        });
+        
+        
+        
+    })
 
 module.exports = router;

@@ -59,4 +59,21 @@ export class AssessmentTestService {
         return this.http.put(url, body);
 
     }
+    
+    completeTest(name: string, description: string, dateCompleted: Date, dateCreated: Date, questions:any, physioRating: number, phsyioComments: string, pat_id: string){
+        var url = "/api/assessmentTest/completedTests";
+        var body = {
+            name: name,
+            description: description,
+            completed: false,
+            dateCompleted: dateCompleted,
+            dateCreated: dateCreated,
+            questions: questions,
+            physioRate: physioRating,
+            physioDescription: phsyioComments,
+            patient: pat_id
+        }
+        return this.http.post(url, body);
+    }
+    
 }

@@ -452,8 +452,22 @@ export class AssessmentTestComponent implements OnInit {
     console.log(index);
     this.physioRating = index;
   }
-  assignFollowUp(){
+  assignFollowUp(physioComments: string){
     //this.patientService.
+    var pat: any;
+    var temp:any = this.selectedPlan;
+    this.patientService.GetAllPatients().subscribe(data => {
+      var retObj: any = data.docs;
+      pat = retObj[0];
+      console.log(pat);
+      console.log(temp);
+      console.log(physioComments)
+      this.assessmentTestService.completeTest(temp.name, temp.description, temp.dateCompleted, temp.dateCreated, temp.questions, this.physioRating, physioComments, pat._id).subscribe(data =>{
+        console.log(data);
+      });
+    });
+    
+    
   }
   
   
