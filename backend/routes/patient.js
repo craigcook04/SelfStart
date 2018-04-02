@@ -494,7 +494,8 @@ router.route('/admincreated')
         });
     });
         
-});
+    });
+
 
 router.route('/getclient/:userid')
     .get(function(request, response) {

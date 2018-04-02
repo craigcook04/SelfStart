@@ -1,3 +1,84 @@
-<p>
-  generate-report works!
-</p>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+            <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;">Dashboard</button>
+            </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <!-- <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercise Menu</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../bookappointment']">Book Appointment</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../completetest']">Complete Assessment</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../transactions']">Transactions</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../settings']">Settings</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider> -->
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <!-- <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+          <br>
+          <div style="margin-top: -10px;">
+              <h3 *ngIf="client" class="title" style="color: #0275d8">
+                  Good {{ timeOfDay }}<a *ngIf="client">, {{ client?.givenName }}.</a>
+               </h3>
+               <p class="quote">
+                 Welcome to your dashboard, what would you like to do today?
+               </p>
+          </div>
+        </div> -->
+
+        <div style="min-height: 100vh;" class="page col-11">
+          <mat-card style="min-height: 75vh;">
+            <mat-card-content>
+              <mat-tab-group>
+                <mat-tab label="1">
+
+                </mat-tab>
+                <mat-tab label="2">
+
+                </mat-tab>
+                <mat-tab label="3">
+                  <br>
+                  <div style="display: block">
+                      <canvas mdbChart 
+                          [chartType]="chartType"
+                          [datasets]="chartDatasets" 
+                          [labels]="chartLabels"
+                          [colors]="chartColors"
+                          [options]="chartOptions"
+                          [legend]="true"
+                          (chartHover)="chartHovered($event)" 
+                          (chartClick)="chartClicked($event)">
+                      </canvas>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-card-content>
+          </mat-card>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

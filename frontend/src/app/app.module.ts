@@ -37,7 +37,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
-  MatExpansionModule,
+  //MatExpansionModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -87,6 +87,8 @@ import { CalendarModule } from 'angular-calendar';
 import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './auth.guard'
@@ -101,6 +103,7 @@ import { RolesService } from './roles.service';
 import { SettingsComponent } from './settings/settings.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -131,14 +134,16 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
+    CalendarComponent,
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,
     WelcomeHomeComponent,
     ManagePermissionsComponent,
+    ClientHomeComponent,
+    TransactionsComponent,
     SettingsComponent,
     GenerateReportComponent,
-    ClientHomeComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -160,7 +165,6 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -178,7 +182,9 @@ import { ClientHomeComponent } from './client-home/client-home.component';
     MatTableModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatProgressBarModule
   ],
   providers: [
     PatientService, 

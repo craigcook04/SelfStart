@@ -114,35 +114,35 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         }else if(this.currentType == 'initial'){
          if(indx > 31){
             if(indx == 32){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
              }
              else if(indx == 33){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
              }
             else if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else if(indx == 35){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else{
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }
           }else{
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[5]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[5]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
         }
       }
@@ -340,7 +340,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       //make all squares blue
       for(var i=0; i<7; i++){
         for(var j=0; j<37; j++){
-          document.getElementById("slot"+i+j).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          document.getElementById("slot"+i+j).setAttribute("class", "btn btn-sm btn-primary chooseTime");
         }
       }
       

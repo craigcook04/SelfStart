@@ -54,7 +54,7 @@
                 <li *ngIf="showLogin" class="nav-item" id='right-items' [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['signup']">Book Appointment</a>
                 </li>
-                <li *ngIf="!showLogin" class="nav-item" id='right-items' [routerLinkActive]="['active']">
+                <li *ngIf="!showLogin && isClient" class="nav-item" id='right-items' [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['client/bookappointment']">Book Appointment</a>
                 </li>    
           </ul>

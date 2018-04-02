@@ -3,6 +3,7 @@ import { PatientService } from '../patient.service';
 import { CookieService } from 'ngx-cookie-service';
 import { RehabPlansService } from '../rehab-plans.service';
 import { MatSnackBar } from '@angular/material';
+import { UserAccountsService } from '../user-accounts.service';
 
 @Component({
   selector: 'app-client-home',
@@ -23,11 +24,12 @@ export class ClientHomeComponent implements OnInit {
   constructor(private patientService: PatientService,
               private cookieService: CookieService,
               private planService: RehabPlansService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private accountService: UserAccountsService) { }
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
+    //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
@@ -42,6 +44,7 @@ export class ClientHomeComponent implements OnInit {
         this.currTest = obj.rehabPlan.assessmentTests[0];
         console.log(this.currTest);
       })
+      //this.accountService.GetInfoDates(this.cookieService.get('ID'))
     })
     this.patientService.GetPatientApppointments(this.cookieService.get('ID')).subscribe(data =>{
       let obj: any = data;

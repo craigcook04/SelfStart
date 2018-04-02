@@ -6,3 +6,14 @@
 .card-body {
     padding: 1em;
 }
+
+.faq-title {
+    color: #0275d8;
+    text-decoration: underline;
+    font-size: large;
+    text-transform: capitalize;
+}
+
+.faq-list {
+    margin-bottom: 2em;
+}
