@@ -111,6 +111,7 @@ export class BookAppointmentComponent implements OnInit {
   saveAppointment(patient, reason, other){
     this.apptService.AddAppointment(patient, reason, other).subscribe(data => {
       console.log(data);
+      
     })
   }
 

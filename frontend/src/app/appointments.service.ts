@@ -11,6 +11,7 @@ export class AppointmentsService {
   newPatient: any;
   newOther: any;
   newReason: any;
+  currentPatientId: any; //set a method to set this equal to current user
 
   constructor(private httpClient: HttpClient) { }
   
@@ -19,14 +20,18 @@ export class AppointmentsService {
       return this.httpClient.get(url);
   }
   
-  AddAppointment(patient: any, reason: string, other: string): any{
+  
+  AddAppointment(reason: string, other: string): any{
     
       var body = {
           date: this.newDate,
           reason: reason,
           other: other,
-          type: this.newType
-          // patient: patient
+          type: this.newType,
+          patient: this.currentPatientId
+          
+          //This is where we have to link to images************
+          // images: images
       }
       
       var url = '/api/appointment';
