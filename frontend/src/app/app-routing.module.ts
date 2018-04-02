@@ -35,6 +35,7 @@ import {UnauthorizedComponent } from './unauthorized/unauthorized.component'
 import { WrongAccountComponent } from './wrong-account/wrong-account.component'
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { ManagePermissionsComponent} from './manage-permissions/manage-permissions.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 import { SettingsComponent } from './settings/settings.component'
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 
@@ -72,6 +73,7 @@ const routes: Routes = [
   {path: 'admin/wrongaccount', component: WrongAccountComponent},
   {path: 'physio/wrongaccount', component: WrongAccountComponent},  
   {path: 'client/home', component: ClientHomeComponent},
+  {path: 'client/transactions', component: TransactionsComponent},
   {path: 'managepermissions', component: ManagePermissionsComponent},
   {path: 'client/settings', component: SettingsComponent},
   {path: 'admin/settings', component: SettingsComponent},
