@@ -93,4 +93,25 @@ export class UserAccountsService {
     return this.http.put(url, body);
   }
 
+  SetAppointmentCounter(id: string, appoint: number, initial: number){
+    var body = {
+      appointment: appoint,
+      initial: initial
+    }
+
+    var url = '/api/useraccount/appointments/' + id;
+    return this.http.put(url, body);
+  }
+
+  GetInfoDates(id: string){
+    var url = '/api/useracccount/getdates/' + id;
+  }
+
+  GetAdminByUserID() {
+    var userID = this.cookieService.get('ID');
+    var url = '/api/administrator/getadmin/' + userID;
+
+    return this.http.get(url);
+  }
+
 }

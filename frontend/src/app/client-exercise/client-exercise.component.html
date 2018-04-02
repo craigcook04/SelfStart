@@ -27,12 +27,12 @@
           <br> -->
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Transactions</button>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../transactions']">Transactions</button>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Settings</button>
+            <button class="btn-primary btn-block" mat-raised-button [routerLink]="['../settings']" style="color:white;">Settings</button>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>

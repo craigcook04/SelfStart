@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { CookieService } from 'ngx-cookie-service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -9,17 +9,20 @@ const httpOptions = {
 @Injectable()
 export class PhysiotherapistService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private cookieService: CookieService) { }
   
   
   getTherapists(): any{
       var url = 'api/physiotherapist?s=familyName&sortorder=asc&offset=0';
       return this.http.get(url);
   }
-   SearchPhysio(searchString: string, searchArea: string, offset, ascvsdesc) {
+
+  SearchPhysio(searchString: string, searchArea: string, offset, ascvsdesc) {
     var url = '/api/physiotherapist?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
     return this.http.get(url);
   }
+
   createPhysio(newPhysioFirstName: string, newPhysioLastName: string, newPhysioEmail: string, newPhysioHired: string, newPhysioFinished: string, newPhysioUserName: string, newPhysioPassword: string, salt: string ): any{
       var url = "/api/physiotherapist";
       var body = {
@@ -32,10 +35,9 @@ export class PhysiotherapistService {
           givenName: newPhysioFirstName,
           familyName: newPhysioLastName,
           salt: salt
-          
       }
       return this.http.post(url, body);
-  }
+   }
   
   createPhysiobyAdmin(newPhysioFirstName: string, newPhysioLastName: string, newPhysioEmail: string, newPhysioHired: string, newPhysioFinished: string, newPhysioUserName: string, newPhysioPassword: string, salt: string ): any{
       var url = "/api/physiotherapist/admincreated";
@@ -57,6 +59,7 @@ export class PhysiotherapistService {
        var url = '/api/physiotherapist/' + ID;
        return this.http.delete(url);
   }
+
   updatePhysio(givenName1: string, familyName1: string, email1: string, ID1: string, dateHired1: string, dateFinished1: string, _id1: string){
       //var string1 = therapist._id;
       //console.log(string1);
@@ -74,8 +77,16 @@ export class PhysiotherapistService {
   
       return this.http.put(url, body);
   }
+
   getInfo(id: string){
-      var url = 'api/physiotherapist/' + id;
+      var url = '/api/physiotherapist/' + id;
       return this.http.get(url);
+  }
+
+  GetPhysioByUserID() {
+    var userID = this.cookieService.get('ID');
+
+    var url = '/api/physiotherapist/getphysio/' + userID;
+    return this.http.get(url);
   }
 }

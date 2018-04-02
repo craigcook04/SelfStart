@@ -61,6 +61,7 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -97,10 +98,12 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ClientHomeComponent } from './client-home/client-home.component';
-import { TransactionsComponent } from './transactions/transactions.component';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { RolesService } from './roles.service';
+import { SettingsComponent } from './settings/settings.component';
+import { GenerateReportComponent } from './generate-report/generate-report.component';
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +140,10 @@ import { RolesService } from './roles.service';
     WrongAccountComponent,
     WelcomeHomeComponent,
     ManagePermissionsComponent,
-    ClientHomeComponent
+    ClientHomeComponent,
+    TransactionsComponent,
+    SettingsComponent,
+    GenerateReportComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -159,7 +165,6 @@ import { RolesService } from './roles.service';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     NoopAnimationsModule,
     MatGridListModule,
     MomentModule,
@@ -176,9 +181,8 @@ import { RolesService } from './roles.service';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSnackBarModule
   ],
   providers: [
     PatientService, 

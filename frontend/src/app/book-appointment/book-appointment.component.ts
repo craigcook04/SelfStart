@@ -29,8 +29,6 @@ export class BookAppointmentComponent implements OnInit {
   invalidName: boolean = false;
   paymentAmount: any = '0';
   currContent: any;
-  render1: boolean = false;
-  render2: boolean = false;
   client: any;
 
   constructor(private modalService: NgbModal,
@@ -42,7 +40,7 @@ export class BookAppointmentComponent implements OnInit {
               }
 
   ngOnInit() {
-    this.cookieService.set('ID', "5ab0007926bba10fad373817");
+    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
@@ -62,14 +60,6 @@ export class BookAppointmentComponent implements OnInit {
     if(value === '0.02'){
       this.paymentAmount = value;
       this.currContent = "initialModal";
-    }
-    if(this.render1 === false && this.currContent === "bookModal"){
-      paypal.Button.render(this.paypalConfig, '#paypal-button-container');
-      this.render1 = true;
-    }
-    if(this.render2 === false && this.currContent === "initialModal"){
-      paypal.Button.render(this.paypalConfig, '#paypal-button-container2');
-      this.render1 = true;
     }
   }
 
@@ -97,56 +87,6 @@ export class BookAppointmentComponent implements OnInit {
   //     return;
   //   }
   // }
-
-  paypalConfig: any =  {
-    env: 'sandbox', // sandbox | production
-    // Paypal custom styling
-    style: {
-      label: 'paypal',
-      size:  'medium',    // small | medium | large | responsive
-      shape: 'rect',     // pill | rect
-      color: 'blue',     // gold | blue | silver | black
-      tagline: false    
-  },
-    // PayPal Client IDs - replace with your own
-    client: {
-      sandbox: 'ASewACzIceIwQug016WZc-thKQg4RWSSY_eZFOjAzKB9bu3Cw2u0CogzKktitI8jQ7AJN3zmuyrXAxRP',
-      //this is where Stephanie's paypal will go
-      production: ''
-    },
-    // Show the buyer a 'Pay Now' button in the checkout flow
-    commit: true,
-    // payment() is called when the button is clicked
-    payment: (data, actions) => {
-    // Make a call to the REST api to create the payment
-      return actions.payment.create({
-        payment: {
-          transactions: [{ amount: { total: this.paymentAmount, currency: 'CAD' }}]
-        }
-      });
-    },
-    // onAuthorize() is called when the buyer approves the payment
-    onAuthorize: (data, actions) => {
-      // Make a call to the REST api to execute the payment
-      return actions.payment.execute().then((data) => {
-        this.StorePayment(data);
-      })
-    },
-
-    onError: function(err, actions){
-      if (err === 'INSTRUMENT_DECLINED') {
-        window.alert("They Payment Method Was Declined, Please Try Again.");
-      }
-      console.log(err);
-    }
-}
-
-  StorePayment(data: any){
-    this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
-      console.log(data);
-      this.currContent.hide();
-    })
-  }
 
   getTimeOfDay(): string{
     this.today = new Date();
