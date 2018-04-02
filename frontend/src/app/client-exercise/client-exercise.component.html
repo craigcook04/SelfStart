@@ -56,7 +56,7 @@
            
            <div class="page col-11">
              <mat-card style="min-height: 75vh;">
-                <div class="row">
+                <div *ngIf="clientPlan" class="row">
                     <div class="col-6">
                       <mat-card>
                         <mat-card-content>
@@ -73,7 +73,7 @@
                                       <mat-icon style="color: #0275d8" svgIcon="dumbbell"></mat-icon> &nbsp;
                                   </div>
                                   <div class="col-7">
-                                      <h5> <b>{{ exercise.name }}</b> </h5>
+                                      <h5> <b>{{ exercise?.name }}</b> </h5>
                                   </div>
                                 </div>
                                 <div class="divider">
@@ -169,6 +169,9 @@
                             </mat-card>
                       </div>
                     </div>
+                  </div>
+                  <div *ngIf="!clientPlan" class="row">
+                    No Plan Currently Assigned.
                   </div>
                 </mat-card>
               </div>

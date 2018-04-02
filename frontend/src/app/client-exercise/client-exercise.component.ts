@@ -22,11 +22,6 @@ export class ClientExerciseComponent implements OnInit {
   exercises: Object [];
   currExercise: any;
   images: any [];
-  exerciseImages: {
-    firstTime: boolean,
-    exerciseId: string,
-    images: any
-  } [];
   timeOfDay: string;
   currSteps: string [];
   client: any;
