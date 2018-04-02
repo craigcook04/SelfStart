@@ -281,6 +281,7 @@
         <mat-action-row>
             <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#updateModal" (click)="updateModal.show()" mdbRippleRadius>Edit</button>
             <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="deleteModal.show()" mdbRippleRadius>Delete</button>   
+            <button class="btn btn-primary btn-sm patientbtn" [routerLink]="['../physio/reports/' + patient._id]">View Generated Report</button>
         </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
