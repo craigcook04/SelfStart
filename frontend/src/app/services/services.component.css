@@ -12,12 +12,25 @@
 .display-12 {
     padding-bottom: 1em;
     border-bottom: solid rgba(0, 0, 0, 0.1) 1px;
+    text-align: center;
 }
 
 .content {
     padding: 1em;
+    text-align: center;
+}
+
+.price {
+    padding-top: 2em;
+    font-weight: bold;
+    text-align: left;
+    border-top: solid rgba(0, 0, 0, 0.1) 1px;
 }
 
 .below {
     margin-top: 2em;
+}
+
+span {
+    font-weight: bold;
 }

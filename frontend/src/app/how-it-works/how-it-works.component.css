@@ -1,6 +1,5 @@
 .title {
     color: #0275d8;
-    margin: 0.5em;
 }
 
 .col-4 {
@@ -17,4 +16,8 @@
 img {
     width: 100px;
     height: 100px;
+}
+
+p {
+    padding: 1em;
 }
