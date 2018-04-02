@@ -33,26 +33,30 @@
                   <a class="nav-link" [routerLink]="['login']">Login</a>
                 </li>
                 <li *ngIf="isClient" class="nav-item" id="right-items" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['home']"><i class="fa fa-th-large"></i>Dashboard</a>
+                    <a class="nav-link" [routerLink]="['client/home']"><i class="fa fa-th-large"></i>Dashboard</a>
                 </li>
                 <li *ngIf="isPhysio" class="nav-item" id="right-items" [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['physiohome']"><i class="fa fa-th-large"></i>Dashboard</a>
                 </li>
                 <li *ngIf="isAdmin" class="nav-item" id="right-items" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['adminhome']"><i class="fa fa-th-large"></i>Dashboard</a>
+                    <a class="nav-link" [routerLink]="['admin/home']"><i class="fa fa-th-large"></i>Dashboard</a>
                 </li>
                 <li class="nav-item dropdown" dropdown *ngIf="!showLogin">
                     <a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-light" mdbRippleRadius>
                     <i class="fa fa-user"></i> Account<span class="caret"></span></a>
                     <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-                        <a class="dropdown-item waves-light" mdbRippleRadius [routerLink]="['#']"><i class="fa fa-cog"></i> &nbsp; Account Settings</a>
+                        <a *ngIf="isClient" class="dropdown-item waves-light" mdbRippleRadius [routerLink]="['client/settings']"><i class="fa fa-cog"></i> &nbsp; Account Settings</a>
+                        <a *ngIf="isPhysio" class="dropdown-item waves-light" mdbRippleRadius [routerLink]="['physio/settings']"><i class="fa fa-cog"></i> &nbsp; Account Settings</a>
+                        <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbRippleRadius [routerLink]="['admin/settings']"><i class="fa fa-cog"></i> &nbsp; Account Settings</a>                        
                         <a class="dropdown-item waves-light" mdbRippleRadius (click)="logout();"><i class="fa fa-sign-out"></i>&nbsp; Log Out</a>
                     </div>
                 </li>
-                <li class="nav-item" id='right-items' [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['bookappointment']">Book Appointment</a>
+                <li *ngIf="showLogin" class="nav-item" id='right-items' [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['signup']">Book Appointment</a>
                 </li>
-                
+                <li *ngIf="!showLogin" class="nav-item" id='right-items' [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['client/bookappointment']">Book Appointment</a>
+                </li>    
           </ul>
       </div>
     </div>

@@ -36,6 +36,7 @@ import { WrongAccountComponent } from './wrong-account/wrong-account.component'
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { ManagePermissionsComponent} from './manage-permissions/manage-permissions.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { SettingsComponent } from './settings/settings.component'
 
 //Later: add gueard to the routes that need to be protected
 //to do this append ,canActivate: [something] to an object
@@ -73,6 +74,9 @@ const routes: Routes = [
   {path: 'client/home', component: ClientHomeComponent},
   {path: 'client/transactions', component: TransactionsComponent},
   {path: 'managepermissions', component: ManagePermissionsComponent},
+  {path: 'client/settings', component: SettingsComponent},
+  {path: 'admin/settings', component: SettingsComponent},
+  {path: 'physio/settings', component: SettingsComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 

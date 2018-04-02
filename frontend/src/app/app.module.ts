@@ -61,6 +61,7 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
@@ -95,12 +96,12 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ClientHomeComponent } from './client-home/client-home.component';
-import { TransactionsComponent } from './transactions/transactions.component';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { RolesService } from './roles.service';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
+import { SettingsComponent } from './settings/settings.component';
+import { GenerateReportComponent } from './generate-report/generate-report.component';
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,9 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
     WelcomeHomeComponent,
     ManagePermissionsComponent,
     ClientHomeComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    SettingsComponent,
+    GenerateReportComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -175,11 +178,16 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
     MatPaginatorModule,
     MatTableModule,
     MatExpansionModule,
+<<<<<<< HEAD
     MatProgressBarModule,
     MatSnackBarModule,
     MatTooltipModule,
     MatTabsModule,
     NgbModalModule
+=======
+    MatTooltipModule,
+    MatSnackBarModule
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
   ],
   providers: [
     PatientService, 

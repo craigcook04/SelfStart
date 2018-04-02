@@ -207,8 +207,6 @@ router.route('/:patient_id')
                 patient.familyName = request.body.familyName;
                 patient.givenName = request.body.givenName;
                 patient.email = request.body.email;
-                patient.dateRegistered = new Date();
-                patient.lastLoggedIn = new Date();
                 var myDate = new Date(request.body.DOB);
                 patient.DOB = myDate;
                 patient.postalCode = request.body.postalCode;
@@ -217,14 +215,12 @@ router.route('/:patient_id')
                 patient.healthCardNumber = request.body.healthCardNumber;
                 patient.occupation = request.body.occupation;
                 patient.others = request.body.others;
-                patient.payment = request.body.payment;
                 patient.country = request.body.country;
                 patient.province = request.body.province;
                 patient.city = request.body.city;
                 patient.gender = request.body.gender;
                 patient.address = request.body.address;
 
-                console.log(request.body);
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
@@ -495,10 +491,35 @@ router.route('/admincreated')
                 
                 response.json({success: true, patient: patient});
             });
-            });
-        })
+        });
+    });
         
+<<<<<<< HEAD
     });
 
+=======
+});
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
 
+router.route('/getclient/:userid')
+    .get(function(request, response) {
+        var options = 
+        {
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+        };
+        var query = {'account': request.params.userid};
+        Patient.paginate(query, options, function(err, client) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(client == null) {
+                response.send({success: true, message: 'could not find client'});
+                return;
+            }
+            
+            response.send({success: true, client: client});
+        });
+    });
 module.exports = router;

@@ -93,6 +93,7 @@ export class UserAccountsService {
     return this.http.put(url, body);
   }
 
+<<<<<<< HEAD
   SetAppointmentCounter(id: string, appoint: number, initial: number){
     var body = {
       appointment: appoint,
@@ -105,6 +106,12 @@ export class UserAccountsService {
 
   GetInfoDates(id: string){
     var url = '/api/useracccount/getdates/' + id;
+=======
+  GetAdminByUserID() {
+    var userID = this.cookieService.get('ID');
+    var url = '/api/administrator/getadmin/' + userID;
+
+>>>>>>> 2bbf427bfd89a7c4cbf1fcc53303f5d5db038284
     return this.http.get(url);
   }
 

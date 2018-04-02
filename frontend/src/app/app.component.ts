@@ -80,7 +80,10 @@ export class AppComponent {
     this.cookieService.delete('ID');
     this.cookieService.delete('session');
     this.cookieService.delete('role');
-    console.log(session);
+    this.showLogin = true;
+    this.isAdmin= false;
+    this.isClient = false;
+    this.isPhysio = false; 
     this.userAccountsService.LogOut(session).subscribe(data => {
         console.log(data);
     });
@@ -88,12 +91,8 @@ export class AppComponent {
     let router2 = this.router;
     setTimeout(function() { 
       document.body.style.cursor = "default";     
-      this.showLogin = true;
-      this.isAdmin= false;
-      this.isClient = false;
-      this.isPhysio = false; 
       router2.navigate(['./welcome']);
-    }, 1500);
+    }, 1000);
     
   }
   
