@@ -38,6 +38,7 @@ export class BookAppointmentComponent implements OnInit {
   render1: boolean = false;
   render2: boolean = false;
   client: any;
+  clientId: any;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -50,12 +51,19 @@ export class BookAppointmentComponent implements OnInit {
 
   ngOnInit() {
     this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
-    this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+    
+    this.patientService.GetPatient().subscribe(data =>{
+      var temp: any = data;
+      this.client = this.patientService.GetPatientInfo(temp.client._id).subscribe(data =>{
       console.log(data);
       var obj: any = data;
       obj = obj.patient;
       this.client = obj;
+      })
     })
+    
+    
+    
     this.timeOfDay = this.getTimeOfDay();
   }
 
@@ -108,8 +116,8 @@ export class BookAppointmentComponent implements OnInit {
     //console.log(this.type); - RIGHT TYPE HERE
   }
 
-  saveAppointment(patient, reason, other){
-    this.apptService.AddAppointment(patient, reason, other).subscribe(data => {
+  saveAppointment(reason, other){
+    this.apptService.AddAppointment(this.client, reason, other).subscribe(data => {
       console.log(data);
       
     })

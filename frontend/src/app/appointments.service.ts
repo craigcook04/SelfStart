@@ -21,14 +21,14 @@ export class AppointmentsService {
   }
   
   
-  AddAppointment(reason: string, other: string): any{
+  AddAppointment(patient: any, reason: string, other: string): any{
     
       var body = {
           date: this.newDate,
           reason: reason,
           other: other,
           type: this.newType,
-          patient: this.currentPatientId
+          patient: patient
           
           //This is where we have to link to images************
           // images: images
@@ -49,7 +49,9 @@ export class AppointmentsService {
   }
   
   setNewDate(date: any){
-    this.newDate = moment(date).format("MMMM Do YYYY, h:mm:ss a");
+    this.newDate = new Date(date);
+
+    // moment(date).format("MMMM Do YYYY, h:mm:ss a");
   }
   
   // getDate(){

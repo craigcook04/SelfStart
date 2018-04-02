@@ -59,11 +59,21 @@ td {
 .chooseTime:focus {
   outline: none;
   box-shadow:none !important;
+  background-color: #ffbb33;
 }
 
-.sel{
-    background-color: #f94545;
+.btn-yellow{
+    background-color: #ffbb33 !important;
 }
+
+.btn-yellow:hover {
+    background-color: #ffbb33 !important;
+}
+
+.chooseTime:hover{
+    background-color: #ffbb33;
+}
+
 
 .taken{
     background-color: #828282;

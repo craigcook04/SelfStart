@@ -96,20 +96,20 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         if(this.currentType == "normal"){
           if(indx > 33){
             if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm danger-color chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else if(indx == 35){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else{
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }
           }else{
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
         }else if(this.currentType == 'initial'){
          if(indx > 31){
