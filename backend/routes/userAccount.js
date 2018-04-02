@@ -364,4 +364,41 @@ router.route('/session/refresh')
             });
         });
     });
+
+router.route('/appointments/:id')
+    
+    .get(function(request, response) {
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({account: account});
+        })
+    })
+    
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            console.log(request.body);
+            
+            account.numbAppoint += request.body.appointment;
+            account.numbInitial += request.body.initial;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.send({account: account});
+            })
+        })
+    })
+    
+    
+
 module.exports = router;

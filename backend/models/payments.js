@@ -4,7 +4,7 @@ var paymentsSchema = new mongoose.Schema(
         dayTimeStamp: Date,
         amount: Number,
         note: String,
-        patient: String
+        patient: {type: mongoose.Schema.Types.ObjectId, ref: ('UserAccount')}
     }
 );
 
