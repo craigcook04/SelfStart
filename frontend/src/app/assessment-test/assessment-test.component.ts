@@ -28,11 +28,12 @@ export class AssessmentTestComponent implements OnInit {
   clients: any[];
   selectedPlan: any[];
   offset: number = 0;
+  pageInfo: string;
   tests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "Date Completed", "Status", "View Test Results"];  
  
  
-  length = 20;
+  length;
   pageSize = 10;
   pageSizeOptions = [10];
   // var currOption = 'c';
@@ -57,7 +58,8 @@ export class AssessmentTestComponent implements OnInit {
     this.tests = new MatTableDataSource();
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
-      this.tests.data = retObj.assessmentTest;
+      this.length = retObj.total;
+      this.tests.data = retObj.docs;
       console.log(this.tests);
       console.log(data);
       console.log(this.tests);
@@ -79,7 +81,8 @@ export class AssessmentTestComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.tests.filter = filterValue;
+    //this.tests.filter = filterValue;
+    this.searchTests(filterValue);
   }
     
  
@@ -316,9 +319,10 @@ export class AssessmentTestComponent implements OnInit {
     this.manageTests = true;
     this.showPatients = false;
     this.showCreat = true;
+    this.tests = new MatTableDataSource();
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
-      this.tests.data = retObj.assessmentTest;
+      this.tests.data = retObj.docs;
       console.log(this.tests);
       console.log(data);
       console.log(this.tests);
@@ -415,5 +419,28 @@ export class AssessmentTestComponent implements OnInit {
     var index = this.questions.indexOf(Q);
     this.questions[index].questionContent.push("");
   }
+  
+  SwitchPageEvent(pageEvent: any, searchString: string) {
+    this.offset = pageEvent.pageIndex * pageEvent.pageSize;
+    console.log('hello im switching');
+    this.searchTests(searchString);
+  }
 
+  searchTests(searchString: string){
+    this.tests = new MatTableDataSource();
+    this.assessmentTestService.search(searchString, "name", this.offset, 'asc').subscribe(data =>{
+       if(data != []) {
+        var retObj : any = data;
+        this.tests.data =  retObj.docs;
+        this.length = retObj.total;
+        if(this.offset + 10 > this.length) {
+          this.pageInfo = `${this.offset} - ${this.length} of ${retObj.total}` 
+        }
+        else{
+          this.pageInfo = `${this.offset} - ${this.offset + 10} of ${retObj.total}`    
+        }
+        
+      }
+    });
+  }
 }

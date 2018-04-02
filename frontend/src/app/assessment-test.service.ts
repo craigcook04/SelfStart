@@ -19,7 +19,11 @@ export class AssessmentTestService {
 
     }    
     getTests(){
-        var url = '/api/assessmentTest';
+        var url = '/api/assessmentTest?s=name&sortorder=asc&offset=0';
+        return this.http.get(url);
+    }
+    search(searchString: string, searchArea: string, offset, ascvsdesc){
+        var url = '/api/assessmentTest?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
         return this.http.get(url);
     }
     createPlanwithAssignedTest(name1: string, description1: string, questions1: any[], clientId: string){
