@@ -93,4 +93,11 @@ export class UserAccountsService {
     return this.http.put(url, body);
   }
 
+  GetAdminByUserID() {
+    var userID = this.cookieService.get('ID');
+    var url = '/api/administrator/getadmin/' + userID;
+
+    return this.http.get(url);
+  }
+
 }

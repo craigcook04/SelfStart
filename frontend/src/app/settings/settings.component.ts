@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service';
 import { PatientService} from '../patient.service'
+import { PhysiotherapistService } from '../physiotherapist.service'
+import {UserAccountsService } from '../user-accounts.service'
 
 @Component({
   selector: 'app-settings',
@@ -9,6 +11,10 @@ import { PatientService} from '../patient.service'
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+
+  patient: any;
+  admin: any;
+  physio: any;
 
   isClient: boolean;
   isPhysio: boolean;
@@ -19,23 +25,114 @@ export class SettingsComponent implements OnInit {
   successfullyChangedPassword: boolean;
   couldntProcessRequest: boolean;
   incorrectOldPassword: boolean;
+  showSuccess: boolean;
+  showCreationSuccess: boolean;
+  showDeleteSuccess: boolean;
+  showFailure: boolean;
+  emailSuccess: boolean;
+  invalidSearchArea: boolean;
+  invalidFirstname: boolean = false;
+  invalidLastname: boolean = false;
+  invalidDOB: boolean = false;
+  invalidPhoneNumber: boolean = false;
+  invalidPostalCode: boolean = false;
+  invalidEmail: boolean = false;
+  invalidGender: boolean = false;
+  invalidCountry: boolean = false;
+  invalidAddress: boolean = false;
+  cannotContinue: boolean = false;
+  countries: any[];
+  provinces: any[];
+  cities: any[];
+  genders: any[];
+
   constructor(private route: ActivatedRoute,
               private cookieService: CookieService,
-              private patientService: PatientService) { }
+              private patientService: PatientService,
+              private physiotherapistService: PhysiotherapistService,
+              private userAccountsService: UserAccountsService) { }
 
   ngOnInit() {
     var url = this.route.routeConfig.path;
     if(url.includes('admin')) {
-      this.isAdmin = true;
+      this.userAccountsService.GetAdminByUserID().subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        this.admin = retObj.admin;
+      })
     }
     else if(url.includes('client')) {
-      this.isClient = true;
+      this.patientService.GetPatient().subscribe(data => {
+        console.log(data);
+        this.isClient = true;  
+        var retObj: any = data;
+        this.patient = retObj.client.docs[0];
+        console.log("yo", retObj.client.docs[0])
+              
+      })
     }
     else {
-      this.isPhysio = true;
+      this.physiotherapistService.GetPhysioByUserID().subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        this.isPhysio = true;
+        this.physio = retObj.physio;
+      })
     }
     this.successfullyChangedPassword = false;
     this.couldntProcessRequest = false;
+    this.patientService.GetCountries().subscribe(data => {
+      var retObj: any = data;
+      this.countries = Object.assign([], retObj.country);
+    })
+
+    this.patientService.GetGenders().subscribe(data => {
+      var retObj: any = data;
+      this.genders = Object.assign([], retObj.gender);
+    })
+  }
+
+
+  GetCities(provinceId: string) {
+    //retrieve all cities within a certain province
+    this.patientService.GetCities(provinceId).subscribe(data => {
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.cities);
+    })
+  }
+
+  SetProvinceBox(provinceBox, cityBox){
+    // a new country has been selected so remove all entries from the province and city boxes 
+    provinceBox.selectedIndex = -1;
+    cityBox.selectedIndex = -1;
+    while (provinceBox.options.length > 0) {                
+      provinceBox.remove(0);
+    } 
+    while (cityBox.options.length > 0) {                
+      cityBox.remove(0);
+    } 
+  }
+
+  DifferentGetProvince(countryId: string) {
+     //This gets the cities for the first province selected
+     this.patientService.GetProvinces(countryId).subscribe(data => {
+      var retObj: any = data;
+      this.provinces = Object.assign([], retObj.province);
+      console.log(data);
+      this.GetCities(retObj.province[0]._id);
+    })
+  }
+
+  ClearAndGetCities(provinceId: string, cityBox) {
+    //clear the city box and repopulate it with cities within the selected province
+    while (cityBox.options.length > 0) {                
+      cityBox.remove(0);
+    } 
+
+    this.patientService.GetCities(provinceId).subscribe(data => {
+      var retObj: any = data;
+      this.cities = Object.assign([], retObj.cities);
+    })
   }
 
   ResetPassword(password: string, repeatPassword: string, tempPassword: string) {
@@ -92,6 +189,99 @@ export class SettingsComponent implements OnInit {
         })
       }
       
+    })
+
+  }
+
+  ResetErrorMessages() {
+    //Reset all the error messages. Then new ones will be shown if some still exist
+    var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'rgba(0,0,0,.15)';  
+    var lastnameBox = document.getElementById('inputLastName').style.borderColor = 'rgba(0,0,0,.15)';  
+    var DOBBox = document.getElementById('inputDOB').style.borderColor = 'rgba(0,0,0,.15)';
+    var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'rgba(0,0,0,.15)'; 
+    var emailBox = document.getElementById('inputEmail').style.borderColor = 'rgba(0,0,0,.15)';
+    var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'rgba(0,0,0,.15)';
+    var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'rgba(0,0,0,.15)';    
+    this.invalidFirstname= false;
+    this.invalidLastname= false;
+    this.invalidGender= false;
+    this.invalidDOB= false;
+    this.invalidPhoneNumber = false;
+    this.invalidPostalCode = false;
+    this.invalidEmail = false;
+  }
+
+
+  updatePatient(ID: string, firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string, newAddress: string) {
+    var badFormat = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //regex statement to limit bad characters in a username
+    var badFormatWithNumbers =  /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\d]/ //regex format to confirm input of first name and last name
+    var badFormatWithLetters = /[ !\s\t@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+    var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+    this.cannotContinue = false;
+    console.log(phoneNumber, newAddress)
+    if(badFormatWithNumbers.test(firstName) || !firstName) {
+      var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'red';    
+      this.invalidFirstname = true;
+      this.cannotContinue = true;
+    }
+
+    if(badFormatWithNumbers.test(lastName) || !lastName) {
+      var firstnameBox = document.getElementById('inputLastName').style.borderColor = 'red';    
+      this.invalidLastname = true;
+      this.cannotContinue = true;
+    }
+
+    if(!DOB) {
+      var DOBBox = document.getElementById('inputDOB').style.borderColor = 'red';
+      this.invalidDOB = false;
+      this.cannotContinue = true;
+    }
+
+    if(!newAddress) {
+      var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'red';
+      console.log(newAddress);
+      this.invalidAddress = true;
+      this.cannotContinue = true;
+    }
+
+    if(!postalCode) {
+      var postalCodeBox = document.getElementById('inputPostalCode').style.borderColor = 'red';
+      this.invalidPostalCode = true;
+      this.cannotContinue = true;
+    }
+    
+    if(!validPhoneNumber.test(phoneNumber)){
+      var phoneBox = document.getElementById('inputPhoneNumber').style.borderColor = 'red';
+      this.invalidPhoneNumber = true;
+      this.cannotContinue = true;
+    }
+    if(!emailFormat.test(email)) {
+      var emailBox = document.getElementById('inputEmail').style.borderColor = 'red';
+      this.invalidEmail = true;
+      this.cannotContinue = true;
+    }
+
+    if(this.cannotContinue) {
+      //user cannot continue until changes have been fixed
+      return;
+    }
+
+    this.showSuccess = true;
+    this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
+      console.log(data);
+
+      if(data.success) {
+        //the update was successful
+        this.showSuccess = true;
+        var closebtn: any= document.getElementById('closeBtn');
+        this.ResetErrorMessages();
+        closebtn.click();
+      }
+      else{
+        //it was not successful
+        this.showFailure = true;
+      }
     })
 
   }

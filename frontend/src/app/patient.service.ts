@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
 import {EncryptionService} from './encryption.service'
+import { CookieService } from 'ngx-cookie-service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -10,7 +11,8 @@ const httpOptions = {
 export class PatientService {
 
   constructor(private http: HttpClient,
-              private encryptionService: EncryptionService) { }
+              private encryptionService: EncryptionService,
+              private cookieService: CookieService) { }
 
   GetAllPatients() : any{
     var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
@@ -162,6 +164,13 @@ export class PatientService {
 
   GetSalt(id: string) {
     var url = "/api/useraccount/account/getsalt/" + id;
+
+    return this.http.get(url);
+  }
+
+  GetPatient() {
+    var userID = this.cookieService.get('ID');
+    var url = '/api/patient/getclient/' + userID;
 
     return this.http.get(url);
   }
