@@ -33,6 +33,8 @@ import { PhysioAuthGuard } from './physio-auth.guard';
 import { AdminAuthGuard } from './admin-auth.guard';
 import {UnauthorizedComponent } from './unauthorized/unauthorized.component'
 import { WrongAccountComponent } from './wrong-account/wrong-account.component'
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { ManagePermissionsComponent} from './manage-permissions/manage-permissions.component';
 
 //Later: add gueard to the routes that need to be protected
 //to do this append ,canActivate: [something] to an object
@@ -45,14 +47,14 @@ const routes: Routes = [
   {path: 'services', component: ServicesComponent},
   {path: 'faq', component: FaqComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'manageforms', component: DynamicFormsComponent},
+  {path: 'admin/manageforms', component: DynamicFormsComponent},
   {path: 'client', component: PatientProfileComponent},
-  {path: 'adminhome', component: AdminHomeComponent},
+  {path: 'admin', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
   {path: 'signup', component: NewClientComponent},
-  {path: 'bookappointment', component: BookAppointmentComponent},
-  {path: 'useraccounts', component:UserAccountsComponent},
+  {path: 'client/bookappointment', component: BookAppointmentComponent},
+  {path: 'admin/useraccounts', component:UserAccountsComponent},
   {path: 'clients/:id', component: ClientsOfTherapistComponent},
   {path: 'bookappointement', component: AppointmentsComponent},
   {path: 'physiohome', component: PhysioHomeComponent},
@@ -62,13 +64,14 @@ const routes: Routes = [
   {path: 'client/exercises', component: ClientExerciseComponent},
   {path: 'assessmenttest', component: AssessmentTestComponent},
   {path: 'assignplans', component: AssignPlanComponent},
-  {path: 'completetest', component: CompleteAssessmentTestComponent},
+  {path: 'client/completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
   {path: 'unauthorized', component: UnauthorizedComponent},
   {path: 'admin/wrongaccount', component: WrongAccountComponent},
   {path: 'physio/wrongaccount', component: WrongAccountComponent},  
+  {path: 'client/home', component: ClientHomeComponent},
+  {path: 'managepermissions', component: ManagePermissionsComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
-
 ];
 
 @NgModule({

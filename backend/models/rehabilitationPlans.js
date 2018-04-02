@@ -7,7 +7,7 @@ var rehabilitationPlansSchema = new mongoose.Schema(
         authorName: String,
         goal: String,
         timeFrameToComplete: Date,
-        assessmentTests: [{type: mongoose.Schema.Types.ObjectId, ref: ('AssessmentTests')}],
+        assessmentTests: [{type: mongoose.Schema.Types.ObjectId, ref: ('AssessmentTest')}],
         exercises: [{type: mongoose.Schema.Types.ObjectId, ref: ('Exercises')}],
         treatments: [{type: mongoose.Schema.Types.ObjectId, ref: ('Treatments')}],
         exerciseObjects: []

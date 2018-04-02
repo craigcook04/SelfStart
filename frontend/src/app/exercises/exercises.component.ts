@@ -7,6 +7,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from '../image.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 import { PageEvent } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 
 const URL = '/api/image';
@@ -30,6 +31,7 @@ export class ExercisesComponent implements OnInit {
   pageSizeOptions = [10];
   pageEvent: PageEvent;
   noPause = true;
+  panelColor = new FormControl('blue');
 
 
   @ViewChild('carousel') carousel:NgbCarousel;
@@ -170,6 +172,11 @@ export class ExercisesComponent implements OnInit {
         this.exercises = obj.docs;
       }
     })
+  }
+
+  openSearchArea(searchArea: any){
+    console.log(searchArea);
+    searchArea.show();
   }
 
 }

@@ -1,8 +1,6 @@
 .resetPass {
-    background: #eceeef;
-    margin-left: 5%;
+    background: #f5f5f5;
     padding: 1%;
-    display: inline-block;
     border-radius: 5%;
 }
 
@@ -25,4 +23,8 @@
 
 li {
     margin-bottom: 5px;
+}
+
+.dividers{
+    margin-top: -20px;
 }
