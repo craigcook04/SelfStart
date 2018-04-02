@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../patient.service';
-import { ActivatedRoute, Router} from '@angular/router'
+import { ActivatedRoute, Router} from '@angular/router';
+import * as moment from 'moment';
+import { PaymentService } from '../payment.service'
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-generate-report',
   templateUrl: './generate-report.component.html',
@@ -9,9 +13,13 @@ import { ActivatedRoute, Router} from '@angular/router'
 export class GenerateReportComponent implements OnInit {
 
   patient: any;
+  paymentHistory: any;
+
   constructor(private patientService: PatientService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private paymentService: PaymentService, 
+              private cookieService: CookieService) { }
 
   private chartType:string = 'line';
   
@@ -46,6 +54,8 @@ export class GenerateReportComponent implements OnInit {
     responsive: true
   };
 
+  
+
   ngOnInit() {
     var patientID = this.activatedRoute.snapshot.paramMap.get("id");
     this.patientService.GetPatientByPatientID(patientID).subscribe(data => {
@@ -53,6 +63,19 @@ export class GenerateReportComponent implements OnInit {
       console.log(data);
       this.patient = retObj.patient;
     })
+    var userID = this.cookieService.get('ID');
+    console.log("id",userID);
+    this.paymentService.GetPaymentHistory(userID).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.paymentHistory = retObj.payments;
+    })
+
+  }
+
+  CalculateAge(DOB: string) {
+    var years = moment().diff(DOB, 'years');
+    return years;
   }
 
   chartClicked(e: any): void { 
