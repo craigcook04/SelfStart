@@ -4,6 +4,7 @@
 <br>
 <br>
 <mat-card class="assessTest">
+  <div class="mycenter">
   <div class="form-group row usandpass">
     <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
     <div class="col-sm-9">
@@ -14,28 +15,25 @@
     <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
     <div class="col-sm-9">
       <input type="password" class="form-control" id="inputPassword" placeholder="Password" (keyup.enter)="Login(username.value, password.value)" #password>
-    </div> 
-  </div>
+    </div>
+    </div>
+        <div class="col-sm-9">
+          <button class="btn btn-sm btn-default loginbtn" (click)="Login(username.value, password.value)">Login</button>  
+        </div>
   <div *ngIf="showFailure" class="dangeralrt">
       <p class="failureMessage">The username or password you entered is incorrect</p>
   </div>
   <div *ngIf="userIsDisabled" class="dangeralrt">
       <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
   </div>
-  <div style="margin-top: 3rem;">
-    <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
-    <p class="cont">||</p>
-    <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
-  </div>
+</div>
   <hr>
-
-  <mat-card-actions align="end">
-      <span flex></span>
-      <div class="btns">
-      <button class="btn btn-sm btn-primary" (click)="Login(username.value, password.value)">Login</button>
-      <button class="btn btn-sm btn-secondary">Cancel</button>
-      </div>
-  </mat-card-actions>
-
+  <div>
+      <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
+      <p class="cont">||</p>
+      <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
+  </div>
 
 </mat-card>
+
+

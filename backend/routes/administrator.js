@@ -155,5 +155,22 @@ router.route('/:administrator_id')
             }
         );
     });
+    
+router.route('/getadmin/:userid')
+    .get(function(request, response) {
+        Administrator.findOne({'account': request.params.userid}, function(err, admin) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(admin == null) {
+                response.send({success: false, admin: admin});
+                return;
+            }
+            
+            response.send({success: true, admin: admin});
+        });
+    });
 
 module.exports = router;
