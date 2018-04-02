@@ -34,6 +34,9 @@ export class ClientHomeComponent implements OnInit {
       obj = obj.patient;
       this.client = obj;
       this.currPlan = this.client.rehabPlan;
+      if(obj.rehabPlan == null) {
+        return;
+      }
       this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
         let obj: any = data;
         this.currTest = obj.rehabPlan.assessmentTests[0];

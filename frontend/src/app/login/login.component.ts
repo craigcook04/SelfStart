@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           }
           else {
             //expires in 1 hour, expires takes days so 1 hour is 1/24
-            this.cookieService.set('ID', retObj.userID);
+            this.cookieService.set('ID', retObj.userID, 1/24);
             this.cookieService.set('session', retObj1.nonce, 1/24);
             this.cookieService.set('role', retObj.role, 1/24);
 
@@ -60,8 +60,9 @@ export class LoginComponent implements OnInit {
               this.appComponent.alterLoginState();
               this.appComponent.toggleToClient();
             }
+
             else if (retObj.role == "AD") {
-              this.router.navigate(['../adminhome']);
+              this.router.navigate(['../admin/home']);
               this.appComponent.alterLoginState();
               this.appComponent.toggleToAdmin();
             }

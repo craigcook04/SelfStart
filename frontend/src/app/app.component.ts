@@ -84,7 +84,6 @@ export class AppComponent {
     this.isAdmin= false;
     this.isClient = false;
     this.isPhysio = false; 
-    console.log(session);
     this.userAccountsService.LogOut(session).subscribe(data => {
         console.log(data);
     });
@@ -92,9 +91,8 @@ export class AppComponent {
     let router2 = this.router;
     setTimeout(function() { 
       document.body.style.cursor = "default";     
-      
       router2.navigate(['./welcome']);
-    }, 1500);
+    }, 1000);
     
   }
   
