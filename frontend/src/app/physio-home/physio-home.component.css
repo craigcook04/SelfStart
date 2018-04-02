@@ -2,6 +2,19 @@ h4 {
     margin: 1em;
 }
 
+h5 {
+    margin: 0.25em;
+}
+
+#title {
+    width: 90%;
+    padding: 20px;
+}
+
+#list {
+    width: 90%;
+}
+
 #section {
     /*top: 90px;*/
     float: left;
@@ -86,8 +99,8 @@ ul {
   color: #FFFFFF;
   text-align: center;
   font-size: 20px;
-  padding: 20px;
-  width: 230px;
+  padding: 14px;
+  width: 160px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
