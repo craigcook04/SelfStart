@@ -10,17 +10,13 @@
         <div class='form-inline row'>
           <div class="row justify-content-start col-8">
               <div class='form-inline'>
-                  <div class="btn-group col">
-                      <button type="button" class="btn btn-primary">Search By...</button>
-                      <button type="button" class="btn btn-primary dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="sr-only">Toggle Dropdown</span>
-                      </button>
-                      <div #searchArea class="dropdown-menu" id="searchDropdown">
-                          <a class="dropdown-item" value='name'>Search by...</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" value="name">Exercise Name</a>
-                          <a class="dropdown-item" value="location">Target Area</a>
-                      </div>
+                  <div>
+                      <select #searchArea class="searchdropdown" id="searchDropdown">
+                          <option value='name'>Search By...</option>
+                          <option disabled='disabled'>----</option>
+                          <option value="name">Exercise Name</option>
+                          <option value="location">Target Area</option>
+                        </select>
                   </div>
                 </div>
                 <div class="form-inline col">

@@ -34,6 +34,7 @@ router.route('/')
         form.save(function (error) {
             if (error){
                 response.send(error);
+                return;
             } 
             
             response.json({form: form});
@@ -44,6 +45,7 @@ router.route('/')
         Forms.find(function (error, form) {
             if (error){
                  response.send(error);
+                 return;
             }
             response.json({form: form});
         });
@@ -55,6 +57,7 @@ router.route('/:form_id')
         Forms.findById(request.params.form_id, function (error, form) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({form: form});
@@ -66,6 +69,7 @@ router.route('/:form_id')
         Forms.findById(request.params.form_id, function (error, form) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             else {
 

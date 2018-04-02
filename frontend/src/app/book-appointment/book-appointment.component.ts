@@ -10,6 +10,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AppointmentsService } from '../appointments.service';
 import { PaymentService } from '../payment.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from '../patient.service';
 
 
 const URL = "/api/image/bookappointment";
@@ -25,6 +26,8 @@ export class BookAppointmentComponent implements OnInit {
 
   public uploader:FileUploader = new FileUploader({url: URL});
 
+  timeOfDay: string;
+  today: Date;
   invalidName: boolean = false;
   type: any;
   
@@ -34,17 +37,26 @@ export class BookAppointmentComponent implements OnInit {
   currContent: any;
   render1: boolean = false;
   render2: boolean = false;
+  client: any;
 
   constructor(private modalService: NgbModal,
               private router: Router,
               private imageService: ImageService,
               private apptService: AppointmentsService,
               private paymentService: PaymentService,
-              private cookieService: CookieService) {}
+              private cookieService: CookieService,
+              private patientService: PatientService) { 
+              }
 
   ngOnInit() {
-    this.cookieService.set('ID', "5ab0007926bba10fad373816");
-    console.log(this.cookieService.getAll());
+    this.cookieService.set('ID', "5ab0007926bba10fad373817");
+    this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+      console.log(data);
+      var obj: any = data;
+      obj = obj.patient;
+      this.client = obj;
+    })
+    this.timeOfDay = this.getTimeOfDay();
   }
 
   // open(content) {
@@ -143,13 +155,21 @@ export class BookAppointmentComponent implements OnInit {
       }
       console.log(err);
     }
-  }
+}
 
   StorePayment(data: any){
     this.paymentService.StorePayment(data, this.cookieService.get('ID')).subscribe(data => {
       console.log(data);
       this.currContent.hide();
     })
+  }
+
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
   }
   
 }

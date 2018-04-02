@@ -43,8 +43,13 @@ export class RehabPlansService {
   }
   
   removeClientFromPlan(ID: string){
-    var url = 'api/patient/unassignPlan' + ID;
+    var url = '/api/patient/unassignPlan' + ID;
     return this.http.put(url, "");
+  }
+
+  GetCurrentAssesmentTest(id: string){
+    var url = '/api/rehabPlans/gettest/' + id;
+    return this.http.get(url);
   }
   
 }

@@ -213,7 +213,7 @@ router.route('/account/login')
                response.send({success: false, message: "This username doesnt exist"});
                return;
            }
-
+           user.lastLoggedIn = new Date();
            var inputPassDecrypted = user.decrypt(request.body.encryptedpass);
            var hashedPassword = user.decrypt(user.encryptedPassword);
            var sentDecryptedNonce = user.decrypt(request.body.encryptednonce);
@@ -325,22 +325,43 @@ router.route('/session/loggedin')
 
 router.route('/session/logout')
     .delete(function(request, response) {
+        console.log('getting here');
         Session.remove({nonce: request.header('Authorization')}, function(err, deleted) {
+            if(err) {
+                console.log('wut');
+                response.send(err);
+                return;
+            }
+            console.log("deleted:", deleted);
+            response.send({deleted: deleted});
+        });
+        // console.log(request.params.id);
+        
+    });
+    
+router.route('/session/refresh')
+    .put(function(request, response) {
+        var user = new UserAccount();
+        var decryptedSessionToken = user.decrypt(request.body.session);
+        Session.findOne({nonce: decryptedSessionToken}, function(err, refresh) {
             if(err) {
                 response.send(err);
                 return;
             }
-            console.log(deleted);
-            response.send({deleted: deleted});
+            
+            if(refresh == null) {
+                response.send({success: false, message: 'could not find session'});
+                return;
+            }
+            
+            refresh.resetTTL();
+            refresh.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                response.send({success: true, message: "session has been successfully updated"});
+            });
         });
-        // console.log(request.params.id);
-        // Session.findById(request.params.id, function(err, refresh) {
-        //     console.log(refresh);
-        //     refresh.resetTTL();
-        //     refresh.save(function(err) {
-        //         console.log('done');
-        //         response.send('done');
-        //     })
-        // })
     });
 module.exports = router;

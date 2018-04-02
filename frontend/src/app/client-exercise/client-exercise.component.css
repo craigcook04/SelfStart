@@ -1,7 +1,11 @@
 .page{
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    top: -30px;
+}
+
+.dividers{
+    margin-top: -20px;
 }
 
 .jumbotron {

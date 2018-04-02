@@ -27,22 +27,48 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatListModule,MatPaginatorModule, MatDialogModule, MatButtonToggleModule, MatExpansionModule} from '@angular/material'; 
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
 import { EmailService } from './email.service';
 import { NewClientComponent } from './new-client/new-client.component';
 import { NewClientService } from './new-client.service'
 import { ImageService } from './image.service';
-import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ClientsOfTherapistComponent } from './clients-of-therapist/clients-of-therapist.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'angular2-moment/moment.module';
 import { PhysioHomeComponent } from './physio-home/physio-home.component';
 import { ClientExerciseComponent } from './client-exercise/client-exercise.component';
@@ -69,6 +95,10 @@ import { PaymentService } from './payment.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { WrongAccountComponent } from './wrong-account/wrong-account.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ClientHomeComponent } from './client-home/client-home.component';
+import { TransactionsComponent } from './transactions/transactions.component';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { RolesService } from './roles.service';
 
 @NgModule({
   declarations: [
@@ -102,7 +132,9 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,
-    WelcomeHomeComponent
+    WelcomeHomeComponent,
+    ManagePermissionsComponent,
+    ClientHomeComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -140,7 +172,10 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatButtonToggleModule,
     MatPaginatorModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [
     PatientService, 
@@ -159,7 +194,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     AuthGuard,
     PhysioAuthGuard,
     AdminAuthGuard,
-    PaymentService],
+    PaymentService,
+    RolesService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

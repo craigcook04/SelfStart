@@ -30,6 +30,31 @@ export class NewClientService {
     return this.http.post(url, body);
   }
 
+    CreateClientFromAdmin(username: String, password: String, lastName: String, firstName: String, email: String, DOB: String, gender: string, postalCode: String, phone: String, others: String, country: string, province: string, city: string, address: string, salt: string) {
+    var url = "/api/patient/admincreated"
+    var body = {
+      username: username,
+      encryptedPassword: password,
+      ID: 0,
+      familyName: lastName,
+      givenName: firstName,
+      email: email,
+      DOB: DOB,
+      gender: gender,
+      postalCode: postalCode,
+      phone: phone,
+      others: others,
+      country: country,
+      province: province,
+      city: city,
+      address: address,
+      salt: salt
+    }
+
+    return this.http.post(url, body);
+  }
+
+
   SendToVerification(userID: String, email: String, firstName: string, lastName: string) {
     var url = "/api/temp";
     var body = {

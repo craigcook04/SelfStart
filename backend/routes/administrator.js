@@ -50,6 +50,8 @@ router.route('/')
         userAccount.needToChangePass = false;
         userAccount.isDisabled = false;
         userAccount.resetRequestSent = false;
+        userAccount.dateRegistered = new Date();
+        userAccount.lastLoggedIn = new Date();
         userAccount.userCode = "AD"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retadmin) {

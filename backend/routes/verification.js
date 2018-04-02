@@ -66,7 +66,7 @@ router.route('/')
             <h4>Hello ${fullName}, let us be the first to welcome you to Self Start. <br> We are happy that we can help with your treatment</h4>
             <h4>Thank you for registering for Self Start! <br> <br>You are just one click away from being able to use the site and getting started </h4>
             <h4> Please <a href="${url}" >click here</a> to verify your account! </h4>
-              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
+              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
         </body>
         `;
         var mailOptions = {
@@ -115,7 +115,7 @@ router.route('/:accessCode')
                             <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
                             <h4>Hello, you are already verified in our Self Start records! </h4>
                             <h4> Please disregard this message and <a href="" >click here</a> to return home. </h4>
-                              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
+                              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
                         </body>
                     `;
                     response.send(returnEmail);
@@ -127,7 +127,7 @@ router.route('/:accessCode')
                             <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
                             <h4>Hello, you are already verified in our Self Start records! </h4>
                             <h4> Please disregard this message and <a href="" >click here</a> to return home. </h4>
-                              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
+                              <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
                         </body>
                     `;
                     response.send(returnEmail);
@@ -160,7 +160,7 @@ router.route('/:accessCode')
                   <h4>Congratulations, you have verified your email account! <br> We are excited to learn more about you.</h4>
                   <h4>You're all done! <br> <br>You may now able to enjoy the many features of the site! </h4>
                   <h4> Please <a href="" >click here</a> to return home. </h4>
-                    <img src="http://marcottephysio.com/wp-content/uploads/2017/03/water-buterfly_940x434.jpg" style="margin: 1rem;">
+                    <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
                 </body>
                 `;
                 response.send(returnEmail);
