@@ -105,6 +105,7 @@ export class UserAccountsService {
 
   GetInfoDates(id: string){
     var url = '/api/useracccount/getdates/' + id;
+    return this.http.get(url);
   }
 
   GetAdminByUserID() {

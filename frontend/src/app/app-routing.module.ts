@@ -53,7 +53,7 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'admin/manageforms', component: DynamicFormsComponent},
   {path: 'client', component: PatientProfileComponent},
-  {path: 'admin', component: AdminHomeComponent},
+  {path: 'admin/home', component: AdminHomeComponent},
   {path: 'rehabplans', component: RehabPlansComponent},
   {path: 'exercises', component: ExercisesComponent},
   {path: 'signup', component: NewClientComponent},
@@ -81,7 +81,7 @@ const routes: Routes = [
   {path: 'client/settings', component: SettingsComponent},
   {path: 'admin/settings', component: SettingsComponent},
   {path: 'physio/settings', component: SettingsComponent},
-  {path: 'physio/reports', component: GenerateReportComponent},
+  {path: 'physio/reports/:id', component: GenerateReportComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 
