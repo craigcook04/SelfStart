@@ -65,15 +65,22 @@ export class RecoverAccountComponent implements OnInit {
       return;
     }
 
-    this.patientService.ChangePassword(this.userID, password, tempPassword).subscribe(data => {
+    this.patientService.GetSalt(this.userID).subscribe(data => {
       var retObj: any = data;
-      console.log(data);
-      if(retObj.success) {
-        this.router.navigate(['../login']);        
+      console.log(retObj)
+      if(retObj.success == true){
+        this.patientService.ChangePassword(this.userID, password, tempPassword, retObj.salt).subscribe(data => {
+          var retObj: any = data;
+          console.log("returned", data);
+          if(retObj.success) {
+            this.router.navigate(['../login']);           
+          }
+          else {
+            //do later
+          }
+        })
       }
-      else {
-
-      }
+      
     })
 
   }

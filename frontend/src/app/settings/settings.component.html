@@ -1,0 +1,96 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+            <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;">Dashboard</button>
+            </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercise Menu</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../bookappointment']">Book Appointment</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../completetest']">Complete Assessment</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Transactions</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Settings</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+            <br>
+            <div style="margin-top: -10px;">
+                <h3 class="title" style="color: #0275d8">
+                    Reset Password
+                 </h3>
+            </div>
+          </div>
+
+<mat-card class="assessTest">
+    <div *ngIf="!successfullyChangePassword">
+      <mat-card-subtitle>
+        <p>please enter your old password and the new password you would like for your account</p>
+      </mat-card-subtitle>
+      
+      <div class="form-group row">
+        <label for="inputOldPassword" class="col-sm-2 col-form-label">Old Password: </label>
+        <div class="col-sm-8">
+          <input type="password" class="form-control" id="inputOldPassword" placeholder="Old Password" #tempPassword>
+        </div> 
+      </div>
+      <div class="form-group row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">New Password: </label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="inputPassword" placeholder="New Password" #password>
+          </div> 
+      </div>
+  
+      <div class="form-group row">
+            <label for="inputRepeatPassword" class="col-sm-2 col-form-label">Repeat New Password: </label>
+            <div class="col-sm-8">
+              <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat New Password" #repeatPassword>
+            </div> 
+      </div>
+      <div *ngIf="couldntProcessRequest"> 
+        <p>Sorry we were unable to complete your request. Please try again later!</p>
+      </div>
+      <div *ngIf="incorrectOldPassword">
+        <p>The old password that you inputted is incorrect</p>
+      </div>
+      <br>
+      <hr>
+      <mat-card-actions align="end">
+        <button class="btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value, tempPassword.value)">Change</button>
+      </mat-card-actions>  
+    </div>
+    <div *ngIf="successfullyChangePassword">
+        <h4>You have successfully updated your password</h4>
+        <p>You can now log in</p>
+        <button class="btn btn-sm btn-primary">Return to Log In</button>
+    </div>
+    
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

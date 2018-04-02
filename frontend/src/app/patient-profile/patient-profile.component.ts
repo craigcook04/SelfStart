@@ -224,6 +224,7 @@ export class PatientProfileComponent implements OnInit {
     }
     this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
       if(data != []) {
+        console.log(data);
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
         if(this.offset + 10 > this.totalPatients) {
