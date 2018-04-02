@@ -103,4 +103,9 @@ export class UserAccountsService {
     return this.http.put(url, body);
   }
 
+  GetInfoDates(id: string){
+    var url = '/api/useracccount/getdates/' + id;
+    return this.http.get(url);
+  }
+
 }
