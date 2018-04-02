@@ -9,9 +9,11 @@ var completedAssessmentTest = new mongoose.Schema(
         dateCreated: Date,
         dateCompleted: Date,
         questions: [],
+        physioRate: Number,
+        physioDescription: String,
         patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
     }
 )
 
-var CompletedAssessmentTest = mongoose.modal('CompletedAssessmentTest', completedAssessmentTest);
+var CompletedAssessmentTest = mongoose.model('CompletedAssessmentTest', completedAssessmentTest);
 module.exports = CompletedAssessmentTest;
