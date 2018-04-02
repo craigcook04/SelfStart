@@ -182,7 +182,9 @@ import { TransactionsComponent } from './transactions/transactions.component';
     MatTableModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatTabsModule
   ],
   providers: [
     PatientService, 
