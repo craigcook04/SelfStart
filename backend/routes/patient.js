@@ -187,6 +187,7 @@ router.route('/:patient_id')
         Patient.findById(request.params.patient_id, function (error, patient) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({patient: patient});
@@ -227,6 +228,7 @@ router.route('/:patient_id')
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({success: true, patient: patient});
@@ -260,6 +262,7 @@ router.route('/findpatient/search')
         .exec(function(error, patients) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({patients: patients});
@@ -309,11 +312,15 @@ router.route('/assign/:patient_id')
             else {
                 //save updated information of patient
                 patient.rehabPlan = request.body.rehabPlan;
+                console.log(patient.rehabPlan);
+
+                console.log(request.body);
                 patient.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
+                        console.log("Here");
                         response.json({success: true, patient: patient});
                     }
                 });
@@ -337,46 +344,14 @@ router.route('/plan/:plan_id')
 router.route('/notplan/:plan_id')
 
     .get(function (request, response) {
-        // Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
-        //     if (error) {
-        //       response.send({error: error});
-        //     }
-        //     else {
-        //       response.json({patients: patients});
-        //     }
-        // })
-        
-        let query = {};
-        if(request.query.q != null || request.query.q != undefined) {
-            //if the query string isn't null, set the query to search for the query string
-            query = Patient.find({"rehabPlan": { "$ne": request.params.plan_id}});
-            query = query.find({ "$or": [{"givenName": { "$regex": request.query.q}}, {"familyName": {"$regex": request.query.q}}]});
-        }
-        else{
-            query = Patient.find({"rehabPlan": { "$ne": request.params.plan_id}});
-        }
-        var myparameter = request.query.s;
-        let sortOrder = 1;
-        var sort ={};
-        sort[myparameter] = sortOrder;
-        var options = 
-        {
-            sort: sort,
-            limit: 10,
-            populate: 'rehabPlan',
-            offset: Number(request.query.offset)
-        };
-        
-        Patient.paginate(query, options, function(err, results) {
-            if(err) {
-                console.log(err);
-                response.send(err);
-                return;
+        Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
+            if (error) {
+               response.send({error: error});
             }
-            
-            console.log(results);
-            response.send(results);
-        });
+            else {
+               response.json({patients: patients});
+            }
+        })
     });
     
 router.route('/plan/remove')
@@ -431,13 +406,99 @@ router.route('/unassignPlan/:id')
 router.route('/patientinfo/:id')
 
     .get(function(request, response){
-        Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+        Patient.findOne({"account": request.params.id}).populate('rehabPlan').exec(function(err, patient){
             if(err){
-                response.send(err)
+                response.send({error: err});
+                return;
             }
             
             response.send({patient: patient});
         })
     })
+    
+router.route('/patient/appointments/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('appointment', 'account').exec(function(err, patient){
+            if(err){
+                response.send({error: err})
+            }
+            response.send({patient: patient});   
+        })
+    })
+    
+    
+router.route('/admincreated')
+
+    .post(function (request, response) {
+        var patient = new Patient();
+        patient.ID = request.body.ID;
+        patient.familyName = request.body.familyName;
+        patient.givenName = request.body.givenName;
+        patient.email = request.body.email;
+        patient.physioId = request.body.physioId;
+        var myDate = new Date(request.body.DOB);
+        patient.DOB = myDate;
+        patient.postalCode = request.body.postalCode;
+        patient.phone = request.body.phone;
+        patient.maritalStatus = request.body.maritalStatus;
+        patient.healthCardNumber = request.body.healthCardNumber;
+        patient.occupation = request.body.occupation;
+        patient.others = request.body.others;
+        patient.account = request.body.account;
+        patient.payment = request.body.payment;
+        patient.country = request.body.country;
+        patient.province = request.body.province;
+        patient.city = request.body.city;
+        patient.gender = request.body.gender;
+        patient.appointment = request.body.appointment;
+        patient.address = request.body.address;
+        patient.verified = false;
+        
+        var userAccount = new UserAccount();
+        userAccount.userAccountName = request.body.username;
+        userAccount.encryptedPassword = request.body.encryptedPassword;
+        userAccount.salt = request.body.salt;
+        userAccount.needToChangePass = true;
+        userAccount.isDisabled = false;
+        userAccount.resetRequestSent = false;
+        userAccount.userCode = "US"; //this is a user account
+        console.log(userAccount.encryptedPassword);
+        UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            console.log(retpatient.length);
+            
+            if(retpatient.length != 0) {
+                //someone with this username already exists
+                response.send({success: false, message: "Please choose a different username"});
+                return;
+            }
+        
+            userAccount.save(function(err, userAccount) {
+                if(err){
+                    response.send(err);
+                    return;
+                }
+                //create the user account of the patient and then sets the patient's account to it's ID, then save the patient
+                patient.account = userAccount._id;
+                
+                patient.save(function (error) {
+                if (error) {
+                    response.send(error);
+                    console.log(error);
+                    return;
+                }
+                
+                response.json({success: true, patient: patient});
+            });
+            });
+        })
+        
+    })
+
 
 module.exports = router;

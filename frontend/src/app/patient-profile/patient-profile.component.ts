@@ -62,11 +62,13 @@ export class PatientProfileComponent implements OnInit {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     })
+   console.log('hi');
    
   }
 
   SwitchPageEvent(pageEvent: any, searchString: string, searchArea: string) {
     this.offset = pageEvent.pageIndex * pageEvent.pageSize;
+    console.log('hello im switching');
     this.searchPatients(searchString, searchArea);
   }
 
@@ -222,6 +224,7 @@ export class PatientProfileComponent implements OnInit {
     }
     this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
       if(data != []) {
+        console.log(data);
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
         if(this.offset + 10 > this.totalPatients) {
@@ -237,6 +240,7 @@ export class PatientProfileComponent implements OnInit {
 
   HideMessage() {
     //hide all messages, if there are any
+    console.log('hide messages');
     this.showSuccess = false;
     this.showFailure = false;
     this.showDeleteSuccess = false;

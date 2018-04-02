@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AssessmentTestService } from '../assessment-test.service'
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from '../patient.service';
+import { RehabPlansService } from '../rehab-plans.service';
 
 @Component({
   selector: 'app-complete-assessment-test',
@@ -11,24 +14,50 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CompleteAssessmentTestComponent implements OnInit {
 
+  timeOfDay: string;
   assessmentTest: any;
   assessmentTestQuestions: any[];
   testLength: Number;
   MCAnswers: any[];
+  today: Date;
+  client: any;
+  clientName: any;
+  appointments: any;
+  currPlan: any;
+  currTest: any;
 
   constructor(private assessmentTestService: AssessmentTestService,
               private config: NgbRatingConfig,  
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private cookieService: CookieService,
+              private patientService: PatientService,
+              private planService: RehabPlansService) {
                 this.config.max = 5;
                }
 
   ngOnInit() {
-    this.assessmentTestService.GetPlans().subscribe(data => {
-      var retObj: any = data;
-      this.assessmentTest = retObj.assessmentTest[3];
-      this.assessmentTestQuestions = this.assessmentTest.questions;
-      this.testLength = this.assessmentTestQuestions.length;
+    this.timeOfDay = this.getTimeOfDay();
+    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
+    this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+      console.log(data);
+      var obj: any = data;
+      obj = obj.patient;
+      this.client = obj;
+      this.currPlan = this.client.rehabPlan;
+      this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
+        let obj: any = data;
+        console.log(data);
+        this.assessmentTest = obj.rehabPlan.assessmentTests[0];
+        this.assessmentTestQuestions = obj.rehabPlan.assessmentTests[0].questions;
+        this.testLength = this.assessmentTestQuestions.length;
+      })
     })
+    // this.assessmentTestService.GetPlans().subscribe(data => {
+    //   var retObj: any = data;
+    //   this.assessmentTest = retObj.assessmentTest[3];
+    //   this.assessmentTestQuestions = this.assessmentTest.questions;
+    //   this.testLength = this.assessmentTestQuestions.length;
+    // })
 
     this.MCAnswers = [];
 
@@ -69,6 +98,14 @@ export class CompleteAssessmentTestComponent implements OnInit {
   NumToChar(n) {
     var ch = String.fromCharCode(97 + n);
     return ch;
+  }
+
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
   }
 
 }

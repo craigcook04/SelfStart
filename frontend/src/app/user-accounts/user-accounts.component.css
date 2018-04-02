@@ -8,8 +8,32 @@ h2 {
 
 
 .tab{
-    width: 80%;
+    width: 90%;
     margin-left: 60px;
+}
+
+
+.accordion {
+    background-color: white;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    margin-left: 70px;
+    transition: 0.4s;
+    width: 65%;
+}
+.info {
+    margin: 1em;
+}
+.active, .accordion:hover {
+    width:90%;
+    background-color: #F0F8FF; 
+    
+   
 }
 
 .searchbar{
@@ -27,6 +51,158 @@ ul{
     content: "\2212";
     left: -20px;
 }
+.failedSearch {
+    margin-left: 3.5em;
+    color: red;
+    font-size: 12px;
+}
+.mydropdown {
+    display: block;
+    height: 40px;
+    width: 100%;
+    padding: .5rem, .75rem;
+    padding-left: .5rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-color: #ffffff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 5px;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+
+}
+.failedSearch {
+    margin-left: 3.5em;
+    color: red;
+    font-size: 12px;
+}
+.blockContainer {
+    text-align: center;
+}
+.left {
+    float: left;
+    text-align: right;
+    display: inline;
+}
+  
+.right {
+    float: left;
+    text-align: left;
+    margin: 2px 10px;
+    display: inline;
+    width: 200px;
+}
+
+
+.greyCard {
+    width: 95%;
+    background-color: lightgrey;
+}
+.myPaginator {
+    margin-left: 3.7em;
+    margin-right: 3.7em;
+    margin-bottom: 0.5em;
+}
+
+.searchdropdown {
+    height: 44px;
+    padding: 3px;
+    padding-left: 0px;
+    border: solid 1px #E4E4E4;
+    border-radius: 3px;
+    background-color: #fff;
+    width: 200px;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-image: none;
+    background-clip: padding-box;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    margin-left: 2.5rem;
+    margin-top: 2px;
+}
+.patients {
+    margin-left: 3em;
+    margin-right: 3em;
+}
+.dummyclr{
+    clear:both
+ }
+
+ .rfrshicon {
+     height: 28px;
+     padding-top: 0px;
+     margin-bottom: 10px;
+     cursor: pointer;
+ }
+
+ .dummy {
+     display: none;
+ }
+
+ .ascvsdesc {
+    height: 44px;
+    padding-left: 0px;
+    border: solid 1px #E4E4E4;
+    border-radius: 3px;
+    background-color: #fff;
+    width: 200px;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-image: none;
+    background-clip: padding-box;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    margin-top: 2px;
+    margin-left: 1rem;
+ }
+ 
+ .orderTag{
+     margin-left: 2.5rem;
+     margin-bottom: -1.5rem;
+ }
+
+ .arrows {
+     cursor: pointer;
+     display: inline-block;
+     margin-left: 12rem;
+     color: #0275d8;
+ }
+ .mypanel {
+    vertical-align: middle;
+    line-height: 30px;
+    text-align: middle;
+}
+.myta{
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+    margin-right: 1.25rem;
+    
+}
+
+.tobody {
+    margin-left: 1rem;
+}
+.pageinfo {
+    float: right;
+    margin-right: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.alrt {
+    height: 44px;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    margin-left: 2.5rem;
+    margin-right: 10rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem; 
+    border-radius: 2.5px;
+    vertical-align: middle;
+}
 
 #custom-search-input{
     padding: 3px;
@@ -34,6 +210,7 @@ ul{
     border: solid 1px #E4E4E4;
     border-radius: 3px;
     background-color: #fff;
+    width: 600px;
 }
 
 #custom-search-input input{

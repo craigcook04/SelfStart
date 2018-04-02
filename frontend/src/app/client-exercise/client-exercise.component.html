@@ -1,165 +1,212 @@
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-
-<div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
- <h3 *ngIf="client" class="title" style="color: #0275d8">
-  Good {{ timeOfDay }}, {{ client?.givenName }}.
- </h3>
-  <p class="quote">
-    Fix the system, fix the pain. That starts here, select an exercise...
-  </p>
-</div>
-
-<div class="page">
-  <div class="row">
-    <div class="col-lg-6 col-md-5 col-sm-5">
-      <mat-card>
-        <mat-card-content>
-          <mat-list>
-            <mat-card-title style="color: #0275d8;">
-              <b>Exercises in {{ clientPlan?.name }}: </b>
-            </mat-card-title>
-            <mat-divider></mat-divider>
-            <br>
-            <mat-list-item class="listItems" *ngFor="let exercise of exercises" (click)="getExerciseInfo(exercise)" (click)="getExerciseImages(exercise._id)">
-              <button class="btn-block button">
-                <div class="row">
-                  <div class="col-sm-1">
-                      <mat-icon style="color: #0275d8" svgIcon="dumbbell"></mat-icon> &nbsp;
-                  </div>
-                  <div class="col-sm-7">
-                      <h5> <b>{{ exercise.name }}</b> </h5>
-                  </div>
-                </div>
-                <div class="divider">
-                  <mat-divider></mat-divider>
-                </div>
-              </button>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+            <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
             </mat-list-item>
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-lg-6 col-md-5 col-sm-5">
-      <div>
-          <mat-card>
-              <mat-card-title class="title2">
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Exercise Menu</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../bookappointment']">Book Appointment</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../completetest']">Complete Assessment</button>
+          </mat-list-item>
+          <br>
+          <!-- <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Upload Photos</button>
+          </mat-list-item>
+          <br> -->
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Transactions</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button [routerLink]="['../settings']" style="color:white;">Settings</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+          </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+            <br>
+            <div style="margin-top: -10px;">
+                <h3 *ngIf="client" class="title" style="color: #0275d8">
+                    Good {{ timeOfDay }}<a *ngIf="client">, {{ client?.givenName }}.</a>
+                 </h3>
+                 <p class="quote">
+                   Fix the system, fix the pain. That starts here, select an exercise...
+                 </p>
+            </div>
+          </div>
+           
+           <div class="page col-11">
+             <mat-card style="min-height: 75vh;">
                 <div class="row">
-                  <div class="col-sm-10" style="color: #0275d8">
-                    <b> {{ currExercise?.name }} </b>
+                    <div class="col-6">
+                      <mat-card>
+                        <mat-card-content>
+                          <mat-list>
+                            <mat-card-title style="color: #0275d8;">
+                              <b>Exercises in {{ clientPlan?.name }}: </b>
+                            </mat-card-title>
+                            <mat-divider></mat-divider>
+                            <br>
+                            <mat-list-item class="listItems" *ngFor="let exercise of exercises" (click)="getExerciseInfo(exercise)" (click)="getExerciseImages(exercise._id)">
+                              <button class="btn-block button">
+                                <div class="row">
+                                  <div class="col-1">
+                                      <mat-icon style="color: #0275d8" svgIcon="dumbbell"></mat-icon> &nbsp;
+                                  </div>
+                                  <div class="col-7">
+                                      <h5> <b>{{ exercise.name }}</b> </h5>
+                                  </div>
+                                </div>
+                                <div class="divider">
+                                  <mat-divider></mat-divider>
+                                </div>
+                              </button>
+                            </mat-list-item>
+                          </mat-list>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                    <div class="col-6">
+                      <div>
+                          <mat-card>
+                              <mat-card-title class="title2">
+                                <div class="row">
+                                  <div class="col-10" style="color: #0275d8">
+                                    <b> {{ currExercise?.name }} </b>
+                                  </div>
+                                  <div class="ml-5 print">
+                                    <i class="fa fa-print" (click)="openPrint(currExercise)"></i>
+                                  </div>
+                                </div>
+                              </mat-card-title>
+                              <mat-divider></mat-divider>
+                              <br>
+                              <mat-card-content>
+                                <div class="row">
+                                  <div class="col-2">
+                                    <b>Description: </b>
+                                  </div>
+                                  <div class="col-10 descrip">
+                                    {{ currExercise?.description }}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-2">
+                                    <b>Objectives: </b>
+                                  </div>
+                                  <div class="col-10 descrip">
+                                    {{ currExercise?.objectives }}
+                                  </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-2">
+                                    <b>Repetitions: </b>
+                                  </div>
+                                  <div class="col-4">
+                                    {{ currExercise?.duration }}
+                                  </div>
+                                  <div class="col-2">
+                                    <b>Sets: </b>
+                                  </div>
+                                  <div class="col-4">
+                                    {{ currExercise?.frequency }}
+                                  </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-2">
+                                    <b>Location: </b>
+                                  </div>
+                                  <div class="col-4">
+                                      {{ currExercise?.location }}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-2">
+                                    <b>Action Steps:</b>
+                                  </div>
+                                  <div class ="col-10">
+                                    <ol *ngFor="let step of currSteps; index as i" class="col-sm">
+                                      <b>{{ i + 1 }}. </b> &nbsp; {{ currSteps[i] }}
+                                    </ol>
+                                  </div>
+                                </div>
+                                <div>
+                                  <br>
+                                  <mat-divider></mat-divider>
+                                  <br>
+                                </div>
+                                <div (pause)="!noPause" #carousel>
+                                    <ngb-carousel *ngIf="images?.length > 0">
+                                        <ng-template ngbSlide *ngFor="let image of images">
+                                          <img on-mouseover="nopause = !noPause" style="max-height: 600px;" mat-card-image src="data:image/png;base64,{{image.data}}">
+                                        </ng-template>
+                                      </ngb-carousel>
+                                </div>
+                              </mat-card-content>
+                            </mat-card>
+                      </div>
+                    </div>
                   </div>
-                  <div class="ml-sm-5 print">
-                    <i class="fa fa-print" (click)="openPrint(currExercise)"></i>
-                  </div>
-                </div>
-              </mat-card-title>
-              <mat-divider></mat-divider>
+                </mat-card>
+              </div>
+                    
+          <div style="display:none" #test>
+              <h1 style="color: #0275d8">Self Start: &nbsp; {{ currExercise?.name }} </h1>
               <br>
-              <mat-card-content>
-                <div class="row">
-                  <div class="col-sm-2">
-                    <b>Description: </b>
-                  </div>
-                  <div class="col-sm-10 descrip">
-                    {{ currExercise?.description }}
-                    </div>
-                </div>
+              <div>
+                <b>Description: </b> &nbsp; {{ currExercise?.description }}
+              </div>
+              <br>
+              <div>
+                <b>Objectives: </b> &nbsp; {{ currExercise?.objectives }}
+              </div>
+              <div>
+                <p>
+                  <b>Repetitions: </b> &nbsp; {{ currExercise?.duration }} &nbsp; &nbsp;
+                  <b>Sets: </b> &nbsp; {{ currExercise?.frequency }} &nbsp; &nbsp;
+                  <b>Location: </b> &nbsp; {{ currExercise?.location }} &nbsp; &nbsp;
+                </p>
+              </div>
+              <b>Action Steps: </b> &nbsp;
+              <div>
+                  <ol *ngFor="let step of currSteps; index as i">
+                    <li> {{ currSteps[i] }} </li>
+                  </ol>
+              </div>
+          </div>
+            
+          <div style="display:none;" #test2>
+              <b>Images:</b>
+              <div *ngFor="let image of images">
+                <img src="data:image/png;base64,{{image.data}}">
                 <br>
-                <div class="row">
-                  <div class="col-sm-2">
-                    <b>Objectives: </b>
-                  </div>
-                  <div class="col-sm-10 descrip">
-                    {{ currExercise?.objectives }}
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-sm-2">
-                    <b>Repetitions: </b>
-                  </div>
-                  <div class="col-sm-4">
-                    {{ currExercise?.duration }}
-                  </div>
-                  <div class="col-sm-2">
-                    <b>Sets: </b>
-                  </div>
-                  <div class="col-sm-4">
-                    {{ currExercise?.frequency }}
-                  </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-sm-2">
-                    <b>Location: </b>
-                  </div>
-                  <div class="col-sm-4">
-                      {{ currExercise?.location }}
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                  <div class="col-sm-2">
-                    <b>Action Steps:</b>
-                  </div>
-                  <div class ="col-sm-10">
-                    <ol *ngFor="let step of currSteps; index as i" class="col-sm">
-                      <b>{{ i + 1 }}. </b> &nbsp; {{ currSteps[i] }}
-                    </ol>
-                  </div>
-                </div>
-                <div>
-                  <br>
-                  <mat-divider></mat-divider>
-                  <br>
-                </div>
-                <div (pause)="!noPause" #carousel>
-                    <ngb-carousel *ngIf="images?.length > 0">
-                        <ng-template ngbSlide *ngFor="let image of images">
-                          <img on-mouseover="nopause = !noPause" style="max-height: 600px" mat-card-image src="data:image/png;base64,{{image.data}}">
-                        </ng-template>
-                      </ngb-carousel>
-                </div>
-              </mat-card-content>
-            </mat-card>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div style="display:none" #test>
-  <h1 style="color: #0275d8">Self Start: &nbsp; {{ currExercise?.name }} </h1>
-  <br>
-  <div>
-    <b>Description: </b> &nbsp; {{ currExercise?.description }}
-  </div>
-  <br>
-  <div>
-    <b>Objectives: </b> &nbsp; {{ currExercise?.objectives }}
-  </div>
-  <div>
-    <p>
-      <b>Repetitions: </b> &nbsp; {{ currExercise?.duration }} &nbsp; &nbsp;
-      <b>Sets: </b> &nbsp; {{ currExercise?.frequency }} &nbsp; &nbsp;
-      <b>Location: </b> &nbsp; {{ currExercise?.location }} &nbsp; &nbsp;
-    </p>
-  </div>
-  <b>Action Steps: </b> &nbsp;
-  <div>
-      <ol *ngFor="let step of currSteps; index as i">
-        <li> {{ currSteps[i] }} </li>
-      </ol>
-  </div>
-</div>
-
-<div style="display:none;" #test2>
-  <b>Images:</b>
-  <div *ngFor="let image of images">
-    <img src="data:image/png;base64,{{image.data}}">
-    <br>
-  </div>
-</div>
+              </div>
+          </div>
+          <br>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
 

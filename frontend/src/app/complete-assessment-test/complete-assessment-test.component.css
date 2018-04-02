@@ -1,4 +1,6 @@
-
+.dividers{
+    margin-top: -20px;
+}
 
 .myta {
     margin-left: 2rem;
@@ -40,4 +42,24 @@
 .ratingstars {
     margin-left: 1rem;
     margin-bottom: 1rem;
+}
+
+.jumbotron {
+    padding: 0.6em 0.6em;
+}
+
+h3 {
+    font-size: 2em;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.page{
+    margin-left: auto;
+    margin-right: auto;
+    top: -30px;
 }

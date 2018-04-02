@@ -33,6 +33,7 @@ router.route('/')
         questionType.save(function (error) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({questionType: questionType});
@@ -43,6 +44,7 @@ router.route('/')
         QuestionType.find(function (error, questionType) {
             if (error) {
                 response.send(error);
+                return;
             }
             
             response.json({questionType: questionType});
@@ -57,6 +59,7 @@ router.route('/:questionType_id')
         QuestionType.findById(request.params.questionType_id, function (error, questionType) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({questionType: questionType});
@@ -68,6 +71,7 @@ router.route('/:questionType_id')
         QuestionType.findById(request.params.questionType_id, function (error, questionType) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             else {
                 
@@ -78,6 +82,7 @@ router.route('/:questionType_id')
                 questionType.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({questionType: questionType});
@@ -103,6 +108,7 @@ router.route('/type/:typeName')
         QuestionType.find({name: request.params.typeName}, function (error, questionType) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
                response.json({questionType: questionType});

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
-
+import {EncryptionService} from './encryption.service'
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -9,7 +9,8 @@ const httpOptions = {
 @Injectable()
 export class PatientService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private encryptionService: EncryptionService) { }
 
   GetAllPatients() : any{
     var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
@@ -95,12 +96,22 @@ export class PatientService {
     return this.http.post(url, body);
   }
 
-  ChangePassword(hash: string, password: string, tempPassword: string) {
+  ChangePassword(hash: string, password: string, tempPassword: string, salt) {
     var url = "/api/useraccount/account/change";
+    var hashPassword = this.encryptionService.hash(password);
+    var hashWithSalt = hashPassword + salt;
+    var hashedPassAndSalt = this.encryptionService.hash(hashWithSalt);
+    var newEncryptedPassword = this.encryptionService.encrypt(hashedPassAndSalt);
+
+    var hashPassword = this.encryptionService.hash(tempPassword);
+    var hashWithSalt = hashPassword + salt;
+    var hashedPassAndSalt = this.encryptionService.hash(hashWithSalt);
+    var encryptedTempPassword = this.encryptionService.encrypt(hashedPassAndSalt);
+
     var body = {
       userID: hash,
-      password: password,
-      temppassword: tempPassword
+      newEncryptedPassword: newEncryptedPassword,
+      encryptedTempPassword: encryptedTempPassword
     }
 
     return this.http.put(url, body);
@@ -141,6 +152,17 @@ export class PatientService {
 
   GetPatientInfo(id: string){
     var url = '/api/patient/patientinfo/' + id;
+    return this.http.get(url);
+  }
+
+  GetPatientApppointments(id: string){
+    var url = '/api/patient/patient/appointments/' + id;
+    return this.http.get(url);
+  }
+
+  GetSalt(id: string) {
+    var url = "/api/useraccount/account/getsalt/" + id;
+
     return this.http.get(url);
   }
 
