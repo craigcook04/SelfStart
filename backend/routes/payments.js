@@ -33,16 +33,12 @@ router.route('/')
         payment.dayTimeStamp = request.body.dayTimeStamp;
         payment.amount = request.body.amount;
         payment.note = request.body.note;
-        let patient = Patient.findOne({"_id": request.body.patient}, function(err, foundYou){
-            if(err){
-                response.send({success: false});
-            }
-            payment.patient = foundYou;
-        })
+        payment.patient = request.body.patient;
         
         payment.save(function (error) {
             if (error) {
-                response.send(error);
+                response.send({error: error});
+                return;
             }
             
             response.json({payment: payment});
@@ -52,7 +48,8 @@ router.route('/')
     .get(function (request, response) {
         Payment.find(function (error, payment) {
             if (error) {
-                response.send(error);
+                response.send({error: error});
+                return;
             }
             
             response.json({payment: payment});
@@ -67,10 +64,10 @@ router.route('/:payment_id')
         Payment.findById(request.params.payment_id, function (error, payment) {
             if (error) {
                response.send({error: error});
+               return;
             }
-            else {
-               response.json({payment: payment});
-            }
+            
+            response.json({payment: payment});
         });
     })
 
@@ -78,6 +75,7 @@ router.route('/:payment_id')
         Payment.findById(request.params.payment_id, function (error, payment) {
             if (error) {
                 response.send({error: error});
+                return;
             }
             else {
                 
@@ -90,6 +88,7 @@ router.route('/:payment_id')
                 payment.save(function (error) {
                     if (error) {
                         response.send({error: error});
+                        return;
                     }
                     else {
                         response.json({payment: payment});
@@ -107,6 +106,19 @@ router.route('/:payment_id')
                 }
             }
         );
+    });
+    
+router.route('/getpayments/:id')
+
+    .get(function(request, response){
+        Payment.find({"patient": request.params.id}).sort({dayTimeStamp: 1}).exec(function(error, payments){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({payments: payments});
+        })
     });
 
 module.exports = router;
