@@ -17,4 +17,9 @@ export class PaymentService {
     return this.httpClient.post(url, body);
   }
 
+  GetPaymentHistory(id: string){
+    var url = '/api/payments/getpayments/' + id;
+    return this.httpClient.get(url);
+  }
+
 }

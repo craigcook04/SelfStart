@@ -22,7 +22,7 @@
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;">Transactions</button>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../transactions']">Transactions</button>
                   </mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div style="min-height: 100vh;">
-                    <div class="col-8 page container card">
+                    <mat-card class="col-11 page">
                         <div>
                             <br>
                             <div class="card-body justify-content-center">
@@ -68,142 +68,140 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div mdbModal #bookModal="mdb-modal" class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content" style="overflow-y: visible;">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="bookModalLabel"><b>Book Your Appointment...</b></h5>
-                                        <button type="button" class="close" (click)="bookModal.hide()" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" style="overflow-x: hidden;">
-                                        <div class="row">
-                                            <label class="form-inline col-2"><strong>Client Name</strong></label>
-                                            <div class="col">
-                                                <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
-                                                <div *ngIf="invalidName">
-                                                    Please Enter a Valid Name
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" >
-                                            <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
-                                            <!--<div class="col-10"></div>-->
-                                                <!--<div style="overflow: auto; overflow-x:scroll;"></div>-->
-                                            <div class="col-sm-12" style="transform: scale(0.85);"><app-appointments></app-appointments></div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="form-inline col-2"><strong>Description</strong></label>
-                                            <div class="col">
-                                                <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="form-inline col-2"><strong>Upload Images</strong></label>
-                                            <div class="col">
-                                                <label class="btn btn-block btn-blue-grey" id="inputMedia">
-                                                    Click Here to Select File(s) for Upload&hellip;
-                                                    <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
-                                                </label>
-                                                <td nowrap>
-                                                    <div>
-                                                        <div class="col">
-                                                            <button type="button" class="btn btn-success"
-                                                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                                                <span class="glyphicon glyphicon-upload"></span> Upload all
-                                                            </button>
-                                                            <button type="button" class="btn btn-danger"
-                                                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                                                <span class="glyphicon glyphicon-trash"></span> Remove all
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <tr *ngFor="let item of uploader.queue">
-                                                    <td><strong>{{ item?.file?.name }}</strong></td>
-                                                </tr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="float-left">
-                                            To Proceed, Click the PayPal button..
-                                        </div>
-                                        <div id="paypal-button-container"></div>
-                                        <button type="button" class="btn btn-secondary" (click)="bookModal.hide()">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                    
-                    <div mdbModal #initialModal="mdb-modal" class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="initialModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content" style="overflow-y: visible;">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="bookModalLabel"><b>Book Your Initial Consultation...</b></h5>
-                                        <button type="button" class="close" (click)="initialModal.hide()" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" style="overflow-x: hidden;">
-                                        <!-- <div class="row">
-                                            <label class="form-inline col-2"><strong>Client Name</strong></label>
-                                            <div class="col">
-                                                <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
-                                                <div *ngIf="invalidName">
-                                                    Please Enter a Valid Name
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" >
-                                            <div class="col-sm-12" style="transform: scale(0.85);"><app-appointments></app-appointments></div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="form-inline col-2"><strong>Description</strong></label>
-                                            <div class="col">
-                                                <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="form-inline col-2"><strong>Upload Images</strong></label>
-                                            <div class="col">
-                                                <label class="btn btn-block btn-blue-grey" id="inputMedia">
-                                                    Click Here to Select File(s) for Upload&hellip;
-                                                    <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
-                                                </label>
-                                                <td nowrap>
-                                                    <div>
-                                                        <div class="col">
-                                                            <button type="button" class="btn btn-success"
-                                                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                                                <span class="glyphicon glyphicon-upload"></span> Upload all
-                                                            </button>
-                                                            <button type="button" class="btn btn-danger"
-                                                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                                                <span class="glyphicon glyphicon-trash"></span> Remove all
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <tr *ngFor="let item of uploader.queue">
-                                                    <td><strong>{{ item?.file?.name }}</strong></td>
-                                                </tr>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="float-left">
-                                            To Proceed, Click the PayPal button..
-                                        </div>
-                                        <div id="paypal-button-container2"></div>
-                                        <button type="button" class="btn btn-secondary" (click)="initialModal.hide()">Close</button>
-                                    </div>
-                                </div>
+                    </mat-card>
+                </div>
+            </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div mdbModal #bookModal="mdb-modal" class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="overflow-y: visible;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel"><b>Book Your Appointment...</b></h5>
+                    <button type="button" class="close" (click)="bookModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="overflow-x: hidden;">
+                    <div class="row">
+                        <label class="form-inline col-2"><strong>Client Name</strong></label>
+                        <div class="col">
+                            <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
+                            <div *ngIf="invalidName">
+                                Please Enter a Valid Name
                             </div>
                         </div>
                     </div>
-            </mat-sidenav-content>
-</mat-sidenav-container>
+                    <div class="row" >
+                        <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
+                        <!--<div class="col-10"></div>-->
+                            <!--<div style="overflow: auto; overflow-x:scroll;"></div>-->
+                        <div class="col-sm-12" style="transform: scale(0.85);"><app-appointments></app-appointments></div>
+                    </div>
+                    <div class="row">
+                        <label class="form-inline col-2"><strong>Description</strong></label>
+                        <div class="col">
+                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="form-inline col-2"><strong>Upload Images</strong></label>
+                        <div class="col">
+                            <label class="btn btn-block btn-blue-grey" id="inputMedia">
+                                Click Here to Select File(s) for Upload&hellip;
+                                <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
+                            </label>
+                            <td nowrap>
+                                <div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-success"
+                                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                                        </button>
+                                        <button type="button" class="btn btn-danger"
+                                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <tr *ngFor="let item of uploader.queue">
+                                <td><strong>{{ item?.file?.name }}</strong></td>
+                            </tr>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="float-left">
+                        To Proceed, Click the PayPal button..
+                    </div>
+                    <button type="button" class="btn btn-secondary" (click)="bookModal.hide()">Close</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div mdbModal #initialModal="mdb-modal" class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="initialModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="overflow-y: visible;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel"><b>Book Your Initial Consultation...</b></h5>
+                    <button type="button" class="close" (click)="initialModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="overflow-x: hidden;">
+                    <!-- <div class="row">
+                        <label class="form-inline col-2"><strong>Client Name</strong></label>
+                        <div class="col">
+                            <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
+                            <div *ngIf="invalidName">
+                                Please Enter a Valid Name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-sm-12" style="transform: scale(0.85);"><app-appointments></app-appointments></div>
+                    </div>
+                    <div class="row">
+                        <label class="form-inline col-2"><strong>Description</strong></label>
+                        <div class="col">
+                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="form-inline col-2"><strong>Upload Images</strong></label>
+                        <div class="col">
+                            <label class="btn btn-block btn-blue-grey" id="inputMedia">
+                                Click Here to Select File(s) for Upload&hellip;
+                                <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
+                            </label>
+                            <td nowrap>
+                                <div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-success"
+                                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                                        </button>
+                                        <button type="button" class="btn btn-danger"
+                                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <tr *ngFor="let item of uploader.queue">
+                                <td><strong>{{ item?.file?.name }}</strong></td>
+                            </tr>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <div class="float-left">
+                        To Proceed, Click the PayPal button..
+                    </div>
+                    <button type="button" class="btn btn-secondary" (click)="initialModal.hide()">Close</button>
+                </div>
+            </div>
+        </div>
+</div>
