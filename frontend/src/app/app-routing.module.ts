@@ -82,6 +82,7 @@ const routes: Routes = [
   {path: 'admin/settings', component: SettingsComponent},
   {path: 'physio/settings', component: SettingsComponent},
   {path: 'physio/reports/:id', component: GenerateReportComponent},
+  {path: 'physio/exercises', component: ExercisesComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 
