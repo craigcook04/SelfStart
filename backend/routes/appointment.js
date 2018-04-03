@@ -105,7 +105,7 @@ router.route('/:appointment_id')
         );
     });
     
-<<<<<<< HEAD
+
 router.route('/client/appointments/:id')
     .get(function(request, response) {
         Appointment.find({'userID': request.params.id}, function(err, appointments) {
@@ -120,7 +120,8 @@ router.route('/client/appointments/:id')
             }
             
             response.send({success: true, appointments: appointments});
-=======
+        });
+    });
 router.route('/:current_date')
 
     .get(function (request, response) {
@@ -132,7 +133,6 @@ router.route('/:current_date')
             else {
                response.json({appointment: appointment});
             }
->>>>>>> f65541b94499ba9ccdda1921fc4d03cae70ec05f
         });
     });
 
