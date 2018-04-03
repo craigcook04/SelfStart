@@ -175,4 +175,9 @@ export class PatientService {
     return this.http.get(url);
   }
 
+  GetSpecificPatient(id: string){
+    var url = '/api/patient/getspecific/' + id;
+    return this.http.get(url);
+  }
+
 }
