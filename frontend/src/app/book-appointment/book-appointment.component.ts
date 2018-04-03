@@ -11,6 +11,7 @@ import { AppointmentsService } from '../appointments.service';
 import { PaymentService } from '../payment.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
+import { AssessmentTestService } from '../assessment-test.service';
 
 
 const URL = "/api/image/bookappointment";
@@ -38,6 +39,11 @@ export class BookAppointmentComponent implements OnInit {
   client: any;
   clientId: any;
   selected = 'option2';
+  ratePain: any;
+  weeklyPain: any;
+  hasMoreThanOneSymptom: boolean;
+  hasOtherMedicalCondition: boolean;
+  medicalTraumas: boolean;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -45,7 +51,10 @@ export class BookAppointmentComponent implements OnInit {
               private apptService: AppointmentsService,
               private paymentService: PaymentService,
               private cookieService: CookieService,
-              private patientService: PatientService) {}
+              private patientService: PatientService,
+              private assessmentTestService: AssessmentTestService) { 
+              }
+
 
   ngOnInit() {
     this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
@@ -65,6 +74,16 @@ export class BookAppointmentComponent implements OnInit {
     
     
     this.timeOfDay = this.getTimeOfDay();
+    this.ratePain = 0;
+    this.weeklyPain = 0;
+  }
+
+  StorePainRating(num: any) {
+    this.ratePain = num + 1;
+  }
+
+  StoreWeeklyPain(num: any) {
+    this.weeklyPain = num + 1;
   }
 
   // open(content) {
@@ -122,10 +141,52 @@ export class BookAppointmentComponent implements OnInit {
     if(hour < 17){ return "Afternoon"}
     else{ return "Evening"};
   }
-  
-  SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, ) {
-    console.log(started);
+
+  moreThanOneSymptom(yesorno: boolean) {
+    this.hasMoreThanOneSymptom = yesorno;
   }
+
+  otherMedicalCondition(yesorno: boolean) {
+    this.hasOtherMedicalCondition = yesorno;
+  }
+
+  otherMedicalTraumas(yesorno: boolean) {
+    this.medicalTraumas = yesorno;
+  }
+
+  SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, treatment: string, explainOther: string, symptoms: string, explainTraumas:string, occupation: string, hobbies: string, goals: string ) {
+    
+    var userID = this.cookieService.get('ID');    
+    var InitialiInjuryObject = {
+      injuryarea: injuryarea,
+      painScale: painScale,
+      started: started,
+      dateStarted: dateStarted,
+      describe: describe,
+      ratePain: this.ratePain,
+      weeklyPain: this.weeklyPain,
+      aggravates: aggravates,
+      easePain: easePain,
+      morningPain: morningPain,
+      eveningPain: eveningPain,
+      treatment: treatment,
+      moreThanOneSymptom: this.hasMoreThanOneSymptom,
+      hasOtherMedicalCondition: this.hasOtherMedicalCondition,
+      describeOtherMedCondition: explainOther,
+      symptoms: symptoms,
+      medicalTraumas: this.medicalTraumas,
+      explainTraumas: explainTraumas,
+      occupation: occupation,
+      hobbies: hobbies,
+      goals: goals,
+      userID: userID
+    }
+
+    this.assessmentTestService.CompletedInitialAppointment(InitialiInjuryObject).subscribe(data => {
+      console.log(data);
+    })
+  }
+  
 
 }
 

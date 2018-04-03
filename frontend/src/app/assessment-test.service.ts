@@ -60,4 +60,27 @@ export class AssessmentTestService {
         var url = '/api/assessmentTest/getresults/' + id;
         return this.http.get(url);
     }
+
+    CompletedInitialAppointment(completedTest: any) {
+        var url = '/api/assessmentTest/initial/completed';
+        var body = completedTest;
+        console.log(body)
+        return this.http.post(url, body);
+    }
+
+    GetUsersInitialInjuries(userID: string) {
+        var url = '/api/assessmentTest/initial/getbyid/' + userID;
+        return this.http.get(url);
+    }
+
+    CreateCompletedTest(userID: string, name: string, description: string, questions: any) {
+        var url = '/api/assessmentTest/completedtest/' + userID;
+        var body = {
+            name: name, 
+            description: description,
+            questions: questions
+        }
+
+        return this.http.post(url, body);
+    }
 }
