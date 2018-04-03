@@ -31,10 +31,21 @@
                     <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToReports()">Client Reports</button></mat-list-item>
                 </mat-nav-list>
             </mat-sidenav>
-  <h3 style="margin:1em; float:middle;">
+  <!--<h3 style="margin:1em; float:middle;">
     <b>Good Morning!</b>
   </h3>
-  <br>
+  <br>-->
+  <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+          <br>
+          <div style="margin-top: -10px;">
+              <h3 *ngIf="client" class="title" style="color: #0275d8">
+                  Good {{ timeOfDay }} <a *ngIf="physio">, {{ physio?.givenName }}.</a>
+               </h3>
+               <p class="quote">
+                 Welcome to your dashboard, what would you like to do today?
+               </p>
+          </div>
+        </div>
   <mat-card-title>
     <h4 style="color: #0275d8;"><b>Your Appointments for Today:</b></h4>
   </mat-card-title>
@@ -111,3 +122,4 @@
   <a id=test (click)="goToTests()">Manage Assessment Tests</a>
   <a id=report (click)="goToReports()">Generate Client Reports</a>
 </div>-->
+

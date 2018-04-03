@@ -6,7 +6,10 @@ export class PhysioHomeService {
 
   constructor(private http: HttpClient) { }
     
-    getAppointments(/*today*/){
-        return this.http.get('api/appointment'/*+ today*/);
+    GetPhysio(id: string) {
+      return this.http.get('api/physiotherapist/' + id);
+    }
+    GetAppointments(/*today*/) {
+      return this.http.get('api/appointment');
     }
 }

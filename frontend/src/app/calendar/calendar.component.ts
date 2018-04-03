@@ -50,7 +50,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     //this.fetchEvents();
     this.appointments = [];
-    this.physioHomeService.getAppointments().subscribe(data =>{
+    this.physioHomeService.GetAppointments().subscribe(data =>{
       console.log(data);
       var retObj:any = data;
       this.appointments = retObj.appointment;
@@ -59,6 +59,11 @@ export class CalendarComponent implements OnInit {
   }
   
   events: CalendarEvent[] = [
+    /*{
+      title: "Stephanie Pereira",
+      color: colors.blue,
+      start: new Date()
+    }*/
   ];
 
   eventClicked({ event }: { event: CalendarEvent }): void {
