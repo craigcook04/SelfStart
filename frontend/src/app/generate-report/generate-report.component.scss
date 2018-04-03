@@ -13,10 +13,9 @@
 }
 
 h3 {
-    font-size: 2em;
     text-align: center;
     color: #0275d8;
-    font-size: 26px;
+    font-size: 32px;
 }
 
 p {
@@ -29,5 +28,16 @@ p {
 
 h5 {
     color: #0275d8;    
+    font-size: 26px;
 }
 
+h6 {
+    font-size: 1.5em;
+    font-weight: black;
+}
+
+.centerme {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
