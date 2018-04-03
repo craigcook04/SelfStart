@@ -215,15 +215,11 @@ router.route('/forgotten')
     
 router.route('/update/sendpdf')
     .post(function(request, response) {
-        console.log(request.body.pdf);
         var mailOptions = {
-            to: 'ablack65@uwo.ca',
-            subject: 'trying to send a pdf',
-            html: '<h1>Please work</h1>',
-            attachments: [{
-                path: request.body.pdf
-            }
-                ]
+            to: request.body.toEmail,
+            subject: request.body.subject,
+            html: request.body.html,
+            attachments: [{path: request.body.pdf}]
         };
         
         smtpTransport.sendMail(mailOptions, function(error, resp) {
@@ -232,10 +228,9 @@ router.route('/update/sendpdf')
                 response.send(error);
                 return;
             }
-            console.log(resp);
             response.send({success: true, message: "Sent Mail!"});
         });
-    })
+    });
     
 module.exports = router;
 

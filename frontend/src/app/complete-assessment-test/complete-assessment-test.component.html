@@ -106,7 +106,7 @@
                     </p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-med" (click)="SubmitAnswers(); c('Close click')">OK</button>     
+                    <button type="button" class="btn btn-primary btn-med" [routerLink]="['../home']" (click)="SubmitAnswers(); c('Close click')">OK</button>     
                     <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Cancel</button>   
                   </div>
               </ng-template>

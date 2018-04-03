@@ -1,8 +1,9 @@
 {
-    "/api/*": {
-        "target": "https://loopsolutions-selfstart-mattnorthmore.c9users.io:8082",
-        "secure": false,
-        "changeOrigin": true,
-        "logLevel": "info"
-    }
+   "/api/*": {
+       "target": "https://se3350finalproject-sammallabone.c9users.io:8082",
+       "secure": false,
+       "changeOrigin": true,
+       "logLevel": "info"
+   }
+
 }
