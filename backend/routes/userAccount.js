@@ -35,6 +35,8 @@ router.route('/')
         userAccount.adminUser = request.body.adminUser;
         userAccount.physioUser = request.body.physioUser;
         userAccount.patientUser = request.body.patientUser;
+        userAccount.numbInitial = 0;
+        userAccount.numAppoint = 0;
         
         userAccount.save(function (error) {
             if (error) {
