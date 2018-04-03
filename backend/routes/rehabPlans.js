@@ -67,7 +67,7 @@ router.route('/')
         }
         
         var myparameter = request.query.s;
-        var sort ={};
+        var sort = {};
         sort[myparameter] = sortOrder;
         var options = 
         {
@@ -224,5 +224,7 @@ router.route('/gettest/:id')
             response.json({rehabPlan: plan});
         })
     })
+    
+
     
 module.exports = router;
