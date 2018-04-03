@@ -1,4 +1,4 @@
-<mat-sidenav-container style="min-height: 100vh;">
+<mat-sidenav-container>
 <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
                 <mat-nav-list style="top: -10px;">
                   <mat-list-item [routerLinkActive]="['active']">
@@ -7,100 +7,116 @@
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']">
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToCalendar()">Calendar</button>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../../calendar']">Calendar</button>
                   </mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToPatients()">Client Profiles</button></mat-list-item>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../../client']">Client Profiles</button></mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToExercises()">Exercises</button></mat-list-item>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../../exercises']">Exercises</button></mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToRehabPlans()">Rehabilitation Plans</button></mat-list-item>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../../rehabplans']">Rehabilitation Plans</button></mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToTests()">Assessment Tests</button></mat-list-item>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../../assessmenttest']">Assessment Tests</button></mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" (click)="goToReports()">Client Reports</button></mat-list-item>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;">Generate Reports</button></mat-list-item>
                 </mat-nav-list>
             </mat-sidenav>
-  <h3 style="margin:1em; float:middle;">
-    <b>Good Morning!</b>
-  </h3>
-  <br>
-  <mat-card-title>
-    <h4 style="color: #0275d8;"><b>Your Appointments for Today:</b></h4>
-  </mat-card-title>
-  <mat-card-content>
-  <div id="list" *ngFor = "let appt of appointments">
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{appt.patient}}
-          </mat-panel-title>
-          <mat-panel-description>
-            {{appt.date | date:'shortTime'}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p style="font-size: 16px;"><b style="color: #0275d8;">Reason:  </b>{{appt.reason}}</p>
-        <p style="font-size: 16px;"><b style="color: #0275d8;">Other:  </b>{{appt.other}}</p>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-  </mat-card-content>
-</mat-sidenav-container>
-<!--<br>
-<div id="title" class="alert alert-info">
-  <h4>Welcome</h4>
-</div>-->
-
-<!--<div id=section>
-  <h4>Your Appointments</h4>
-  <hr>
-  <div *ngFor = "let appt of appointments">
-    <br>
-    <button class="accordion"  (click)="show(appt)"><b>{{appt.date | date:'medium'}}</b></button>
-    <div *ngIf = "appt == activated">
-      <div class="info">
-        <hr>
-        <p><b>Name:  </b>{{appt.patient}}</p>
-        <p><b>Reason:  </b>{{appt.reason}}</p>
-        <p><b>Other:  </b>{{appt.other}}</p>
-        <hr>
-      </div>
-    </div>
-  </div>
-  <br>
-</div>-->
-
-<!--<br>
-<h5 style="color: #0275d8;"><b>Your Appointments for Today:</b></h5>
- {{today | date:'longDate'}}
-<br>
-<div id="list" *ngFor = "let appt of appointments">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{appt.patient}}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{appt.date | date:'shortTime'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p><b>Reason:  </b>{{appt.reason}}</p>
-      <p><b>Other:  </b>{{appt.other}}</p>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>-->
+   <mat-sidenav-content>
+        <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+          <br>
+          <div style="margin-top: -10px;">
+              <h3 *ngIf="physio" class="title" style="color: #0275d8">
+                  Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
+               </h3>
+               <p class="quote">
+                 Welcome to your dashboard, what would you like to do today?
+               </p>
+          </div>
+        </div>
+        <div style="min-height: 100vh;" class="page col-11">
+          <mat-card style="min-height: 75vh;">
+            <mat-card-content>
+                <div class="row">
+                  <mat-card class="col-6">
+                    <div>
+                    <mat-card-title style="color: #0275d8;">
+                      Your Appointments Today:
+                    </mat-card-title>
+                    <mat-card-content>
+                      <mat-card-subtitle *ngIf="appointments?.length < 1">
+                        <br>
+                        <div>
+                          <p><b>You have no appointments booked for today</b></p>
+                        </div>
+                      </mat-card-subtitle>
+                    <div id="list" *ngFor = "let appt of appointments">
+                      <mat-accordion>
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              {{appt.userID}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              {{appt.date | date:'shortTime'}}
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                          <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Reason:  </b>{{appt.reason}}</p>
+                          <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Type:  </b>{{appt.type}}</p>
+                        </mat-expansion-panel>
+                      </mat-accordion>
+                    </div>
+                    </mat-card-content>
+                    </div>
+                    <br>
+                    </mat-card>
+                      <mat-card class="col-6">
+                        <div>
+                          <mat-card-title style="color: #0275d8;">
+                            <div class="row">
+                              <div class="col-10">
+                                  Details & Summary
+                              </div>
+                            </div>
+                          </mat-card-title>
+                          <mat-list>
+                          <mat-list-item>
+                              <div class="btn-block">
+                                <div class="row">
+                                    <div class="col">
+                                      <mat-card-subtitle>
+                                          <h6><b> Number of Clients: </b></h6>
+                                      </mat-card-subtitle>
+                                      </div>
+                                      <div class="col">
+                                        <h4><b></b></h4>
+                                      </div>
+                                    </div>
+                                    <div class="divider">
+                                      <mat-divider></mat-divider>
+                                    </div>
+                                </div>
+                          </mat-list-item>
+                          </mat-list>
+                        </div>
+                        <br>
+                      </mat-card>    
+                </div>
+            </mat-card-content>
+            <br><br>
+          </mat-card>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>    
 
 <!--<br>
 <button class="button" style="vertical-align:middle" (click)="goToCalendar()"><span>Calendar</span></button>
@@ -111,3 +127,4 @@
   <a id=test (click)="goToTests()">Manage Assessment Tests</a>
   <a id=report (click)="goToReports()">Generate Client Reports</a>
 </div>-->
+
