@@ -167,16 +167,37 @@ router.route('/putquestions/:id')
 router.route('/getresults/:id')
     
     .get(function (request, response){
-        console.log("Here");
-       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}), function(error, tests){
+       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}).exec(function(error, tests){
            if(error){
                response.send({error: error});
                return;
            }
            
-           if(tests === null || tests === undefined){ console.log("None")};
-           response.send({completedTests: tests});
-       }
+           response.json({completedTests: tests});
+       })
+    });
+    
+router.route('/completedtest/:id')
+
+    .post(function(request, response){
+        let completedTest = new CompletedAssessment();
+        completedTest.name = request.body.name;
+        completedTest.description = request.body.descrip;
+        completedTest.completed = true;
+        let date = new Date();
+        completedTest.dateCompleted = date;
+        completedTest.physioRate = request.body.physioRate;
+        completedTest.questions = request.body.questions;
+        completedTest.patient = request.params.id;
+        
+        completedTest.save(function(err){
+            if(err){
+                response.send({error: err});
+                return;
+            }
+            
+            response.json({completedTest: completedTest});
+        })
     })
 
 module.exports = router;

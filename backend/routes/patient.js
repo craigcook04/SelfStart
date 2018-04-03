@@ -518,4 +518,17 @@ router.route('/getclient/:userid')
             response.send({success: true, client: client});
         });
     });
+    
+router.route('/getspecific/:id')
+
+    .get(function(request, response){
+        Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+            if(err){
+                response.send({error: err})
+            }
+            
+            response.send({patient: patient});   
+        })
+    })
+
 module.exports = router;
