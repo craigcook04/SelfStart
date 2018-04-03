@@ -4,6 +4,8 @@
 var express = require('express');
 var router = express.Router();
 var Appointment = require('../models/appointment');
+var moment = require('moment');
+moment().format();
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -32,6 +34,7 @@ router.route('/')
         appointment.reason = request.body.reason;
         appointment.other = request.body.other;
         appointment.patient = request.body.patient;
+        appointment.type = request.body.type;
         
         appointment.save(function (error) {
             if (error) {
@@ -100,6 +103,20 @@ router.route('/:appointment_id')
                 }
             }
         );
+    });
+    
+router.route('/:current_date')
+
+    .get(function (request, response) {
+        
+        Appointment.find("date", moment(request.params.current_date).format("MMMM Do YYYY, h:mm:ss a"), function (error, appointment) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({appointment: appointment});
+            }
+        });
     });
 
 module.exports = router;

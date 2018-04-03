@@ -26,4 +26,13 @@ export class EmailService {
     return this.http.post(url, body);
   }
 
+  SendPDFToClient(pdf) {
+    var url = 'api/email/update/sendpdf';
+    var body = {
+      pdf: pdf
+    }
+
+    return this.http.post(url, body);
+  }
+
 }

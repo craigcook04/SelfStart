@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var AssessmentTest = require('../models/assessmentTest');
 var CompletedAssessment = require('../models/completedAssessmentTest');
+var InitialIntake = require('../models/initialIntake');
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -215,13 +216,13 @@ router.route('/putquestions/:id')
 router.route('/getresults/:id')
     
     .get(function (request, response){
-        console.log("Here");
-       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}), function(error, tests){
+       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}).exec(function(error, tests){
            if(error){
                response.send({error: error});
                return;
            }
            
+<<<<<<< HEAD
            if(tests === null || tests === undefined){ console.log("None")};
            response.send({completedTests: tests});
        }
@@ -252,5 +253,101 @@ router.route('/completedTests')
         
         
     })
+=======
+           response.json({completedTests: tests});
+       })
+    });
+    
+router.route('/completedtest/:id')
+
+    .post(function(request, response){
+        let completedTest = new CompletedAssessment();
+        completedTest.name = request.body.name;
+        completedTest.description = request.body.descrip;
+        completedTest.completed = false;
+        let date = new Date();
+        completedTest.dateCompleted = date;
+        completedTest.physioRate = 0;
+        completedTest.physioDescription = '';
+        completedTest.questions = request.body.questions;
+        completedTest.userID = request.params.id;
+        completedTest.treatmentClosed = false
+        
+        InitialIntake.find({'userID': request.params.id}, function(err, injuries) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            completedTest.injuryNumber = injuries.length;
+            
+            completedTest.save(function(err){
+            if(err){
+                response.send({error: err});
+                return;
+            }
+            
+            response.json({completedTest: completedTest});
+        })
+        })
+    });
+    
+router.route('/initial/completed')
+    .post(function(request, response) {
+        
+        InitialIntake.find({'userID': request.body.userID}, function(err, injuries) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            var initialIntake = new InitialIntake();
+            initialIntake.injuryarea = request.body.injuryarea;
+            initialIntake.painScale = request.body.painScale;
+            initialIntake.started = request.body.started;
+            initialIntake.dateStarted = new Date(request.body.dateStarted);
+            initialIntake.describe = request.body.describe;
+            initialIntake.ratePain = request.body.ratePain;
+            initialIntake.weeklyPain = request.body.weeklyPain;
+            initialIntake.aggravates = request.body.aggravates;
+            initialIntake.easePain = request.body.easePain;
+            initialIntake.morningPain = request.body.morningPain;
+            initialIntake.eveningPain = request.body.eveningPain;
+            initialIntake.treatment = request.body.treatment;
+            initialIntake.moreThanOneSymptom = request.body.moreThanOneSymptom;
+            initialIntake.hasOtherMedicalCondition = request.body.hasOtherMedicalCondition;
+            initialIntake.describeOtherMedCondition = request.body.describeOtherMedCondition;
+            initialIntake.symptoms = request.body.symptoms;
+            initialIntake.medicalTraumas = request.body.medicalTraumas;
+            initialIntake.explainTraumas = request.body.explainTraumas;
+            initialIntake.occupation = request.body.occupation;
+            initialIntake.hobbies = request.body.hobbies;
+            initialIntake.goals = request.body.goals;
+            initialIntake.userID = request.body.userID;
+            initialIntake.injuryNumber = injuries.length + 1;
+            
+            initialIntake.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({success: true, message: 'successfully filled out the initial intake form'});
+            });
+        });
+    });
+    
+router.route('/initial/getbyid/:userID')
+    .get(function(request, response) {
+        InitialIntake.find({'userID': request.params.userID}, function(err, intakes) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            response.send({intakes: intakes});
+        });
+    });
+>>>>>>> 2f5fb8557018fd4998c9a5257c001302de50aa2b
 
 module.exports = router;
