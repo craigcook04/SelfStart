@@ -357,24 +357,6 @@ router.route('/session/refresh')
             });
         });
     });
-    
-router.route('/account/getsalt/:id')
-    .get(function(request, response) {
-        console.log('hi')
-        UserAccount.findById(request.params.id, function(error, userAccount) {
-            if(error) {
-                response.send(error);
-                return;
-            }
-            
-            if(userAccount == null) {
-                response.send({success: false, message: 'couldnt find account'});
-                return;
-            }
-            
-            response.send({success: true, salt: userAccount.salt});
-        });
-    });
 
 router.route('/appointments/:id')
     
@@ -395,17 +377,22 @@ router.route('/appointments/:id')
                 response.send({error: error});
                 return
             }
-            console.log(request.body);
+            if(account == null) {
+                response.send({success: true, message: 'couldnt find user', userID: request.params.id});
+                return;
+            }
             
-            account.numbAppoint += request.body.appointment;
-            account.numbInitial += request.body.initial;
+            console.log(request.body);
+            console.log(request.params.id)
+            //account.numbAppoint += request.body.appointment;
+            //account.numbInitial += request.body.initial;
             account.save(function(err){
                 if(err){
                     response.send({error: err});
                     return;
                 }
                 
-                response.send({account: account});
+                response.json({account: account});
             })
         })
     });
@@ -422,7 +409,23 @@ router.route('/getdates/:id')
             response.send({account});
         })
     })
-    
-    
+
+router.route('/account/getsalt/:id')
+    .get(function(request, response) {
+        console.log('hi')
+        UserAccount.findById(request.params.id, function(error, userAccount) {
+            if(error) {
+                response.send(error);
+                return;
+            }
+            
+            if(userAccount == null) {
+                response.send({success: false, message: 'couldnt find account'});
+                return;
+            }
+            
+            response.send({success: true, salt: userAccount.salt});
+        });
+    });
 
 module.exports = router;
