@@ -33,7 +33,7 @@ router.route('/')
         appointment.date = request.body.date;
         appointment.reason = request.body.reason;
         appointment.other = request.body.other;
-        appointment.patient = request.body.patient;
+        appointment.userID = request.body.patient;
         appointment.type = request.body.type;
         
         appointment.save(function (error) {
@@ -81,7 +81,7 @@ router.route('/:appointment_id')
                 appointment.date = request.body.date;
                 appointment.reason = request.body.reason;
                 appointment.other = request.body.other;
-                appointment.patient = request.body.patient;
+                appointment.userID = request.body.patient;
 
                 appointment.save(function (error) {
                     if (error) {
@@ -105,6 +105,23 @@ router.route('/:appointment_id')
         );
     });
     
+
+router.route('/client/appointments/:id')
+    .get(function(request, response) {
+        Appointment.find({'userID': request.params.id}, function(err, appointments) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(appointments.length == 0) {
+                response.send({success: false, message: 'no appointments for this user'});
+                return;
+            }
+            
+            response.send({success: true, appointments: appointments});
+        });
+    });
 router.route('/:current_date')
 
     .get(function (request, response) {

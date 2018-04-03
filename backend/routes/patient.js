@@ -309,14 +309,53 @@ router.route('/plan/:plan_id')
 router.route('/notplan/:plan_id')
 
     .get(function (request, response) {
-        Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
-            if (error) {
-               response.send({error: error});
+        // Patient.find({"rehabPlan": { "$ne": request.params.plan_id}}).populate('rehabPlan').exec(function (error, patients) {
+        //     if (error) {
+        //       response.send({error: error});
+        //     }
+        //     else {
+        //       response.json({patients: patients});
+        //     }
+        // })
+        var query = {};
+        if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            var search = '^' + request.query.q;
+            var regexexp = new RegExp(search, 'i');
+            query[request.query.s] = regexexp;
+        }
+        else{
+            query = {};
+        }
+        
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
+        
+        var myparameter = request.query.s;
+        var sort = {};
+        sort[myparameter] = sortOrder;
+        var options = 
+        {
+            sort: sort,
+            //populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+            limit: 10,
+            offset: Number(request.query.offset)
+        };
+        
+        Patient.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+                return;
             }
-            else {
-               response.json({patients: patients});
-            }
-        })
+            
+            response.send(results);
+        });
     });
     
 router.route('/plan/remove')
@@ -371,7 +410,7 @@ router.route('/unassignPlan/:id')
 router.route('/patientinfo/:id')
 
     .get(function(request, response){
-        Patient.findOne({"account": request.params.id}).populate('rehabPlan').exec(function(err, patient){
+        Patient.findOne({"account": request.params.id}).populate('rehabPlan').populate('account').exec(function(err, patient){
             if(err){
                 response.send({error: err});
                 return;
@@ -472,7 +511,7 @@ router.route('/getclient/:userid')
     .get(function(request, response) {
         var options = 
         {
-            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender', 'rehabPlan'],
         };
         var query = {'account': request.params.userid};
         Patient.paginate(query, options, function(err, client) {

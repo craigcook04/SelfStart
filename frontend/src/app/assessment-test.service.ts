@@ -106,4 +106,10 @@ export class AssessmentTestService {
 
         return this.http.post(url, body);
     }
+
+    GetFinalResults(userID: string, injuryNum) {
+        var url = '/api/assessmentTest/completedtest/final/' + userID + '?num=' + injuryNum;
+
+        return this.http.get(url);
+    }
 }
