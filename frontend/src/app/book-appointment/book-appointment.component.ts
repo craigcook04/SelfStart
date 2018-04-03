@@ -45,8 +45,7 @@ export class BookAppointmentComponent implements OnInit {
               private apptService: AppointmentsService,
               private paymentService: PaymentService,
               private cookieService: CookieService,
-              private patientService: PatientService) { 
-              }
+              private patientService: PatientService) {}
 
   ngOnInit() {
     this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
@@ -116,8 +115,6 @@ export class BookAppointmentComponent implements OnInit {
     })
   }
 
-  }
-
   getTimeOfDay(): string{
     this.today = new Date();
     var hour = this.today.getHours();
@@ -125,10 +122,7 @@ export class BookAppointmentComponent implements OnInit {
     if(hour < 17){ return "Afternoon"}
     else{ return "Evening"};
   }
-
-}
-
-
+  
   SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, ) {
     console.log(started);
   }
