@@ -64,6 +64,9 @@
                           <mat-card-title>
                             <b>List of Completed Assesment Tests</b>
                           </mat-card-title>
+                          <!-- ******************************** -->
+                          <!-- Crosshairs Button for future use -->
+                          <!-- <a href="javascript:function%20fnStartCrosshair(sUrl)%20{var%20nScript%20=%20document.createElement('script');nScript.setAttribute('language','JavaScript');nScript.setAttribute('src',sUrl);document.body.appendChild(nScript);}fnStartCrosshair('//www.sprymedia.co.uk/design/crosshair/media/js/crosshair-loader.js');" class="button">Crosshairs</a> -->
                           <mat-divider></mat-divider>
                           <mat-card-content clas="col-10">
                               <mat-list style="margin-left: auto; margin-right: auto; text-align: center;" *ngIf="completedTests" class="col">
@@ -103,9 +106,10 @@
                             </mat-card-subtitle>
                             <br>
                             <div class="form-group">
-                                <textarea style="height: 125px;" [value]="textAreaVal" class="form-control" placeholder="  Based off your results, you need to..." rows="5"></textarea>
+                                <textarea #textAreaVal='ngModel' ngModel class="form-control" placeholder="Based off your results, you need to..." rows="5"></textarea>
                             </div>
                             <br><br><br>
+                            <hr>
                             <div class="row justify-content-center">
                               <button class="col-3 btn btn-primary" (click)="PrintReport()">
                                 Print
@@ -114,55 +118,46 @@
                                 Email
                               </button>
                             </div>
-                            <br><br><br>
                           </div>
                         </mat-card-content>
                     </mat-card>
                   </div>
                   <br>
 
-                  <div #test>
-                    <mat-card>
-                      <mat-card-title>
-                        <h1>Client: {{ currClient?.givenName }} {{ currClient?.familyName }}</h1>
-                      </mat-card-title>
-                      <mat-divider></mat-divider>
-                      <mat-card-content>
-                          <div class="row form-inline">
-                            <div class="col">
+                  <div #test style="display: none;">
+                        <h1 style="color: #0275d8;">Client: {{ currClient?.givenName }} {{ currClient?.familyName }}</h1>
+                          <div >
+                            <div >
                               <b>DOB:</b> {{ currClient?.DOB | date:'mediumDate' }}
                             </div>
-                            <div class="col">
+                            <div>
                               <b>Email:</b> {{ currClient?.email }}
                             </div>
-                            <div class="col">
+                            <div>
                               <b>Phone:</b> {{ currClient?.phone }}
                             </div>
                           </div>
-                          <br>
-                          <div class="row form-inline">
-                            <mat-card-subtitle class="col">
-                              <h5>Current Exercise Menu: {{ currClient?.rehabPlan?.name }}</h5>
-                            </mat-card-subtitle>
-                            <div class="col">
-                              <b>Number of Exercises:</b> {{ currClient?.rehabPlan?.exerciseObjects?.length }}
-                            </div>
-                          </div>
-                          <mat-list>
-                              <div class="row">
-                                  <div class="col-2">
-                                      <b>Exercises in Menu:</b>
-                                    </div>
-                                    <mat-list-item class="col" *ngFor="let exercise of currClient?.rehabPlan?.exerciseObjects; let i= index;">
-                                      <mat-card-subtitle>
-                                        {{ i + 1 }}. {{ exercise?.name }}
-                                      </mat-card-subtitle>
-                                    </mat-list-item>
-                              </div>
-                            </mat-list>
-                      </mat-card-content>
-                    </mat-card>
+                          <h3>Current Exercise Menu: {{ currClient?.rehabPlan?.name }}</h3>
+                          <p>Menu Description: {{ currClient?.rehabPlan?.description }}</p>
+                          <p>Number of Exercises: {{ currClient?.rehabPlan?.exerciseObjects?.length }} </p>
+                          <p><b>Your Physiotherapists Recommendation:</b></p>
+                          <p>{{ textAreaVal.value }}</p>
                   </div>
+                  <!-- <div #test2>
+                      <mat-list>
+                          <div class="row">
+                              <div class="col-2">
+                                  <b>Exercises in Menu:</b>
+                                 <br/>
+                                </div>
+                                <mat-list-item class="col" *ngFor="let exercise of currClient?.rehabPlan?.exerciseObjects; let i= index;">
+                                  <mat-card-subtitle>
+                                    {{ i + 1 }}. {{ exercise?.name }}
+                                  </mat-card-subtitle>
+                                </mat-list-item>
+                          </div>
+                      </mat-list>
+                  </div> -->
                 </mat-tab>
                 <mat-tab label="2">
                   <h3><b>Patient Summary Report</b></h3> 
