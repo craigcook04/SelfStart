@@ -6,12 +6,14 @@ var completedAssessmentTest = new mongoose.Schema(
         injuryNumber: String,
         description: String,
         completed: Boolean,
-        dateCreated: Date,
+        treatmentClosed: Boolean,
+        closedFinalThoughts: String,
         dateCompleted: Date,
+        dateClosed: Date,
         questions: [],
         physioRate: Number,
         physioDescription: String,
-        patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
+        userID: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'}
     }
 )
 
