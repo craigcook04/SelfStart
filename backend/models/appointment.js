@@ -6,7 +6,7 @@ var appointmentSchema = new mongoose.Schema(
         other: String,
         type: String,
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
-        patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
+        userID: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'}
     }
 );
 
