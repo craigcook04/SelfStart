@@ -50,7 +50,6 @@
                </p>
           </div>
         </div> -->
-
         <div style="min-height: 100vh; margin: 2%;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
@@ -62,7 +61,7 @@
                     <mat-card class="col">
                         <div>
                           <mat-card-title>
-                            <b>List of Completed Assesment Tests</b>
+                            <b style="color: #0275d8;">List of Completed Assesment Tests</b>
                           </mat-card-title>
                           <!-- ******************************** -->
                           <!-- Crosshairs Button for future use -->
@@ -93,9 +92,10 @@
                           </mat-card-content>
                         </div>
                     </mat-card>
+
                     <mat-card class="col">
                         <mat-card-title>
-                            <b>Generate Patient Report</b>
+                            <b style="color: #0275d8;">Generate Patient Report</b>
                         </mat-card-title>
                         <mat-divider></mat-divider>
                         <mat-card-content>
@@ -114,7 +114,7 @@
                               <button class="col-3 btn btn-primary" (click)="PrintReport()">
                                 Print
                               </button>
-                              <button class="col-3 btn btn-primary" (click)="EmailReport()">
+                              <button class="col-3 btn btn-primary" (click)="EmailReport()" (click)="emailModal.show()" >
                                 Email
                               </button>
                             </div>
@@ -212,4 +212,21 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+
+
+        <!-- Confirmation modal for email -->
+        <div mdbModal #emailModal="mdb-modal" class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">Email sent to {{ currClient?.givenName }}</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm waves-light" (click)="emailModal.hide()" mdbRippleRadius>Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
