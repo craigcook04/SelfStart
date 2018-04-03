@@ -51,7 +51,7 @@ export class RehabPlansComponent implements OnInit {
   applyFilter(filterValue: string){
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.rehabPlansService.SearchPlans(filterValue, "name", 0, 'asc' ).subscribe(data => {
+    this.rehabPlansService.SearchPlans(filterValue, 0).subscribe(data => {
       console.log(data);
       //this.total = (data.total);
       var retObj : any = data;
@@ -127,7 +127,7 @@ export class RehabPlansComponent implements OnInit {
       this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
         var retObj: any = data;
         console.log(retObj);
-        this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+        this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.rehabPlans = Object.assign([], retObj.docs);
       
@@ -142,7 +142,7 @@ export class RehabPlansComponent implements OnInit {
     var ID = this.currPlan._id;
     this.rehabPlansService.removePlan(ID).subscribe(data => {
       console.log(data);
-     this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+     this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.total = retObj.total;
           this.rehabPlans = Object.assign([], retObj.docs);
@@ -167,7 +167,7 @@ export class RehabPlansComponent implements OnInit {
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       //window.location.reload();
-      this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+      this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.rehabPlans = Object.assign([], retObj.docs);
       
@@ -186,7 +186,7 @@ export class RehabPlansComponent implements OnInit {
       console.log(data)
       //window.location.reload();
       
-      this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+      this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
         var retObj : any = data;
         this.rehabPlans = Object.assign([], retObj.docs);
       
@@ -225,7 +225,7 @@ export class RehabPlansComponent implements OnInit {
       this.offset-=10;
       this.pageIndex--;
     }
-    this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+    this.rehabPlansService.SearchPlans(searchString,this.offset).subscribe(data => {
       var retObj : any = data;
       this.rehabPlans = Object.assign([], retObj.docs);
       
