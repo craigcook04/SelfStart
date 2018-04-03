@@ -98,6 +98,16 @@ export class AssessmentTestComponent implements OnInit {
     this.viewDetails = false;
     this.manageTests = false;
     this.showPatients = false;
+    var temp: string = "How Do you Feel Today"
+    
+    var tempQuestion = {
+      questionText: temp,
+      questionCode: "RA",
+      answer: null
+      
+    }
+    
+    this.questions.push(tempQuestion);
     // this.manageTests = true;
     
   }
