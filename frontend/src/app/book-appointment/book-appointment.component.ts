@@ -30,7 +30,7 @@ export class BookAppointmentComponent implements OnInit {
   paymentAmount: any = '0';
   currContent: any;
   client: any;
-
+  selected = 'option2';
   constructor(private modalService: NgbModal,
               private router: Router,
               private imageService: ImageService,
