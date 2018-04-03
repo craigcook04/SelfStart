@@ -154,7 +154,6 @@ export class GenerateReportComponent implements OnInit {
     var years = moment().diff(DOB, 'years');
     return years;
   }
-  @ViewChild('test') test: ElementRef;
   @ViewChild('summarytest') summarytest: ElementRef;
 
   chartClicked(e: any): void { 
@@ -201,7 +200,7 @@ export class GenerateReportComponent implements OnInit {
 
         let pdf = doc.output('datauristring');
     
-        this.emailService.SendPDFToClient(pdf).subscribe(data => {
+        this.emailService.SendPDFToClient(pdf, 'none', 'none', 'none').subscribe(data => {
           console.log(data);
         })
   }
@@ -229,9 +228,9 @@ export class GenerateReportComponent implements OnInit {
     doc.save(pdfName);
   }
 
-  EmailPatientSummary() {
+  EmailPatientSummary(toEmail: string, message: string) {
     let doc = new jsPDF();
-    
+    console.log(toEmail, message);
     let specialElementHandlers = {
        '#editor': function(element, renderer){
         return true;
@@ -247,7 +246,8 @@ export class GenerateReportComponent implements OnInit {
     let pdf = doc.output('datauristring');
     console.log(pdf);
     
-    this.emailService.SendPDFToClient(pdf).subscribe(data => {
+    var pdfName = `${this.patient.givenName}${this.patient.familyName}-SummaryReport.pdf`;
+    this.emailService.SendPDFToClient(pdf, toEmail, message, pdfName).subscribe(data => {
        console.log(data);
     })
   }
