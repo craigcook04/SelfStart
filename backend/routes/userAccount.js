@@ -387,7 +387,7 @@ router.route('/appointments/:id')
                     return;
                 }
                 
-                response.send({account: account});
+                response.json({account: account});
             })
         })
     });

@@ -55,4 +55,9 @@ export class AssessmentTestService {
         return this.http.put(url, body);
 
     }
+
+    GetCompletedTests(id: string){
+        var url = '/api/assessmentTest/getresults/' + id;
+        return this.http.get(url);
+    }
 }
