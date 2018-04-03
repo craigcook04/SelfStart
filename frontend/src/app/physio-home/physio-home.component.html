@@ -54,6 +54,7 @@
                     </mat-card-title>
                     <mat-card-content>
                       <mat-card-subtitle *ngIf="appointments?.length < 1">
+                        <br>
                         <div>
                           <p><b>You have no appointments booked for today</b></p>
                         </div>
@@ -83,10 +84,29 @@
                           <mat-card-title style="color: #0275d8;">
                             <div class="row">
                               <div class="col-10">
-                                  Statistics & Summary
+                                  Details & Summary
                               </div>
                             </div>
                           </mat-card-title>
+                          <mat-list>
+                          <mat-list-item>
+                              <div class="btn-block">
+                                <div class="row">
+                                    <div class="col">
+                                      <mat-card-subtitle>
+                                          <h6><b> Number of Clients: </b></h6>
+                                      </mat-card-subtitle>
+                                      </div>
+                                      <div class="col">
+                                        <h4><b></b></h4>
+                                      </div>
+                                    </div>
+                                    <div class="divider">
+                                      <mat-divider></mat-divider>
+                                    </div>
+                                </div>
+                          </mat-list-item>
+                          </mat-list>
                         </div>
                         <br>
                       </mat-card>    
