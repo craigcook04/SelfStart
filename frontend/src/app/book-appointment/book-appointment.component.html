@@ -181,13 +181,13 @@
                     <br>
                     <select #started class="mydropdown">
                             <option value="" disabled>Please select...</option>
-                            <option value="sudden">sudden onset related to a trauma</option>
-                            <option value="gradual">gradual onset</option>
-                            <option value="juststarted">it just started one day</option>
+                            <option value="sudden onset related to a trauma">sudden onset related to a trauma</option>
+                            <option value="gradual onset">gradual onset</option>
+                            <option value="it just started one day">it just started one day</option>
                     </select>
                     <label class="form-inline col-2"><strong>What was the date of your injury?</strong></label>
                     <div class="col">
-                        <input class="form-control" type="text" id="dateStarted" placeholder="Date Started" #date required>
+                        <input class="form-control" type="text" id="dateStarted" placeholder="Date Started" #dateStarted required>
                     </div>
                     <label class="form-inline col-2"><strong>Please describe your injury?</strong></label>
                     <div class="col">
@@ -212,7 +212,7 @@
                             <option value="walking">walking</option>
                             <option value="sitting">sitting</option>
                             <option value="standing">standing</option>
-                            <option value="lyingdown">lying down</option>                            
+                            <option value="lying down">lying down</option>                            
                     </select>
                     <label>What can you do that helps ease  your pain or make you feel better- even if only temporarily?</label>
                     <br>
@@ -221,20 +221,20 @@
                             <option value="walking">walking</option>
                             <option value="sitting">sitting</option>
                             <option value="standing">standing</option>
-                            <option value="lyingdown">lying down</option>                            
+                            <option value="lying down">lying down</option>                            
                     </select>
-                    <label>How is your paing in the morning?</label>
+                    <label>How is your pain in the morning?</label>
                     <br>
                     <select #morningPain class="mydropdown">
                             <option value="" disabled>Please select...</option>
                             <option value="worse">worse</option>
                             <option value="better">better</option>
-                            <option value="nochange">no change</option>
+                            <option value="no change">no change</option>
                             <option value="stiff">stiff</option>
-                            <option value="stiff">the morning is my best time</option>                            
+                            <option value="the morning is my best time">the morning is my best time</option>                            
                     </select>
 
-                    <label>How is your paing in the evening?</label>
+                    <label>How is your pain in the evening?</label>
                     <br>
                     <select #eveningPain class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -242,7 +242,7 @@
                             <option value="better">better</option>
                             <option value="stiff">stiff</option>
                             <option value="nochange">no change</option>
-                            <option value="stiff">the evening is my best time</option>                            
+                            <option value="the evening is my best time">the evening is my best time</option>                            
                     </select>
 
                     <label>Have you sought treatment for this condition with other professionals?</label>
@@ -251,8 +251,8 @@
                             <option value="" disabled>Please select...</option>
                             <option value="physiotherapist">physiotherapist</option>
                             <option value="massage">massage</option>
-                            <option value="chiropractor">stiff</option>
-                            <option value="osteopath">no change</option>
+                            <option value="chiropractor">chiropractor</option>
+                            <option value="osteopath">osteopath</option>
                     </select>
                     <label>Do you have more than one symptom or any other pains in your body?</label>
                     <mat-radio-group>
@@ -309,11 +309,11 @@
                     <br>
                     <select #goals class="mydropdown">
                             <option value="" disabled>Please select...</option>
-                            <option value="painrelief">paint relief</option>
-                            <option value="joint">increased joint range of motion</option>
-                            <option value="strength">improved strength</option>
-                            <option value="sleepbetter">sleep better</option>
-                            <option value="returnroact">return to a specific activity</option>                            
+                            <option value="pain relief">paint relief</option>
+                            <option value="increased joint range of motion">increased joint range of motion</option>
+                            <option value="improved strength">improved strength</option>
+                            <option value="sleep better">sleep better</option>
+                            <option value="return to a specific activity">return to a specific activity</option>                            
                     </select>
                     <!-- <div class="row">
                         <label class="form-inline col-2"><strong>Client Name</strong></label>
@@ -364,7 +364,7 @@
                     <div class="float-left">
                         To Proceed, Click the PayPal button..
                     </div>
-                    <button type="button" class="btn btn-secondary" (click)="initialModal.hide()">Close</button>
+                    <button type="button" class="btn btn-secondary" (click)="SubmitInitialInjuryForm(injuryarea.value, painScale.value, started.value)">Close</button>
                 </div>
             </div>
         </div>
