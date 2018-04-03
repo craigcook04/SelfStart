@@ -71,7 +71,7 @@ export class BookAppointmentComponent implements OnInit {
     else{ return "Evening"};
   }
 
-  SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string,) {
+  SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, ) {
     console.log(started);
   }
 
