@@ -6,6 +6,7 @@ var router = express.Router();
 var UserAccount = require('../models/userAccount');
 var Session  = require('../models/session');
 const crypto = require('crypto');
+var Patient = require('../models/patient')
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -228,8 +229,23 @@ router.route('/account/login')
                        return;
                    }
                    else{
-                         response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
-                         return;
+                       if(user.userCode == "US"){
+                           Patient.findOne({account: user._id}, function(err, patient) {
+                               if(err) {
+                                   response.send(err);
+                                   return;
+                               }
+                               else {
+                                    response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id, verified: patient.verified});
+                                    return;
+                               }
+                           })
+                       }
+                       else{
+                           response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
+                           return;
+                       }
+                         
                    }
                    
                 }
