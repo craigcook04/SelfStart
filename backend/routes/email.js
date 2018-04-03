@@ -217,20 +217,24 @@ router.route('/update/sendpdf')
     .post(function(request, response) {
         console.log(request.body.pdf);
         var mailOptions = {
-            to: 'smallabo@uwo.ca',
+            to: 'ablack65@uwo.ca',
             subject: 'trying to send a pdf',
-            html: '<h1>Please work</h1>'
+            html: '<h1>Please work</h1>',
+            attachments: [{
+                path: request.body.pdf
+            }
+                ]
         };
         
-        // smtpTransport.sendMail(mailOptions, function(error, resp) {
-        //     if(error) {
-        //         console.log(error);
-        //         response.send(error);
-        //         return;
-        //     }
-        //     console.log(resp);
-        //     response.send({success: true, message: "Sent Mail!"});
-        // });
+        smtpTransport.sendMail(mailOptions, function(error, resp) {
+            if(error) {
+                console.log(error);
+                response.send(error);
+                return;
+            }
+            console.log(resp);
+            response.send({success: true, message: "Sent Mail!"});
+        });
     })
     
 module.exports = router;
