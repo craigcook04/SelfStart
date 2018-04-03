@@ -83,15 +83,16 @@
                     </button>
                 </div>
                 <div class="modal-body" style="overflow-x: hidden;">
-                    <div class="row">
-                        <label class="form-inline col-2"><strong>Client Name</strong></label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
-                            <div *ngIf="invalidName">
-                                Please Enter a Valid Name
-                            </div>
-                        </div>
-                    </div>
+                    <!--Dont need this because its on the dashboard-->
+                    <!--<div class="row">-->
+                    <!--    <label class="form-inline col-2"><strong>Client Name</strong></label>-->
+                    <!--    <div class="col">-->
+                    <!--        <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>-->
+                    <!--        <div *ngIf="invalidName">-->
+                    <!--            Please Enter a Valid Name-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
                     <div class="row" >
                         <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
                         <!--<div class="col-10"></div>-->
@@ -101,9 +102,11 @@
                     <div class="row">
                         <label class="form-inline col-2"><strong>Description</strong></label>
                         <div class="col">
-                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
+                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3" #descript></textarea>
                         </div>
                     </div>
+                    <br>
+                    <br>
                     <div class="row">
                         <label class="form-inline col-2"><strong>Upload Images</strong></label>
                         <div class="col">
@@ -116,11 +119,13 @@
                                     <div class="col">
                                         <button type="button" class="btn btn-success"
                                         (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                                            <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
+                                            <fa name="upload"></fa>
                                         </button>
                                         <button type="button" class="btn btn-danger"
                                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                                            <!--<span class="glyphicon glyphicon-trash"></span> Remove all-->
+                                            <fa name="trash"></fa>
                                         </button>
                                     </div>
                                 </div>
@@ -132,9 +137,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="float-left">
-                        To Proceed, Click the PayPal button..
-                    </div>
+                    <button type="submit" class="btn btn-primary" (click)="saveAppointment(descript.value, 'Other Field'); bookModal.hide();">Submit</button>
                     <button type="button" class="btn btn-secondary" (click)="bookModal.hide()">Close</button>
                 </div>
             </div>
@@ -196,13 +199,13 @@
                     <label class="form-inline col-2"><strong>How would you rate your pain right now out of 10?</strong></label>
                     <ngb-rating [(rate)]="currentRate" id="ratePain" class="ratingstars">
                             <ng-template let-fill="fill" let-index="index">
-                              <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
+                              <span class="star" [class.filled]="fill === 100" (click)="StorePainRating(index)">&#9733;</span>
                             </ng-template>
                     </ngb-rating> 
                     <label class="form-inline col-2"><strong>Please rate your paing over the last 7 days?</strong></label>
                     <ngb-rating [(rate)]="currentRate" id="last7days" class="ratingstars">
                             <ng-template let-fill="fill" let-index="index">
-                              <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
+                              <span class="star" [class.filled]="fill === 100" (click)="StoreWeeklyPain(index)">&#9733;</span>
                             </ng-template>
                     </ngb-rating>
                     <label>What aggravates your pain?</label>
@@ -257,24 +260,22 @@
                     <label>Do you have more than one symptom or any other pains in your body?</label>
                     <mat-radio-group>
                             <div class="form-group row-inline" >
-                                <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
-                                <mat-radio-button class="mcchoices" value='yes' (click)="RadioButtonClicked(qcontent, i)">yes</mat-radio-button>
-                                <mat-radio-button class="mcchoices" value='no' (click)="RadioButtonClicked(qcontent, i)">no</mat-radio-button>                                
+                                <mat-radio-button class="mcchoices" value='yes' (click)="moreThanOneSymptom(true)">yes</mat-radio-button>
+                                <mat-radio-button class="mcchoices" value='no' (click)="moreThanOneSymptom(false)">no</mat-radio-button>                                
                             </div>
                     </mat-radio-group>
                     <label>Do you have any other medical conditions</label>
                     <mat-radio-group>
                             <div class="form-group row-inline" >
-                                <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
-                                <mat-radio-button class="mcchoices" value='yes' (click)="RadioButtonClicked(qcontent, i)">yes</mat-radio-button>
-                                <mat-radio-button class="mcchoices" value='no' (click)="RadioButtonClicked(qcontent, i)">no</mat-radio-button>                                
+                                <mat-radio-button class="mcchoices" value='yes' (click)="otherMedicalCondition(true)">yes</mat-radio-button>
+                                <mat-radio-button class="mcchoices" value='no' (click)="otherMedicalCondition(false)">no</mat-radio-button>                                
                             </div>
                     </mat-radio-group>
                     <label>
                         Please explain:
                     </label>
                     <div class="col">
-                            <input class="form-control" type="text" id="explain" placeholder="Date Started" #date required>
+                            <input class="form-control" type="text" id="explain" placeholder="explanation" #explainOther required>
                     </div>
                     <label>Are you experiencing any of following symptoms?</label>
                     <br>
@@ -285,25 +286,25 @@
                             <option value="chiropractor">stiff</option>
                             <option value="osteopath">no change</option>
                     </select>
-                    <label>Do you have  any other pertinent medical, traumas or  surgical history</label>
+                    <label>Do you have  any other pertinent medical traumas or surgical history</label>
                     <mat-radio-group>
                             <div class="form-group row-inline" >
                                 <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
-                                <mat-radio-button class="mcchoices" value='yes' (click)="RadioButtonClicked(qcontent, i)">yes</mat-radio-button>
-                                <mat-radio-button class="mcchoices" value='no' (click)="RadioButtonClicked(qcontent, i)">no</mat-radio-button>                                
+                                <mat-radio-button class="mcchoices" value='yes' (click)="otherMedicalTraumas(true)">yes</mat-radio-button>
+                                <mat-radio-button class="mcchoices" value='no' (click)="otherMedicalTraumas(false)">no</mat-radio-button>                                
                             </div>
                     </mat-radio-group>
                     <label>Please describe</label>
                     <div class="col">
-                            <input class="form-control" type="text" id="description" placeholder="Date Started" #date required>
+                            <input class="form-control" type="text" id="description" placeholder="Date Started" #explainTraumas required>
                     </div>
                     <label>What is your occupation?</label>
                     <div class="col">
-                            <input class="form-control" type="text" id="occupation" placeholder="Date Started" #date required>
+                            <input class="form-control" type="text" id="occupation" placeholder="Date Started" #occupation required>
                     </div>
                     <label>What are your favorite recreational activities or hobbies?</label>
                     <div class="col">
-                            <input class="form-control" type="text" id="hobbies" placeholder="Date Started" #date required>
+                            <input class="form-control" type="text" id="hobbies" placeholder="Date Started" #hobbies required>
                     </div>
                     <label>What are your goals for this treatment?</label>
                     <br>
@@ -315,56 +316,12 @@
                             <option value="sleep better">sleep better</option>
                             <option value="return to a specific activity">return to a specific activity</option>                            
                     </select>
-                    <!-- <div class="row">
-                        <label class="form-inline col-2"><strong>Client Name</strong></label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
-                            <div *ngIf="invalidName">
-                                Please Enter a Valid Name
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" >
-                        <div class="col-sm-12" style="transform: scale(0.85);"><app-appointments></app-appointments></div>
-                    </div>
-                    <div class="row">
-                        <label class="form-inline col-2"><strong>Description</strong></label>
-                        <div class="col">
-                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label class="form-inline col-2"><strong>Upload Images</strong></label>
-                        <div class="col">
-                            <label class="btn btn-block btn-blue-grey" id="inputMedia">
-                                Click Here to Select File(s) for Upload&hellip;
-                                <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
-                            </label>
-                            <td nowrap>
-                                <div>
-                                    <div class="col">
-                                        <button type="button" class="btn btn-success"
-                                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                            <span class="glyphicon glyphicon-upload"></span> Upload all
-                                        </button>
-                                        <button type="button" class="btn btn-danger"
-                                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                            <span class="glyphicon glyphicon-trash"></span> Remove all
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <tr *ngFor="let item of uploader.queue">
-                                <td><strong>{{ item?.file?.name }}</strong></td>
-                            </tr>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="modal-footer">
-                    <div class="float-left">
-                        To Proceed, Click the PayPal button..
-                    </div>
-                    <button type="button" class="btn btn-secondary" (click)="SubmitInitialInjuryForm(injuryarea.value, painScale.value, started.value)">Close</button>
+
+                    <button type="button" class="btn btn-secondary" (click)="initialModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" (click)="SubmitInitialInjuryForm(injuryarea.value, painScale.value, started.value, dateStarted.value, describe.value, aggravates.value, easePain.value, morningPain.value, eveningPain.value, treatment.value, explainOther.value, symptoms.value, explainTraumas.value, occupation.value, hobbies.value, goals.value)">Save</button>
+
                 </div>
             </div>
         </div>

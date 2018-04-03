@@ -13,6 +13,7 @@ import * as jsPDF from 'jspdf';
   templateUrl: './generate-report.component.html',
   styleUrls: ['./generate-report.component.scss']
 })
+
 export class GenerateReportComponent implements OnInit {
 
   patient: any;
@@ -82,6 +83,10 @@ export class GenerateReportComponent implements OnInit {
       console.log(data);
       var retObj: any = data;
       this.paymentHistory = retObj.payments;
+    })
+
+    this.assessmentService.GetUsersInitialInjuries(userID).subscribe(data => {
+      console.log(data);
     })
 
     this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
