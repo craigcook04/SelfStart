@@ -38,26 +38,26 @@ export class CompleteAssessmentTestComponent implements OnInit {
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
     this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
-    this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
-      console.log(data);
-      var obj: any = data;
-      obj = obj.patient;
-      this.client = obj;
-      this.currPlan = this.client.rehabPlan;
-      this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
-        let obj: any = data;
-        console.log(data);
-        this.assessmentTest = obj.rehabPlan.assessmentTests[0];
-        this.assessmentTestQuestions = obj.rehabPlan.assessmentTests[0].questions;
-        this.testLength = this.assessmentTestQuestions.length;
-      })
-    })
-    // this.assessmentTestService.GetPlans().subscribe(data => {
-    //   var retObj: any = data;
-    //   this.assessmentTest = retObj.assessmentTest[3];
-    //   this.assessmentTestQuestions = this.assessmentTest.questions;
-    //   this.testLength = this.assessmentTestQuestions.length;
+    // this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+    //   console.log(data);
+    //   var obj: any = data;
+    //   obj = obj.patient;
+    //   this.client = obj;
+    //   this.currPlan = this.client.rehabPlan;
+    //   this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
+    //     let obj: any = data;
+    //     console.log(data);
+    //     this.assessmentTest = obj.rehabPlan.assessmentTests[0];
+    //     this.assessmentTestQuestions = obj.rehabPlan.assessmentTests[0].questions;
+    //     this.testLength = this.assessmentTestQuestions.length;
+    //   })
     // })
+    this.assessmentTestService.GetPlans().subscribe(data => {
+      var retObj: any = data;
+      this.assessmentTest = retObj.assessmentTest[3];
+      this.assessmentTestQuestions = this.assessmentTest.questions;
+      this.testLength = this.assessmentTestQuestions.length;
+    })
 
     this.MCAnswers = [];
 
@@ -90,7 +90,8 @@ export class CompleteAssessmentTestComponent implements OnInit {
         this.assessmentTestQuestions[i].answer = this.MCAnswers[i];
       }
     }
-      this.assessmentTestService.SendCompletedQuestions(this.assessmentTest._id, this.assessmentTestQuestions).subscribe(data=> {
+      var userID = this.cookieService.get('ID');
+      this.assessmentTestService.CreateCompletedTest(userID, this.assessmentTest.name, this.assessmentTest.description, this.assessmentTestQuestions).subscribe(data => {
         console.log(data);
       })
   }
