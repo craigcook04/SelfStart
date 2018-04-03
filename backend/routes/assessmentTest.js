@@ -222,41 +222,41 @@ router.route('/getresults/:id')
                return;
            }
            
-<<<<<<< HEAD
+
            if(tests === null || tests === undefined){ console.log("None")};
            response.send({completedTests: tests});
-       }
-    })
-router.route('/completedTests')
-
-    .post(function(request,response){
-        var completedAssessment = new CompletedAssessment();
-        completedAssessment.name = request.body.name;
-        completedAssessment.description = request.body.description;
-        completedAssessment.completed = true;
-        completedAssessment.dateCompleted = request.body.dateCompleted;
-        completedAssessment.dateCreated = request.body.dateCreated;
-        completedAssessment.questions = request.body.questions;
-        completedAssessment.physioRate = request.body.physioRate;
-        completedAssessment.physioDescription = request.body.physioDescription;
-        completedAssessment.patient =request.body.patient;
-        
-        completedAssessment.save(function (error) {
-            if (error) {
-                response.send(error);
-                return;
-            }
-            
-            response.json({completedAssessment: completedAssessment});
-        });
-        
-        
-        
-    })
-=======
-           response.json({completedTests: tests});
        })
-    });
+    })
+// router.route('/completedTests')
+
+//     .post(function(request,response){
+//         var completedAssessment = new CompletedAssessment();
+//         completedAssessment.name = request.body.name;
+//         completedAssessment.description = request.body.description;
+//         completedAssessment.completed = true;
+//         completedAssessment.dateCompleted = request.body.dateCompleted;
+//         completedAssessment.dateCreated = request.body.dateCreated;
+//         completedAssessment.questions = request.body.questions;
+//         completedAssessment.physioRate = request.body.physioRate;
+//         completedAssessment.physioDescription = request.body.physioDescription;
+//         completedAssessment.patient =request.body.patient;
+        
+//         completedAssessment.save(function (error) {
+//             if (error) {
+//                 response.send(error);
+//                 return;
+//             }
+            
+//             response.json({completedAssessment: completedAssessment});
+//         });
+        
+        
+        
+//     })
+// =======
+//           response.json({completedTests: tests});
+//       })
+//     });
     
 router.route('/completedtest/:id')
 
@@ -348,6 +348,6 @@ router.route('/initial/getbyid/:userID')
             response.send({intakes: intakes});
         });
     });
->>>>>>> 2f5fb8557018fd4998c9a5257c001302de50aa2b
+
 
 module.exports = router;
