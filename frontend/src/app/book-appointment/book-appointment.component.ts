@@ -50,15 +50,17 @@ export class BookAppointmentComponent implements OnInit {
   ngOnInit() {
     this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     
-    this.patientService.GetPatient().subscribe(data =>{
-      var temp: any = data;
-      this.client = this.patientService.GetPatientInfo(temp.client._id).subscribe(data =>{
-      console.log(data);
-      var obj: any = data;
-      obj = obj.patient;
-      this.client = obj;
-      })
-    })
+    // this.patientService.GetPatient().subscribe(data =>{
+    //   var temp: any = data;
+    //   console.log(data);
+    //   this.client = this.patientService.GetPatientInfo(temp.client._id).subscribe(data =>{
+    //   //console.log(data);
+    //   console.log("Client ID: " + temp.client._id);
+    //   var obj: any = data;
+    //   obj = obj.patient;
+    //   this.client = obj;
+    //   })
+    // })
     
     
     
@@ -106,7 +108,7 @@ export class BookAppointmentComponent implements OnInit {
   }
 
   saveAppointment(reason, other){
-    this.apptService.AddAppointment(this.client, reason, other).subscribe(data => {
+    this.apptService.AddAppointment(this.cookieService.get('ID'), reason, other).subscribe(data => {
       console.log(data);
       
     })
