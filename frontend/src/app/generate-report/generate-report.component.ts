@@ -19,6 +19,9 @@ export class GenerateReportComponent implements OnInit {
   patient: any;
   paymentHistory: any;
 
+  @ViewChild('test') test: ElementRef;
+  @ViewChild('test2') test2: ElementRef;
+
   constructor(private patientService: PatientService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -124,8 +127,6 @@ export class GenerateReportComponent implements OnInit {
     var years = moment().diff(DOB, 'years');
     return years;
   }
-  @ViewChild('test') test: ElementRef;
-
 
   chartClicked(e: any): void { 
   } 
@@ -170,7 +171,6 @@ export class GenerateReportComponent implements OnInit {
         });
 
         let pdf = doc.output('datauristring');
-        console.log(pdf);
     
         this.emailService.SendPDFToClient(pdf).subscribe(data => {
           console.log(data);
