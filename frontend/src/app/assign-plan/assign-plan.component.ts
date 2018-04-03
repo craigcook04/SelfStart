@@ -170,7 +170,7 @@ export class AssignPlanComponent implements OnInit {
         this.length = obj.total;
         this.dataSource = new MatTableDataSource(this.clientList);
       })
-    }
+    })
   }
 
 }
