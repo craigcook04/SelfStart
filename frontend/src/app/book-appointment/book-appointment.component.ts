@@ -37,6 +37,7 @@ export class BookAppointmentComponent implements OnInit {
   currContent: any;
   client: any;
   clientId: any;
+  selected = 'option2';
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -105,6 +106,7 @@ export class BookAppointmentComponent implements OnInit {
       this.apptService.setType(this.type);
     }
 
+
   }
 
   saveAppointment(reason, other){
@@ -114,6 +116,7 @@ export class BookAppointmentComponent implements OnInit {
     })
   }
 
+  }
 
   getTimeOfDay(): string{
     this.today = new Date();
@@ -122,5 +125,13 @@ export class BookAppointmentComponent implements OnInit {
     if(hour < 17){ return "Afternoon"}
     else{ return "Evening"};
   }
-  
+
 }
+
+
+  SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, ) {
+    console.log(started);
+  }
+
+}
+

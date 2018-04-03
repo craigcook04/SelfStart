@@ -246,20 +246,20 @@
 
       </ngb-tab>
     </ngb-tabset> -->
-
+    <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+        <br>
+        <div style="margin-top: -10px;">
+          <h3 class="title" style="color: #0275d8">
+            Account Details
+          </h3>
+        </div>
+      </div>
     <mat-card style="min-height: 100vh;" class="page col-11">
         <mat-tab-group style="min-height: 75vh;">
             <mat-tab label="Account Details">
-                <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
-                    <br>
-                    <div style="margin-top: -10px;">
-                      <h3 class="title" style="color: #0275d8">
-                        Account Details
-                      </h3>
-                    </div>
-                  </div>
                   <br>
                   <div *ngIf="isClient">
+                    <div *ngIf="patient">
                     <mat-card class="accountinfo">
                       <form>
                           <div class="form-group row">
@@ -382,7 +382,8 @@
                       </mat-card>
                         <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
                         <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>      
-                  </div>
+                    </div>
+                    </div>
                   <div *ngIf="isPhysio"></div>
             </mat-tab>
             <mat-tab label="Change Password">
