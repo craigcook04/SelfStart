@@ -83,15 +83,16 @@
                     </button>
                 </div>
                 <div class="modal-body" style="overflow-x: hidden;">
-                    <div class="row">
-                        <label class="form-inline col-2"><strong>Client Name</strong></label>
-                        <div class="col">
-                            <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>
-                            <div *ngIf="invalidName">
-                                Please Enter a Valid Name
-                            </div>
-                        </div>
-                    </div>
+                    <!--Dont need this because its on the dashboard-->
+                    <!--<div class="row">-->
+                    <!--    <label class="form-inline col-2"><strong>Client Name</strong></label>-->
+                    <!--    <div class="col">-->
+                    <!--        <input class="form-control" type="text" id="inputName" placeholder="Client Name" #name required>-->
+                    <!--        <div *ngIf="invalidName">-->
+                    <!--            Please Enter a Valid Name-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--</div>-->
                     <div class="row" >
                         <!--<label class="col-2 col-form-label"><strong>Choose a Date</strong></label>-->
                         <!--<div class="col-10"></div>-->
@@ -101,9 +102,11 @@
                     <div class="row">
                         <label class="form-inline col-2"><strong>Description</strong></label>
                         <div class="col">
-                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3"></textarea>
+                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3" #descript></textarea>
                         </div>
                     </div>
+                    <br>
+                    <br>
                     <div class="row">
                         <label class="form-inline col-2"><strong>Upload Images</strong></label>
                         <div class="col">
@@ -116,11 +119,13 @@
                                     <div class="col">
                                         <button type="button" class="btn btn-success"
                                         (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                                            <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
+                                            <fa name="upload"></fa>
                                         </button>
                                         <button type="button" class="btn btn-danger"
                                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                                            <!--<span class="glyphicon glyphicon-trash"></span> Remove all-->
+                                            <fa name="trash"></fa>
                                         </button>
                                     </div>
                                 </div>
@@ -132,9 +137,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="float-left">
-                        To Proceed, Click the PayPal button..
-                    </div>
+                    <button type="submit" class="btn btn-primary" (click)="saveAppointment(descript.value, 'Other Field'); bookModal.hide();">Submit</button>
                     <button type="button" class="btn btn-secondary" (click)="bookModal.hide()">Close</button>
                 </div>
             </div>
@@ -365,6 +368,8 @@
                         To Proceed, Click the PayPal button..
                     </div>
                     <button type="button" class="btn btn-secondary" (click)="SubmitInitialInjuryForm(injuryarea.value, painScale.value, started.value)">Close</button>
+                    <button type="submit" class="btn btn-primary" (click)="saveAppointment();">Submit</button>
+                    <button type="button" class="btn btn-secondary" (click)="initialModal.hide();">Close</button>
                 </div>
             </div>
         </div>

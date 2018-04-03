@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as moment from 'moment';
+
 
 @Injectable()
 export class AppointmentsService {
+
+  newType: any;
+  newDate: any;
+  newPatient: any;
+  newOther: any;
+  newReason: any;
+  currentPatientId: any; //set a method to set this equal to current user
 
   constructor(private httpClient: HttpClient) { }
   
@@ -11,16 +20,42 @@ export class AppointmentsService {
       return this.httpClient.get(url);
   }
   
-  AddAppointment(date: any, reason: string, other: string): any{
+  
+  AddAppointment(patient: any, reason: string, other: string): any{
+    
       var body = {
-          date: date,
+          date: this.newDate,
           reason: reason,
-          other: other
-          // patient: patient
+          other: other,
+          type: this.newType,
+          patient: patient
+          
+          //This is where we have to link to images************
+          // images: images
       }
       
       var url = '/api/appointment';
       return this.httpClient.post(url, body);
   }
+  
+  setType(type: string){
+    this.newType = type;
+    //console.log(this.newType); - ALSO DEFINED HERE
+  }
+  
+  getType(){
+    //console.log(this.newType);
+    return this.newType;
+  }
+  
+  setNewDate(date: any){
+    this.newDate = new Date(date);
+
+    // moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  }
+  
+  // getDate(){
+  //   return this.newDate;
+  // }
 
 }
