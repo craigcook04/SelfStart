@@ -83,7 +83,7 @@ export class AssignPlanComponent implements OnInit {
   //this is for the exercise menus
   applyFilter2(filterValue: string) {
     
-        this.rehabPlanService.SearchPlans(filterValue, "name", "asc", this.offset * this.pageSize).subscribe(data =>{
+        this.rehabPlanService.SearchPlans(filterValue, this.offset * this.pageSize).subscribe(data =>{
           if(data != []){
             console.log(data);
             this.rehabPlans = [];
@@ -97,7 +97,7 @@ export class AssignPlanComponent implements OnInit {
     this.offset2 = event.pageIndex;
     this.pageSize2 = event.pageSize;
 
-    this.rehabPlanService.SearchPlans(searchValue, "name", "asc", this.offset * this.pageSize).subscribe(data =>{
+    this.rehabPlanService.SearchPlans(searchValue, this.offset * this.pageSize).subscribe(data =>{
       if(data != []){
         console.log(data);
         this.rehabPlans = [];

@@ -35,11 +35,11 @@ export class RehabPlansService {
     console.log("im in the service");
     return this.http.put('api/rehabPlans/' + plan._id, plan);
   }
-  
-  SearchPlans(searchString: string, searchArea: string, offset, ascvsdesc){
+
+  SearchPlans(searchString: string, offset){
     // var url = '/api/rehabPlans/findplan/search?q=' + word;
     // return this.http.get(url);
-    var url = '/api/rehabPlans?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
+    var url = '/api/rehabPlans/?q=' + searchString + '&s=name'+ '&sortorder=asc' + '&offset=' + offset;
     return this.http.get(url);
   }
   
