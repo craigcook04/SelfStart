@@ -470,7 +470,7 @@ router.route('/getclient/:userid')
     .get(function(request, response) {
         var options = 
         {
-            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender', 'rehabPlan'],
         };
         var query = {'account': request.params.userid};
         Patient.paginate(query, options, function(err, client) {
