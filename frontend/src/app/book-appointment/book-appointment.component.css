@@ -1,3 +1,5 @@
+
+
 .card-body {
     text-align: center;
     padding-bottom: 1em;
@@ -11,6 +13,18 @@
 .title {
     text-align: center;
 }
+
+.modal{
+    height: 75%;
+    overflow: auto;
+    margin-top: 1rem;
+}
+
+/*.modal-open .modal {*/
+
+/*overflow-y: auto;*/
+
+/*}*/
 /* 
 #scrollable{
     overflow-y: visible;
@@ -19,6 +33,24 @@
 
 /* body.modal-open {
     overflow: hidden;
+} */
+
+/* .durationDropdown {
+    height: 44px;
+    padding: 3px;
+    padding-left: 0px;
+    border: solid 1px #E4E4E4;
+    border-radius: 3px;
+    background-color: #fff;
+    width: 200px;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-image: none;
+    background-clip: padding-box;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    margin-left: 2.5rem;
+    margin-top: 2px;
 } */
 
 .dividers{
