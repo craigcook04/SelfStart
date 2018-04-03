@@ -393,7 +393,7 @@ export class AssessmentTestComponent implements OnInit {
   moveUp(q: any){
     var index = this.questions.indexOf(q);
     console.log(index);
-    if (index!=0){
+    if (index!=1){
       var temp = this.questions[index-1];
       this.questions[index-1] = q;
       this.questions[index] = temp;

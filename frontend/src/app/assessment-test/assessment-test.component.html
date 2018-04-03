@@ -55,46 +55,94 @@
 <!--<button type="button" class="btn btn-primary createbtn" (click)="showTable()" style="margin-left: 2em;">Manage Tests</button>-->
 <br><br><br>
 <mat-card *ngIf="manageTests && showCreat" class="assessTest">
-    <div class="example-header">
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" #searchString>
-        </mat-form-field>
-    </div>
-    <mat-table [dataSource]="tests" matSort>
-        <ng-container matColumnDef="Patient">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Rehab Plan Name </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.belongsTo?.name}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="Plan Assigned">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Test Assigned </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="Date">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Date Created</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.dateCreated | date: 'yyyy-MM-dd'}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="Date Completed">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Date completed</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.dateCompleted | date: 'yyyy-MM-dd'}} </mat-cell>
-        </ng-container>
+    <mat-tab-group style="min-height: 75vh;">
+        <mat-tab label="All Assessment Tests">
+            <br><br>
+            <div class="example-header">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" #searchString>
+                </mat-form-field>
+            </div>
+            <mat-table [dataSource]="tests" matSort>
+                <ng-container matColumnDef="Patient">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Rehab Plan Name </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.belongsTo?.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Plan Assigned">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Assigned </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date Created</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dateCreated | date: 'yyyy-MM-dd'}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Date Completed">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date completed</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dateCompleted | date: 'yyyy-MM-dd'}} </mat-cell>
+                </ng-container>
 
-        <ng-container matColumnDef="Status">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                <p *ngIf="row.completed" style="color: green">completed</p>
-                <p *ngIf="!row.completed" style="color: red">incomplete</p>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="View Test Results">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                <button type="button" class="btn btn-primary createbtn" (click)="view(row)">view</button>
-            </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="SwitchPageEvent($event, searchString.value);"></mat-paginator>
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <p *ngIf="row.completed" style="color: green">completed</p>
+                        <p *ngIf="!row.completed" style="color: red">incomplete</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="View Test Results">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button type="button" class="btn btn-primary createbtn" (click)="view(row)">view</button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="SwitchPageEvent($event, searchString.value);"></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Pending and Completed Tests">
+            <br><br>
+            <div class="example-header">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" #searchString>
+                </mat-form-field>
+            </div>
+            <mat-table [dataSource]="tests" matSort>
+                <ng-container matColumnDef="Patient">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Rehab Plan Name </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.belongsTo?.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Plan Assigned">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Assigned </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date Created</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dateCreated | date: 'yyyy-MM-dd'}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Date Completed">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Date completed</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dateCompleted | date: 'yyyy-MM-dd'}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <p *ngIf="row.completed" style="color: green">completed</p>
+                        <p *ngIf="!row.completed" style="color: red">incomplete</p>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="View Test Results">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button type="button" class="btn btn-primary createbtn" (click)="view(row)">view</button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+        </mat-tab>
+    </mat-tab-group>
 </mat-card>
 
 <div style="margin-left: 2em;">
@@ -124,10 +172,10 @@
                     <label><b>{{question.questionText}}</b></label>
                     <!--<button class="btn btn-outline-primary" style="float: right;" (click)="deleteQuestion(question)">Remove Question</button>-->
 
-                    <i class="fa fa-chevron-up" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="moveUp(question)"></i>
-                    <i class="fa fa-chevron-down" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="moveDown(question)"></i>
-                    <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteQuestion(question)"></i>
-                    <i class="fa fa-edit" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="open(editQ)"></i>
+                    <i *ngIf="question!=questions[0]" class="fa fa-chevron-up" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: blue;" (click)="moveUp(question)"></i>
+                    <i *ngIf="question!=questions[0]" class="fa fa-chevron-down" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: blue;" (click)="moveDown(question)"></i>
+                    <i *ngIf="question!=questions[0]" class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: red;" (click)="deleteQuestion(question)"></i>
+                    <i *ngIf="question!=questions[0]" class="fa fa-edit" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: green;" (click)="open(editQ)"></i>
 
 
                     <br><br><br>
@@ -325,7 +373,7 @@
         <div>
             <h5>Enter some comments on the test results</h5>
             <br>
-            <input type = "text" #physioComments><br><br>
+            <input type="text" #physioComments><br><br>
             <h5>Based on these results, how do you feel the Client is progressing out of 10 </h5>
             <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
                 <ng-template let-fill="fill" let-index="index">
