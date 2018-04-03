@@ -39,18 +39,6 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <!-- <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
-          <br>
-          <div style="margin-top: -10px;">
-              <h3 *ngIf="client" class="title" style="color: #0275d8">
-                  Good {{ timeOfDay }}<a *ngIf="client">, {{ client?.givenName }}.</a>
-               </h3>
-               <p class="quote">
-                 Welcome to your dashboard, what would you like to do today?
-               </p>
-          </div>
-        </div> -->
-
         <div style="min-height: 100vh; margin: 2%;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
@@ -164,31 +152,163 @@
                     </mat-card>
                   </div>
                 </mat-tab>
-                <mat-tab label="2">
+                <mat-tab  label="2">
+                  <div class="col-11 centerme">
                   <h3><b>Patient Summary Report</b></h3> 
-                  <h5>Personal Information</h5>
                   <br>
-                  <div *ngIf="patient">
-                    <p><b>Name: </b>&nbsp; {{patient?.givenName}} {{patient?.familyName}}</p>
-                    <p><b>Username: </b> &nbsp; {{patient?.account?.userAccountName}}</p>
-                    <p><b>Email: </b>&nbsp; {{patient?.email}}</p>
-                    <p><b>Hometown: </b> &nbsp; {{patient?.city?.name}}, {{patient?.province?.name}}, {{patient?.country?.name}}</p>
-                    <p><b>Age: </b> &nbsp; {{CalculateAge(patient.DOB)}}</p>
+                  <div class="container">
+                      <div class="row">
+                       
+                        <div class="col">
+                            <h5>Personal Information</h5>
+                            <br>
+                            <div *ngIf="patient">
+                              <p><b>Name: </b>&nbsp; {{patient?.givenName}} {{patient?.familyName}}</p>
+                              <p><b>Username: </b> &nbsp; {{patient?.account?.userAccountName}}</p>
+                              <p><b>Email: </b>&nbsp; {{patient?.email}}</p>
+                              <p><b>Hometown: </b> &nbsp; {{patient?.city?.name}}, {{patient?.province?.name}}, {{patient?.country?.name}}</p>
+                              <p><b>Age: </b> &nbsp; {{CalculateAge(patient.DOB)}} years old</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <h5>Diagnosed Case</h5>
+                            <br>
+                            <div *ngIf="initialInjury">
+                              <p><b>Injured Area: </b>&nbsp; {{initialInjury.injuryarea}}</p>
+                              <p><b>How the injury started: </b>&nbsp; {{initialInjury.started}}</p>     
+                              <p><b>Injury description: </b>&nbsp; {{initialInjury.describe}}</p> 
+                              <p><b>Date the Injury Started: </b>&nbsp; {{initialInjury.dateStarted | date: 'yyyy-MM-dd'}}</p>   
+                              <p><b>Client Rehabilitation Goal: </b>&nbsp; {{initialInjury.goals}}</p> 
+                              <p><b>Activity the Client Wants to Return to:</b>&nbsp; {{initialInjury.hobbies}}</p>                
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <h5>Treatment Plan</h5>
+                            <br>
+                            <div *ngIf="rehabPlan"> 
+                                <p><b>Treatment Plan Name: </b>&nbsp; {{rehabPlan.name}}</p>
+                                <p><b>Treatment Plan Description: </b>&nbsp; {{rehabPlan.description}}</p>
+                                <p><b>Treatment Plan Author: </b>&nbsp; {{rehabPlan.authorName}}</p>
+                                <p><b>Number of Exercises in Plan: </b> &nbsp; {{rehabPlan.exerciseObjects.length}}</p>
+                                <div *ngIf="!rehabPlan">
+                                    <p>A rehab plan hasn't been assigned to this client yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                      </div>
                   </div>
-                  <h5>Diagnosed Case</h5>
-                  <h5>Treatments</h5>
-                  <h5>Appointments</h5>
-                  <h5>Payments</h5>
-                  <div *ngIf="paymentHistory">
-                    <div *ngFor="let payment of paymentHistory; let i = index">
-                      <h6>Payment {{i}}</h6>
-                      <p><b>Date: </b> {{payment.dayTimeStamp | date: 'yyyy-MM-dd'}}</p>
-                      <p><b>Amount: </b> ${{payment.amount}}</p>
-                      <p><b>Note: </b>{{payment.note}}</p>
-                      <p><b></b></p>
+                  <br>
+                  <br>
+                  <div class="container">
+                      <div class="row">
+                        <div class="col">
+                            <h5>Payments</h5>
+                            <br>
+                            <div *ngIf="paymentHistory">
+                              <div *ngFor="let payment of paymentHistory; let i = index">
+                                <h6><em>Payment {{i}}</em></h6>
+                                <p><b>Date: </b> &nbsp;  {{payment.dayTimeStamp | date: 'yyyy-MM-dd'}}</p>
+                                <p><b>Amount: </b> &nbsp;  ${{payment.amount}}</p>
+                                <p><b>Note: </b> &nbsp; {{payment.note}}</p>
+                              </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <h5>Appointments</h5>
+                            <br>
+                            <div *ngIf="appointments">
+                              <div *ngFor="let appointment of appointments">
+                                <p><b>Appointment Date: </b> &nbsp; {{appointment.date | date: 'yyyy-MM-dd'}}</p>
+                                <p><b>Appointment Reason: </b> &nbsp; {{appointment.reason}}</p>
+                                <p><b>Other: </b> &nbsp; {{appointment.other}}</p>
+                              </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <h5>Final Outcome</h5>
+                            <br>
+                            <div *ngIf="!finalOutcome">
+                              <p>This treatment is still ongoing.</p>
+                            </div>
+                        </div>
+                        
+                      </div>
                     </div>
+                    <mat-card-actions align="end">
+                      <button type="button" class="btn btn-primary waves-light" mdbRippleRadius (click)="PrintPatientSummary()">Print Summary</button>
+                      <button type="button" class="btn btn-primary waves-light" mdbRippleRadius (click)="EmailPatientSummary()">Email Summary to Client</button>
+                    </mat-card-actions>
                   </div>
-                  <h5>Final Outcome</h5>
+                    <div #summarytest style="display: none;">
+                      <h1 *ngIf="patient" style="color: #0275d8;"><u>{{patient.givenName}} {{patient.familyName}} - Summary Report</u></h1>
+                        <p *ngIf="patient">The patient summary for {{patient.givenName}} {{patient.familyName}} generated on {{GetTodaysDate() | date: 'medium'}}.</p>
+                        <h3 style="color: #0275d8;">Personal Information</h3>                        
+                        <br>
+                        <div *ngIf="patient">
+                          <p><b>Name: </b>&nbsp; {{patient?.givenName}} {{patient?.familyName}}</p>
+                          <p><b>Username: </b> &nbsp; {{patient?.account?.userAccountName}}</p>
+                          <p><b>Email: </b>&nbsp; {{patient?.email}}</p>
+                          <p><b>Hometown: </b> &nbsp; {{patient?.city?.name}}, {{patient?.province?.name}}, {{patient?.country?.name}}</p>
+                          <p><b>Age: </b> &nbsp; {{CalculateAge(patient.DOB)}} years old</p>
+                        </div>
+                        <br>
+                        <h3 style="color: #0275d8;">Diagnosed Case</h3>
+                        <br>
+                        <div *ngIf="initialInjury">
+                          <p><b>Injured Area: </b>&nbsp; {{initialInjury.injuryarea}}</p>
+                          <p><b>How the injury started: </b>&nbsp; {{initialInjury.started}}</p>     
+                          <p><b>Injury description: </b>&nbsp; {{initialInjury.describe}}</p> 
+                          <p><b>Date the Injury Started: </b>&nbsp; {{initialInjury.dateStarted | date: 'yyyy-MM-dd'}}</p>   
+                          <p><b>Client Rehabilitation Goal: </b>&nbsp; {{initialInjury.goals}}</p> 
+                          <p><b>Activity the Client Wants to Return to:</b>&nbsp; {{initialInjury.hobbies}}</p>                
+                        </div>
+                        <br>
+                        <h3 style="color: #0275d8;">Treatment Plan</h3>
+                        <br>
+                        <div *ngIf="rehabPlan"> 
+                            <p><b>Treatment Plan Name: </b>&nbsp; {{rehabPlan.name}}</p>
+                            <p><b>Treatment Plan Description: </b>&nbsp; {{rehabPlan.description}}</p>
+                            <p><b>Treatment Plan Author: </b>&nbsp; {{rehabPlan.authorName}}</p>
+                            <p><b>Number of Exercises in Plan: </b> &nbsp; {{rehabPlan.exerciseObjects.length}}</p>
+                            <div *ngIf="!rehabPlan">
+                                <p>A rehab plan hasn't been assigned to this client yet.</p>
+                            </div>
+                        </div>
+                        <br>
+                        <h3 style="color: #0275d8;">Payments</h3>
+                        <br>
+                        <div *ngIf="paymentHistory">
+                          <div *ngFor="let payment of paymentHistory; let i = index">
+                            <h4><em>Payment {{i}}</em></h4>
+                            <p><b>Date: </b> &nbsp;  {{payment.dayTimeStamp | date: 'yyyy-MM-dd'}}</p>
+                            <p><b>Amount: </b> &nbsp;  ${{payment.amount}}</p>
+                            <p><b>Note: </b> &nbsp; {{payment.note}}</p>
+                          </div>
+                        </div>
+                        <br>
+                        <h3 style="color: #0275d8;">Appointments</h3>
+                        <br>
+                        <div *ngIf="appointments">
+                          <div *ngFor="let appointment of appointments">
+                            <p><b>Appointment Date: </b> &nbsp; {{appointment.date | date: 'yyyy-MM-dd'}}</p>
+                            <p><b>Appointment Reason: </b> &nbsp; {{appointment.reason}}</p>
+                            <p><b>Other: </b> &nbsp; {{appointment.other}}</p>
+                          </div>
+                        </div>
+                        <br>
+                        <h3 style="color: #0275d8;">Final Outcome</h3>
+                        <br>
+                        <div *ngIf="!finalOutcome">
+                          <p>This treatment is still ongoing.</p>
+                        </div>
+                        <br>
+                    </div>
+                  <br> 
                 </mat-tab>
                 <mat-tab label="3">
                   <mat-card class="col">
