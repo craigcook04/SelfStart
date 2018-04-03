@@ -5,9 +5,8 @@ import { PaymentService } from '../payment.service'
 import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AssessmentTestService } from '../assessment-test.service';
-
+import { EmailService } from '../email.service'
 import * as jsPDF from 'jspdf';
-import { PdfService } from '../pdf.service';
 
 @Component({
   selector: 'app-generate-report',
@@ -24,8 +23,8 @@ export class GenerateReportComponent implements OnInit {
               private router: Router,
               private paymentService: PaymentService, 
               private cookieService: CookieService,
-              private pdfService: PdfService,
-              private assessmentService: AssessmentTestService) { }
+              private assessmentService: AssessmentTestService,
+              private emailService: EmailService) { }
 
   
   currClient: any;
@@ -65,7 +64,7 @@ export class GenerateReportComponent implements OnInit {
   private chartOptions:any = { 
     responsive: true 
   }
-  patient: any;
+  patient2: any;
   completedTests: any[];
 
   
@@ -168,6 +167,9 @@ export class GenerateReportComponent implements OnInit {
         let pdf = doc.output('datauristring');
         console.log(pdf);
     
+        this.emailService.SendPDFToClient(pdf).subscribe(data => {
+          console.log(data);
+        })
         //doc.save(this.currClient.familyName + "_" + this.currClient.givenName + ".pdf");
   }
 
