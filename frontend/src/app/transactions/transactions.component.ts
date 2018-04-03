@@ -33,7 +33,7 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.cookieService.set('ID', "5ab0007926bba10fad373816");
+    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       var obj: any = data;
       obj = obj.patient;

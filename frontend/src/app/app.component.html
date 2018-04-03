@@ -57,6 +57,12 @@
                 <li *ngIf="!showLogin && isClient" class="nav-item" id='right-items' [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['client/bookappointment']">Book Appointment</a>
                 </li>    
+                <li *ngIf="!showLogin && isPhysio" class="nav-item" id="right-items" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['#']">Book Time Off</a>
+                </li>
+                <li *ngIf="!showLogin && isAdmin" class="nav-item  moveright" id='right-items' [routerLinkActive]="['active']">
+
+                </li>
           </ul>
       </div>
     </div>

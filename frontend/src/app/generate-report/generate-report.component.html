@@ -51,7 +51,7 @@
           </div>
         </div> -->
 
-        <div style="min-height: 100vh;" class="page col-11">
+        <div style="min-height: 100vh; margin: 2%;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
               <br>
@@ -165,7 +165,30 @@
                   </div>
                 </mat-tab>
                 <mat-tab label="2">
-
+                  <h3><b>Patient Summary Report</b></h3> 
+                  <h5>Personal Information</h5>
+                  <br>
+                  <div *ngIf="patient">
+                    <p><b>Name: </b>&nbsp; {{patient?.givenName}} {{patient?.familyName}}</p>
+                    <p><b>Username: </b> &nbsp; {{patient?.account?.userAccountName}}</p>
+                    <p><b>Email: </b>&nbsp; {{patient?.email}}</p>
+                    <p><b>Hometown: </b> &nbsp; {{patient?.city?.name}}, {{patient?.province?.name}}, {{patient?.country?.name}}</p>
+                    <p><b>Age: </b> &nbsp; {{CalculateAge(patient.DOB)}}</p>
+                  </div>
+                  <h5>Diagnosed Case</h5>
+                  <h5>Treatments</h5>
+                  <h5>Appointments</h5>
+                  <h5>Payments</h5>
+                  <div *ngIf="paymentHistory">
+                    <div *ngFor="let payment of paymentHistory; let i = index">
+                      <h6>Payment {{i}}</h6>
+                      <p><b>Date: </b> {{payment.dayTimeStamp | date: 'yyyy-MM-dd'}}</p>
+                      <p><b>Amount: </b> ${{payment.amount}}</p>
+                      <p><b>Note: </b>{{payment.note}}</p>
+                      <p><b></b></p>
+                    </div>
+                  </div>
+                  <h5>Final Outcome</h5>
                 </mat-tab>
                 <mat-tab label="3">
                   <mat-card class="col">

@@ -1,10 +1,12 @@
+import { PatientService } from '../patient.service';
+import { ActivatedRoute, Router} from '@angular/router';
+import * as moment from 'moment';
+import { PaymentService } from '../payment.service'
+import { CookieService } from 'ngx-cookie-service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AssessmentTestService } from '../assessment-test.service';
-import {ActivatedRoute, Router} from '@angular/router'
-import { PatientService } from '../patient.service';
-
+import { EmailService } from '../email.service'
 import * as jsPDF from 'jspdf';
-import { PdfService } from '../pdf.service';
 
 @Component({
   selector: 'app-generate-report',
@@ -13,6 +15,18 @@ import { PdfService } from '../pdf.service';
 })
 export class GenerateReportComponent implements OnInit {
 
+  patient: any;
+  paymentHistory: any;
+
+  constructor(private patientService: PatientService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private paymentService: PaymentService, 
+              private cookieService: CookieService,
+              private assessmentService: AssessmentTestService,
+              private emailService: EmailService) { }
+
+  
   currClient: any;
   textAreaVal: string = "";
   chartType: string = 'line';
@@ -46,20 +60,30 @@ export class GenerateReportComponent implements OnInit {
         pointHoverBorderColor: 'rgba(151,187,205,1)'
     }
   ];
-  chartOptions: any = { 
-    responsive: true,
-  };
-  patient: any;
+
+  private chartOptions:any = { 
+    responsive: true 
+  }
+  patient2: any;
   completedTests: any[];
 
-  @ViewChild('test') test: ElementRef;
-
-  constructor(  private assessmentService: AssessmentTestService,
-                private activatedRoute: ActivatedRoute,
-                private patientService: PatientService,
-                private pdfService: PdfService) { }
+  
 
   ngOnInit() {
+    var patientID = this.activatedRoute.snapshot.paramMap.get("id");
+    this.patientService.GetPatientByPatientID(patientID).subscribe(data => {
+      var retObj: any = data;
+      console.log(data);
+      this.patient = retObj.patient;
+    })
+    var userID = this.cookieService.get('ID');
+    console.log("id",userID);
+    this.paymentService.GetPaymentHistory(userID).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.paymentHistory = retObj.payments;
+    })
+
     this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
       console.log(data);
       let obj: any = data;
@@ -90,6 +114,13 @@ export class GenerateReportComponent implements OnInit {
       console.log(this.currClient);
     })
   }
+
+  CalculateAge(DOB: string) {
+    var years = moment().diff(DOB, 'years');
+    return years;
+  }
+  @ViewChild('test') test: ElementRef;
+
 
   chartClicked(e: any): void { 
   } 
@@ -136,6 +167,9 @@ export class GenerateReportComponent implements OnInit {
         let pdf = doc.output('datauristring');
         console.log(pdf);
     
+        this.emailService.SendPDFToClient(pdf).subscribe(data => {
+          console.log(data);
+        })
         //doc.save(this.currClient.familyName + "_" + this.currClient.givenName + ".pdf");
   }
 
