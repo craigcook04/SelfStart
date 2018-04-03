@@ -49,7 +49,7 @@ export class AppointmentsService {
   }
   
   setNewDate(date: any){
-    this.newDate = new Date(date);
+    this.newDate = date;
 
     // moment(date).format("MMMM Do YYYY, h:mm:ss a");
   }

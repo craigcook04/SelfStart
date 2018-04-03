@@ -12,17 +12,27 @@ import { AppointmentsService } from '../appointments.service';
   styleUrls: ['./appointments.component.css']
 })
 export class AppointmentsComponent implements OnInit, AfterViewInit {
+  //verified 
+  currentWeek = 0; //starts at the current week and increments every time next button is clicked
+  cells: Object[]; //an array for the 37 time slots
+  timeIndex: any; //keeps the currently selected time
+  dayIndex: any; //keeps the currently selected day of the week
+  currentlyFilled: any[]; //array for all slot ids in use
+  yellowStartDate: any; //keeps currently yellow slots - previously: currentlyHighlighted
+  yellowFormattedDate: any; //yellow selected date - but formatted
+  saveYellow: any[]; //save the selected yellow slot in a variable
   
-  cells: Object[];
+  
+  
+  
+  //unverified
   dateSelected: any;
-  currentWeek = 0;
-  currentlyHighlighted: any;
-  previouslyHighlighted: any[];
+  
+  
   isSelected: any;
   bookedDates: any[];
-  timeIndex: any; 
-  dayIndex: any;
-  currentlyFilled: any[];
+  
+  
   currentlySaved: any[];
   isStart: any;
   temp: any[];
@@ -30,7 +40,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   selectedWeek: any;
   isSaved: any;
   edgePage: any;
-  formattedLiveDate: any;
+  
   currentType: string;
   reHighlight: any[];
 
@@ -43,27 +53,41 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     //this.currentType = this.apptService.getType(); - TO EARLY TO GET?
     //console.log(this.currentType);
-    this.isSelected = false;
-    this.currentlyFilled = new Array(37);
+    this.isSelected = false; //this is for if we have to set previous yellow squres back to blue or not
+    this.currentlyFilled = new Array(); //array for the possible slots that could be filled - holds booked slots on current page
     this.cells = new Array(37); //Create 37 time slots
-    this.temp = new Array(3);
-    this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially
+    this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially with the current week
     this.refreshCalendar(); //populate calendar
-    this.isStart = true;
+    
+    
+    
+    this.temp = new Array(3); 
+    this.isStart = true; 
     this.toCancel = false;
     this.isSaved = false;
   }
   
+  
+  
+  
   ngAfterViewInit(){
     // this.refreshCalendar();
-    this.isSelected = false;
+    this.isSelected = false; 
   }
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   //this gets called when a time slot is clicked
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
-    this.currentType = this.apptService.getType();
-    var notTaken = true;
+    this.currentType = this.apptService.getType(); //get the type from the service
+    var notTaken = true; //start this at true and set to false in the for loop below if needed
     //console.log(this.currentType);
     
     //make sure they havnt selected more than one date
@@ -71,83 +95,83 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       //make sure the date they chose isnt already booked
       for(var i = 0; i<this.currentlyFilled.length; i++){
         if(this.currentlyFilled[i] == ("slot"+day+indx)){
-          notTaken = false;
+          notTaken = false; //gets set if date is already booked
         }
       }
-      
-      
+    
       //if booking is okay...
       if(notTaken){
-        this.isStart = false;
         this.isSelected = true; //If one is selected they cant select another
         this.timeIndex = indx; //keeping variable with selected index
-        this.dayIndex = day;
-        // day = Number(day) - 1;
-        this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
-        this.apptService.setNewDate(this.currentlyHighlighted);
-        this.formattedLiveDate = moment(this.currentlyHighlighted).format("dddd, MMMM Do YYYY, h:mm a");
-        //console.log(this.currentlyHighlighted);
-        var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))];
-        this.previouslyHighlighted = highlighted;
-        this.reHighlight = highlighted;
-        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))];
+        this.dayIndex = day; //saving index to variable
+        this.yellowStartDate = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks') //add values to get selected date
+          .add(this.dayIndex, 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
+        this.apptService.setNewDate(moment(this.yellowStartDate).toDate());
+        var yellow = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), 
+          ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))]; //always sets 6 slots as if its an initial appointment
+        this.saveYellow = yellow;
         this.selectedWeek = this.currentWeek;
         
         if(this.currentType == "normal"){
           if(indx > 33){
             if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else if(indx == 35){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else{
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }
           }else{
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
         }else if(this.currentType == 'initial'){
          if(indx > 31){
             if(indx == 32){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
              }
              else if(indx == 33){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
              }
             else if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else if(indx == 35){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else{
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }
           }else{
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
-            document.getElementById(highlighted[5]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[5]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
         }
+        
+        this.isStart = false;
+        this.reHighlight = yellow;
+        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))];
       }
+      
   }else{ //this will have to change the current selection to a new one
-      console.log("Booking time has been changed");
+      console.log("Booking time must be changed");
       //make sure the date they chose isnt already booked
         for(var i = 0; i<this.currentlyFilled.length; i++){
           if(this.currentlyFilled[i] == ("slot"+day+indx)){
@@ -155,182 +179,138 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           }
         }
       
+      
       //if booking is okay...
       if(notTaken){
         this.timeIndex = indx; //keeping variable with selected index
         this.dayIndex = day;
-        this.isStart = false;
-        // day = Number(day) - 1;
-        this.currentlyHighlighted = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
-        this.formattedLiveDate = moment(this.currentlyHighlighted).format("dddd, MMMM Do YYYY, h:mm a");
-        //console.log(this.currentlyHighlighted);
-        var highlighted = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)),  ("slot"+day+(indx+5))];
-        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)),  ("slot"+day+(indx+5))];
-        this.reHighlight = highlighted;
+        this.yellowStartDate = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
+        var yellow = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)),  ("slot"+day+(indx+5))];
         this.selectedWeek = this.currentWeek;
-        if(this.previouslyHighlighted[0] == "slot035" || this.previouslyHighlighted[0] == "slot135" || this.previouslyHighlighted[0] == "slot235" || this.previouslyHighlighted[0] == "slot335" ||this.previouslyHighlighted[0] == "slot435" ||this.previouslyHighlighted[0] ==  "slot535" ||this.previouslyHighlighted[0] == "slot635" 
-        || this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"
-        || this.previouslyHighlighted[0] == "slot032" || this.previouslyHighlighted[0] == "slot132" || this.previouslyHighlighted[0] == "slot232" || this.previouslyHighlighted[0] == "slot332" ||this.previouslyHighlighted[0] == "slot432" ||this.previouslyHighlighted[0] ==  "slot532" ||this.previouslyHighlighted[0] == "slot632"
-        || this.previouslyHighlighted[0] == "slot033" || this.previouslyHighlighted[0] == "slot133" || this.previouslyHighlighted[0] == "slot233" || this.previouslyHighlighted[0] == "slot333" ||this.previouslyHighlighted[0] == "slot433" ||this.previouslyHighlighted[0] ==  "slot533" ||this.previouslyHighlighted[0] == "slot633"
-        || this.previouslyHighlighted[0] == "slot034" || this.previouslyHighlighted[0] == "slot134" || this.previouslyHighlighted[0] == "slot234" || this.previouslyHighlighted[0] == "slot334" ||this.previouslyHighlighted[0] == "slot434" ||this.previouslyHighlighted[0] ==  "slot534" ||this.previouslyHighlighted[0] == "slot634"){
+        
+        
+        
+        
+        this.isStart = false;
+        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)),  ("slot"+day+(indx+5))];
+        this.reHighlight = yellow;
+        
+        if(this.saveYellow[0] == "slot035" || this.saveYellow[0] == "slot135" || this.saveYellow[0] == "slot235" || this.saveYellow[0] == "slot335" ||this.saveYellow[0] == "slot435" ||this.saveYellow[0] ==  "slot535" ||this.saveYellow[0] == "slot635" 
+        || this.saveYellow[0] == "slot036" || this.saveYellow[0] == "slot136" || this.saveYellow[0] == "slot236" || this.saveYellow[0] == "slot336" ||this.saveYellow[0] == "slot436" ||this.saveYellow[0] ==  "slot536" ||this.saveYellow[0] == "slot636"
+        || this.saveYellow[0] == "slot032" || this.saveYellow[0] == "slot132" || this.saveYellow[0] == "slot232" || this.saveYellow[0] == "slot332" ||this.saveYellow[0] == "slot432" ||this.saveYellow[0] ==  "slot532" ||this.saveYellow[0] == "slot632"
+        || this.saveYellow[0] == "slot033" || this.saveYellow[0] == "slot133" || this.saveYellow[0] == "slot233" || this.saveYellow[0] == "slot333" ||this.saveYellow[0] == "slot433" ||this.saveYellow[0] ==  "slot533" ||this.saveYellow[0] == "slot633"
+        || this.saveYellow[0] == "slot034" || this.saveYellow[0] == "slot134" || this.saveYellow[0] == "slot234" || this.saveYellow[0] == "slot334" ||this.saveYellow[0] == "slot434" ||this.saveYellow[0] ==  "slot534" ||this.saveYellow[0] == "slot634"){
           
-           if(this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"){
-            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+           if(this.saveYellow[0] == "slot036" || this.saveYellow[0] == "slot136" || this.saveYellow[0] == "slot236" || this.saveYellow[0] == "slot336" ||this.saveYellow[0] == "slot436" ||this.saveYellow[0] ==  "slot536" ||this.saveYellow[0] == "slot636"){
+            document.getElementById(this.saveYellow[0]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
           }
-          else if(this.previouslyHighlighted[0] == "slot035" || this.previouslyHighlighted[0] == "slot135" || this.previouslyHighlighted[0] == "slot235" || this.previouslyHighlighted[0] == "slot335" ||this.previouslyHighlighted[0] == "slot435" ||this.previouslyHighlighted[0] ==  "slot535" ||this.previouslyHighlighted[0] == "slot635"){
-            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          else if(this.saveYellow[0] == "slot035" || this.saveYellow[0] == "slot135" || this.saveYellow[0] == "slot235" || this.saveYellow[0] == "slot335" ||this.saveYellow[0] == "slot435" ||this.saveYellow[0] ==  "slot535" ||this.saveYellow[0] == "slot635"){
+            document.getElementById(this.saveYellow[0]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[1]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
           }
-          else if(this.previouslyHighlighted[0] == "slot034" || this.previouslyHighlighted[0] == "slot134" || this.previouslyHighlighted[0] == "slot234" || this.previouslyHighlighted[0] == "slot334" ||this.previouslyHighlighted[0] == "slot434" ||this.previouslyHighlighted[0] ==  "slot534" ||this.previouslyHighlighted[0] == "slot634"){
-            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          else if(this.saveYellow[0] == "slot034" || this.saveYellow[0] == "slot134" || this.saveYellow[0] == "slot234" || this.saveYellow[0] == "slot334" ||this.saveYellow[0] == "slot434" ||this.saveYellow[0] ==  "slot534" ||this.saveYellow[0] == "slot634"){
+            document.getElementById(this.saveYellow[0]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[1]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[2]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
           }
-          else if(this.previouslyHighlighted[0] == "slot033" || this.previouslyHighlighted[0] == "slot133" || this.previouslyHighlighted[0] == "slot233" || this.previouslyHighlighted[0] == "slot333" ||this.previouslyHighlighted[0] == "slot433" ||this.previouslyHighlighted[0] ==  "slot533" ||this.previouslyHighlighted[0] == "slot633"){
-            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[3]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          else if(this.saveYellow[0] == "slot033" || this.saveYellow[0] == "slot133" || this.saveYellow[0] == "slot233" || this.saveYellow[0] == "slot333" ||this.saveYellow[0] == "slot433" ||this.saveYellow[0] ==  "slot533" ||this.saveYellow[0] == "slot633"){
+            document.getElementById(this.saveYellow[0]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[1]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[2]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[3]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
           }
-          else if(this.previouslyHighlighted[0] == "slot032" || this.previouslyHighlighted[0] == "slot132" || this.previouslyHighlighted[0] == "slot232" || this.previouslyHighlighted[0] == "slot332" ||this.previouslyHighlighted[0] == "slot432" ||this.previouslyHighlighted[0] ==  "slot532" ||this.previouslyHighlighted[0] == "slot632"){
-            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[3]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[4]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+          else if(this.saveYellow[0] == "slot032" || this.saveYellow[0] == "slot132" || this.saveYellow[0] == "slot232" || this.saveYellow[0] == "slot332" ||this.saveYellow[0] == "slot432" ||this.saveYellow[0] ==  "slot532" ||this.saveYellow[0] == "slot632"){
+            document.getElementById(this.saveYellow[0]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[1]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[2]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[3]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[4]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
           }
           
           
         }else{
-            document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[3]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[4]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-            document.getElementById(this.previouslyHighlighted[5]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
+            document.getElementById(this.saveYellow[0]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[1]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[2]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[3]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[4]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
+            document.getElementById(this.saveYellow[5]).setAttribute("class", "btn btn-sm btn-primary chooseTime");
         }
         
-        this.previouslyHighlighted = highlighted;
+        this.saveYellow = yellow;
         
         if(this.currentType == "normal"){
           if(indx > 33){
             if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else if(indx == 35){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else{
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }
           }else{
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
         }else if(this.currentType == 'initial'){
          if(indx > 31){
             if(indx == 32){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
              }
              else if(indx == 33){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
              }
             else if(indx == 34){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else if(indx == 35){
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-              document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+              document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }else{
-              document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+              document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             }
           }else{
-            document.getElementById(highlighted[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-            document.getElementById(highlighted[5]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+            document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+            document.getElementById(yellow[5]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
         }
       }else{
-        console.log("sorry, slot is already booked by another client");
+        console.log("sorry, slot is already booked by another client (already grey)");
       }
     }
   }
   
   
-  // //we ended up taking this feature out to simplify the user exp.
-  // cancelSelection(){
-    
-  //   if(this.isSelected){
-  //     var highlighted = [("slot"+this.dayIndex+this.timeIndex), ("slot"+this.dayIndex+(this.timeIndex+1)), ("slot"+this.dayIndex+(this.timeIndex+2))("slot"+this.dayIndex+this.timeIndex+3), ("slot"+this.dayIndex+(this.timeIndex+4)), ("slot"+this.dayIndex+(this.timeIndex+5))];
-  //     this.isSaved = false;
-  //     this.isSelected = false;
-      
-  //     if(this.previouslyHighlighted[0] == "slot035" || this.previouslyHighlighted[0] == "slot135" || this.previouslyHighlighted[0] == "slot235" || this.previouslyHighlighted[0] == "slot335" ||this.previouslyHighlighted[0] == "slot435" ||this.previouslyHighlighted[0] ==  "slot535" ||this.previouslyHighlighted[0] == "slot635" 
-  //       || this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"
-  //       || this.previouslyHighlighted[0] == "slot032" || this.previouslyHighlighted[0] == "slot132" || this.previouslyHighlighted[0] == "slot232" || this.previouslyHighlighted[0] == "slot332" ||this.previouslyHighlighted[0] == "slot432" ||this.previouslyHighlighted[0] ==  "slot532" ||this.previouslyHighlighted[0] == "slot632"
-  //       || this.previouslyHighlighted[0] == "slot033" || this.previouslyHighlighted[0] == "slot133" || this.previouslyHighlighted[0] == "slot233" || this.previouslyHighlighted[0] == "slot333" ||this.previouslyHighlighted[0] == "slot433" ||this.previouslyHighlighted[0] ==  "slot533" ||this.previouslyHighlighted[0] == "slot633"
-  //       || this.previouslyHighlighted[0] == "slot034" || this.previouslyHighlighted[0] == "slot134" || this.previouslyHighlighted[0] == "slot234" || this.previouslyHighlighted[0] == "slot334" ||this.previouslyHighlighted[0] == "slot434" ||this.previouslyHighlighted[0] ==  "slot534" ||this.previouslyHighlighted[0] == "slot634"){
-          
-  //         if(this.previouslyHighlighted[0] == "slot036" || this.previouslyHighlighted[0] == "slot136" || this.previouslyHighlighted[0] == "slot236" || this.previouslyHighlighted[0] == "slot336" ||this.previouslyHighlighted[0] == "slot436" ||this.previouslyHighlighted[0] ==  "slot536" ||this.previouslyHighlighted[0] == "slot636"){
-  //           document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //         }
-  //         else if(this.previouslyHighlighted[0] == "slot035" || this.previouslyHighlighted[0] == "slot135" || this.previouslyHighlighted[0] == "slot235" || this.previouslyHighlighted[0] == "slot335" ||this.previouslyHighlighted[0] == "slot435" ||this.previouslyHighlighted[0] ==  "slot535" ||this.previouslyHighlighted[0] == "slot635"){
-  //           document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //         }
-  //         else if(this.previouslyHighlighted[0] == "slot034" || this.previouslyHighlighted[0] == "slot134" || this.previouslyHighlighted[0] == "slot234" || this.previouslyHighlighted[0] == "slot334" ||this.previouslyHighlighted[0] == "slot434" ||this.previouslyHighlighted[0] ==  "slot534" ||this.previouslyHighlighted[0] == "slot634"){
-  //           document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //         }
-  //         else if(this.previouslyHighlighted[0] == "slot033" || this.previouslyHighlighted[0] == "slot133" || this.previouslyHighlighted[0] == "slot233" || this.previouslyHighlighted[0] == "slot333" ||this.previouslyHighlighted[0] == "slot433" ||this.previouslyHighlighted[0] ==  "slot533" ||this.previouslyHighlighted[0] == "slot633"){
-  //           document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[3]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //         }
-  //         else if(this.previouslyHighlighted[0] == "slot032" || this.previouslyHighlighted[0] == "slot132" || this.previouslyHighlighted[0] == "slot232" || this.previouslyHighlighted[0] == "slot332" ||this.previouslyHighlighted[0] == "slot432" ||this.previouslyHighlighted[0] ==  "slot532" ||this.previouslyHighlighted[0] == "slot632"){
-  //           document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[3]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[4]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //         }
-          
-          
-  //       }else{
-  //           document.getElementById(this.previouslyHighlighted[0]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[1]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[2]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[3]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[4]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //           document.getElementById(this.previouslyHighlighted[5]).setAttribute("class", "btn btn-sm bg-primary chooseTime");
-  //       }
-      
-  //   }else{
-  //     console.log("Cannot cancel without selecting");
-  //   }
-    
-  //   //initialize new arrays for these to start fresh for next booking choice
-  //   this.temp = new Array(6);
-  //   this.currentlySaved = new Array(6);
-  // }
+
+
+
+
+//------------------------- GOOD TILL HERE -------------------------------------
+
+
+
+
   
   refreshCalendar(){
+    //lets change this to use this.selected week so were not pulling all appointments every single call
+    
     //populate with new dates
     this.apptService.GetAllAppointments().subscribe(data =>{
       var retObj: any = data; //Get all the appointements (like every one). -- will search by date here eventually
@@ -445,62 +425,62 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             if(this.currentType == "normal"){
               if((this.timeIndex) > 33){
                 if((this.timeIndex) == 34){
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }else if((this.timeIndex) == 35){
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }else{
-                document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }
               }else{
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
               }
             }else if(this.currentType == 'initial'){
             if((this.timeIndex) > 31){
                 if((this.timeIndex) == 32){
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }
                 else if((this.timeIndex) == 33){
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }
                 else if((this.timeIndex) == 34){
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }else if((this.timeIndex) == 35){
-                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }else{
-                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                  document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
                 }
               }else{
-                document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                document.getElementById(this.reHighlight[4]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
-                document.getElementById(this.reHighlight[5]).setAttribute("class", "btn btn-sm bg-warning chooseTime");
+                document.getElementById(this.reHighlight[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                document.getElementById(this.reHighlight[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                document.getElementById(this.reHighlight[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                document.getElementById(this.reHighlight[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                document.getElementById(this.reHighlight[4]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
+                document.getElementById(this.reHighlight[5]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
               }
             }
           }
           
           //this used to be used for the ave functionality that was removed and combined into one step
           // if((this.isSelected) && (this.currentWeek == this.selectedWeek) && (this.isSaved == false)){
-          //   document.getElementById(this.temp[0]).setAttribute("class", "btn btn-sm bg-warning chooseTime disabled");
-          //   document.getElementById(this.temp[1]).setAttribute("class", "btn btn-sm bg-warning chooseTime disabled");
-          //   document.getElementById(this.temp[2]).setAttribute("class", "btn btn-sm bg-warning chooseTime disabled");
+          //   document.getElementById(this.temp[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime disabled");
+          //   document.getElementById(this.temp[1]).setAttribute("class", "btn btn-sm btn-yellow chooseTime disabled");
+          //   document.getElementById(this.temp[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime disabled");
           // }
           
           console.log("Week: " + this.currentWeek);
@@ -509,11 +489,31 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     });
   }
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   nextWeek(){ //function for when they click the next button -- this works perfectly
-    this.currentWeek = this.currentWeek + 1;
+    this.currentWeek = this.currentWeek + 1; 
     this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
     
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   prevWeek(){ //function for the previous button -- also works perfectly
     if((this.currentWeek) === 0){
