@@ -436,8 +436,10 @@
 
                         <br><br>
 
+
                         <!--<button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments1.value);">Assign Followup</button>-->
                         <!--<button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment); setphysioComments(physioComments1.value);">Close Treatment</button>-->
+
                         <ng-template #closeTreatment let-c="close" let-d="dismiss">
                             <div class="modal-header">
                                 <h4 class="modal-title">Close Treatment</h4>

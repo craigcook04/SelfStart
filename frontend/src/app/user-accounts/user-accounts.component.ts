@@ -611,6 +611,7 @@ export class UserAccountsComponent implements OnInit {
         this.ResetErrorMessages();
         closebtn.click();
         this.modalService.open(successfulModal),{size: 'lg'};
+        document.body.style.cursor = "default";
       }
       else {
         //the user will be shown an error in the creation problem along the lines of there being a server problem.

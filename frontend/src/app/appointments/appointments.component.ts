@@ -339,8 +339,10 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   
   refreshCalendar(){
     //lets change this to use this.selected week so were not pulling all appointments every single call
+    //var m = moment(this.weekToFill).toISOString();
     
-    this.apptService.GetAppointmentsByWeek('2018-04-03T12:00:00.000Z').subscribe(data => {
+    
+    this.apptService.GetAppointmentsByWeek(this.weekToFill).subscribe(data => {
       var retObj: any = data;
       console.log(data);
       this.weeklyBookings = Object.assign([], retObj.appointment) //all appointments in current week
@@ -507,7 +509,10 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   
   nextWeek(){ //function for when they click the next button -- this works perfectly
     this.currentWeek = this.currentWeek + 1; 
-    this.weekToFill = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL');
+    
+    this.weekToFill = moment().add(this.currentWeek, 'weeks').startOf('week').add(1, 'day').date();;
+    console.log(this.weekToFill);
+    
     this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
     
   }
@@ -527,7 +532,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       return;
     }else{
       this.currentWeek = this.currentWeek - 1;
-      this.weekToFill = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL');
+      this.weekToFill = moment().add(this.currentWeek, 'weeks').startOf('week').add(1, 'day').date();
       this.dateSelected = moment().add(this.currentWeek, 'weeks').startOf('week').format('LL') + " - " + moment().add(this.currentWeek, 'weeks').endOf('week').format('LL');
     }
   }
