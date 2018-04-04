@@ -63,13 +63,12 @@ export class RehabPlansComponent implements OnInit {
   }
   
 
-  createPlan(planName: string, descript: string, author: string, goalOfPlan: string, timeFrame: Date){
+  createPlan(planName: string, descript: string, author: string, goalOfPlan: string){
     var body = {
       name: planName,
       description: descript,
       authorName: author,
-      goal: goalOfPlan,
-      timeFrameToComplete: timeFrame
+      goal: goalOfPlan
     };
     console.log("hello");
     console.log(body);
@@ -157,13 +156,12 @@ export class RehabPlansComponent implements OnInit {
     
     
   }
-  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date, newDescription: string, searchString){
+  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newDescription: string, searchString){
     console.log("in the function");
     plan.name = newName;
     plan.authorName = newAuthorName;
     plan.goal = newGoalName;
     plan.description = newDescription;
-    plan.timeFrameToComplete = newTimeFrame;
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       //window.location.reload();
@@ -184,7 +182,6 @@ export class RehabPlansComponent implements OnInit {
     console.log(this.currPlan.exerciseObjects);
     this.rehabPlansService.updatePlan(this.currPlan).subscribe(data =>{
       console.log(data)
-      //window.location.reload();
       
       this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
         var retObj : any = data;
