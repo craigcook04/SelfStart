@@ -7,7 +7,7 @@ import * as moment from 'moment';
 export class AppointmentsService {
 
   newType: any;
-  newDate: any;
+  newDate: Date;
   newPatient: any;
   newOther: any;
   newReason: any;
@@ -18,6 +18,11 @@ export class AppointmentsService {
   GetAllAppointments(){
       var url = '/api/appointment';
       return this.httpClient.get(url);
+  }
+  
+  GetAppointmentsByWeek(week: any){
+    var url = '/api/appointment/week/' + week;
+    return this.httpClient.get(url);
   }
   
   
@@ -48,7 +53,7 @@ export class AppointmentsService {
     return this.newType;
   }
   
-  setNewDate(date: any){
+  setNewDate(date: Date){
     this.newDate = date;
 
     // moment(date).format("MMMM Do YYYY, h:mm:ss a");

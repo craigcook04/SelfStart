@@ -105,11 +105,13 @@ router.route('/:appointment_id')
         );
     });
     
-router.route('/:current_date')
+router.route('/day/:current_day')
 
     .get(function (request, response) {
         
-        Appointment.find("date", moment(request.params.current_date).format("MMMM Do YYYY, h:mm:ss a"), function (error, appointment) {
+        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_day).startOf('day').toDate()}}, 
+        {"date": {$lte: moment(request.params.current_day).endOf('day').toDate()}}]}
+            ,function (error, appointment) {
             if (error) {
                response.send({error: error});
             }
@@ -119,4 +121,22 @@ router.route('/:current_date')
         });
     });
 
+//example from mongodb website for reference
+//db.inventory.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
+
+router.route('/week/:current_week')
+
+    .get(function (request, response) {
+        
+        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_week).startOf('week').toDate()}}, 
+        {"date": {$lte: moment(request.params.current_day).endOf('week').toDate()}}]}, function (error, appointment) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({appointment: appointment});
+            }
+        });
+    });
+    
 module.exports = router;
