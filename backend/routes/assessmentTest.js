@@ -53,15 +53,119 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
-            if (error) {
-                response.send({error: error});
+
+        // AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
+        //     if (error) {
+        //         response.send(error);
+        //     }
+            
+        //     response.json({assessmentTest: assessmentTest});
+        //});
+         var query = {};
+        if(request.query.s == "ID"){
+            
+            query['ID'] = Number(request.query.q);
+        }
+        else if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            var search = '^' + request.query.q;
+            var regexexp = new RegExp(search, 'i');
+            query[request.query.s] = regexexp;
+        }
+        else{
+            query = {};
+        }
+        
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
+        
+        var myparameter = request.query.s;
+        var sort ={};
+        sort[myparameter] = sortOrder;
+        var options = 
+        {
+            sort: sort,
+            populate: ['belongsTo'],
+            limit: 10,
+            offset: Number(request.query.offset)
+        };
+        
+        AssessmentTest.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+// =======
+//         AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
+//             if (error) {
+//                 response.send({error: error});
+// >>>>>>> 68ffc52ae9893ccf74363ccc9257eb369218d3f0
                 return;
             }
             
-            response.json({assessmentTest: assessmentTest});
+            response.send(results);
         });
     });
+router.route ('/getCompleted')
+ .get(function (request, response) {
+
+   
+        var query = {};
+        if(request.query.s == "ID"){
+            
+            query['ID'] = Number(request.query.q);
+        }
+        else if(request.query.q != null || request.query.q != undefined) {
+            //if the query string isn't null, set the query to search for the query string
+            var search = '^' + request.query.q;
+            var regexexp = new RegExp(search, 'i');
+            query[request.query.s] = regexexp;
+        }
+        else{
+            query = {};
+        }
+        
+        var sortOrder;
+        if(request.query.sortorder == 'asc') {
+            sortOrder = 1;
+        }
+        else {
+            sortOrder = -1;
+        }
+        
+        var myparameter = request.query.s;
+        var sort ={};
+        sort[myparameter] = sortOrder;
+        var options = 
+        {
+            sort: sort,
+            populate: ['userID'],
+            limit: 10,
+            offset: Number(request.query.offset)
+        };
+        
+        CompletedAssessment.paginate(query, options, function(err, results) {
+            if(err) {
+                console.log(err);
+                response.send(err);
+// =======
+//         AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
+//             if (error) {
+//                 response.send({error: error});
+// >>>>>>> 68ffc52ae9893ccf74363ccc9257eb369218d3f0
+                return;
+            }
+            
+            response.send(results);
+        });
+    });
+
+    
+
 
 //fetching a specific assessment test. This could then retrieve the test, modify the test or delete the test
 
@@ -148,7 +252,7 @@ router.route('/client/completed')
 router.route('/putquestions/:id')
 
     .put(function(request, response){
-        AssessmentTest.findByID(request.params.id, function(error, assessmentTest){
+        AssessmentTest.findById(request.params.id, function(error, assessmentTest){
             if(error){
                 response.send({error: error});
                 return;
@@ -174,9 +278,41 @@ router.route('/getresults/:id')
                return;
            }
            
-           response.json({completedTests: tests});
+
+           if(tests === null || tests === undefined){ console.log("None")};
+           response.send({completedTests: tests});
        })
-    });
+    })
+// router.route('/completedTests')
+
+//     .post(function(request,response){
+//         var completedAssessment = new CompletedAssessment();
+//         completedAssessment.name = request.body.name;
+//         completedAssessment.description = request.body.description;
+//         completedAssessment.completed = true;
+//         completedAssessment.dateCompleted = request.body.dateCompleted;
+//         completedAssessment.dateCreated = request.body.dateCreated;
+//         completedAssessment.questions = request.body.questions;
+//         completedAssessment.physioRate = request.body.physioRate;
+//         completedAssessment.physioDescription = request.body.physioDescription;
+//         completedAssessment.patient =request.body.patient;
+        
+//         completedAssessment.save(function (error) {
+//             if (error) {
+//                 response.send(error);
+//                 return;
+//             }
+            
+//             response.json({completedAssessment: completedAssessment});
+//         });
+        
+        
+        
+//     })
+// =======
+//           response.json({completedTests: tests});
+//       })
+//     });
     
 router.route('/completedtest/:id')
 
@@ -286,5 +422,36 @@ router.route('/initial/getbyid/:userID')
             response.send({intakes: intakes});
         });
     });
+
+router.route('/closeTreatment/:id')
+
+    .put(function(request, response){
+        CompletedAssessment.findById(request.params.id, function(error, completedAssessment){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            if(completedAssessment == null) {
+                response.send({success: true, message: "could not retrieve the assessment test"});
+                return;
+            }
+            
+            completedAssessment.physioRate = request.body.physioRate;
+            completedAssessment.completed = true;
+            completedAssessment.dateClosed = new Date();
+            completedAssessment.finalThoughts = request.body.finalThoughts;
+            completedAssessment.treatmentClosed = true;
+            completedAssessment.save(function(err) {
+                if(err) {
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.json({assessmentTest: completedAssessment, success: true});
+            });
+            
+        })
+    })
 
 module.exports = router;

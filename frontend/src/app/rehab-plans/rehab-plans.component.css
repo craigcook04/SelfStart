@@ -2,9 +2,46 @@ h2 {
     margin: 1em;
 }
 
-.plans {
-    margin-left: 2em;
-    margin-right: 2em;
+.dividers{
+    margin-top: -20px;
+}
+
+.page{
+    margin-left: auto;
+    margin-right: auto;
+    top: -30px;
+}
+
+.jumbotron {
+    padding: 0.6em 0.6em;
+}
+
+h3 {
+    font-size: 2em;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.appointments {
+    background: #f5f5f5;
+    padding: 1%;
+    border-radius: 5%;
+}
+
+.appoints {
+    clear: both;
+}
+
+.listItems{
+    padding-bottom: 1em;
+}
+
+.divider{
+    margin-top: -25px;
 }
 
 .info{
@@ -82,12 +119,6 @@ h2 {
 .calFormat{
     display: flex;
     flex-direction: row;
-}
-
-.page{
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
 }
 
 .button{

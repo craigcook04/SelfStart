@@ -1,3 +1,99 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Calendar</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../clients']">Client Profiles</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercises</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../rehabplans']">Rehabilitation Plans</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../assessmenttests']">Assessment Tests</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+        </mat-nav-list>
+        <mat-divider class="dividers"></mat-divider>
+    </mat-sidenav>
+  <mat-sidenav-content>
+      <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+          <br>
+          <div style="margin-top: -10px;">
+              <h3 *ngIf="physio" class="title" style="color: #0275d8">
+                  Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
+               </h3>
+               <p class="quote">
+                 Manage your appointments, book time off, or get a glimpse of your weekly schedule.
+               </p>
+          </div>
+        </div>
+    <div style="min-height: 100vh;" class="page col-11">
+      <mat-card style="min-height: 75vh;">
+        <br>
+        <div>
+            <br>
+            <div id="cal">
+            <mwl-demo-utils-calendar-header
+              [(view)]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="fetchEvents()"
+              (viewChange)="fetchEvents()">
+            </mwl-demo-utils-calendar-header>
+            
+            <ng-template #loading>
+              <div class="text-center">
+                <i class="fa fa-spin fa-spinner fa-5x"></i>
+                <br>
+                Loading appointments...
+              </div>
+            </ng-template>
+            
+            <div *ngIf="events$ | async; else loading; let events">
+              <div [ngSwitch]="view">
+                <mwl-calendar-month-view
+                  *ngSwitchCase="'month'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  [activeDayIsOpen]="activeDayIsOpen"
+                  (dayClicked)="dayClicked($event.day)"
+                  (eventClicked)="eventClicked($event.event)">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view
+                  *ngSwitchCase="'week'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  (eventClicked)="eventClicked($event.event)">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view
+                  *ngSwitchCase="'day'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  (eventClicked)="eventClicked($event.event)">
+                </mwl-calendar-day-view>
+              </div>
+            </div>
+            </div>
+            <br><br>
+        </div>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 <br>
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
@@ -22,51 +118,51 @@
 </ng-template>
 
 
-<div id="cal">
-  <mwl-demo-utils-calendar-header
-    [(view)]="view"
-    [(viewDate)]="viewDate"
-    (viewDateChange)="fetchEvents()"
-    (viewChange)="fetchEvents()">
-  </mwl-demo-utils-calendar-header>
+<!--<div id="cal">-->
+<!--  <mwl-demo-utils-calendar-header-->
+<!--    [(view)]="view"-->
+<!--    [(viewDate)]="viewDate"-->
+<!--    (viewDateChange)="fetchEvents()"-->
+<!--    (viewChange)="fetchEvents()">-->
+<!--  </mwl-demo-utils-calendar-header>-->
   
-  <ng-template #loading>
-    <div class="text-center">
-      <i class="fa fa-spin fa-spinner fa-5x"></i>
-      <br>
-      Loading appointments...
-    </div>
-  </ng-template>
+<!--  <ng-template #loading>-->
+<!--    <div class="text-center">-->
+<!--      <i class="fa fa-spin fa-spinner fa-5x"></i>-->
+<!--      <br>-->
+<!--      Loading appointments...-->
+<!--    </div>-->
+<!--  </ng-template>-->
 
-  <div *ngIf="events$ | async; else loading; let events">
-    <div [ngSwitch]="view">
-      <mwl-calendar-month-view
-        *ngSwitchCase="'month'"
-        [viewDate]="viewDate"
-        [events]="events"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="eventClicked($event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view
-        *ngSwitchCase="'week'"
-        [viewDate]="viewDate"
-        [events]="events"
-        (eventClicked)="eventClicked($event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view
-        *ngSwitchCase="'day'"
-        [viewDate]="viewDate"
-        [events]="events"
-        (eventClicked)="eventClicked($event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-day-view>
-    </div>
-  </div>
-</div>
-<br><br>
+<!--  <div *ngIf="events$ | async; else loading; let events">-->
+<!--    <div [ngSwitch]="view">-->
+<!--      <mwl-calendar-month-view-->
+<!--        *ngSwitchCase="'month'"-->
+<!--        [viewDate]="viewDate"-->
+<!--        [events]="events"-->
+<!--        [activeDayIsOpen]="activeDayIsOpen"-->
+<!--        (dayClicked)="dayClicked($event.day)"-->
+<!--        (eventClicked)="eventClicked($event.event)"-->
+<!--        (eventTimesChanged)="eventTimesChanged($event)">-->
+<!--      </mwl-calendar-month-view>-->
+<!--      <mwl-calendar-week-view-->
+<!--        *ngSwitchCase="'week'"-->
+<!--        [viewDate]="viewDate"-->
+<!--        [events]="events"-->
+<!--        (eventClicked)="eventClicked($event.event)"-->
+<!--        (eventTimesChanged)="eventTimesChanged($event)">-->
+<!--      </mwl-calendar-week-view>-->
+<!--      <mwl-calendar-day-view-->
+<!--        *ngSwitchCase="'day'"-->
+<!--        [viewDate]="viewDate"-->
+<!--        [events]="events"-->
+<!--        (eventClicked)="eventClicked($event.event)"-->
+<!--        (eventTimesChanged)="eventTimesChanged($event)">-->
+<!--      </mwl-calendar-day-view>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<br><br>-->
 
 <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
 <!--<div mdbModal #deleteModal="mdb-modal" class="modal fade mymodal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
@@ -97,7 +193,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); removePlan(searchString.value);">Confirm</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');">Confirm</button>
         <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
 
     </div>
