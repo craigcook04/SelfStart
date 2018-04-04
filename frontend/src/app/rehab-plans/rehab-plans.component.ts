@@ -29,6 +29,11 @@ export class RehabPlansComponent implements OnInit {
   total: any;
   pageIndex:any = 0;
   offset: number = 0;
+  offset2: number = 0;
+  pageInfo: string;
+  length2;
+  pageSize = 10;
+  pageSizeOptions = [10];
   ngOnInit() {
     this.rehabPlansService.getPlans().subscribe(data => {
       console.log(data);
@@ -41,8 +46,9 @@ export class RehabPlansComponent implements OnInit {
     });
      this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
+      this.length2 = retObj.total;
       console.log(data);
-      this.allExercises = Object.assign([], retObj.exercise);
+      this.allExercises = Object.assign([], retObj.docs);
       
     });
   }
@@ -62,8 +68,9 @@ export class RehabPlansComponent implements OnInit {
     });
   }
   
-
   createPlan(planName: string, descript: string, author: string, goalOfPlan: string){
+    //var timeFrame = year + '/' + month + '/' + day;
+
     var body = {
       name: planName,
       description: descript,
@@ -97,7 +104,7 @@ export class RehabPlansComponent implements OnInit {
     this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
       console.log(data);
-      this.allExercises = Object.assign([], retObj.exercise);
+      this.allExercises = Object.assign([], retObj.docs);
     });
   }
   
@@ -156,12 +163,17 @@ export class RehabPlansComponent implements OnInit {
     
     
   }
+
   editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newDescription: string, searchString){
     console.log("in the function");
     plan.name = newName;
     plan.authorName = newAuthorName;
     plan.goal = newGoalName;
     plan.description = newDescription;
+
+    // var newTimeFrame = year + '/' + month + '/' + day;
+    // plan.timeFrameToComplete = newTimeFrame;
+
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       //window.location.reload();
@@ -205,7 +217,7 @@ export class RehabPlansComponent implements OnInit {
     this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
       console.log(data);
-      this.allExercises = Object.assign([], retObj.exercise);
+      this.allExercises = Object.assign([], retObj.docs);
     });
   } 
 
@@ -225,5 +237,33 @@ export class RehabPlansComponent implements OnInit {
       this.rehabPlans = Object.assign([], retObj.docs);
       
     });
+  }
+  applyFilter1(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    //this.tests.filter = filterValue;
+    this.searchExecises(filterValue);
+  }
+  searchExecises(searchString: string){
+    this.exerciseService.SearchExercises(searchString,"name", this.offset2, 10).subscribe(data =>{
+      if(data != []) {
+        var retObj:any = data;
+        //retObj = retObj.docs;
+        this.length2 = retObj.total;
+        this.allExercises = retObj.docs;
+        if(this.offset2 + 10 > this.length2) {
+          this.pageInfo = `${this.offset2} - ${this.length2} of ${retObj.total}` 
+        }
+        else{
+          this.pageInfo = `${this.offset2} - ${this.offset2 + 10} of ${retObj.total}`    
+        }
+        
+      }
+    })
+  }
+   SwitchPageEvent(pageEvent: any, searchString: string) {
+    this.offset2 = pageEvent.pageIndex * pageEvent.pageSize;
+    console.log('hello im switching');
+    this.searchExecises(searchString);
   }
 }

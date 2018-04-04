@@ -504,7 +504,9 @@ router.route('/admincreated')
             });
         });
         
-    });
+
+});
+
 
 
 router.route('/getclient/:userid')
