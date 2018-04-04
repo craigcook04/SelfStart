@@ -50,7 +50,7 @@
                </p>
           </div>
         </div>
-
+        <br>
         <div style="min-height: 100vh;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
@@ -81,17 +81,6 @@
                                         </button>
                                       </mat-list-item>
                                 </mat-list>
-                                <ng-template #resetModal let-c="close" let-d="dismiss">
-                                    <div class="modal-header">
-                                      Reset Password Email Sent
-                                    </div>
-                                    <div class="modal-body">
-                                      An email has been successfully sent to {{ user.userAccountName }} so that they are able to recover their account
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
-                                    </div>
-                                </ng-template>
                             </div>
                           </div>
                     </div>
@@ -99,6 +88,51 @@
                     <mat-divider></mat-divider>
                     <br>
                     <div>
+                        <mat-card-title>
+                            <b style="color: #0275d8;"> Your Assigned Exercise Menu: </b> {{ currPlan?.name }}
+                          </mat-card-title>
+                          <mat-list *ngIf="currPlan">
+                              <mat-list-item>
+                                  <div style="top: -30px;" class="btn-block">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <mat-card-subtitle>
+                                                <h6> <b> Description: </b> </h6>
+                                            </mat-card-subtitle>
+                                          </div>
+                                          <div class="col-4">
+                                            <b> {{ currPlan?.description }} </b>
+                                          </div>
+                                        </div>
+                                        <div class="divider">
+                                          <mat-divider></mat-divider>
+                                        </div>
+                                    </div>
+                              </mat-list-item>
+                              <mat-list-item>
+                                  <div style="top: -30px;" class="btn-block">
+                                      <div class="row">
+                                          <div class="col-4">
+                                              <mat-card-subtitle>
+                                                <h6> <b>Number of Exercises: </b></h6>
+                                              </mat-card-subtitle>
+                                            </div>
+                                            <div class="col-4">
+                                              <b> {{ currPlan?.exerciseObjects?.length }} </b>
+                                          </div>
+                                        </div>
+                                        <div class="divider">
+                                        <mat-divider></mat-divider>
+                                        </div>
+                                  </div>
+                              </mat-list-item>
+                          </mat-list>
+                          <div *ngIf="!currPlan">
+                              <p><b>No Plan is currently assigned. Speak with your Physiotherapist!</b></p>
+                          </div>
+                          <br>
+                          <mat-divider></mat-divider>
+                          <br>
                       <mat-card-title style="color: #0275d8;">
                         <b>Details and Patient Summary:</b>
                       </mat-card-title>
@@ -108,11 +142,11 @@
                               <div class="row">
                                   <div class="col">
                                     <mat-card-subtitle>
-                                        <h6><b> Been a Member for: </b></h6>
+                                        <h6><b> Been a Member since: </b></h6>
                                     </mat-card-subtitle>
                                     </div>
                                     <div class="col">
-                                      <h4><b> 8 months </b></h4>
+                                      <h4><b> {{ client?.account?.dateRegistered | date:'mediumDate' }}</b></h4>
                                     </div>
                                   </div>
                                   <div class="divider">
@@ -129,7 +163,7 @@
                                       </mat-card-subtitle>
                                     </div>
                                     <div class="col">
-                                      <h4><b> Yesterday </b></h4>
+                                      <h4><b> {{ client?.account?.lastLoggedIn | date:'mediumDate' }} </b></h4>
                                     </div>
                                   </div>
                                   <div class="divider">
@@ -137,12 +171,12 @@
                                   </div>
                               </div>
                         </mat-list-item>
-                        <mat-list-item>
+                        <!-- <mat-list-item>
                             <div class="btn-block">
                               <div class="row">
                                   <div class="col">
                                       <mat-card-subtitle>
-                                          <h6><b> Your Movement Master is: </b></h6>
+                                          <h6><b> Your Expert is: </b></h6>
                                         </mat-card-subtitle>
                                     </div>
                                     <div class="col">
@@ -153,25 +187,9 @@
                                     <mat-divider></mat-divider>
                                   </div>
                               </div>
-                        </mat-list-item>
-                        <mat-list-item>
-                            <div class="btn-block">
-                              <div class="row">
-                                  <div class="col">
-                                      <mat-card-subtitle>
-                                          <h6><b> These are just for: </b></h6>
-                                        </mat-card-subtitle>
-                                    </div>
-                                    <div class="col">
-                                      <h4> <b> SHOW </b></h4>
-                                    </div>
-                                  </div>
-                                  <div class="divider">
-                                    <mat-divider></mat-divider>
-                                  </div>
-                              </div>
-                        </mat-list-item>
+                        </mat-list-item> -->
                       </mat-list>
+                      <br>
                     </div>
                   </mat-card>
                   <mat-card class="col-6">
@@ -202,7 +220,7 @@
                         <hr>
                         <div class="row justify-content-center">
                             <div class="col-8">
-                                <button class="btn btn-block btn-info" [routerLink]="['../completetest']"> Begin Assessment Test</button>
+                                <button class="btn btn-block btn-info" [routerLink]="['../completetest']">Begin Assessment Test</button>
                             </div>
                         </div>
                       </mat-card-subtitle>
@@ -217,19 +235,20 @@
                     <br>
                     <div>
                       <mat-card-title>
-                        <b style="color: #0275d8;"> Your Assigned Exercise Menu: </b> {{ currPlan?.name }}
+                        <b style="color: #0275d8;">Your Current Payment Plan</b>
                       </mat-card-title>
-                      <mat-list *ngIf="currPlan">
+                      <mat-list>
                           <mat-list-item>
-                              <div style="top: -30px;" class="btn-block">
+                              <div class="btn-block">
                                 <div class="row">
-                                    <div class="col-4">
-                                        <mat-card-subtitle>
-                                            <h6> <b> Description: </b> </h6>
-                                        </mat-card-subtitle>
+                                    <div class="col">
+                                      <mat-card-subtitle>
+                                          <h6><b> Amount of Initial Consults: </b></h6>
+                                      </mat-card-subtitle>
                                       </div>
-                                      <div class="col-4">
-                                        <b> {{ currPlan?.description }} </b>
+                                      <div class="col">
+                                        <h4 *ngIf="client?.account?.numbInitial"><b> {{ client?.account?.numbInitial }}</b></h4>
+                                        <h4 *ngIf="!client?.account?.numbInitial"><b> 0 </b></h4>
                                       </div>
                                     </div>
                                     <div class="divider">
@@ -238,38 +257,33 @@
                                 </div>
                           </mat-list-item>
                           <mat-list-item>
-                              <div style="top: -30px;" class="btn-block">
-                                  <div class="row">
-                                      <div class="col-4">
-                                          <mat-card-subtitle>
-                                            <h6> <b>Number of Exercises: </b></h6>
-                                          </mat-card-subtitle>
-                                        </div>
-                                        <div class="col-4">
-                                          <b> {{ currPlan?.exerciseObjects.length }} </b>
+                              <div class="btn-block">
+                                <div class="row">
+                                    <div class="col">
+                                      <mat-card-subtitle>
+                                          <h6><b> Amount of Follow Up Appointments: </b></h6>
+                                      </mat-card-subtitle>
+                                      </div>
+                                      <div class="col">
+                                        <h4 *ngIf="client?.account?.numbAppoint"><b> {{ client?.account?.numbAppoint }}</b></h4>
+                                        <h4 *ngIf="!client?.account?.numbAppoint"><b> 0 </b></h4>
                                       </div>
                                     </div>
                                     <div class="divider">
-                                    <mat-divider></mat-divider>
+                                      <mat-divider></mat-divider>
                                     </div>
-                              </div>
+                                </div>
                           </mat-list-item>
-                      </mat-list>
-                      <div *ngIf="!currPlan">
-                          <p><b>No Plan is currently assigned. Speak with your Physiotherapist!</b></p>
-                      </div>
-                    </div>
-                    <br>
-                    <mat-divider></mat-divider>
-                    <div>
-                      <br>
-                      <mat-card-title>
-                        <b style="color: #0275d8;">Your Progress</b>
-                      </mat-card-title>
-                      <br>
-                      <div class="btn-block justify-content-center">
-                        <mat-progress-bar mode="determinate" [value]="currProgress"></mat-progress-bar>
-                      </div>
+                        </mat-list>
+                        <br><br>
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <button class="btn btn-block btn-info" [routerLink]="['../bookappointment']">Book an Appointment</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-block btn-info" [routerLink]="['../transactions']">Top up Your Plan</button>
+                            </div>
+                        </div>
                       <br>
                     </div>
                   </mat-card>    

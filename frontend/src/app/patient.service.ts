@@ -18,8 +18,14 @@ export class PatientService {
     var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
     return this.http.get(url);
   }
+
   getPhysioPatients(id: string){
     var url = "/api/patient/physiotherapist/" + id;
+    return this.http.get(url);
+  }
+
+  GetPatientByPatientID(patientID: string) {
+    var url = '/api/patient/' + patientID;
     return this.http.get(url);
   }
 
@@ -134,8 +140,8 @@ export class PatientService {
     return this.http.get(url);
   }
 
-  GetPatientsNotUnderPlan(id: string){
-    var url ='/api/patient/notplan/' + id + '/?&offset=0';
+  GetPatientsNotUnderPlan(id: string, pageSize){
+    var url ='/api/patient/notplan/' + id + '/?&offset=0' + '&pageSize=' + pageSize;
     return this.http.get(url);
   }
 
@@ -148,7 +154,7 @@ export class PatientService {
   }
 
   SearchPatientRehab(id: string, searchString: string, offset, pageSize){
-    var url = '/api/patient/notplan/'+ id + '/?q=' + searchString + '&offset=' + offset + '&pageSize=' + pageSize;
+    var url = '/api/patient/notplan/'+ id + '/?q=' + searchString + '&s=givenName' + '&sortorder=asc' + '&offset=' + offset + '&pageSize=' + pageSize;
     return this.http.get(url);
   }
 
@@ -172,6 +178,11 @@ export class PatientService {
     var userID = this.cookieService.get('ID');
     var url = '/api/patient/getclient/' + userID;
 
+    return this.http.get(url);
+  }
+
+  GetSpecificPatient(id: string){
+    var url = '/api/patient/getspecific/' + id;
     return this.http.get(url);
   }
 

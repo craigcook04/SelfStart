@@ -377,8 +377,12 @@ router.route('/appointments/:id')
                 response.send({error: error});
                 return
             }
-            console.log(request.body);
+            if(account == null) {
+                response.send({success: true, message: 'couldnt find user', userID: request.params.id});
+                return;
+            }
             
+            console.log(request.body);
             account.numbAppoint += request.body.appointment;
             account.numbInitial += request.body.initial;
             account.save(function(err){
@@ -387,7 +391,7 @@ router.route('/appointments/:id')
                     return;
                 }
                 
-                response.send({account: account});
+                response.json({account: account});
             })
         })
     });
@@ -404,10 +408,7 @@ router.route('/getdates/:id')
             response.send({account});
         })
     })
-    
-    
 
-    
 router.route('/account/getsalt/:id')
     .get(function(request, response) {
         console.log('hi')
@@ -425,4 +426,5 @@ router.route('/account/getsalt/:id')
             response.send({success: true, salt: userAccount.salt});
         });
     });
+    
 module.exports = router;

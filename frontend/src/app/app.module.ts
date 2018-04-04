@@ -37,7 +37,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
-  MatExpansionModule,
+  //MatExpansionModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -87,6 +87,8 @@ import { CalendarModule } from 'angular-calendar';
 import {DemoUtilsModule} from '../demo-utils/module';
 import { AssignPlanComponent } from './assign-plan/assign-plan.component';
 import { CompleteAssessmentTestComponent } from './complete-assessment-test/complete-assessment-test.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { WelcomeHomeComponent } from './welcome-home/welcome-home.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './auth.guard'
@@ -132,6 +134,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
     AssessmentTestComponent,
     AssignPlanComponent,
     CompleteAssessmentTestComponent,
+    CalendarComponent,
     WelcomeHomeComponent,
     UnauthorizedComponent,
     WrongAccountComponent,
@@ -179,7 +182,10 @@ import { TransactionsComponent } from './transactions/transactions.component';
     MatTableModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatProgressBarModule,
+    MatSelectModule
   ],
   providers: [
     PatientService, 

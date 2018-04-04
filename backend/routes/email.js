@@ -4,6 +4,8 @@ var nodemailer = require("nodemailer");
 var ResetEmail = require('../models/resetEmail');
 var UserAccount = require('../models/userAccount');
 var Patient = require('../models/patient');
+var Administrator = require('../models/administrator');
+var Physiotherapist = require('../models/physiotherapist');
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -55,6 +57,7 @@ router.route('/')
         smtpTransport.sendMail(mailOptions, function(error, resp) {
             if(error) {
                 console.log(error);
+                response.send(error);
                 return;
             }
             console.log(resp);
@@ -81,70 +84,222 @@ router.route('/forgotten')
                response.send({success: false, message: "password request already issued"});
                return;
            }
+           if(useraccount.userCode == "US") {
            
-           Patient.findOne({account: useraccount._id}, function(err, myPatient) {
-               if(err) {
-                   response.send('bad');
-                   return;
-               }
-               
-               console.log(myPatient);
-               if(myPatient == {} || myPatient == null) {
-                   console.log('something bad happened');
-                   return;
-               }
-                              
-              var resetEmail = new ResetEmail();
-              resetEmail.username = request.body.username;
-              var randomHash = makeHash();
-              resetEmail.myHash = randomHash;
-              resetEmail.myDate = new Date();
-              resetEmail.save(function(err) {
-                  if(err) {
-                      console.log("couldn't save");
-                  }
-              });
-              //need to generate a random password for the user, and set it to their account.
-              var newPassword = makeHash();
-              var hashedpass = useraccount.hash(newPassword);
-              var PassAndSalt = hashedpass + useraccount.salt;
-              var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
-              var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
-              useraccount.encryptedPassword = inputPassEncrypted;
-              useraccount.resetRequestSent = true;
-              useraccount.save(function(err) {
-                  if(err) {
-                      response.send(err);
-                      return;
-                  }
-              });
-
-              var emailBody = `
-              <h4>Hello, please follow the folowing instructions to recover your account </h4>
-              <p>We have assigned your account a temporary password to be used to log in to your account.</p> 
-              <p>Your temporary password is ${newPassword}. </p>
-              <p>Upon logging in, you will be prompted to enter a new password. Once you have entered your new password, your account will be updated accordingly</p>
-              <h5>Thank you for using Self Start </h5>
-              `;
-              var mailOptions = {
-                  to: myPatient.email,
-                  subject: "Self Start - Recover Account",
-                  html: emailBody
-              }; 
-               
-              smtpTransport.sendMail(mailOptions, function(error, resp) {
-                if(error) {
-                    console.log(error);
-                    return;
+               Patient.findOne({account: useraccount._id}, function(err, myPatient) {
+                   if(err) {
+                       response.send('bad');
+                       return;
+                   }
+                   
+                   console.log(myPatient);
+                   if(myPatient == {} || myPatient == null) {
+                       console.log('something bad happened');
+                       return;
+                   }
+                                  
+                  var resetEmail = new ResetEmail();
+                  resetEmail.username = request.body.username;
+                  var randomHash = makeHash();
+                  resetEmail.myHash = randomHash;
+                  resetEmail.myDate = new Date();
+                  resetEmail.save(function(err) {
+                      if(err) {
+                          console.log("couldn't save");
+                      }
+                  });
+                  //need to generate a random password for the user, and set it to their account.
+                  var newPassword = makeHash();
+                  var hashedpass = useraccount.hash(newPassword);
+                  var PassAndSalt = hashedpass + useraccount.salt;
+                  var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
+                  var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
+                  useraccount.encryptedPassword = inputPassEncrypted;
+                  useraccount.resetRequestSent = true;
+                  useraccount.save(function(err) {
+                      if(err) {
+                          response.send(err);
+                          return;
+                      }
+                  });
+    
+                  var emailBody = `
+                  <h4>Hello, please follow the folowing instructions to recover your account </h4>
+                  <p>We have assigned your account a temporary password to be used to log in to your account.</p> 
+                  <p>Your temporary password is ${newPassword}. </p>
+                  <p>Upon logging in, you will be prompted to enter a new password. Once you have entered your new password, your account will be updated accordingly</p>
+                  <h5>Thank you for using Self Start </h5>
+                  `;
+                  var mailOptions = {
+                      to: myPatient.email,
+                      subject: "Self Start - Recover Account",
+                      html: emailBody
+                  }; 
+                   
+                  smtpTransport.sendMail(mailOptions, function(error, resp) {
+                    if(error) {
+                        console.log(error);
+                        return;
+                    }
+                    console.log(resp);
+                    response.send({success: true, message: "Sent Mail!"});
+                  });
+               });
+            }
+            
+            if(useraccount.userCode == "PH") {
+           
+               Physiotherapist.findOne({account: useraccount._id}, function(err, myPatient) {
+                   if(err) {
+                       response.send('bad');
+                       return;
+                   }
+                   
+                   console.log(myPatient);
+                   if(myPatient == {} || myPatient == null) {
+                       console.log('something bad happened');
+                       return;
+                   }
+                                  
+                  var resetEmail = new ResetEmail();
+                  resetEmail.username = request.body.username;
+                  var randomHash = makeHash();
+                  resetEmail.myHash = randomHash;
+                  resetEmail.myDate = new Date();
+                  resetEmail.save(function(err) {
+                      if(err) {
+                          console.log("couldn't save");
+                      }
+                  });
+                  //need to generate a random password for the user, and set it to their account.
+                  var newPassword = makeHash();
+                  var hashedpass = useraccount.hash(newPassword);
+                  var PassAndSalt = hashedpass + useraccount.salt;
+                  var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
+                  var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
+                  useraccount.encryptedPassword = inputPassEncrypted;
+                  useraccount.resetRequestSent = true;
+                  useraccount.save(function(err) {
+                      if(err) {
+                          response.send(err);
+                          return;
+                      }
+                  });
+    
+                  var emailBody = `
+                  <h4>Hello, please follow the folowing instructions to recover your account </h4>
+                  <p>We have assigned your account a temporary password to be used to log in to your account.</p> 
+                  <p>Your temporary password is ${newPassword}. </p>
+                  <p>Upon logging in, you will be prompted to enter a new password. Once you have entered your new password, your account will be updated accordingly</p>
+                  <h5>Thank you for using Self Start </h5>
+                  `;
+                  var mailOptions = {
+                      to: myPatient.email,
+                      subject: "Self Start - Recover Account",
+                      html: emailBody
+                  }; 
+                   
+                  smtpTransport.sendMail(mailOptions, function(error, resp) {
+                    if(error) {
+                        console.log(error);
+                        return;
+                    }
+                    console.log(resp);
+                    response.send({success: true, message: "Sent Mail!"});
+                  });
+               });
+            }
+            
+            else if(useraccount.userCode == "AD") {
+                    Administrator.findOne({account: useraccount._id}, function(err, myPatient) {
+                        console.log('admin')
+                       if(err) {
+                           response.send('bad');
+                           return;
+                       }
+                       
+                       console.log(myPatient);
+                       if(myPatient == {} || myPatient == null) {
+                           console.log('something bad happened');
+                           return;
+                       }
+                                      
+                      var resetEmail = new ResetEmail();
+                      resetEmail.username = request.body.username;
+                      var randomHash = makeHash();
+                      resetEmail.myHash = randomHash;
+                      resetEmail.myDate = new Date();
+                      resetEmail.save(function(err) {
+                          if(err) {
+                              console.log("couldn't save");
+                          }
+                      });
+                      //need to generate a random password for the user, and set it to their account.
+                      var newPassword = makeHash();
+                      var hashedpass = useraccount.hash(newPassword);
+                      var PassAndSalt = hashedpass + useraccount.salt;
+                      var hashedSaltPlusPass = useraccount.hash(PassAndSalt);
+                      var inputPassEncrypted = useraccount.encrypt(hashedSaltPlusPass);
+                      useraccount.encryptedPassword = inputPassEncrypted;
+                      useraccount.resetRequestSent = true;
+                      useraccount.save(function(err) {
+                          if(err) {
+                              response.send(err);
+                              return;
+                          }
+                      });
+        
+                      var emailBody = `
+                      <h4>Hello, please follow the folowing instructions to recover your account </h4>
+                      <p>We have assigned your account a temporary password to be used to log in to your account.</p> 
+                      <p>Your temporary password is ${newPassword}. </p>
+                      <p>Upon logging in, you will be prompted to enter a new password. Once you have entered your new password, your account will be updated accordingly</p>
+                      <h5>Thank you for using Self Start </h5>
+                      `;
+                      var mailOptions = {
+                          to: myPatient.email,
+                          subject: "Self Start - Recover Account",
+                          html: emailBody
+                      }; 
+                       
+                      smtpTransport.sendMail(mailOptions, function(error, resp) {
+                        if(error) {
+                            console.log(error);
+                            return;
+                        }
+                        console.log(resp);
+                        response.send({success: true, message: "Sent Mail!"});
+                      });
+                   });
                 }
-                console.log(resp);
-                response.send({success: true, message: "Sent Mail!"});
-              });
-           });
-
            
            });
        
+    });
+    
+router.route('/update/sendpdf')
+    .post(function(request, response) {
+        var body = `You have been sent a Patient Summary Report from your physiotherapist at Self Start. Please note the attachment in this email. <br>
+                    ${request.body.message}
+                    <br>
+                    <br>
+                    Self Start
+                    `;
+        var mailOptions = {
+            to: request.body.toEmail,
+            subject: 'Self Start - Patient Summary',
+            html: body,
+            attachments: [{filename: request.body.fileName, path: request.body.pdf}]
+        };
+        
+        smtpTransport.sendMail(mailOptions, function(error, resp) {
+            if(error) {
+                console.log(error);
+                response.send(error);
+                return;
+            }
+            response.send({success: true, message: "Sent Mail!"});
+        });
     });
     
 module.exports = router;

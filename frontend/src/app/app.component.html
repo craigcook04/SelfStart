@@ -36,7 +36,7 @@
                     <a class="nav-link" [routerLink]="['client/home']"><i class="fa fa-th-large"></i>Dashboard</a>
                 </li>
                 <li *ngIf="isPhysio" class="nav-item" id="right-items" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['physiohome']"><i class="fa fa-th-large"></i>Dashboard</a>
+                    <a class="nav-link" [routerLink]="['physio/home']"><i class="fa fa-th-large"></i>Dashboard</a>
                 </li>
                 <li *ngIf="isAdmin" class="nav-item" id="right-items" [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['admin/home']"><i class="fa fa-th-large"></i>Dashboard</a>
@@ -54,9 +54,15 @@
                 <li *ngIf="showLogin" class="nav-item" id='right-items' [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['signup']">Book Appointment</a>
                 </li>
-                <li *ngIf="!showLogin" class="nav-item" id='right-items' [routerLinkActive]="['active']">
+                <li *ngIf="!showLogin && isClient" class="nav-item" id='right-items' [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['client/bookappointment']">Book Appointment</a>
                 </li>    
+                <li *ngIf="!showLogin && isPhysio" class="nav-item" id="right-items" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['#']">Book Time Off</a>
+                </li>
+                <li *ngIf="!showLogin && isAdmin" class="nav-item  moveright" id='right-items' [routerLinkActive]="['active']">
+
+                </li>
           </ul>
       </div>
     </div>
@@ -132,7 +138,7 @@
     <!--Copyright-->
     <div class="footer-copyright text-center" style="margin-top: 10px; background-color: #3949ab">
         <b style="color: white; ">© 2018 Copyright:</b>
-        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" style="color: white; "> Loop Solutions Inc.</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" style="color: white; "> Loop Solutions Inc.</a>
     </div>
     <!--/Copyright-->
 </footer>

@@ -51,7 +51,7 @@ export class RehabPlansComponent implements OnInit {
   applyFilter(filterValue: string){
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.rehabPlansService.SearchPlans(filterValue, "name", 0, 'asc' ).subscribe(data => {
+    this.rehabPlansService.SearchPlans(filterValue, 0).subscribe(data => {
       console.log(data);
       //this.total = (data.total);
       var retObj : any = data;
@@ -63,13 +63,12 @@ export class RehabPlansComponent implements OnInit {
   }
   
 
-  createPlan(planName: string, descript: string, author: string, goalOfPlan: string, timeFrame: Date){
+  createPlan(planName: string, descript: string, author: string, goalOfPlan: string){
     var body = {
       name: planName,
       description: descript,
       authorName: author,
-      goal: goalOfPlan,
-      timeFrameToComplete: timeFrame
+      goal: goalOfPlan
     };
     console.log("hello");
     console.log(body);
@@ -127,7 +126,7 @@ export class RehabPlansComponent implements OnInit {
       this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
         var retObj: any = data;
         console.log(retObj);
-        this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+        this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.rehabPlans = Object.assign([], retObj.docs);
       
@@ -142,7 +141,7 @@ export class RehabPlansComponent implements OnInit {
     var ID = this.currPlan._id;
     this.rehabPlansService.removePlan(ID).subscribe(data => {
       console.log(data);
-     this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+     this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.total = retObj.total;
           this.rehabPlans = Object.assign([], retObj.docs);
@@ -157,17 +156,16 @@ export class RehabPlansComponent implements OnInit {
     
     
   }
-  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newTimeFrame: Date, newDescription: string, searchString){
+  editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newDescription: string, searchString){
     console.log("in the function");
     plan.name = newName;
     plan.authorName = newAuthorName;
     plan.goal = newGoalName;
     plan.description = newDescription;
-    plan.timeFrameToComplete = newTimeFrame;
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
       console.log(data);
       //window.location.reload();
-      this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+      this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.rehabPlans = Object.assign([], retObj.docs);
       
@@ -184,9 +182,8 @@ export class RehabPlansComponent implements OnInit {
     console.log(this.currPlan.exerciseObjects);
     this.rehabPlansService.updatePlan(this.currPlan).subscribe(data =>{
       console.log(data)
-      //window.location.reload();
       
-      this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+      this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
         var retObj : any = data;
         this.rehabPlans = Object.assign([], retObj.docs);
       
@@ -210,10 +207,8 @@ export class RehabPlansComponent implements OnInit {
       console.log(data);
       this.allExercises = Object.assign([], retObj.exercise);
     });
-  
-    
-    
   } 
+
   switchPage(event: any, searchString: any){
     console.log("teting123");
     console.log(event);
@@ -225,7 +220,7 @@ export class RehabPlansComponent implements OnInit {
       this.offset-=10;
       this.pageIndex--;
     }
-    this.rehabPlansService.SearchPlans(searchString, "name", this.offset, 'asc').subscribe(data => {
+    this.rehabPlansService.SearchPlans(searchString,this.offset).subscribe(data => {
       var retObj : any = data;
       this.rehabPlans = Object.assign([], retObj.docs);
       

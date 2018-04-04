@@ -12,38 +12,6 @@
     width:65%;
 }
 
-/* #custom-search-input{
-    padding: 3px;
-    border: solid 1px #E4E4E4;
-    border-radius: 3px;
-    background-color: #fff;
-}
-
-#custom-search-input input{
-    border: 0;
-    box-shadow: none;
-}
-
-#custom-search-input button{
-    margin: 2px 0 0 0;
-    background: none;
-    box-shadow: none;
-    border: 0;
-    color: #666666;
-    padding: 0 8px 0 10px;
-    border-left: solid 1px #ccc;
-}
-
-#custom-search-input button:hover{
-    border: 0;
-    box-shadow: none;
-    border-left: solid 1px #ccc;
-}
-
-#custom-search-input .glyphicon-search{
-    font-size: 16px;
-} */
-
 .calFormat{
     display: flex;
     flex-direction: row;
@@ -77,11 +45,6 @@
 
 .createbtn {
     margin-left: 1em;
-    margin-top: 1em;
-}
-
-h2 {
-    margin-left: 0.5em;
     margin-top: 1em;
 }
 
@@ -172,6 +135,48 @@ h2 {
     margin-left: 1em;
     margin-right: 2.5em;
     width: 50%;
+}
+
+.dividers{
+    margin-top: -20px;
+}
+
+.page{
+    margin-left: auto;
+    margin-right: auto;
+    top: -30px;
+}
+
+.jumbotron {
+    padding: 0.6em 0.6em;
+}
+
+h3 {
+    font-size: 2em;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.appointments {
+    background: #f5f5f5;
+    padding: 1%;
+    border-radius: 5%;
+}
+
+.appoints {
+    clear: both;
+}
+
+.listItems{
+    padding-bottom: 1em;
+}
+
+.divider{
+    margin-top: -25px;
 }
 
   

@@ -8,12 +8,12 @@
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']">
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['useraccounts']">Manage User Accounts</button>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../useraccounts']">Manage User Accounts</button>
                   </mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
                   <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['manageforms']">Manage Dynamic Forms</button></mat-list-item>
+                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../manageforms']">Manage Dynamic Forms</button></mat-list-item>
                 </mat-nav-list>
             </mat-sidenav>
 
@@ -51,19 +51,20 @@
                                                 <li *ngFor="let user of resetUsers">
                                                    <span class="lefts">{{user.userAccountName}}</span> 
                                                    <fa class="rights check" name="check" matTooltip="Confirm Reset for {{ user?.userAccountName }}" (click)="ResetPassword(user.userAccountName, resetModal)"></fa>
+                                                   <ng-template #resetModal let-c="close" let-d="dismiss">
+                                                      <div class="modal-header">
+                                                        Reset Password Email Sent
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        An email has been successfully sent to {{user.userAccountName}} so that they are able to recover their account
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
+                                                      </div>
+                                                  </ng-template>
                                                 </li>
                                               </ul>
-                                              <ng-template #resetModal let-c="close" let-d="dismiss">
-                                                  <div class="modal-header">
-                                                    Reset Password Email Sent
-                                                  </div>
-                                                  <div class="modal-body">
-                                                    An email has been successfully sent to {{user.userAccountName}} so that they are able to recover their account
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
-                                                  </div>
-                                                </ng-template>
+                                              
                                             </div>
                                         </div>
                                   </div>

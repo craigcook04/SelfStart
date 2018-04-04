@@ -19,7 +19,9 @@ export class ClientHomeComponent implements OnInit {
   appointments: any;
   currPlan: any;
   currTest: any;
-  currProgress: any = 69;
+  //currProgress: any = 69;
+  completedTests: any;
+  accountAge: any = 0;
 
   constructor(private patientService: PatientService,
               private cookieService: CookieService,
@@ -29,7 +31,7 @@ export class ClientHomeComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
+    //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
@@ -50,6 +52,10 @@ export class ClientHomeComponent implements OnInit {
       let obj: any = data;
       this.appointments = obj.appointment;
     })
+
+    // let day = new Date().getTime() - this.client.dateRegistered.getTime();
+    // this.accountAge = day;
+    // console.log(day);
   }
 
   getTimeOfDay(): string{

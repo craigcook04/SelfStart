@@ -6,12 +6,16 @@ var completedAssessmentTest = new mongoose.Schema(
         injuryNumber: String,
         description: String,
         completed: Boolean,
-        dateCreated: Date,
+        treatmentClosed: Boolean,
+        closedFinalThoughts: String,
         dateCompleted: Date,
+        dateClosed: Date,
         questions: [],
-        patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'}
+        physioRate: Number,
+        physioDescription: String,
+        userID: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'}
     }
 )
 
-var CompletedAssessmentTest = mongoose.modal('CompletedAssessmentTest', completedAssessmentTest);
+var CompletedAssessmentTest = mongoose.model('CompletedAssessmentTest', completedAssessmentTest);
 module.exports = CompletedAssessmentTest;

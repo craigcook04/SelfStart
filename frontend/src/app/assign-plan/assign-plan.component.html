@@ -4,9 +4,9 @@
 
 <br>
 <br>
-<div class="page">
+<div class="page col">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-6">
       <mat-card>
         <mat-card-title style="color: #0275d8;">
           <b>Available Exercise Menus:</b>
@@ -14,7 +14,7 @@
         <mat-divider></mat-divider>
         <br>
         <mat-form-field>
-            <input matInput (keyup)="applyFilter2(searchValue.value)" placeholder="Search for Menus..." #searchValue2>
+            <input matInput (keyup)="applyFilter2(searchValue2.value)" placeholder="Search for Menus..." #searchValue2>
           </mat-form-field>
         <mat-list>
             <mat-paginator [length]="length2" [pageSize]="pageSize2" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent2 = $event" (page)="SetOffset2(searchValue2.value, $event)"></mat-paginator>
@@ -36,7 +36,7 @@
         </mat-list>
       </mat-card>
     </div>
-    <div class="col-lg-6">
+    <div class="col-6">
       <mat-card>
           <mat-card-title>
             <div>
@@ -126,15 +126,8 @@
                 </mat-table>
             </div>
             <br>
-              <!-- <mat-card-footer>
-                  <div class="col-sm-12">
-                      <button mat-button class="btn btn-block md">
-                        <b>Add Patients to Plan</b>
-                      </button>
-                    </div>
-                    <br>
-              </mat-card-footer> -->
       </mat-card>
+      <br>
     </div>
   </div>
 </div>

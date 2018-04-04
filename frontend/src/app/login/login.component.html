@@ -4,29 +4,40 @@
 <br>
 <br>
 <mat-card class="assessTest">
-  <div class="mycenter">
-  <div class="form-group row usandpass">
-    <label for="inputUsername" class="col-sm-2 col-form-label">Username: </label>
-    <div class="col-sm-9">
-      <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
-    </div> 
-  </div>
-  <div class="form-group row usandpass">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Password: </label>
-    <div class="col-sm-9">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password" (keyup.enter)="Login(username.value, password.value)" #password>
+  <div class="row justify-content-center">
+    <!-- <div class="form-group row usandpass">
+      <div class="col">
+          <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
+          
+      </div> 
+    </div> -->
+    <div class="md-form usandpass">
+        <i class="fa fa-user prefix"></i>
+        <input mdbActive type="text" id="username" class="form-control" #username>
+        <label for="form2">Username</label>
     </div>
+    <div class="md-form usandpass">
+        <i class="fa fa-lock prefix"></i>
+        <input mdbActive type="password" id="inputPassword" (keyup.enter)="Login(username.value, password.value)" class="form-control" #password>
+        <label for="form2">Password</label>
     </div>
-        <div class="col-sm-9">
-          <button class="btn btn-sm btn-default loginbtn" (click)="Login(username.value, password.value)">Login</button>  
-        </div>
-  <div *ngIf="showFailure" class="dangeralrt">
-      <p class="failureMessage">The username or password you entered is incorrect</p>
+    <!-- <div class="form-group row usandpass">
+      <div class="col">
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password" (keyup.enter)="Login(username.value, password.value)" #password>
+      </div>
+    </div> -->
+    <div class="form-group row usandpass">
+      <div class="col">
+        <button class="btn btn-block btn-default" (click)="Login(username.value, password.value)">Login</button> 
+      </div> 
+    </div>
+    <div *ngIf="showFailure" class="dangeralrt">
+        <p class="failureMessage">The username or password you entered is incorrect</p>
+    </div>
+    <div *ngIf="userIsDisabled" class="dangeralrt">
+        <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
+    </div>
   </div>
-  <div *ngIf="userIsDisabled" class="dangeralrt">
-      <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
-  </div>
-</div>
   <hr>
   <div>
       <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
