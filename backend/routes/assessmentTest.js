@@ -168,12 +168,12 @@ router.route('/putquestions/:id')
 router.route('/getresults/:id')
     
     .get(function (request, response){
-       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}).exec(function(error, tests){
+       CompletedAssessment.find({"userID": request.params.id}).sort({dateCompleted: 1}).exec(function(error, tests){
            if(error){
                response.send({error: error});
                return;
            }
-           
+           console.log("HERE");
            response.json({completedTests: tests});
        })
     });
@@ -187,7 +187,7 @@ router.route('/completedtest/:id')
         completedTest.completed = false;
         let date = new Date();
         completedTest.dateCompleted = date;
-        completedTest.physioRate = 0;
+        completedTest.physioRate = request.body.physioRate;
         completedTest.physioDescription = '';
         completedTest.questions = request.body.questions;
         completedTest.userID = request.params.id;
