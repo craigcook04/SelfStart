@@ -142,11 +142,11 @@
                               <div class="row">
                                   <div class="col">
                                     <mat-card-subtitle>
-                                        <h6><b> Been a Member for: </b></h6>
+                                        <h6><b> Been a Member since: </b></h6>
                                     </mat-card-subtitle>
                                     </div>
                                     <div class="col">
-                                      <h4><b> {{ accountAge }}</b></h4>
+                                      <h4><b> {{ client?.account?.dateRegistered | date:'mediumDate' }}</b></h4>
                                     </div>
                                   </div>
                                   <div class="divider">
@@ -171,7 +171,7 @@
                                   </div>
                               </div>
                         </mat-list-item>
-                        <mat-list-item>
+                        <!-- <mat-list-item>
                             <div class="btn-block">
                               <div class="row">
                                   <div class="col">
@@ -187,7 +187,7 @@
                                     <mat-divider></mat-divider>
                                   </div>
                               </div>
-                        </mat-list-item>
+                        </mat-list-item> -->
                       </mat-list>
                       <br>
                     </div>
@@ -220,7 +220,7 @@
                         <hr>
                         <div class="row justify-content-center">
                             <div class="col-8">
-                                <button class="btn btn-block btn-info" [routerLink]="['../completetest']"> Begin Assessment Test</button>
+                                <button class="btn btn-block btn-info" [routerLink]="['../completetest']">Begin Assessment Test</button>
                             </div>
                         </div>
                       </mat-card-subtitle>
@@ -275,6 +275,15 @@
                                 </div>
                           </mat-list-item>
                         </mat-list>
+                        <br><br>
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <button class="btn btn-block btn-info" [routerLink]="['../bookappointment']">Book an Appointment</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-block btn-info" [routerLink]="['../transactions']">Top up Your Plan</button>
+                            </div>
+                        </div>
                       <br>
                     </div>
                   </mat-card>    
