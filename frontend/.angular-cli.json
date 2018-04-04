@@ -61,6 +61,10 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {},
+    "serve": {
+      "sslKey": "./server.key",
+      "sslCert": "./server.crt"
+    }
   }
 }

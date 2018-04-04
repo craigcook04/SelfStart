@@ -10,8 +10,8 @@ var https = require('https');
 var fs = require('fs');
 const crypto = require('crypto');
 var sslOptions = {
-    key: "temporarykey",
-    cert: "temporarycertificate"
+    key: fs.readFileSync("./server.key"),
+    cert: fs.readFileSync("./server.crt")
 };
 
 var app = express();                 // define our app using express
@@ -120,5 +120,5 @@ app.use('/api', router);
 // =============================================================================
 app.listen(port);
 //https.createServer(sslOptions, app).listen(844)
-https.createServer(app).listen(8443);
+//https.createServer(sslOptions, app).listen(8443);
 console.log('Magic happens on port ' + port);
