@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-physio-home',
@@ -11,54 +12,35 @@ import { PhysioHomeService } from '../physio-home.service';
 
 export class PhysioHomeComponent implements OnInit {
   
+  physio: any;
+  today: Date;
+  timeOfDay: string;
   activated: any;
   appointments: any[];
   panelOpenState: boolean = false;
   
-  constructor(private router: Router, private physioHomeService: PhysioHomeService) { }
-  
-  //view: string = 'month';
-  //viewDate: Date = new Date();
-  //events: CalendarEvent[] = [];
-  //clickedDate: Date;
-  
-  //events$: Observable<Array<CalendarEvent<{ appointment: Appointment }>>>;
-  //activeDayIsOpen: boolean = false;
-
-  
-  //events: any;
-  //items: Array<CalendarEvent<{ time: any }>> = [];
+  constructor(private router: Router, private physioHomeService: PhysioHomeService, private cookieService: CookieService) { }
   
   ngOnInit() {
     //var j = 0;
     var today = new Date();
+    this.timeOfDay = this.getTimeOfDay();
+    // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
+    this.physio = this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+      console.log(data);
+      var obj: any = data;
+      obj = obj.docs;
+      this.physio = obj;
+    })
     this.appointments = [];
     //this.appoint = [];
     console.log(today);
-     this.physioHomeService.getAppointments().subscribe(data =>{
+     this.physioHomeService.GetAppointments(today).subscribe(data =>{
       console.log(data);
       var retObj:any = data;
       this.appointments = retObj.appointment;
       console.log(this.appointments);
-      /*for(let i=0; i<this.appointments.length; i++) {
-        if(this.appointments[i].date == today){
-          this.appoint[j]=this.appointments[i];
-          j++
-        }*/
-        /*for(let i=0; i<appointment.data.length; i++) {
-          this.items.push(
-          {
-            title: appointment.data[i].name,
-            start: new Date(appointments.data[i].date),
-            color: colors.blue,
-            meta: {
-              time: appointments.data[i].date
-            }
-          });
-          this.events = this.items;
-        }*/
     });
-    
   }
   
   show(appointment: any){
@@ -71,7 +53,15 @@ export class PhysioHomeComponent implements OnInit {
     console.log(this.activated);
   }
   
-  goToCalendar(){
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
+  }
+  
+  /*goToCalendar(){
     this.router.navigate(['../calendar']);
   }
   goToPatients(){
@@ -87,6 +77,6 @@ export class PhysioHomeComponent implements OnInit {
     this.router.navigate(['../assessmenttest']);
   }
   goToReports(){
-    
-  }
+  
+  }*/
 }

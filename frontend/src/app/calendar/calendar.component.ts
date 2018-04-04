@@ -5,8 +5,8 @@ import { CalendarEvent } from 'angular-calendar';
 import { ViewEncapsulation } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { colors } from '../../demo-utils/colors';
-//import { map } from 'rxjs/operators/map';
-/*import {
+import { map } from 'rxjs/operators/map';
+import {
   isSameMonth,
   isSameDay,
   startOfMonth,
@@ -17,14 +17,14 @@ import { colors } from '../../demo-utils/colors';
   endOfDay,
   format
 } from 'date-fns';
-import { Observable } from 'rxjs/Observable';*/
+import { Observable } from 'rxjs/Observable';
 
-/*interface Appointment {
+interface Appointment {
   date: Date
   reason: string;
   other: string;
   patient: string;
-}*/
+}
 
 @Component({
   selector: 'app-calendar',
@@ -37,37 +37,56 @@ import { Observable } from 'rxjs/Observable';*/
 
 export class CalendarComponent implements OnInit {
   
-  appointments: any[];
+  //appointments: any[];
   view: string = 'month';
   viewDate: Date = new Date();
   //events: CalendarEvent[] = [];
   //clickedDate: Date;
-  //events$: Observable<Array<CalendarEvent<{ appointment: Appointment }>>>;
-  //activeDayIsOpen: boolean = false;
+  //asyncEvents$: Observable<CalendarEvent[]>;
+  events$: Observable<Array<CalendarEvent<{ appointment: Appointment }>>>;
+  activeDayIsOpen: boolean = false;
   
   constructor(private router: Router, private http: HttpClient, private physioHomeService: PhysioHomeService) { }
   
   ngOnInit() {
-    //this.fetchEvents();
-    this.appointments = [];
-    this.physioHomeService.getAppointments().subscribe(data =>{
+    this.fetchEvents();
+    /*this.appointments = [];
+    this.physioHomeService.GetAppointments().subscribe(data =>{
       console.log(data);
       var retObj:any = data;
       this.appointments = retObj.appointment;
       console.log(this.appointments);
+    });*/
+  }
+  
+  /*fetchEvents(){
+    this.appointments = [];
+    this.events = [];
+    this.physioHomeService.GetAppointments().subscribe(data =>{
+      console.log(data);
+      var retObj:any = data;
+      this.appointments = retObj.appointment;
+      console.log(this.appointments);
+      for(var i=0; appointment.length; i++){
+        events[i]=[{title:appointment[i].reason, color:blue, start:new Date(appointment[i].date)}];
+      }
     });
   }
   
   events: CalendarEvent[] = [
+    {
+      title: 'Stephanie Pereira',
+      color: colors.blue,
+      start: new Date("2018-04-20")
+    }
   ];
 
   eventClicked({ event }: { event: CalendarEvent }): void {
     console.log('Event clicked', event);
-  }
+  }*/
 
-  
-   /*fetchEvents(): void {
-    const getStart: any = {
+   fetchEvents(): void {
+    /*const getStart: any = {
       month: startOfMonth,
       week: startOfWeek,
       day: startOfDay
@@ -77,21 +96,25 @@ export class CalendarComponent implements OnInit {
       month: endOfMonth,
       week: endOfWeek,
       day: endOfDay
-    }[this.view];
+    }[this.view];*/
   
-  const params = new HttpParams()
-      .set(
-        'primary_release_date.gte',
-        format(getStart(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set(
-        'primary_release_date.lte',
-        format(getEnd(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set('api_key', '0ec33936a68018857d727958dca1424f');
-
+    /*this.asyncEvents$ = this.http.get<DateEvent[]>('api/appointment')
+      .pipe(map(res => { 
+        return res.map(appointment => { 
+          return {
+              title: appointment.reason,
+              start: new Date(appointment.date),
+              color: colors.blue,
+              meta: {
+                appointment
+              },
+              allDay: true
+            };
+        });
+      }));*/
+      
     this.events$ = this.http
-      .get('api/appointment', { params })
+      .get('api/appointment')
       .pipe(
         map(({ results }: { results: Appointment[] }) => {
           return results.map((appointment: Appointment) => {
@@ -108,7 +131,7 @@ export class CalendarComponent implements OnInit {
       );
   }
 
-  dayClicked({
+  /*dayClicked({
     date,
     events
   }: {
@@ -126,13 +149,9 @@ export class CalendarComponent implements OnInit {
         this.viewDate = date;
       }
     }
-  }
-
-  eventClicked(event: CalendarEvent<{ film: Film }>): void {
-    window.open(
-      `https://www.themoviedb.org/movie/${event.meta.film.id}`,
-      '_blank'
-    );
   }*/
 
+  /*eventClicked(event: CalendarEvent<{ appointment: Appointment }>): void {
+    
+  }*/
 }
