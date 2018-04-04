@@ -6,7 +6,6 @@ var router = express.Router();
 var UserAccount = require('../models/userAccount');
 var Session  = require('../models/session');
 const crypto = require('crypto');
-var Patient = require('../models/patient')
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -36,8 +35,6 @@ router.route('/')
         userAccount.adminUser = request.body.adminUser;
         userAccount.physioUser = request.body.physioUser;
         userAccount.patientUser = request.body.patientUser;
-        userAccount.numbInitial = 0;
-        userAccount.numAppoint = 0;
         
         userAccount.save(function (error) {
             if (error) {
@@ -229,23 +226,8 @@ router.route('/account/login')
                        return;
                    }
                    else{
-                       if(user.userCode == "US"){
-                           Patient.findOne({account: user._id}, function(err, patient) {
-                               if(err) {
-                                   response.send(err);
-                                   return;
-                               }
-                               else {
-                                    response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id, verified: patient.verified});
-                                    return;
-                               }
-                           })
-                       }
-                       else{
-                           response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
-                           return;
-                       }
-                         
+                         response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
+                         return;
                    }
                    
                 }
@@ -401,9 +383,8 @@ router.route('/appointments/:id')
             }
             
             console.log(request.body);
-            console.log(request.params.id)
-            //account.numbAppoint += request.body.appointment;
-            //account.numbInitial += request.body.initial;
+            account.numbAppoint += request.body.appointment;
+            account.numbInitial += request.body.initial;
             account.save(function(err){
                 if(err){
                     response.send({error: err});
@@ -427,6 +408,7 @@ router.route('/getdates/:id')
             response.send({account});
         })
     })
+
 
 router.route('/account/getsalt/:id')
     .get(function(request, response) {

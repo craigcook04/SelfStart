@@ -12,7 +12,7 @@
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../client']">Client Profiles</button></mat-list-item>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../clients']">Client Profiles</button></mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
@@ -24,17 +24,27 @@
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../assessmenttest']">Assessment Tests</button></mat-list-item>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../assessmenttests']">Assessment Tests</button></mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Generate Reports</button></mat-list-item>
         </mat-nav-list>
         <mat-divider class="dividers"></mat-divider>
     </mat-sidenav>
   <mat-sidenav-content>
+      <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+          <br>
+          <div style="margin-top: -10px;">
+              <h3 *ngIf="physio" class="title" style="color: #0275d8">
+                  Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
+               </h3>
+               <p class="quote">
+                 Manage your appointments, book time off, or get a glimpse of your weekly schedule.
+               </p>
+          </div>
+        </div>
     <div style="min-height: 100vh;" class="page col-11">
       <mat-card style="min-height: 75vh;">
+        <br>
         <div>
             <br>
             <div id="cal">

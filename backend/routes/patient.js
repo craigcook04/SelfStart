@@ -64,6 +64,8 @@ router.route('/')
         userAccount.resetRequestSent = false;
         userAccount.dateRegistered = new Date();
         userAccount.lastLoggedIn = new Date();
+        userAccount.numbInitial = 0;
+        userAccount.numbAppoint = 0;
         userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {
@@ -491,18 +493,20 @@ router.route('/admincreated')
                 patient.account = userAccount._id;
                 
                 patient.save(function (error) {
-                if (error) {
-                    response.send(error);
-                    console.log(error);
-                    return;
-                }
+                    if (error) {
+                        response.send(error);
+                        console.log(error);
+                        return;
+                    }
                 
-                response.json({success: true, patient: patient});
+                    response.json({success: true, patient: patient});
+                });
             });
         });
-    });
         
+
 });
+
 
 
 router.route('/getclient/:userid')
