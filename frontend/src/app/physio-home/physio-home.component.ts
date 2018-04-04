@@ -25,7 +25,6 @@ export class PhysioHomeComponent implements OnInit {
     //var j = 0;
     var today = new Date();
     this.timeOfDay = this.getTimeOfDay();
-    //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physio = this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
