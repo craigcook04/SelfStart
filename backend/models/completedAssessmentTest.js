@@ -12,6 +12,8 @@ var completedAssessmentTest = new mongoose.Schema(
         dateCreated: Date,
         dateCompleted: Date,
         dateClosed: Date,
+        treatmentClosed: Boolean,
+        closedFinalThoughts: String,
         questions: [],
         physioRate: Number,
         physioDescription: String,

@@ -573,9 +573,9 @@ export class AssessmentTestComponent implements OnInit {
     
     
   }
-  closeInjury(physioComments:string){
+  closeInjury(physioComments:string, finalThoughts:string){
     var temp: any = this.selectedPlan;
-    this.assessmentTestService.closeInjury(physioComments, temp._id,this.physioRating).subscribe(data =>{
+    this.assessmentTestService.closeInjury(physioComments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
       console.log(data);
       this.completedTests = new MatTableDataSource();
       this.assessmentTestService.getAllCompleted().subscribe(data =>{
