@@ -115,209 +115,20 @@
                     <label class="col-sm-3 pnter">{{FormatPhone(patient?.phone)}}</label>
               </mat-expansion-panel-header>
               <hr class="breaker">
-                <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
-                <div mdbModal #deleteModal="mdb-modal" class="modal fade mymodal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg mymodal" role="document">
-                <div class="modal-content mymodal">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Delete {{patient.familyName}}, {{patient.givenName}}</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p>Are you sure you wish to delete client <b>{{patient.familyName}}, {{patient.givenName}}</b>. This action is cannot
-                      be undone. </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); deleteModal.hide();" data-dismiss="modal" mdbRippleRadius>Delete</button>
-                    <button type="button" class="btn btn-secondary btn-med" (click)="deleteModal.hide();" data-dismiss="modal" mdbRippleRadius>Cancel</button>          
-                  </div>
-                </div>
-                </div>
-                </div>
-                <!-- End of First Modal -->
-          
-                <!-- The Second modal which will be brought up when the physiotherapist wants to update the patient-->
-                <div mdbModal #updateModal="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="updateModal">
-                  <div class="modal-dialog modal-lg mymodal" role="document">
-                  <div class="modal-content mymodal">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Update {{patient.familyName}}, {{patient.givenName}}</h4>
-                  </div>
-                  <div class="modal-body mymodal">
-                    <form>
-                      <div class="form-group row">
-                        <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient.givenName}}" #newFirstName>
-                          <div *ngIf='invalidFirstname' class='invalInput'>
-                              Please enter a valid first name
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient.familyName}}" #newLastName>
-                          <div *ngIf='invalidLastname' class='invalInput'>
-                              Please enter a valid last name
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
-                        <div class="col-sm-9">
-                          <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient.ID}}" placement="left"
-                            ngbTooltip="The patient's ID cannot be modified">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient.email}}" #newEmail>
-                          <div *ngIf='invalidEmail' class='invalInput'>
-                              Please enter a valid email
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
-                          <div *ngIf='invalidFirstName' class='invalInput'>
-                              Please enter a valid Date of Birth
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
-                        <div class="col-sm-9">
-                          <select #newGender class="mydropdown">
-                                <option value="{{patient.gender._id}}">{{patient?.gender?.name}}</option>
-                                <option disabled="disabled">----</option>
-                                <option *ngFor="let g of genders" value="{{g._id}}">{{g.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                          <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputAddress" placeholder="Address" value="{{patient.address}}" #newAddress>
-                            <div *ngIf='invalidAddress' class='invalInput'>
-                                Please enter a valid Address
-                            </div>
-                          </div>
-                        </div>
-                      <div class="form-group row">
-                        <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient.postalCode}}" #newPostalCode>
-                          <div *ngIf='invalidPostalCode' class='invalInput'>
-                              Please enter a valid Postal Code
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient.phone}}" (keyup)="closeWarning()" #newPhoneNumber>
-                          <div *ngIf='invalidPhoneNumber' class='invalInput'>
-                              Please enter a valid phone number
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient.others}}" #newOthers>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
-                        <div class="col-sm-9">
-                          <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value); cannotContinue=false;">
-                                    <option value="{{patient.country._id}}">{{patient.country.name}}</option>
-                                    <option disabled="disabled">----</option>
-                                    <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
-                        <div class="col-sm-9">
-                          <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
-                                    <option value="{{patient.province._id}}">{{patient?.province?.name}}</option>
-                                    <option disabled="disabled">----</option>
-                                    <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
-                        <div class="col-sm-9">
-                          <select #newCity class="mydropdown">
-                                    <option value="{{patient.city._id}}">{{patient?.city?.name}}</option>
-                                    <option disabled="disabled">----</option>
-                                    <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </form>
-          
-                  </div>
-                  <div class="modal-footer mymodal">
-                    <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
-                    <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="ResetErrorMessages(); updateModal.hide();" mdbRippleRadius>Cancel</button>
-                    <button class="hddn" data-dismiss="modal" (click)="updateModal.hide()" mdbRippleRadius id='closeBtn'></button>  
-                  </div>
-                </div>
-                </div>
-                </div>
-                <!-- End of Second Modal -->
-           
-                <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
-                <div mdbModal #emailModal="mdb-modal" class="modal fade mymodal" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg mymodal" role="document">
-                  <div class="modal-content mymodal">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Email {{patient.familyName}}, {{patient.givenName}}</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">To: </label>
-                      <p class="toemail">{{patient.email}}</p>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputSubject" class="col-sm-3 col-form-label">Subject: </label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputSubject" placeholder="Subject" #emailSubject>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="Emailbody" class="col-form-label tobody">Body: </label>
-                      <textarea class="form-control myta" rows="5" id="emailBody" #emailBody> </textarea>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-med" (click)="SendEmail(patient.email, emailSubject.value, emailBody.value); emailModal.hide()" data-dismiss="modal" mdbRippleRadius>Send</button>  
-                    <button type="button" class="btn btn-secondary btn-med" (click)="emailModal.hide()" data-dismiss="modal" mdbRippleRadius>Do Not Send</button>        
-                  </div>
-                </div>
-                </div>
-                </div>
-                <!-- End of Third Modal -->
-          
-                  <div class="info" id="wrapper">
-                    <div id="leftcolumn">
+               
+                <div class="container" id="wrapper">
+                  <div class="row" >
+                    <div class="col-5">
                       <p><b class="infob">Username: </b> {{patient?.account?.userAccountName}}</p>
                       <p><b class="infob">Name:  </b> {{patient?.familyName}}, {{patient?.givenName}}</p>
                       <p><b class="infob">Patient ID:  </b> {{patient?.ID}}</p>
-                      <p><b class="infob">Email:  </b> {{patient?.email}} <fa name="envelope" class="emailer" ngbTooltip="send email" data-toggle="modal" data-target="#emailModal" (click)="emailModal.show()" mdbRippleRadius></fa></p>
+                      <p><b class="infob">Email:  </b> {{patient?.email}} <fa name="envelope" class="emailer" ngbTooltip="send email" data-toggle="modal" data-target="#emailModal" (click)="SetPatient2(patient); emailModal.show()" mdbRippleRadius></fa></p>
                       <p><b class="infob">Date of Birth:  </b> {{patient?.DOB | date: 'yyyy-MM-dd'}}</p>
                       <p><b class="infob">Age: </b> {{calculateAge(patient?.DOB)}} years old</p>
                       <p><b class="infob">Gender:  </b> {{patient?.gender?.name}}</p>
                     </div>
                     
-                    <div id="rightcolumn">
+                    <div class="col-5">
                       <p><b class="infob">Address: </b> {{patient?.address}}</p>
                       <p><b class="infob">Postal Code:  </b> {{patient?.postalCode}}</p> 
                       <p><b class="infob">Phone Number:  </b> {{patient?.phone}}   <i class="material-icons copyicon" ngbTooltip="copy phone number" (click)="CopyToClipboard(patient.phone)">description</i></p>
@@ -326,11 +137,12 @@
                       <p><b class="infob">City:  </b> {{patient?.city?.name}} </p>
                       <input type='text' class='dummy' id="dummyInput" value='{{patient.phone}}' #getPhoneNumber/>
                     </div>
-                  </div>  
+                  </div> 
+                </div> 
                   <mat-action-row>
-                      <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#updateModal" (click)="updateModal.show()" mdbRippleRadius>Edit</button>
-                      <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="deleteModal.show()" mdbRippleRadius>Delete</button>   
-                      <button class="btn btn-primary btn-sm patientbtn" [routerLink]="['../physio/reports/' + patient._id]">View Generated Report</button>
+                      <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#updateModal" (click)="updateModal.show();SetPatient2(patient); " mdbRippleRadius>Edit</button>
+                      <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="SetPatient2(patient); deleteModal.show()" mdbRippleRadius>Delete</button>   
+                      <button class="btn btn-primary btn-sm patientbtn" [routerLink]="['../reports/' + patient._id]">View Generated Report</button>
                   </mat-action-row>
             </mat-expansion-panel>
           </mat-accordion>
@@ -343,3 +155,194 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+ <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
+ <div mdbModal #deleteModal="mdb-modal" class="modal fade mymodal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg mymodal" role="document">
+    <div class="modal-content mymodal">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete {{patient2?.familyName}}, {{patient2?.givenName}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you wish to delete client <b>{{patient2?.familyName}}, {{patient2?.givenName}}</b>. This action is cannot
+          be undone. </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-med" (click)="deletePatient(patient._id); deleteModal.hide();" data-dismiss="modal" mdbRippleRadius>Delete</button>
+        <button type="button" class="btn btn-secondary btn-med" (click)="deleteModal.hide();" data-dismiss="modal" mdbRippleRadius>Cancel</button>          
+      </div>
+    </div>
+    </div>
+    </div>
+    <!-- End of First Modal -->
+
+    <!-- The Second modal which will be brought up when the physiotherapist wants to update the patient-->
+    <div mdbModal #updateModal="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="updateModal">
+      <div class="modal-dialog modal-lg mymodal" role="document">
+      <div class="modal-content mymodal">
+      <div class="modal-header">
+        <h4 class="modal-title">Update {{patient2.familyName}}, {{patient2.givenName}}</h4>
+      </div>
+      <div class="modal-body mymodal">
+        <form>
+          <div class="form-group row">
+            <label for="inputFirstName" class="col-sm-3 col-form-label">First Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" value="{{patient2.givenName}}" #newFirstName>
+              <div *ngIf='invalidFirstname' class='invalInput'>
+                  Please enter a valid first name
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" value="{{patient2.familyName}}" #newLastName>
+              <div *ngIf='invalidLastname' class='invalInput'>
+                  Please enter a valid last name
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPatientID" class="col-sm-3 col-form-label">Patient ID</label>
+            <div class="col-sm-9">
+              <input type="text" readonly class="form-control" id="inputPatientID" placeholder="Patient ID" value="{{patient2.ID}}" placement="left"
+                ngbTooltip="The patient's ID cannot be modified">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="{{patient2.email}}" #newEmail>
+              <div *ngIf='invalidEmail' class='invalInput'>
+                  Please enter a valid email
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputDOB" class="col-sm-3 col-form-label">DOB</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputDOB" placeholder="yyyy/MM/dd" value="{{patient2.DOB  | date: 'yyyy-MM-dd'}}" #newBirthDate>
+              <div *ngIf='invalidFirstName' class='invalInput'>
+                  Please enter a valid Date of Birth
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputGender" class="col-sm-3 col-form-label">Gender</label>
+            <div class="col-sm-9">
+              <select #newGender class="mydropdown">
+                    <option value="{{patient2?.gender?._id}}">{{patient2?.gender?.name}}</option>
+                    <option disabled="disabled">----</option>
+                    <option *ngFor="let g of genders" value="{{g?._id}}">{{g?.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+              <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputAddress" placeholder="Address" value="{{patient2?.address}}" #newAddress>
+                <div *ngIf='invalidAddress' class='invalInput'>
+                    Please enter a valid Address
+                </div>
+              </div>
+            </div>
+          <div class="form-group row">
+            <label for="inputPostalCode" class="col-sm-3 col-form-label">Postal Code</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code" value="{{patient2.postalCode}}" #newPostalCode>
+              <div *ngIf='invalidPostalCode' class='invalInput'>
+                  Please enter a valid Postal Code
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" value="{{patient2.phone}}" (keyup)="closeWarning()" #newPhoneNumber>
+              <div *ngIf='invalidPhoneNumber' class='invalInput'>
+                  Please enter a valid phone number
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">Others</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputOthers" placeholder="Others" value="{{patient2?.others}}" #newOthers>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">Country</label>
+            <div class="col-sm-9">
+              <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value); cannotContinue=false;">
+                        <option value="{{patient2?.country?._id}}">{{patient2?.country?.name}}</option>
+                        <option disabled="disabled">----</option>
+                        <option *ngFor="let country of countries" value="{{country?._id}}">{{country?.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">Province</label>
+            <div class="col-sm-9">
+              <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
+                        <option value="{{patient2?.province?._id}}">{{patient2?.province?.name}}</option>
+                        <option disabled="disabled">----</option>
+                        <option *ngFor="let province of provinces" value="{{province?._id}}">{{province?.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputOthers" class="col-sm-3 col-form-label">City</label>
+            <div class="col-sm-9">
+              <select #newCity class="mydropdown">
+                        <option value="{{patient2?.city?._id}}">{{patient2?.city?.name}}</option>
+                        <option disabled="disabled">----</option>
+                        <option *ngFor="let city of cities" value="{{city?._id}}">{{city?.name}}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer mymodal">
+        <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
+        <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="ResetErrorMessages(); updateModal.hide();" mdbRippleRadius>Cancel</button>
+        <button class="hddn" data-dismiss="modal" (click)="updateModal.hide()" mdbRippleRadius id='closeBtn'></button>  
+      </div>
+    </div>
+    </div>
+    </div>
+    <!-- End of Second Modal -->
+
+    <!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
+    <div mdbModal #emailModal="mdb-modal" class="modal fade mymodal" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg mymodal" role="document">
+      <div class="modal-content mymodal">
+      <div class="modal-header">
+        <h4 class="modal-title">Email {{patient2?.familyName}}, {{patient2?.givenName}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">To: </label>
+          <p class="toemail">{{patient2?.email}}</p>
+        </div>
+        <div class="form-group row">
+          <label for="inputSubject" class="col-sm-3 col-form-label">Subject: </label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputSubject" placeholder="Subject" #emailSubject>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Emailbody" class="col-form-label tobody">Body: </label>
+          <textarea class="form-control myta" rows="5" id="emailBody" #emailBody> </textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-med" (click)="SendEmail(patient.email, emailSubject.value, emailBody.value); emailModal.hide()" data-dismiss="modal" mdbRippleRadius>Send</button>  
+        <button type="button" class="btn btn-secondary btn-med" (click)="emailModal.hide()" data-dismiss="modal" mdbRippleRadius>Do Not Send</button>        
+      </div>
+    </div>
+    </div>
+    </div>
+    <!-- End of Third Modal -->

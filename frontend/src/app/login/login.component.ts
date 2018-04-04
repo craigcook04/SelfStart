@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
             else {
               this.appComponent.alterLoginState();
               this.appComponent.toggleToPhysio();
-              this.router.navigate(['../physiohome']);
+              this.router.navigate(['../physio/home']);
               
             }
           }

@@ -38,7 +38,7 @@ export class PatientProfileComponent implements OnInit {
   ascendingOrd: boolean = true;
   cannotContinue: boolean = false;
   totalPatients: number;
-
+  patient2: any;
   // MatPaginator Inputs
   length;
   pageSize = 10;
@@ -52,6 +52,7 @@ export class PatientProfileComponent implements OnInit {
               private emailService: EmailService) { }
 
   ngOnInit() {
+    this.patient2 = {};
     this.StandardPatientList();
     this.patientService.GetCountries().subscribe(data => {
       var retObj: any = data;
@@ -64,6 +65,11 @@ export class PatientProfileComponent implements OnInit {
     })
    console.log('hi');
    
+  }
+
+  SetPatient2(patient) {
+    console.log(patient)
+    this.patient2 = patient;
   }
 
   SwitchPageEvent(pageEvent: any, searchString: string, searchArea: string) {
@@ -81,6 +87,7 @@ export class PatientProfileComponent implements OnInit {
       console.log(data);
       var retObj: any = data;
       this.patients = Object.assign([], data.docs);
+      this.patient2 = this.patients[0];
       this.length = retObj.total;
       console.log(this.patients);
       this.totalPatients = retObj.total;
