@@ -76,6 +76,7 @@ export class GenerateReportComponent implements OnInit {
   }
   patient2: any;
   completedTests: any[];
+  singleTest: any;
 
   
 
@@ -123,24 +124,30 @@ export class GenerateReportComponent implements OnInit {
       console.log(data);
       let obj: any = data;
       this.completedTests = obj.completedTests;
-      this.completedTests.forEach(element =>{
-        console.log(element);
-        this.physioRatings.push(element.physioRate);
-        let obj: string = element.dateCompleted;
-        obj = obj.split('T')[0];
-        this.assesmentDates.push(obj);
-        this.clientRatings.push(element.questions[0]);
-      })
-      this.physioRatings.unshift(0);
-      this.assesmentDates.unshift('Start of Time');
-      this.clientRatings.unshift(0);
+      if(this.completedTests.length > 1){
+        this.completedTests.forEach(element =>{
+          console.log(element);
+          this.physioRatings.push(element.physioRate);
+          let obj: string = element.dateCompleted;
+          obj = obj.split('T')[0];
+          this.assesmentDates.push(obj);
+          this.clientRatings.push(element.questions[0].answer);
+        })
+        this.physioRatings.unshift(0);
+        this.assesmentDates.unshift('Start of Time');
+        this.clientRatings.unshift(0);
+  
+        //set the chart datasets
+        this.chartDatasets = [
+          {data: this.physioRatings, label: "Physio Ratings"},
+          {data: this.clientRatings, label: "Client Ratings"}
+        ];
+        this.chartLabels = this.assesmentDates;
 
-      //set the chart datasets
-      this.chartDatasets = [
-        {data: this.physioRatings, label: "Physio Ratings"},
-        {data: this.clientRatings, label: "Client Ratings"}
-      ];
-      this.chartLabels = this.assesmentDates;
+        return;
+      }
+
+      this.singleTest == this.completedTests;
     })
 
     this.patientService.GetSpecificPatient(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
