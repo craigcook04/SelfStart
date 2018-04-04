@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 
 
     "/api/*": {
@@ -10,4 +11,12 @@
 
 
 
+=======
+   "/api/*": {
+       "target": "https://se3350finalproject-sammallabone.c9users.io:8082",
+       "secure": false,
+       "changeOrigin": true,
+       "logLevel": "info"
+   }
+>>>>>>> aae397df0a42832cd86eda0ef3804025be63161b
 }

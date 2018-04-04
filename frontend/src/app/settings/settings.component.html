@@ -156,38 +156,6 @@
                             </div>
                           </div>
                           <hr>
-                          <div class="form-inline row">
-                            <label for="inputOthers" class="col-2">Country</label>
-                            <div class="col-9">
-                              <select #newCountry class="mydropdown" (change)="SetProvinceBox(newProvince, newCity); GetProvinces(newCountry.value); DifferentGetProvince(newCountry.value); cannotContinue=false;">
-                                        <option value="{{patient.country?._id}}">{{patient.country.name}}</option>
-                                        <option disabled="disabled">----</option>
-                                        <option *ngFor="let country of countries" value="{{country._id}}">{{country.name}}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-inline row">
-                            <label for="inputOthers" class="col-2">Province</label>
-                            <div class="col-9">
-                              <select #newProvince class="mydropdown" (change)="ClearAndGetCities(newProvince.value, newCity)">
-                                        <option value="{{patient.province?._id}}">{{patient?.province?.name}}</option>
-                                        <option disabled="disabled">----</option>
-                                        <option *ngFor="let province of provinces" value="{{province._id}}">{{province.name}}</option>
-                              </select>
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="form-inline row">
-                            <label for="inputOthers" class="col-2">City</label>
-                            <div class="col-9">
-                              <select #newCity class="mydropdown">
-                                        <option value="{{patient.city?._id}}">{{patient?.city?.name}}</option>
-                                        <option disabled="disabled">----</option>
-                                        <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
-                              </select>
-                            </div>
-                          </div>
                           <br>
                         </form>
                       </mat-card>
@@ -202,7 +170,7 @@
             <mat-tab label="Change Password">
                   <mat-card style="min-height: 100vh; margin-left: auto; margin-right: auto; text-align: center;" class="page col-11">
                         <mat-card-title>
-                            <b  style="color: #0275d8">
+                            <b style="color: #0275d8">
                                 Change Password
                             </b>
                         </mat-card-title>
@@ -214,22 +182,25 @@
                       <br>
                       <div class="form-inline row">
                         <label for="inputOldPassword" class="col-2">Old Password: </label>
-                        <div class="col-9">
-                          <input type="password" id="inputOldPassword" placeholder="Old Password" #tempPassword>
+                        <div class="md-form form-sm col-9">
+                          <input mdbActive type="password" id="inputOldPassword" #tempPassword>
+                          <label class="moveLeft" type="text" for="inputOldPassword">Old Password</label>
                         </div>
                       </div>
                       <hr>
                       <div class="form-inline row">
                         <label for="inputPassword" class="col-2">New Password: </label>
-                        <div class="col-9">
-                          <input type="password" id="inputPassword" placeholder="New Password" #password>
+                        <div class="md-form form-sm col-9">
+                          <input mdbActive type="password" id="inputPassword"  #password>
+                          <label class="moveLeft" type="text" for="inputPassword">New Password</label>      
                         </div>
                       </div>
                       <hr>
                       <div class="form-inline row">
                         <label for="inputRepeatPassword" class="col-2">Repeat New Password: </label>
-                        <div class="col-9">
-                          <input type="password" id="inputRepeatPassword" placeholder="Repeat New Password" #repeatPassword>
+                        <div class="md-form form-sm col-9">
+                          <input mdbActive type="password" id="inputRepeatPassword" #repeatPassword>
+                          <label class="moveLeft" type="text" for="inputRepeatPassword">Repeat New Password</label>                          
                         </div>
                       </div>
                       <div *ngIf="couldntProcessRequest">
@@ -244,7 +215,7 @@
                         <button class="col-3 btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value, tempPassword.value)">Change</button>
                       </mat-card-actions>
                     </div>
-                    <div *ngIf="successfullyChangePassword">
+                    <div class="success" *ngIf="successfullyChangedPassword">
                       <h4>You have successfully updated your password</h4>
                       <p>You can now log in</p>
                       <button class="btn btn-sm btn-primary">Return to Log In</button>
