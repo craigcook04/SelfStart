@@ -272,15 +272,13 @@ router.route('/putquestions/:id')
 router.route('/getresults/:id')
     
     .get(function (request, response){
-       CompletedAssessment.find({"patient": request.params.id}).sort({dateCompleted: 1}).exec(function(error, tests){
+       CompletedAssessment.find({"userID": request.params.id}).sort({dateCompleted: 1}).exec(function(error, tests){
            if(error){
                response.send({error: error});
                return;
            }
-           
-
-           if(tests === null || tests === undefined){ console.log("None")};
-           response.send({completedTests: tests});
+           console.log("HERE");
+           response.json({completedTests: tests});
        })
     })
 // router.route('/completedTests')
