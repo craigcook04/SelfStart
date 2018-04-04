@@ -187,7 +187,7 @@ router.route('/completedtest/:id')
         completedTest.completed = false;
         let date = new Date();
         completedTest.dateCompleted = date;
-        completedTest.physioRate = request.body.physioRate;
+        completedTest.physioRate = 0;
         completedTest.physioDescription = '';
         completedTest.questions = request.body.questions;
         completedTest.userID = request.params.id;
