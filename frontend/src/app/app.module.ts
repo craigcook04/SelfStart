@@ -26,6 +26,7 @@ import { DynamicFormsService } from './dynamic-forms.service';
 import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
 import {UserAccountsService} from './user-accounts.service';
+import {DpDatePickerModule} from 'ng2-date-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -104,6 +105,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { TimeOffComponent } from './time-off/time-off.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +146,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
     TransactionsComponent,
     SettingsComponent,
     GenerateReportComponent,
+    TimeOffComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -185,7 +188,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     MatSnackBarModule,
     MatTabsModule,
     MatProgressBarModule,
-    MatSelectModule
+    MatSelectModule,
+    DpDatePickerModule
   ],
   providers: [
     PatientService, 

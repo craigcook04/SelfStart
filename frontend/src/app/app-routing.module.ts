@@ -39,6 +39,7 @@ import { ManagePermissionsComponent} from './manage-permissions/manage-permissio
 import { TransactionsComponent } from './transactions/transactions.component';
 import { SettingsComponent } from './settings/settings.component'
 import { GenerateReportComponent } from './generate-report/generate-report.component';
+import { TimeOffComponent } from './time-off/time-off.component';
 
 //Later: add gueard to the routes that need to be protected
 //to do this append ,canActivate: [something] to an object
@@ -52,10 +53,10 @@ const routes: Routes = [
   {path: 'faq', component: FaqComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'admin/manageforms', component: DynamicFormsComponent},
-  {path: 'client', component: PatientProfileComponent},
+  {path: 'physio/clients', component: PatientProfileComponent},
   {path: 'admin/home', component: AdminHomeComponent},
-  {path: 'rehabplans', component: RehabPlansComponent},
-  {path: 'exercises', component: ExercisesComponent},
+  {path: 'physio/rehabplans', component: RehabPlansComponent},
+  {path: 'physio/exercises', component: ExercisesComponent},
   {path: 'signup', component: NewClientComponent},
   {path: 'client/bookappointment', component: BookAppointmentComponent},
   {path: 'admin/useraccounts', component:UserAccountsComponent},
@@ -66,10 +67,10 @@ const routes: Routes = [
   {path: 'login/forgotten', component: ForgottenPasswordComponent},
   {path: 'login/recover/:id', component: RecoverAccountComponent},
   {path: 'client/exercises', component: ClientExerciseComponent},
-  {path: 'assessmenttest', component: AssessmentTestComponent},
-  {path: 'assignplans', component: AssignPlanComponent},
+  {path: 'physio/assessmenttests', component: AssessmentTestComponent},
+  {path: 'physio/assignplans', component: AssignPlanComponent},
   {path: 'completetest', component: CompleteAssessmentTestComponent},
-  {path: 'calendar', component: CalendarComponent},
+  {path: 'physio/calendar', component: CalendarComponent},
   {path: 'client/completetest', component: CompleteAssessmentTestComponent},
   {path: 'welcome', component: WelcomeHomeComponent},
   {path: 'unauthorized', component: UnauthorizedComponent},
@@ -82,6 +83,7 @@ const routes: Routes = [
   {path: 'admin/settings', component: SettingsComponent},
   {path: 'physio/settings', component: SettingsComponent},
   {path: 'physio/reports/:id', component: GenerateReportComponent},
+  {path: 'physio/timeoff', component: TimeOffComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 
