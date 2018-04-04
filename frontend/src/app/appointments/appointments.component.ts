@@ -27,6 +27,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   weekToFill: any; //holds a date to pass to back end to search by week
   isStart: any;
   storeDate: any;
+  notTaken: any;
   
   
   //unverified
@@ -79,7 +80,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   //this gets called when a time slot is clicked
   choosenSlot(day: any, indx: any){ //day is hard coded, index isnt
     this.currentType = this.apptService.getType(); //get the type from the service
-    var notTaken = true; //start this at true and set to false in the for loop below if needed
+    this.notTaken = true; //start this at true and set to false in the for loop below if needed
     //console.log(this.currentType);
     // let now = new Date();
     // alert( now );
@@ -88,13 +89,27 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
   if(!(this.isSelected)){
       //make sure the date they chose isnt already booked
       for(var i = 0; i<this.currentlyFilled.length; i++){
-        if(this.currentlyFilled[i] == ("slot"+day+indx)){
-          notTaken = false; //gets set if date is already booked
+        if (this.currentType == "normal"){
+          if(this.currentlyFilled[i] == ("slot"+day+indx) || this.currentlyFilled[i] == ("slot"+day+(indx+1)) || this.currentlyFilled[i] == ("slot"+day+(indx+2)) || this.currentlyFilled[i] == ("slot"+day+(indx+3))){
+            this.notTaken = false; //gets set if date is already booked
+            console.log(this.currentlyFilled[i]);
+            break;
+          }
+        }else if (this.currentType == "initial"){
+          if(this.currentlyFilled[i] == ("slot"+day+indx) || this.currentlyFilled[i] == ("slot"+day+(indx+1)) || this.currentlyFilled[i] == ("slot"+day+(indx+2)) || this.currentlyFilled[i] == ("slot"+day+(indx+3)) || this.currentlyFilled[i] == ("slot"+day+(indx+4)) || this.currentlyFilled[i] == ("slot"+day+(indx+5))){
+            this.notTaken = false; //gets set if date is already booked
+            break;
+          }
+        }else{
+          if(this.currentlyFilled[i] == ("slot"+day+indx)){
+            this.notTaken = false; //gets set if date is already booked
+            break;
+          }
         }
       }
     
       //if booking is okay...
-      if(notTaken){
+      if(this.notTaken){
         this.isSelected = true; //If one is selected they cant select another
         this.timeIndex = indx; //keeping variable with selected index
         this.dayIndex = day; //saving index to variable
@@ -109,7 +124,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         this.apptService.setNewDate(newTest);
        
         
-        if(this.currentType == "normal"){
+        if(this.currentType == "normal" && this.notTaken){
           if(indx > 33){
             if(indx == 34){
               document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
@@ -127,7 +142,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             document.getElementById(yellow[2]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
             document.getElementById(yellow[3]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
           }
-        }else if(this.currentType == 'initial'){
+        }else if(this.currentType == 'initial' && this.notTaken){
          if(indx > 31){
             if(indx == 32){
               document.getElementById(yellow[0]).setAttribute("class", "btn btn-sm btn-yellow chooseTime");
@@ -164,21 +179,35 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         
         this.isStart = false;
         this.reHighlight = yellow;
-        this.temp = [("slot"+day+indx), ("slot"+day+(indx+1)), ("slot"+day+(indx+2)), ("slot"+day+(indx+3)), ("slot"+day+(indx+4)), ("slot"+day+(indx+5))];
+      
       }
       
-  }else{ //this will have to change the current selection to a new one
+  }else if(this.isSelected){ //this will have to change the current selection to a new one
       console.log("Booking time must be changed");
       //make sure the date they chose isnt already booked
         for(var i = 0; i<this.currentlyFilled.length; i++){
+        if (this.currentType == "normal"){
+          if(this.currentlyFilled[i] == ("slot"+day+indx) || this.currentlyFilled[i] == ("slot"+day+(indx+1)) || this.currentlyFilled[i] == ("slot"+day+(indx+2)) || this.currentlyFilled[i] == ("slot"+day+(indx+3))){
+            this.notTaken = false; //gets set if date is already booked
+            console.log(this.currentlyFilled[i]);
+            break;
+          }
+        }else if (this.currentType == "initial"){
+          if(this.currentlyFilled[i] == ("slot"+day+indx) || this.currentlyFilled[i] == ("slot"+day+(indx+1)) || this.currentlyFilled[i] == ("slot"+day+(indx+2)) || this.currentlyFilled[i] == ("slot"+day+(indx+3)) || this.currentlyFilled[i] == ("slot"+day+(indx+4)) || this.currentlyFilled[i] == ("slot"+day+(indx+5))){
+            this.notTaken = false; //gets set if date is already booked
+            break;
+          }
+        }else{
           if(this.currentlyFilled[i] == ("slot"+day+indx)){
-            notTaken = false;
+            this.notTaken = false; //gets set if date is already booked
+            break;
           }
         }
+      }
       
       
       //if booking is okay...
-      if(notTaken){
+      if(this.notTaken){
         this.timeIndex = indx; //keeping variable with selected index
         this.dayIndex = day;
         this.yellowStartDate = moment().startOf('week').startOf('day').add(this.currentWeek, 'weeks').add((day), 'days').add(8.5, 'hours').add((this.timeIndex*15), 'minutes');
@@ -316,7 +345,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.weeklyBookings = Object.assign([], retObj.appointment) //all appointments in current week
       
-      console.log("hello: "+this.weeklyBookings[0].date); //at this point we have all booked dates
+      //console.log("hello: "+this.weeklyBookings[0].date); //at this point we have all booked dates
       
       
       //make all squares blue
