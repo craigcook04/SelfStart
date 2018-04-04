@@ -54,6 +54,7 @@ router.route('/')
         temp.save(function(err) {
             if(err){
                 response.send({error: "error creating temp account"});
+                console.log(err);
             }
         });
         

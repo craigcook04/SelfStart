@@ -63,4 +63,9 @@ export class AppointmentsService {
   //   return this.newDate;
   // }
 
+  GetAppointmentsByPatientID(patientID: string) {
+    var url = '/api/appointment/client/appointments/' + patientID;
+    return this.httpClient.get(url);
+  }
+
 }

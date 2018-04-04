@@ -212,6 +212,24 @@ router.route('/completedtest/:id')
         })
     });
     
+router.route('/completedtest/final/:id')
+    .get(function(request, response) {
+        console.log('variables sent to me', request.params.id, request.query.num);
+        CompletedAssessment.findOne({'userID': request.params.id, 'injuryNumber': request.query.num, 'treatmentClosed': true}, function(err, results) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(results == null) {
+                response.send({success: false, message: 'this treatment is still ongoing'});
+                return;
+            }
+            
+            response.send({success: true, results: results});
+        })
+    })
+    
 router.route('/initial/completed')
     .post(function(request, response) {
         
