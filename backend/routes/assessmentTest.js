@@ -438,6 +438,7 @@ router.route('/closeTreatment/:id')
             }
             
             completedAssessment.physioRate = request.body.physioRate;
+            completedAssessment.physioDescription = request.body.physioDescription;
             completedAssessment.completed = true;
             completedAssessment.dateClosed = new Date();
             completedAssessment.finalThoughts = request.body.finalThoughts;

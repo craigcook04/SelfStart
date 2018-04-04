@@ -415,6 +415,8 @@
                                     <span class="star" [class.filled]="fill === 100" (click)="SendBack(index)">&#9733;</span>
                                 </ng-template>
                             </ngb-rating>
+                            <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments1.value);">Assign Followup</button>
+                            <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment); setphysioComments(physioComments1.value);">Close Treatment</button>
                         </div>
                         <div *ngIf="selectedPlan.completed">
                             <h5>Your have already taken action on these test results.</h5>
@@ -434,8 +436,8 @@
 
                         <br><br>
 
-                        <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments.value);">Assign Followup</button>
-                        <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment)">Close Treatment</button>
+                        <!--<button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments1.value);">Assign Followup</button>-->
+                        <!--<button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment); setphysioComments(physioComments1.value);">Close Treatment</button>-->
                         <ng-template #closeTreatment let-c="close" let-d="dismiss">
                             <div class="modal-header">
                                 <h4 class="modal-title">Close Treatment</h4>
@@ -450,7 +452,7 @@
                                 <p>Are you sure you want to close this treatment? this action cannot be undone.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(physioComments1.value, finalThoughts.value); c('Close click'); showTable();">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(finalThoughts.value); c('Close click'); showTable();">Confirm</button>
                                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
 
                             </div>

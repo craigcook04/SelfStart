@@ -34,6 +34,7 @@ export class AssessmentTestComponent implements OnInit {
   offset2: number = 0;
   physioRating: number =0;
   pageInfo: string;
+  comments: string;
   tests = new MatTableDataSource();
   completedTests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "View Test Results"];  
@@ -574,9 +575,9 @@ export class AssessmentTestComponent implements OnInit {
     
     
   }
-  closeInjury(physioComments:string, finalThoughts:string){
+  closeInjury(finalThoughts:string){
     var temp: any = this.selectedPlan;
-    this.assessmentTestService.closeInjury(physioComments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
+    this.assessmentTestService.closeInjury(this.comments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
       console.log(data);
       this.completedTests = new MatTableDataSource();
       this.assessmentTestService.getAllCompleted().subscribe(data =>{
@@ -588,5 +589,7 @@ export class AssessmentTestComponent implements OnInit {
     });
   }
   
-  
+  setphysioComments(comments: string){
+    this.comments = comments;
+  }
 }
