@@ -347,110 +347,112 @@
                                 <mat-form-field>
                                     <input matInput (keyup)="applyFilter2($event.target.value)" placeholder="Filter" #searchString2>
                                 </mat-form-field>
-                                <div>
-                                    <mat-selection-list #clientsList>
-                                        <mat-list-option *ngFor="let client of clients" value="{{client._id}}">
-                                            {{client.name}}
-                                        </mat-list-option>
-                                    </mat-selection-list>
-                                    <br>
-                                    <mat-paginator #paginator [length]="length2" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="SwitchPageEvent2($event, searchString2.value);"></mat-paginator>
-                                    <br><br>
-                                    <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected); showTable();" style="margin-left: 2em; float: right;">Assign Test</button>
-                                    <br><br><br><br>
+                            </div>
+                            <mat-selection-list #clientsList>
+                                <mat-list-option *ngFor="let client of clients" value="{{client._id}}">
+                                    {{client.name}}
+                                </mat-list-option>
+                            </mat-selection-list>
+                            <br>
+                            <mat-paginator #paginator [length]="length2" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="SwitchPageEvent2($event, searchString2.value);"></mat-paginator>
+                            <br><br>
+                            <button type="button" class="btn btn-primary createbtn" (click)="assignTest(clientsList.selectedOptions.selected); showTable();" style="margin-left: 2em; float: right;">Assign Test</button>
+                            <br><br><br><br>
                         </mat-card>
                         <br><br><br><br>
 
 
+                    </div>
+
+                </div>
+                <div *ngIf="viewDetails">
+                    <mat-card class="assessTest">
+                        <div class="center">
+                            <h2 style="color: #0275d8;">{{selectedPlan.name}}</h2>
+                            <br>
+                            <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
+                            <br>
+                            <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.name}}</h5>
                         </div>
+                        <br><br><br>
+                        <ol>
+                            <li *ngFor="let question of selectedPlan.questions">
+                                <div>
+                                    <p><b>Question: </b>{{question.questionText}}</p>
+                                </div>
+                                <div>
+                                    <p><b>Answer: </b>{{question.answer}}</p>
+                                </div>
+                            </li>
 
+                        </ol>
+
+                        <br><br>
+
+                        <!--<button class="btn btn-primary createbtn" (click)="showTable();">Assign Followup</button>-->
+                        <!--<button class="btn btn-primary createbtn" (click)="showTable();">Close Treatment</button>-->
+
+                    </mat-card>
+
+                </div>
+                <div *ngIf="viewDetailsCompleted">
+                    <mat-card class="assessTest">
+                        <div class="center">
+                            <h2 style="color: #0275d8;">{{selectedPlan.name}}</h2>
+                            <br>
+                            <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
+                            <br>
+                            <h5 style="color: #0275d8;">{{selectedPlan.userID?.userAccountName}}</h5>
                         </div>
-                        <div *ngIf="viewDetails">
-                            <mat-card class="assessTest">
-                                <div class="center">
-                                    <h2 style="color: #0275d8;">{{selectedPlan.name}}</h2>
-                                    <br>
-                                    <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
-                                    <br>
-                                    <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.name}}</h5>
-                                </div>
-                                <br><br><br>
-                                <ol>
-                                    <li *ngFor="let question of selectedPlan.questions">
-                                        <div>
-                                            <p><b>Question: </b>{{question.questionText}}</p>
-                                        </div>
-                                        <div>
-                                            <p><b>Answer: </b>{{question.answer}}</p>
-                                        </div>
-                                    </li>
-
-                                </ol>
-
-                                <br><br>
-
-                                <!--<button class="btn btn-primary createbtn" (click)="showTable();">Assign Followup</button>-->
-                                <!--<button class="btn btn-primary createbtn" (click)="showTable();">Close Treatment</button>-->
-
-                            </mat-card>
-
-                        </div>
-                        <div *ngIf="viewDetailsCompleted">
-                            <mat-card class="assessTest">
-                                <div class="center">
-                                    <h2 style="color: #0275d8;">{{selectedPlan.name}}</h2>
-                                    <br>
-                                    <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
-                                    <br>
-                                    <h5 style="color: #0275d8;">{{selectedPlan.userID?.userAccountName}}</h5>
-                                </div>
-                                <br><br>
-                                <div *ngIf="!selectedPlan.completed">
-                                    <h5>Enter some comments on the test results</h5>
-                                    <br>
-                                    <input type="text" #physioComments1><br><br>
-                                    <h5>Based on these results, how do you feel the Client is progressing out of 10 </h5>
-                                    <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
-                                        <ng-template let-fill="fill" let-index="index">
-                                            <span class="star" [class.filled]="fill === 100" (click)="SendBack(index)">&#9733;</span>
-                                        </ng-template>
-                                    </ngb-rating>
-                                </div>
-                                <div *ngIf="selectedPlan.completed">
-                                    <h5>Your have already taken action on these test results.</h5>
-                                </div>
-                                <br><br><br>
-                                <ol>
-                                    <li *ngFor="let question of selectedPlan.questions">
-                                        <div>
-                                            <p><b>Question: </b>{{question.questionText}}</p>
-                                        </div>
-                                        <div>
-                                            <p><b>Answer: </b>{{question.answer}}</p>
-                                        </div>
-                                    </li>
-
-                                </ol>
-
-                                <br><br>
-
-                                <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments.value);">Assign Followup</button>
-                                <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment)">Close Treatment</button>
-                                <ng-template #closeTreatment let-c="close" let-d="dismiss">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Close Treatment</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to close this treatment? this action cannot be undone.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(physioComments1.value); c('Close click'); showTable();">Confirm</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-
-                                    </div>
+                        <br><br>
+                        <div *ngIf="!selectedPlan.completed">
+                            <h5>Enter some comments on the test results</h5>
+                            <br>
+                            <input type="text" #physioComments1><br><br>
+                            <h5>Based on these results, how do you feel the Client is progressing out of 10 </h5>
+                            <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100" (click)="SendBack(index)">&#9733;</span>
                                 </ng-template>
-
-                            </mat-card>
+                            </ngb-rating>
                         </div>
+                        <div *ngIf="selectedPlan.completed">
+                            <h5>Your have already taken action on these test results.</h5>
+                        </div>
+                        <br><br><br>
+                        <ol>
+                            <li *ngFor="let question of selectedPlan.questions">
+                                <div>
+                                    <p><b>Question: </b>{{question.questionText}}</p>
+                                </div>
+                                <div>
+                                    <p><b>Answer: </b>{{question.answer}}</p>
+                                </div>
+                            </li>
+
+                        </ol>
+
+                        <br><br>
+
+                        <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments.value);">Assign Followup</button>
+                        <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment)">Close Treatment</button>
+                        <ng-template #closeTreatment let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Close Treatment</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to close this treatment? this action cannot be undone.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(physioComments1.value); c('Close click'); showTable();">Confirm</button>
+                                <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+
+                            </div>
+                        </ng-template>
+
+                    </mat-card>
+                </div>
+            </mat-card>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

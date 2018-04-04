@@ -69,7 +69,7 @@ export class RehabPlansComponent implements OnInit {
   }
   
   createPlan(planName: string, descript: string, author: string, goalOfPlan: string){
-    var timeFrame = year + '/' + month + '/' + day;
+    //var timeFrame = year + '/' + month + '/' + day;
 
     var body = {
       name: planName,
