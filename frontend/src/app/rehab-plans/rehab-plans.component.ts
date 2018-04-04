@@ -210,10 +210,8 @@ export class RehabPlansComponent implements OnInit {
       console.log(data);
       this.allExercises = Object.assign([], retObj.exercise);
     });
-  
-    
-    
   } 
+
   switchPage(event: any, searchString: any){
     console.log("teting123");
     console.log(event);
