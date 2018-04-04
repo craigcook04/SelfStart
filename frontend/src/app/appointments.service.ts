@@ -24,7 +24,7 @@ export class AppointmentsService {
   }
   
   GetAppointmentsByWeek(week: any){
-    var url = '/api/appointment/week/' + week;
+    var url = '/api/appointment/week/' + moment(week).format("YYYY-MM-DD").toString();
     return this.httpClient.get(url);
   }
   
@@ -61,7 +61,7 @@ export class AppointmentsService {
     return this.newType;
   }
   
-  setNewDate(mydate: Date){
+  setNewDate(mydate: any){
     this.newDate = mydate;
     //new Date(mydate.toISOString());
 
