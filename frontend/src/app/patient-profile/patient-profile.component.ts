@@ -175,6 +175,7 @@ export class PatientProfileComponent implements OnInit {
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
         this.patients = Object.assign([], data.docs);
+        this.length = data.total;
         console.log(data);
       });
 
@@ -191,6 +192,20 @@ export class PatientProfileComponent implements OnInit {
       }
     })
 
+  }
+
+  FormatPhone(phoneNumber) {
+    var a: any = phoneNumber;
+    if(phoneNumber.length == 11) {
+      var newPhoneNumber = a[0] + '-' + a[1] + a[2] + a[3] + '-' + a[4] + a[5] + a[6] + '-' + a[7] + a[8] + a[9] + a[10];
+      return newPhoneNumber;
+    }
+    if(phoneNumber.length == 10) {
+      var newPhoneNumber = a[0] + a[1] + a[2] + '-' + a[3] + a[4] + a[5] + '-' + a[6] + a[7] + a[8] + a[9];
+      return newPhoneNumber;
+    }
+
+    return phoneNumber;
   }
 
   deletePatient(ID: string) {
@@ -227,6 +242,7 @@ export class PatientProfileComponent implements OnInit {
         console.log(data);
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
+        this.length = retObj.total;
         if(this.offset + 10 > this.totalPatients) {
           this.pageInfo = `${this.offset} - ${this.totalPatients} of ${retObj.total}` 
         }

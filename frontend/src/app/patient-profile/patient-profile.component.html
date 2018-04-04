@@ -39,7 +39,7 @@
               <h3 *ngIf="physio" class="title" style="color: #0275d8">
                   Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
                </h3>
-               <p class="quote">
+               <p class="quote centerp">
                  Welcome to your dashboard, what would you like to do today?
                </p>
           </div>
@@ -114,7 +114,7 @@
                     <label class="col-sm-2 pnter">{{patient.familyName}}, {{patient.givenName}}</label>
                     <label class="col-sm-3 pnter">{{patient.email}}</label>
                     <label class="col-sm-2 pnter">{{calculateAge(patient?.DOB)}} years old</label>
-                    <label class="col-sm-3 pnter">{{patient?.phone}}</label>
+                    <label class="col-sm-3 pnter">{{FormatPhone(patient?.phone)}}</label>
               </mat-expansion-panel-header>
               <hr class="breaker">
                 <!-- The First Modal which will be brought up when the physiotherapist wants to delete the patient-->
