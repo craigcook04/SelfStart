@@ -76,7 +76,8 @@ export class AssessmentTestComponent implements OnInit {
       this.tests.data = retObj.docs;
       console.log(this.tests);
       console.log(data);
-      console.log(this.tests);
+      console.log(this.tests);    
+      //khjcgfhghggdhgfh
       
     });
     this.assessmentTestService.getAllCompleted().subscribe(data =>{
