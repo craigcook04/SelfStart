@@ -35,8 +35,6 @@ router.route('/')
         userAccount.adminUser = request.body.adminUser;
         userAccount.physioUser = request.body.physioUser;
         userAccount.patientUser = request.body.patientUser;
-        userAccount.numbInitial = 0;
-        userAccount.numAppoint = 0;
         
         userAccount.save(function (error) {
             if (error) {
@@ -385,9 +383,8 @@ router.route('/appointments/:id')
             }
             
             console.log(request.body);
-            console.log(request.params.id)
-            //account.numbAppoint += request.body.appointment;
-            //account.numbInitial += request.body.initial;
+            account.numbAppoint += request.body.appointment;
+            account.numbInitial += request.body.initial;
             account.save(function(err){
                 if(err){
                     response.send({error: err});
