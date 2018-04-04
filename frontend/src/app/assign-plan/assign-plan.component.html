@@ -14,7 +14,7 @@
         <mat-divider></mat-divider>
         <br>
         <mat-form-field>
-            <input matInput (keyup)="applyFilter2(searchValue.value)" placeholder="Search for Menus..." #searchValue2>
+            <input matInput (keyup)="applyFilter2(searchValue2.value)" placeholder="Search for Menus..." #searchValue2>
           </mat-form-field>
         <mat-list>
             <mat-paginator [length]="length2" [pageSize]="pageSize2" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent2 = $event" (page)="SetOffset2(searchValue2.value, $event)"></mat-paginator>

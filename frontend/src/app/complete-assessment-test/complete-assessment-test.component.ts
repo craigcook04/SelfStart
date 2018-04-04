@@ -90,7 +90,8 @@ export class CompleteAssessmentTestComponent implements OnInit {
         this.assessmentTestQuestions[i].answer = this.MCAnswers[i];
       }
     }
-      this.assessmentTestService.SendCompletedQuestions(this.assessmentTest._id, this.assessmentTestQuestions).subscribe(data=> {
+      var userID = this.cookieService.get('ID');
+      this.assessmentTestService.CreateCompletedTest(userID, this.assessmentTest.name, this.assessmentTest.description, this.assessmentTestQuestions).subscribe(data => {
         console.log(data);
       })
   }

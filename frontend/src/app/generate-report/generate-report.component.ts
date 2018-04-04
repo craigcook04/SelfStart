@@ -7,16 +7,22 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AssessmentTestService } from '../assessment-test.service';
 import { EmailService } from '../email.service'
 import * as jsPDF from 'jspdf';
+import { AppointmentsService } from '../appointments.service';
 
 @Component({
   selector: 'app-generate-report',
   templateUrl: './generate-report.component.html',
   styleUrls: ['./generate-report.component.scss']
 })
+
 export class GenerateReportComponent implements OnInit {
 
   patient: any;
   paymentHistory: any;
+  appointments: any;
+  initialInjury: any;
+  finalOutcome: any;
+  rehabPlan: any;
 
   @ViewChild('test') test: ElementRef;
   @ViewChild('test2') test2: ElementRef;
@@ -27,7 +33,8 @@ export class GenerateReportComponent implements OnInit {
               private paymentService: PaymentService, 
               private cookieService: CookieService,
               private assessmentService: AssessmentTestService,
-              private emailService: EmailService) { }
+              private emailService: EmailService,
+              private appointmentService: AppointmentsService) { }
 
   
   currClient: any;
@@ -78,13 +85,38 @@ export class GenerateReportComponent implements OnInit {
       var retObj: any = data;
       console.log(data);
       this.patient = retObj.patient;
+      this.rehabPlan = this.patient.rehabPlan;
     })
+
     var userID = this.cookieService.get('ID');
+    this.appointmentService.GetAppointmentsByPatientID(userID).subscribe(data => {
+      console.log('appointments:',data);
+      var retObj: any = data;
+      this.appointments = retObj.appointments;
+    })
+    
+
     console.log("id",userID);
     this.paymentService.GetPaymentHistory(userID).subscribe(data => {
       console.log(data);
       var retObj: any = data;
       this.paymentHistory = retObj.payments;
+    })
+
+    this.assessmentService.GetUsersInitialInjuries(userID).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.initialInjury = retObj.intakes[0];
+      this.assessmentService.GetFinalResults(userID, this.initialInjury.injuryNumber).subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        if(retObj.success) {
+          this.finalOutcome = retObj.results;
+        }
+        else {
+          this.finalOutcome = null;
+        }
+      })
     })
 
     this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
@@ -122,6 +154,7 @@ export class GenerateReportComponent implements OnInit {
     var years = moment().diff(DOB, 'years');
     return years;
   }
+  @ViewChild('summarytest') summarytest: ElementRef;
 
   chartClicked(e: any): void { 
   } 
@@ -167,10 +200,56 @@ export class GenerateReportComponent implements OnInit {
 
         let pdf = doc.output('datauristring');
     
-        this.emailService.SendPDFToClient(pdf).subscribe(data => {
+        this.emailService.SendPDFToClient(pdf, 'none', 'none', 'none').subscribe(data => {
           console.log(data);
         })
-        //doc.save(this.currClient.familyName + "_" + this.currClient.givenName + ".pdf");
+  }
+
+  GetTodaysDate() : Date {
+    return new Date();
+  }
+
+  PrintPatientSummary() {
+    let doc = new jsPDF();
+    
+    let specialElementHandlers = {
+        '#editor': function(element, renderer){
+            return true;
+        }
+      }
+
+    let content = this.summarytest.nativeElement;
+        
+    doc.fromHTML(content.innerHTML, 15, 15, {
+       'width': 180,
+       'elementHandlers': specialElementHandlers
+    });
+    var pdfName = `${this.patient.givenName}${this.patient.familyName}-SummaryReport.pdf`;
+    doc.save(pdfName);
+  }
+
+  EmailPatientSummary(toEmail: string, message: string) {
+    let doc = new jsPDF();
+    console.log(toEmail, message);
+    let specialElementHandlers = {
+       '#editor': function(element, renderer){
+        return true;
+        }
+    }
+    
+    let content = this.summarytest.nativeElement;
+        doc.fromHTML(content.innerHTML, 15, 15, {
+        'width': 180,
+        'elementHandlers': specialElementHandlers
+    });
+
+    let pdf = doc.output('datauristring');
+    console.log(pdf);
+    
+    var pdfName = `${this.patient.givenName}${this.patient.familyName}-SummaryReport.pdf`;
+    this.emailService.SendPDFToClient(pdf, toEmail, message, pdfName).subscribe(data => {
+       console.log(data);
+    })
   }
 
 }

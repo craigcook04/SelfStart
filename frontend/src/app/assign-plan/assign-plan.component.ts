@@ -83,7 +83,7 @@ export class AssignPlanComponent implements OnInit {
   //this is for the exercise menus
   applyFilter2(filterValue: string) {
     
-        this.rehabPlanService.SearchPlans(filterValue, "name", "asc", this.offset * this.pageSize).subscribe(data =>{
+        this.rehabPlanService.SearchPlans(filterValue, this.offset * this.pageSize).subscribe(data =>{
           if(data != []){
             console.log(data);
             this.rehabPlans = [];
@@ -97,7 +97,7 @@ export class AssignPlanComponent implements OnInit {
     this.offset2 = event.pageIndex;
     this.pageSize2 = event.pageSize;
 
-    this.rehabPlanService.SearchPlans(searchValue, "name", "asc", this.offset * this.pageSize).subscribe(data =>{
+    this.rehabPlanService.SearchPlans(searchValue, this.offset * this.pageSize).subscribe(data =>{
       if(data != []){
         console.log(data);
         this.rehabPlans = [];
@@ -153,13 +153,23 @@ export class AssignPlanComponent implements OnInit {
   }
 
   removePatient(patient: any, plan: any){
-    var index = this.clients.indexOf(plan);
-    this.clients.splice(index);
+    var index = this.clients.indexOf(patient);
+    this.clients.splice(index, 1);
     var obj: any;
     this.patientService.RemovePatient(patient._id).subscribe(data =>{
       obj = data;
-      this.clientList.push(createClient(obj.patient));
-      this.dataSource = new MatTableDataSource(this.clientList);
+      this.patientService.GetPatientsNotUnderPlan(this.currPlan._id, this.pageSize).subscribe(data =>{
+        this.clientList = [];
+        let obj: any = data;
+        console.log(data);
+        obj.docs.forEach(element => {
+          if(element.rehabPlan !== this.currPlan._id){
+            this.clientList.push(createClient(element));
+          }
+        });
+        this.length = obj.total;
+        this.dataSource = new MatTableDataSource(this.clientList);
+      })
     })
   }
 
