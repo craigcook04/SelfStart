@@ -1,4 +1,5 @@
 var mongoose  = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var completedAssessmentTest = new mongoose.Schema( 
     {
@@ -12,12 +13,12 @@ var completedAssessmentTest = new mongoose.Schema(
         questions: [],
         physioRate: Number,
         physioDescription: String,
-        physioRate: Number,
-        physioDescription: String,
+      
         userID: {type: mongoose.Schema.Types.ObjectId, ref: 'UserAccount'}
 
     }
 )
 
+completedAssessmentTest.plugin(mongoosePaginate);
 var CompletedAssessmentTest = mongoose.model('CompletedAssessmentTest', completedAssessmentTest);
 module.exports = CompletedAssessmentTest;

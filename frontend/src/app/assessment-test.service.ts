@@ -48,6 +48,11 @@ export class AssessmentTestService {
 
         return this.http.get(url);
     }
+    
+    getAllCompleted(){
+        var url = '/api/assessmentTest/getCompleted';
+        return this.http.get(url);
+    }
 
     SendCompletedQuestions(assessmentID: string, completedQuestions) {
         var url = "/api/assessmentTest/client/completed";
@@ -110,6 +115,27 @@ export class AssessmentTestService {
     GetFinalResults(userID: string, injuryNum) {
         var url = '/api/assessmentTest/completedtest/final/' + userID + '?num=' + injuryNum;
 
+        return this.http.get(url);
+    }
+    linktoPlan(ID: any, rehabID:any){
+        console.log("rehabid: " + rehabID);
+        console.log("ass testId: " +ID)
+        var url = '/api/rehabPlans/assignTest/'+rehabID;
+        var body = {
+            assessmentTests: ID
+        }
+        return this.http.put(url,body);
+    }
+    closeInjury(physioComments: string, testId: any, physioRating: Number){
+        var url = '/api/assessmentTest/closeTreatment/' + testId;
+        var body = {
+            physioDescription: physioComments,
+            physioRate: physioRating
+        }
+        return this.http.put(url,body);
+    }
+    searchCompletedTests(searchString: string, searchArea: string, offset, ascvsdesc){
+        var url = '/api/assessmentTest/getCompleted?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
         return this.http.get(url);
     }
 }

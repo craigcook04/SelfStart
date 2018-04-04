@@ -67,7 +67,7 @@ router.route('/')
         }
         
         var myparameter = request.query.s;
-        var sort = {};
+        var sort ={};
         sort[myparameter] = sortOrder;
         var options = 
         {
@@ -193,8 +193,9 @@ router.route('/findplan/search')
 router.route('/assignTest/:id')
 
     .put(function(request, response){
-        RehabPlans.findOne({"_id": request.params.id}, function(error, rehabPlan){
+        RehabPlans.findById(request.params.id, function(error, rehabPlan){
             if(error){
+                console.log("i am error derrrrr");
                 response.send({error: error});
                 return;
             }
