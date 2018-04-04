@@ -22,7 +22,11 @@ export class AssessmentTestService {
 
     }    
     getTests(){
-        var url = '/api/assessmentTest';
+        var url = '/api/assessmentTest?s=name&sortorder=asc&offset=0';
+        return this.http.get(url);
+    }
+    search(searchString: string, searchArea: string, offset, ascvsdesc){
+        var url = '/api/assessmentTest?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
         return this.http.get(url);
     }
     createPlanwithAssignedTest(name1: string, description1: string, questions1: any[], clientId: string){
@@ -44,6 +48,11 @@ export class AssessmentTestService {
 
         return this.http.get(url);
     }
+    
+    getAllCompleted(){
+        var url = '/api/assessmentTest/getCompleted';
+        return this.http.get(url);
+    }
 
     SendCompletedQuestions(assessmentID: string, completedQuestions) {
         var url = "/api/assessmentTest/client/completed";
@@ -55,6 +64,25 @@ export class AssessmentTestService {
         return this.http.put(url, body);
 
     }
+
+    
+    completeTest(name: string, description: string, dateCompleted: Date, dateCreated: Date, questions:any, physioRating: number, phsyioComments: string, pat_id: string){
+        var url = "/api/assessmentTest/completedTests";
+        var body = {
+            name: name,
+            description: description,
+            completed: false,
+            dateCompleted: dateCompleted,
+            dateCreated: dateCreated,
+            questions: questions,
+            physioRate: physioRating,
+            physioDescription: phsyioComments,
+            patient: pat_id
+        }
+        return this.http.post(url, body);
+    }
+    
+
 
     GetCompletedTests(id: string){
         var url = '/api/assessmentTest/getresults/' + id;
@@ -87,6 +115,27 @@ export class AssessmentTestService {
     GetFinalResults(userID: string, injuryNum) {
         var url = '/api/assessmentTest/completedtest/final/' + userID + '?num=' + injuryNum;
 
+        return this.http.get(url);
+    }
+    linktoPlan(ID: any, rehabID:any){
+        console.log("rehabid: " + rehabID);
+        console.log("ass testId: " +ID)
+        var url = '/api/rehabPlans/assignTest/'+rehabID;
+        var body = {
+            assessmentTests: ID
+        }
+        return this.http.put(url,body);
+    }
+    closeInjury(physioComments: string, testId: any, physioRating: Number){
+        var url = '/api/assessmentTest/closeTreatment/' + testId;
+        var body = {
+            physioDescription: physioComments,
+            physioRate: physioRating
+        }
+        return this.http.put(url,body);
+    }
+    searchCompletedTests(searchString: string, searchArea: string, offset, ascvsdesc){
+        var url = '/api/assessmentTest/getCompleted?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
         return this.http.get(url);
     }
 }
