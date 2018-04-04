@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Response } from '@angular/http';
 import * as moment from 'moment';
+import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -23,6 +26,11 @@ export class AppointmentsService {
   GetAppointmentsByWeek(week: any){
     var url = '/api/appointment/week/' + week;
     return this.httpClient.get(url);
+  }
+  
+  GetAppointmentsByMonth(month: any){
+    var url = '/api/appointment/month/'+ month;
+    return this.httpClient.get(url); 
   }
   
   
@@ -53,8 +61,9 @@ export class AppointmentsService {
     return this.newType;
   }
   
-  setNewDate(date: Date){
-    this.newDate = date;
+  setNewDate(mydate: Date){
+    this.newDate = mydate;
+    //new Date(mydate.toISOString());
 
     // moment(date).format("MMMM Do YYYY, h:mm:ss a");
   }
