@@ -104,6 +104,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { PhysioHomeService } from './physio-home.service';
 
 @NgModule({
   declarations: [
@@ -205,7 +206,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     PhysioAuthGuard,
     AdminAuthGuard,
     PaymentService,
-    RolesService],
+    RolesService,
+    PhysioHomeService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

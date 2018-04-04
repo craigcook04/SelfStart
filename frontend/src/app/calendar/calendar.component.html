@@ -35,11 +35,15 @@
           <br>
           <div style="margin-top: -10px;">
               <h3 *ngIf="physio" class="title" style="color: #0275d8">
-                  Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
+                  Good {{ timeOfDay }}<a >, Hello.</a>
                </h3>
                <p class="quote">
                  Manage your appointments, book time off, or get a glimpse of your weekly schedule.
                </p>
+               <div style="margin-left: auto; margin-right: auto; text-align: center;" class="col-2">
+                  <hr>
+                  <b>{{ today | date:'shortTime'}}</b>
+                </div>
           </div>
         </div>
     <div style="min-height: 100vh;" class="page col-11">

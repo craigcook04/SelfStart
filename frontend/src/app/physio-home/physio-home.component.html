@@ -34,11 +34,15 @@
           <br>
           <div style="margin-top: -10px;">
               <h3 *ngIf="physio" class="title" style="color: #0275d8">
-                  Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
+                  Good {{ timeOfDay }}<a>, {{ physio?.givenName }}.</a>
                </h3>
                <p class="quote">
                  Welcome to your dashboard, what would you like to do today?
                </p>
+               <div style="margin-left: auto; margin-right: auto; text-align: center;" class="col-2">
+                 <hr>
+                 <b>{{ today | date:'shortTime'}}</b>
+               </div>
           </div>
         </div>
         <br>
@@ -110,10 +114,13 @@
                                       <mat-card-subtitle>
                                           <h6><b> Number of Clients: </b></h6>
                                       </mat-card-subtitle>
-                                      </div>
-                                      <div class="col">
-                                        <h4><b></b></h4>
-                                      </div>
+                                    </div>
+                                    <div *ngIf="numbPatients" class="col">
+                                        <h4><b> {{ numbPatients }}</b></h4>
+                                    </div>
+                                    <div *ngIf="!numbPatients" class="col">
+                                        <h4><b> 0 </b></h4>
+                                    </div>
                                     </div>
                                     <div class="divider">
                                       <mat-divider></mat-divider>
@@ -124,6 +131,9 @@
                         </div>
                         <br>
                       </mat-card>    
+                </div>
+                <div class="row">
+                  
                 </div>
             </mat-card-content>
             <br><br>

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from '../patient.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -18,18 +19,22 @@ export class PhysioHomeComponent implements OnInit {
   activated: any;
   appointments: any[];
   panelOpenState: boolean = false;
+  numbPatients: any;
   
-  constructor(private router: Router, private physioHomeService: PhysioHomeService, private cookieService: CookieService) { }
+  constructor(private router: Router,
+              private physioHomeService: PhysioHomeService,
+              private cookieService: CookieService,
+              private patientService: PatientService) { }
   
   ngOnInit() {
     //var j = 0;
     var today = new Date();
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
-    this.physio = this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
-      obj = obj.docs;
+      obj = obj.physiotherapist;
       this.physio = obj;
     })
     this.appointments = [];
@@ -40,7 +45,12 @@ export class PhysioHomeComponent implements OnInit {
       var retObj:any = data;
       this.appointments = retObj.appointment;
       console.log(this.appointments);
-    });
+    })
+
+    this.patientService.getPhysioPatients(this.cookieService.get('ID')).subscribe(data =>{
+      let obj: any = data;
+      this.numbPatients = obj.total;
+    })
   }
   
   show(appointment: any){

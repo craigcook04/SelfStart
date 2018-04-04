@@ -18,6 +18,8 @@ import {
   format
 } from 'date-fns';
 import { Observable } from 'rxjs/Observable';
+import { PhysiotherapistService } from '../physiotherapist.service';
+import { CookieService } from 'ngx-cookie-service';
 
 interface Appointment {
   date: Date
@@ -45,11 +47,14 @@ export class CalendarComponent implements OnInit {
   //asyncEvents$: Observable<CalendarEvent[]>;
   events$: Observable<Array<CalendarEvent<{ appointment: Appointment }>>>;
   activeDayIsOpen: boolean = false;
+  physio: any;
+  today: any;
+  timeOfDay: string;
   
-  constructor(private router: Router, private http: HttpClient, private physioHomeService: PhysioHomeService) { }
+  constructor(private router: Router, private http: HttpClient, private physioHomeService: PhysioHomeService,
+              private cookieService: CookieService) { }
   
   ngOnInit() {
-    this.fetchEvents();
     /*this.appointments = [];
     this.physioHomeService.GetAppointments().subscribe(data =>{
       console.log(data);
@@ -57,6 +62,22 @@ export class CalendarComponent implements OnInit {
       this.appointments = retObj.appointment;
       console.log(this.appointments);
     });*/
+
+    this.getTimeOfDay();
+    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+      let obj: any = data;
+      this.physio = obj.physiotherapist;
+    })
+
+    this.fetchEvents();
+  }
+
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
   }
   
   /*fetchEvents(){
