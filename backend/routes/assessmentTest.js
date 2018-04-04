@@ -440,6 +440,8 @@ router.route('/closeTreatment/:id')
             completedAssessment.physioRate = request.body.physioRate;
             completedAssessment.completed = true;
             completedAssessment.dateClosed = new Date();
+            completedAssessment.finalThoughts = request.body.finalThoughts;
+            completedAssessment.treatmentClosed = true;
             completedAssessment.save(function(err) {
                 if(err) {
                     response.send({error: err});

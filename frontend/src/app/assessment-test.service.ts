@@ -126,11 +126,12 @@ export class AssessmentTestService {
         }
         return this.http.put(url,body);
     }
-    closeInjury(physioComments: string, testId: any, physioRating: Number){
+    closeInjury(physioComments: string, testId: any, physioRating: Number, finalThoughts: string){
         var url = '/api/assessmentTest/closeTreatment/' + testId;
         var body = {
             physioDescription: physioComments,
-            physioRate: physioRating
+            physioRate: physioRating,
+            finalThoughts: finalThoughts
         }
         return this.http.put(url,body);
     }
