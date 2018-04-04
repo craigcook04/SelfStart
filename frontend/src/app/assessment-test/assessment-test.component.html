@@ -441,10 +441,16 @@
                                 <h4 class="modal-title">Close Treatment</h4>
                             </div>
                             <div class="modal-body">
+                                <div class="form-group row">
+                                    <label for="inputQuestionText" class="col-sm-3 col-form-label">Final Thoughts</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="inputQuestionText" placeholder="Question" #finalThoughts>
+                                    </div>
+                                </div>
                                 <p>Are you sure you want to close this treatment? this action cannot be undone.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(physioComments1.value); c('Close click'); showTable();">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(physioComments1.value, finalThoughts.value); c('Close click'); showTable();">Confirm</button>
                                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
 
                             </div>
