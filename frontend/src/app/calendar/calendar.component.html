@@ -1,99 +1,86 @@
-<br>
-<!--<mwl-demo-utils-calendar-header
-  [(view)]="view"
-  [(viewDate)]="viewDate">
-</mwl-demo-utils-calendar-header>
-
-<div class="alert alert-info">
-  <strong *ngIf="clickedDate"> {{ clickedDate | date:'medium' }}</strong>
-</div>
-
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="'month'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (dayClicked)="clickedDate = $event.day.date">
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (dayHeaderClicked)="clickedDate = $event.day.date">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="'day'"
-    [viewDate]="viewDate"
-    [events]="events">
-  </mwl-calendar-day-view>
-</div>-->
-<div id="cal">
-<mwl-demo-utils-calendar-header
-  [(view)]="view"
-  [(viewDate)]="viewDate"
-  (viewDateChange)="fetchEvents()"
-  (viewChange)="fetchEvents()">
-</mwl-demo-utils-calendar-header>
-
-<ng-template #loading>
-  <div class="text-center">
-    <i class="fa fa-spin fa-spinner fa-5x"></i>
-    <br>
-    Loading appointments...
-  </div>
-</ng-template>
-
-<div *ngIf="events$ | async; else loading; let events">
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view
-      *ngSwitchCase="'month'"
-      [viewDate]="viewDate"
-      [events]="events"
-      [activeDayIsOpen]="activeDayIsOpen"
-      (dayClicked)="dayClicked($event.day)"
-      (eventClicked)="eventClicked($event.event)">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view
-      *ngSwitchCase="'week'"
-      [viewDate]="viewDate"
-      [events]="events"
-      (eventClicked)="eventClicked($event.event)">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view
-      *ngSwitchCase="'day'"
-      [viewDate]="viewDate"
-      [events]="events"
-      (eventClicked)="eventClicked($event.event)">
-    </mwl-calendar-day-view>
-  </div>
-</div>
-</div>
-<!--<div id="cal">
-<mwl-demo-utils-calendar-header
-  [(view)]="view"
-  [(viewDate)]="viewDate">
-</mwl-demo-utils-calendar-header>
-
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="'month'"
-    [viewDate]="viewDate"
-    [events]="events"
-    [activeDayIsOpen]="true"
-    (eventClicked)="eventClicked($event)">
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (eventClicked)="eventClicked($event)">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="'day'"
-    [viewDate]="viewDate"
-    [events]="events"
-    (eventClicked)="eventClicked($event)">
-  </mwl-calendar-day-view>
-</div>
-</div>-->
-<br><br>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+        <mat-nav-list style="top: -10px;">
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Calendar</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../client']">Client Profiles</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercises</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../rehabplans']">Rehabilitation Plans</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../assessmenttest']">Assessment Tests</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" >
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Generate Reports</button></mat-list-item>
+        </mat-nav-list>
+        <mat-divider class="dividers"></mat-divider>
+    </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="min-height: 100vh;" class="page col-11">
+      <mat-card style="min-height: 75vh;">
+        <div>
+            <br>
+            <div id="cal">
+            <mwl-demo-utils-calendar-header
+              [(view)]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="fetchEvents()"
+              (viewChange)="fetchEvents()">
+            </mwl-demo-utils-calendar-header>
+            
+            <ng-template #loading>
+              <div class="text-center">
+                <i class="fa fa-spin fa-spinner fa-5x"></i>
+                <br>
+                Loading appointments...
+              </div>
+            </ng-template>
+            
+            <div *ngIf="events$ | async; else loading; let events">
+              <div [ngSwitch]="view">
+                <mwl-calendar-month-view
+                  *ngSwitchCase="'month'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  [activeDayIsOpen]="activeDayIsOpen"
+                  (dayClicked)="dayClicked($event.day)"
+                  (eventClicked)="eventClicked($event.event)">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view
+                  *ngSwitchCase="'week'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  (eventClicked)="eventClicked($event.event)">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view
+                  *ngSwitchCase="'day'"
+                  [viewDate]="viewDate"
+                  [events]="events"
+                  (eventClicked)="eventClicked($event.event)">
+                </mwl-calendar-day-view>
+              </div>
+            </div>
+            </div>
+            <br><br>
+        </div>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
