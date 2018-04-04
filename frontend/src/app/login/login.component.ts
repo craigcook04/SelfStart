@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   showFailure: boolean;
   userIsDisabled: boolean;
+  needToVerify: boolean;
   constructor(private userAccountsService: UserAccountsService,
               private router: Router,
               private cookieService: CookieService,
@@ -50,26 +51,33 @@ export class LoginComponent implements OnInit {
             this.appComponent.alterLoginState();
           }
           else {
+            if(retObj.role == "US" && retObj.verified == false ) {
+              this.needToVerify = true;
+              return;
+            }
             //expires in 1 hour, expires takes days so 1 hour is 1/24
             this.cookieService.set('ID', retObj.userID, 1/24);
             this.cookieService.set('session', retObj1.nonce, 1/24);
             this.cookieService.set('role', retObj.role, 1/24);
 
             if(retObj.role == "US") {
-              this.router.navigate(['../client/home']);
               this.appComponent.alterLoginState();
               this.appComponent.toggleToClient();
+              this.router.navigate(['../client/home']);
+              
             }
 
             else if (retObj.role == "AD") {
-              this.router.navigate(['../admin/home']);
               this.appComponent.alterLoginState();
               this.appComponent.toggleToAdmin();
+              this.router.navigate(['../admin/home']);
+              
             }
             else {
-              this.router.navigate(['../physiohome']);
               this.appComponent.alterLoginState();
               this.appComponent.toggleToPhysio();
+              this.router.navigate(['../physiohome']);
+              
             }
           }
         }

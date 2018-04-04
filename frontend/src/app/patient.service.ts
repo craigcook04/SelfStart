@@ -164,7 +164,7 @@ export class PatientService {
   }
 
   GetPatientApppointments(id: string){
-    var url = '/api/patient/patient/appointments/' + id;
+    var url = '/api/patient/appointments/' + id;
     return this.http.get(url);
   }
 
