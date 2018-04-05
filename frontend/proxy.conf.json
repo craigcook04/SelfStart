@@ -1,10 +1,6 @@
 {
    "/api/*": {
-<<<<<<< HEAD
        "target": "https://se3350-sperei32.c9users.io:8082",
-=======
-       "target": "https://se3350finalproject-sammallabone.c9users.io:8082",
->>>>>>> 459b556feb8ddd95cdaf5eff523b00d833c69f46
        "secure": false,
        "changeOrigin": true,
        "logLevel": "info"

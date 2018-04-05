@@ -77,14 +77,14 @@
                                       <mat-expansion-panel>
                                         <mat-expansion-panel-header>
                                           <mat-panel-title>
-                                            {{appt.userID}}
+                                            {{appt.patient}}
                                           </mat-panel-title>
                                           <mat-panel-description>
                                             {{appt.date | date:'shortTime'}}
                                           </mat-panel-description>
                                         </mat-expansion-panel-header>
-                                        <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Reason:  </b>{{appt.reason}}</p>
                                         <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Type:  </b>{{appt.type}}</p>
+                                        <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Description:  </b>{{appt.reason}}</p>
                                       </mat-expansion-panel>
                                     </mat-accordion>
                                 </div>

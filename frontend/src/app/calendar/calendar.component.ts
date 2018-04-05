@@ -124,7 +124,7 @@ export class CalendarComponent implements OnInit {
         return appointment.map((appointment: any) => {
           
           var temp: CalendarEvent = {
-            title: "test",
+            title: appointment.reason,
             start: new Date(appointment.date),
             color: this.colors.blue,
             actions: this.actions

@@ -93,8 +93,7 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<ng-template #modalContent let-c="close" let-d="dismiss">
-  <div class="modal-header">
+<ng-template #modalContent let-c="close" let-d="dismiss">  <div class="modal-header">
     <h4 class="modal-title">Appointment Details</h4>
     <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
       <span aria-hidden="true">&times;</span>
@@ -111,7 +110,7 @@
       <p><b>Type: </b><!--{{appointment.type}}--></p>
     </div>
     <div>
-      <p><b>Reason: </b><!--{{appointment.reason}}--></p>
+      <p><b>Description </b><!--{{appointment.reason}}--></p>
     </div>
   </div>
   <div class="modal-footer">
@@ -150,9 +149,9 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputFirstName" class="col-sm-3 col-form-label"><b>Reason</b></label>
+        <label for="inputFirstName" class="col-sm-3 col-form-label"><b>Description</b></label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="reason" placeholder="Reason" #reason>
+          <input type="text" class="form-control" id="reason" placeholder="Description" #reason>
           <!--value="{{appointment.reason}}"-->
         </div>
       </div>
