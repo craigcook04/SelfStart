@@ -30,6 +30,7 @@ export class ClientHomeComponent implements OnInit {
               private accountService: UserAccountsService) { }
 
   ngOnInit() {
+    console.log(this.cookieService.get('ID'));
     this.timeOfDay = this.getTimeOfDay();
     //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{

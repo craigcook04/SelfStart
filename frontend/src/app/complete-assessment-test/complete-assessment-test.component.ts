@@ -54,6 +54,7 @@ export class CompleteAssessmentTestComponent implements OnInit {
     })
     // this.assessmentTestService.GetPlans().subscribe(data => {
     //   var retObj: any = data;
+    //   console.log(retObj);
     //   this.assessmentTest = retObj.assessmentTest[3];
     //   this.assessmentTestQuestions = this.assessmentTest.questions;
     //   this.testLength = this.assessmentTestQuestions.length;
