@@ -44,9 +44,7 @@
         </div>
     <div style="min-height: 100vh;" class="page col-11">
       <mat-card style="min-height: 75vh;">
-        <br>
         <div>
-            <br>
             <div id="cal">
             <mwl-demo-utils-calendar-header
               [(view)]="view"
@@ -88,34 +86,126 @@
               </div>
             </div>
             </div>
-            <br><br>
+            <br>
         </div>
       </mat-card>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<br>
-<ng-template #modalContent let-close="close">
+
+<ng-template #modalContent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
+    <h4 class="modal-title">Appointment Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p><b>Client Name: </b><!--{{appointment.userID}}--></p>
+    </div>
+    <div>
+      <p><b>Date: </b><!--{{appointment.date}}--></p>
+    </div>
+    <div>
+      <p><b>Type: </b><!--{{appointment.type}}--></p>
+    </div>
+    <div>
+      <p><b>Reason: </b><!--{{appointment.reason}}--></p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #editModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Appointment</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-3 col-form-label"><b>Client Name</b></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="name" placeholder="Name" #name>
+          <!--value="{{appointment.userID}}"-->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="description" class="col-sm-3 col-form-label"><b>Date</b></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="date" placeholder="Date" #date>
+          <!--value="{{appointment.date}}"-->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-3 col-form-label"><b>Type</b></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="type" placeholder="Type" #type>
+          <!--value="{{appointment.type}}"-->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputFirstName" class="col-sm-3 col-form-label"><b>Reason</b></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="reason" placeholder="Reason" #reason>
+          <!--value="{{appointment.reason}}"-->
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');">Confirm</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Are you sure you want to delete this appointment?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');">Confirm</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
+  </div>
+</ng-template>
+
+<!--<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Appointment Details</h5>
     <button type="button" class="close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
+      Client Name:
+      <pre></pre>
     </div>
     <div>
-      Event:
-      <pre>{{ modalData?.event | json }}</pre>
+      Date:
+      <pre></pre>
+    </div>
+    <div>
+      Type:
+      <pre></pre>
+    </div>
+    <div>
+      Reason:
+      <pre></pre>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+    <button type="button" class="btn btn-primary" (click)="close()">Close</button>
   </div>
-</ng-template>
+</ng-template>-->
 
 
 <!--<div id="cal">-->
@@ -185,10 +275,10 @@
 <!--</div>-->
 <!-- End of Third Modal -->
 
-<ng-template mdbModal #delModal="mdb-modal" class="modal fade mymodal" id="del" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true" #deleteModal>
+<!--<ng-template mdbModal #delModal="mdb-modal" class="modal fade mymodal" id="del" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true" #deleteModal>
     <div class="modal-header" style="text-align: center;">
         <h4 class="modal-title">Are you sure you want to remove this appointment?</h4>
-        <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
+        <button type="button" class="close" aria-label="Close" (click)="c('Close click');">
              <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -197,4 +287,4 @@
         <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
 
     </div>
-</ng-template>
+</ng-template>-->
