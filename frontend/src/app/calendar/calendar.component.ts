@@ -29,8 +29,6 @@ import {
 import { CookieService } from 'ngx-cookie-service';
 
 
-  
-
 @Component({
   selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,6 +41,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent') modalContent: any;
   @ViewChild('deleteModal') deleteModal: any;
+  @ViewChild('editModal') editModal: any;
   
   view: string = 'month';
   viewDate: Date = new Date();
@@ -81,21 +80,19 @@ export class CalendarComponent implements OnInit {
     {
       label: '<i class="fa fa-fw fa-pencil"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        this.editEvent('Edited', event);
       }
     },
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.deleteEvent('Deleted', event);
       }
     }
   ];
   
   refresh: Subject<any> = new Subject();
-
-  
   
   constructor(private router: Router, 
               private http: HttpClient, 
@@ -120,8 +117,6 @@ export class CalendarComponent implements OnInit {
 
   }
   
-  
-  
   fetchEvents(): void {
     const getStart: any = {
       month: startOfMonth,
@@ -143,7 +138,7 @@ export class CalendarComponent implements OnInit {
           var temp: CalendarEvent = {
             title: "test",
             start: new Date(appointment.date),
-            color: this.colors.yellow,
+            color: this.colors.blue,
             actions: this.actions
           };
           this.events.push(temp);
@@ -157,9 +152,6 @@ export class CalendarComponent implements OnInit {
 
       console.log(this.myAppointmentDates);
     }
-    
-    
-    
     
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       if (isSameMonth(date, this.viewDate)) {
@@ -187,15 +179,27 @@ export class CalendarComponent implements OnInit {
     }
   
     handleEvent(action: string, event: CalendarEvent): void {
-      this.deleteModal.show();
+      //this.modalService.open(this.deleteModal, { size: 'lg' });
+    }
+    
+    editEvent(action: string, event: CalendarEvent) {
+      this.modalService.open(this.editModal, { size: 'lg' });
+    }
+    
+    deleteEvent(action: string, event: CalendarEvent) {
+      this.modalService.open(this.deleteModal, { size: 'lg' });
+    }
+    
+     eventClicked(event: CalendarEvent<{ appointment: any }>): void {
+      console.log("pop up modal here");
+      //this.modalData = { event, action };
+      this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
     open(content){
       this.modalService.open(content, {size: "lg"});
     }
     
-    
-  
     addEvent(): void {
       this.events.push({
         title: 'New event',
@@ -211,17 +215,13 @@ export class CalendarComponent implements OnInit {
       this.refresh.next();
     }
     
-    eventClicked(event: CalendarEvent<{ appointment: any }>): void {
-      console.log("pop up modal here");
+    getTimeOfDay(): string{
+      this.today = new Date();
+      var hour = this.today.getHours();
+      if(hour < 13 && hour >= 0){ return "Morning"}
+      if(hour < 17){ return "Afternoon"}
+      else{ return "Evening"};
     }
-
-  getTimeOfDay(): string{
-    this.today = new Date();
-    var hour = this.today.getHours();
-    if(hour < 13 && hour >= 0){ return "Morning"}
-    if(hour < 17){ return "Afternoon"}
-    else{ return "Evening"};
-  }
     
       
 }
