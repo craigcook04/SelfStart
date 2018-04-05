@@ -129,6 +129,7 @@ router.route('/account/change')
                     console.log('hello');
                     useraccount.encryptedPassword = request.body.newEncryptedPassword;
                     useraccount.needToChangePass = false;
+                    useraccount.resetRequestSent = false;
                 }
                 
                 else{
@@ -408,6 +409,7 @@ router.route('/getdates/:id')
             response.send({account});
         })
     })
+
 
 router.route('/account/getsalt/:id')
     .get(function(request, response) {

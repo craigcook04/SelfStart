@@ -131,4 +131,16 @@ p {
 .divider{
     margin-top: -25px;
 }
+.star {
+    font-size: 2rem;
+    color: #b0c4de;
+}
+
+.filled {
+    color: #1e90ff;
+}
+.ratingstars {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
 

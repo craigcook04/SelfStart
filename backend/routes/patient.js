@@ -419,8 +419,8 @@ router.route('/patientinfo/:id')
             }
             
             response.send({patient: patient});
-        })
-    })
+        });
+    });
     
 router.route('/patient/appointments/:id')
 
@@ -504,7 +504,9 @@ router.route('/admincreated')
             });
         });
         
-    });
+
+});
+
 
 
 router.route('/getclient/:userid')
