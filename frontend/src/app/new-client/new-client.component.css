@@ -17,8 +17,8 @@
     background-color: #ffffff;
     background-image: none;
     background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.15);
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     cursor: pointer;
 }
@@ -103,4 +103,17 @@ h4 {
 .hddn {
     display: none;
     
+}
+
+.smallmove{
+    margin-left: 1em; 
+}
+
+.moveleft {
+    margin-left: 0em;
+}
+
+.movetop {
+    position: relative;
+    top: 10px;
 }

@@ -30,7 +30,7 @@ router.route('/')
 
     .post(function (request, response) {
         var appointment = new Appointment();
-        appointment.date = request.body.date;
+        appointment.date = moment(request.body.date).toISOString();
         appointment.reason = request.body.reason;
         appointment.other = request.body.other;
         appointment.userID = request.body.patient;
@@ -53,7 +53,17 @@ router.route('/')
             
             response.json({appointment: appointment});
         });
-    });
+    })
+    
+     //deletes all appointments
+    .delete(function(request, response){
+        Appointment.deleteMany({"type": {$ne: "hello"}}, 
+            function (error, deleted) {
+                if (!error) {
+                    response.json({appointment: deleted});
+                }
+            })
+    })
 
 //fetching a specific appointment. The options are to retrieve the appointment, update the appointment or delete the appointment
 
@@ -122,11 +132,14 @@ router.route('/client/appointments/:id')
             response.send({success: true, appointments: appointments});
         });
     });
+    
 router.route('/:current_date')
 
     .get(function (request, response) {
         
-        Appointment.find("date", moment(request.params.current_date).format("MMMM Do YYYY, h:mm:ss a"), function (error, appointment) {
+        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_day).startOf('day').toDate()}}, 
+        {"date": {$lte: moment(request.params.current_day).endOf('day').toDate()}}]}
+            ,function (error, appointment) {
             if (error) {
                response.send({error: error});
             }
@@ -136,4 +149,54 @@ router.route('/:current_date')
         });
     });
 
+//example from mongodb website for reference
+//db.inventory.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
+
+router.route('/week/:current_week')
+
+    .get(function (request, response) {
+        console.log(request.params.current_week);
+        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('week').toDate()}}, 
+        {"date": {$lte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('week').toDate()}}]}, function (error, appointment) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({appointment: appointment});
+            }
+        });
+    });
+    
+router.route('/month/:current_month')
+
+    .get(function (request, response) {
+        
+        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_month, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('month')}}, 
+        {"date": {$lte: moment(request.params.current_month, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('month')}}]}, function (error, appointment) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({appointment: appointment});
+            }
+        });
+    });
+    
+router.route('/timeoff')
+    .post(function (request, response) {
+        var appointment = new Appointment();
+        appointment.date = request.body.date;
+        appointment.reason = request.body.reason;
+        appointment.type = "timeoff";
+        
+        appointment.save(function (error) {
+            if (error) {
+                response.send(error);
+            }
+            
+            response.json({appointment: appointment});
+        });
+    });
+    
+    
 module.exports = router;

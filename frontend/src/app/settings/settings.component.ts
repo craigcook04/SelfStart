@@ -98,10 +98,12 @@ export class SettingsComponent implements OnInit {
     this.patientService.GetCities(provinceId).subscribe(data => {
       var retObj: any = data;
       this.cities = Object.assign([], retObj.cities);
+      console.log(this.cities);
     })
   }
 
   SetProvinceBox(provinceBox, cityBox){
+    console.log(provinceBox, cityBox)
     // a new country has been selected so remove all entries from the province and city boxes 
     provinceBox.selectedIndex = -1;
     cityBox.selectedIndex = -1;
@@ -132,6 +134,7 @@ export class SettingsComponent implements OnInit {
     this.patientService.GetCities(provinceId).subscribe(data => {
       var retObj: any = data;
       this.cities = Object.assign([], retObj.cities);
+      console.log(this.cities);
     })
   }
 

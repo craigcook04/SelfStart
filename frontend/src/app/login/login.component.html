@@ -37,6 +37,9 @@
     <div *ngIf="userIsDisabled" class="dangeralrt">
         <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
     </div>
+    <div *ngIf="needToVerify" class="dangeralrt">
+        <p class="failureMessage">You need to verify your account to continue, please go to your email and click the link. </p>              
+    </div>
   </div>
   <hr>
   <div>

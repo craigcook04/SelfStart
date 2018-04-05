@@ -17,7 +17,7 @@ import { AppointmentsService } from '../appointments.service';
 
 export class GenerateReportComponent implements OnInit {
 
-  patient: any;
+  patient: any = {};
   paymentHistory: any;
   appointments: any;
   initialInjury: any;
@@ -75,7 +75,7 @@ export class GenerateReportComponent implements OnInit {
     responsive: true 
   }
   patient2: any;
-  completedTests: any[];
+  completedTests: any[] = [];
   singleTest: any;
 
   ngOnInit() {
@@ -85,15 +85,61 @@ export class GenerateReportComponent implements OnInit {
       console.log(data);
       this.patient = retObj.patient;
       this.rehabPlan = this.patient.rehabPlan;
+      console.log("IDDDDD: ", this.patient.account._id);
+      this.assessmentService.GetCompletedTests(this.patient.account._id).subscribe(data =>{
+        console.log(data);
+        let obj: any = data;
+        this.completedTests = obj.completedTests;
+        if(this.completedTests.length > 1){
+          this.completedTests.forEach(element =>{
+            console.log(element);
+            this.physioRatings.push(element.physioRate);
+            let obj: string = element.dateCompleted;
+            obj = obj.split('T')[0];
+            this.assesmentDates.push(obj);
+            this.clientRatings.push(element.questions[0]);
+          })
+          this.physioRatings.unshift(0);
+          this.assesmentDates.unshift('Start of Time');
+          this.clientRatings.unshift(0);
+    
+          //set the chart datasets
+          this.chartDatasets = [
+            {data: this.physioRatings, label: "Physio Ratings"},
+            {data: this.clientRatings, label: "Client Ratings"}
+          ];
+          this.chartLabels = this.assesmentDates;
+  
+          return;
+        }
+  
+        this.singleTest == this.completedTests;
+      })
+      this.assessmentService.GetUsersInitialInjuries(this.patient.account._id).subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        this.initialInjury = retObj.intakes[0];
+        this.assessmentService.GetFinalResults(userID, this.initialInjury.injuryNumber).subscribe(data => {
+          console.log(data);
+          var retObj: any = data;
+          if(retObj.success) {
+            this.finalOutcome = retObj.results;
+          }
+          else {
+            this.finalOutcome = null;
+          }
+        })
+      })
+      this.appointmentService.GetAppointmentsByPatientID(this.patient.account._id).subscribe(data => {
+        console.log('appointments:',data);
+        var retObj: any = data;
+        this.appointments = retObj.appointments;
+      })
+      
     })
 
     var userID = this.cookieService.get('ID');
-    this.appointmentService.GetAppointmentsByPatientID(userID).subscribe(data => {
-      console.log('appointments:',data);
-      var retObj: any = data;
-      this.appointments = retObj.appointments;
-    })
-    
+  
 
     console.log("id",userID);
     this.paymentService.GetPaymentHistory(userID).subscribe(data => {
@@ -117,6 +163,9 @@ export class GenerateReportComponent implements OnInit {
         }
       })
     })
+    
+
+    
 
     this.patientService.GetSpecificPatient(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
       let obj: any = data;

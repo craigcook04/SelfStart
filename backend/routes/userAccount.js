@@ -129,6 +129,7 @@ router.route('/account/change')
                     console.log('hello');
                     useraccount.encryptedPassword = request.body.newEncryptedPassword;
                     useraccount.needToChangePass = false;
+                    useraccount.resetRequestSent = false;
                 }
                 
                 else{

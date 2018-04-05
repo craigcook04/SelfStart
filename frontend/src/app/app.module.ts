@@ -25,7 +25,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
 import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
-import {UserAccountsService} from './user-accounts.service';
+import { UserAccountsService } from './user-accounts.service';
+import { DpDatePickerModule } from 'ng2-date-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -105,6 +106,7 @@ import { GenerateReportComponent } from './generate-report/generate-report.compo
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PhysioHomeService } from './physio-home.service';
+import { TimeOffComponent } from './time-off/time-off.component';
 
 @NgModule({
   declarations: [
@@ -145,6 +147,7 @@ import { PhysioHomeService } from './physio-home.service';
     TransactionsComponent,
     SettingsComponent,
     GenerateReportComponent,
+    TimeOffComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -186,7 +189,8 @@ import { PhysioHomeService } from './physio-home.service';
     MatSnackBarModule,
     MatTabsModule,
     MatProgressBarModule,
-    MatSelectModule
+    MatSelectModule,
+    DpDatePickerModule
   ],
   providers: [
     PatientService, 

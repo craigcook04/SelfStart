@@ -321,7 +321,7 @@ router.route('/completedtest/:id')
         completedTest.completed = false;
         let date = new Date();
         completedTest.dateCompleted = date;
-        completedTest.physioRate = 0;
+        completedTest.physioRate = request.body.physioRate;
         completedTest.physioDescription = '';
         completedTest.questions = request.body.questions;
         completedTest.userID = request.params.id;
@@ -411,7 +411,7 @@ router.route('/initial/completed')
     
 router.route('/initial/getbyid/:userID')
     .get(function(request, response) {
-        InitialIntake.find({'userID': request.params.userID}, function(err, intakes) {
+        InitialIntake.find({'userID': request.params.userID}).sort({dateStarted: -1}).exec(function(err, intakes) {
             if(err) {
                 response.send(err);
                 return;
