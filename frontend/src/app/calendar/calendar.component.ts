@@ -131,7 +131,7 @@ export class CalendarComponent implements OnInit {
           var temp: CalendarEvent = {
             title: "test",
             start: new Date(appointment.date),
-            color: this.colors.yellow,
+            color: this.colors.blue,
             actions: this.actions
           };
           this.events.push(temp);
@@ -175,7 +175,8 @@ export class CalendarComponent implements OnInit {
     }
   
     handleEvent(action: string, event: CalendarEvent): void {
-      this.deleteModal.show();
+      //this.deleteModal.show();
+      this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
     open(content){
@@ -201,6 +202,8 @@ export class CalendarComponent implements OnInit {
     
     eventClicked(event: CalendarEvent<{ appointment: any }>): void {
       console.log("pop up modal here");
+      //this.modalData = { event, action };
+      this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
     
