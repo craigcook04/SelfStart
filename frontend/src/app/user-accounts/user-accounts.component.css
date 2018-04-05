@@ -238,3 +238,8 @@ ul{
 #custom-search-input fa{
     font-size: 16px;
 }
+
+.modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+}

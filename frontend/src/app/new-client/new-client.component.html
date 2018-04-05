@@ -6,103 +6,115 @@
       <p class="smallText">*Required Fields</p>
       <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
         <mat-step label="Username and Password">
-          <div class="form-group row">
-            <label for="inputUsername" class="col-sm-2 col-form-label">*Username: </label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username required>
+          <br>
+            <div class="md-form form-sm col-6">
+              <input mdbActive type="text" class="form-control" id="inputUsername"  #username required>
+              <label for="inputUsername" class="smallmove">*Username: </label>              
               <div class="invalInput" *ngIf="invalidUsername">
-                  Please enter a valid username
+                Please enter a valid username
               </div>
               <div class="hintText" *ngIf="!invalidUsername">
                 Username cannot contain special characters
               </div>
-              <div class='invalInput' *ngIf=""></div>
-            </div> 
-          </div>
+            </div>
           <hr class='dvder'>
+        <div class='invalInput' *ngIf=""></div>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">*Password: </label>
-            <div class="col-sm-5">
-                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" #password required>
+            <div class="md-form form-sm col-6">
+                  <input mdbActive type="password" class="form-control" id="inputPassword"  #password required>
+                  <label for="inputPassword" class="smallmove">*Password: </label>
                   <div class="hintText" *ngIf="!invalidPassword">
                     Passwords must match.
                   </div>
             </div>
-        </div>
         <hr class='dvder'>
         <br>
         <br>
-        <div class="form-group row">
-              <label for="inputRepeatPassword" class="col-sm-2 col-form-label">*Repeat Password: </label>
-              <div class="col-sm-5">
-                <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat Password" #repeatPassword required>
+              <div class="md-form form-sm col-6">
+                <input mdbActive type="password" class="form-control" id="inputRepeatPassword" #repeatPassword required>
+                <label for="inputRepeatPassword" class="smallmove">*Repeat Password: </label>
                 <div class="invalInput" *ngIf="invalidPassword">
                   Please fix the password fields so that they match
                 </div>
               </div>
-        </div>
         <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step  label="Personal Information">
-          <div class="form-group row">
-            <label for="inputFirstName" class="col-sm-2 col-form-label">*First Name </label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" #firstName>
+          <br>
+            <div class="md-form form-sm col-6">
+              <input mdbActive type="text" class="form-control" id="inputFirstName"  #firstName>
+              <label for="inputFirstName" class="smallmove">*First Name: </label>            
               <div class="invalInput" *ngIf="invalidFirstname">
                 Please enter a valid Last Name
               </div>
             </div>
-          </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputLastName" class="col-sm-2 col-form-label">*Last Name</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" #lastName>
+            <div class="md-form form-sm col-6">
+              <input mdbActive type="text" class="form-control" id="inputLastName" #lastName>
+              <label for="inputLastName" class="smallmove">*Last Name</label>            
               <div class="invalInput" *ngIf="invalidLastname">
                 Please enter a valid First Name
               </div>
             </div>
-          </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">*Email</label>
-            <div class="col-sm-5">
-              <input type="email" class="form-control" id="inputEmail" placeholder="Email" #email>
+            <div class="md-form form-sm col-6">
+              <input mdbActive type="email" class="form-control" id="inputEmail"  #email>
+              <label for="inputEmail" class="smallmove">*Email</label>            
               <div class="invalInput" *ngIf="invalidEmail">
                 Please enter a valid Email
+              </div>
             </div>
-            </div>
-          </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputDOB" class="col-sm-2 col-form-label">Date Of Birth</label>
-            <div class="col-sm-3">
-                <input class="form-control dateinput" id="inputyearDOB" placeholder="yyyy" #yearDOB>
+          <div class="container moveleft">
+              <div class="row">
+                <div class="col-1">
+                  <label type="text" class="movetop">Date of Birth:</label>
+                </div>
+                <div class="col-2">
+                    <div class="md-form form-sm">
+                        <input mdbActive type="text" class="form-control" id="inputyearDOB" #yearDOB>
+                        <label for="inputDOB" class="smallmove">yyyy</label>
+                    </div>
+                </div>
+                
+                <div class="col-2">
+                    <div class="md-form form-sm">
+                        <input mdbActive type="text" class="form-control" id="inputmonthDOB"  #monthDOB>
+                        <label for="inputDOB" class="smallmove">mm</label>                        
+                    </div>
+                </div>
+                
+                <div class="col-2">
+                    <div class="md-form form-sm">
+                        <input mdbActive type="text" class="form-control" id="inputdayDOB"  #dayDOB>
+                        <label for="inputDOB" class="smallmove">dd</label>
+                    </div>
+                </div>
+                
+              </div>
             </div>
-            <div class="col-sm-1">
-                <input class="form-control dateinput" id="inputmonthDOB" placeholder="mm" #monthDOB>
-            </div>
-            <div class="col-sm-1">
-                <input class="form-control dateinput" id="inputdayDOB" placeholder="dd" #dayDOB>
-            </div>
+            
+            
+            
             <!-- <input matInput [matDatepicker]="picker" class="dontshow" #datepick>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker class="dateinput" #picker></mat-datepicker> -->
-          </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputGender" class="col-sm-2 col-form-label">*Gender</label>
-            <div class="col-sm-5">
+          <div class="container moveleft">
+            <div class="row">
+            <div class="col-1">
+              <label for="inputGender" class="">*Gender</label>
+            </div>
+            <div class="col-6">
               <select #newPatientGender class="mydropdown" id="inputGender">
                   <option value="badvalue">Please select a gender</option>
                   <option disabled="disabled">----</option>
@@ -113,11 +125,13 @@
               </div>
             </div>
           </div>
+          </div>
           <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
           <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step  label="Contact Information">
-          <div class="form-group row">
+          <br>
+          <!-- <div class="form-group row">
             <label for="inputPostalCode" class="col-sm-2 col-form-label">*Address</label>
             <div class="col-sm-3">
                 <input class="form-control" type="text" placeholder="Address" id="inputAddress" #address>
@@ -128,14 +142,35 @@
             <div class="invalInput" *ngIf="invalidPostalCode">
                 Please enter a valid Address and Postal Code
             </div>
-          </div>
+          </div> -->
+          <div class="container moveleft">
+              <div class="row">
+                <div class="col-1">
+                  <label type="text" class="movetop">*Address:</label>
+                </div>
+
+                <div class="col-4">
+                    <div class="md-form form-sm">
+                        <input mdbActive class="form-control" type="text" id="inputAddress" #address>  
+                        <label type="text" for="inputAddress">*Address</label>                        
+                    </div>
+                </div>
+                
+                <div class="col-2">
+                    <div class="md-form form-sm">
+                        <input mdbActive type="text" class="form-control" id="inputPostalCode" #postalCode>                
+                        <label type="text" for="inputPostalCode">*Postal Code</label>
+                    </div>
+                </div>
+                
+              </div>
+            </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputPhoneNumber" class="col-sm-2 col-form-label">*Phone Number</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Phone Number" #phoneNumber>
+            <div class="md-form form-sm col-6">
+              <input mdbActive type="text" class="form-control" id="inputPhoneNumber"  #phoneNumber>
+              <label for="inputPhoneNumber" class="smallmove">*Phone Number</label>            
               <div class="invalInput" *ngIf="invalidPhoneNumber">
                   Please enter a valid Phone Number
               </div>
@@ -143,55 +178,67 @@
                 Please enter a valid 9 digit phone number
               </div>
             </div>
-          </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputOthers" class="col-sm-2 col-form-label">*Country</label>
-            <div class="col-sm-5">
-              <select #newPatientCountry id="inputCountry" class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
-                <option value="badvalue">Please select a country</option>
-                <option disabled="disabled">----</option>    
-                <option *ngFor="let country of countries" value="{{country?._id}}">{{country?.name}}</option>
-              </select>
+          <div class="container moveleft">
+            <div class="row">
+              <div class="col-1">
+                <label for="inputOthers" class="">*Country</label>            
+              </div>
+              <div class="col-6">
+                <select #newPatientCountry id="inputCountry" class="mydropdown" (change)="SetProvinceBox(newPatientProvince, newPatientCity); GetProvinces(newPatientCountry.value); DifferentGetProvince(newPatientCountry.value)">
+                  <option value="badvalue">Please select a country</option>
+                  <option disabled="disabled">----</option>    
+                  <option *ngFor="let country of countries" value="{{country?._id}}">{{country?.name}}</option>
+                </select>
               <div class="invalInput" *ngIf="invalidCountry">
                   Please select a Country, Province and City
               </div>
             </div>
           </div>
-          <hr class='dvder'>
-          <br>
-          <br>
-          <div class="form-group row">
-            <label for="inputOthers" class="col-sm-2 col-form-label">*Province</label>
-            <div class="col-sm-5">
-              <select #newPatientProvince id="inputProvince" class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
-                    <option *ngFor="let province of provinces" value="{{province?._id}}">{{province?.name}}</option>
-              </select>
-            </div>
           </div>
           <hr class='dvder'>
           <br>
           <br>
-          <div class="form-group row">
-            <label for="inputOthers" class="col-sm-2 col-form-label">*City</label>
-            <div class="col-sm-5">
-              <select #newPatientCity id="inputCity" class="mydropdown">
-                    <option *ngFor="let city of cities" value="{{city?._id}}">{{city?.name}}</option>
-                  </select>
+          <div class="container moveleft">
+            <div class="row">
+              <div class="col-1">
+              <label for="inputOthers" class="">*Province</label>            
+              </div>
+            <div class="col-6">
+              <select #newPatientProvince id="inputProvince" class="mydropdown" (change)="ClearAndGetCities(newPatientProvince.value, newPatientCity)">
+                    <option disabled="disabled">Select country first....</option>
+                    <option *ngFor="let province of provinces" value="{{province?._id}}">{{province?.name}}</option>
+              </select>
             </div>
+          </div>
+          </div>
+          <hr class='dvder'>
+          <br>
+          <br>
+          <div class="container moveleft">
+            <div class="row">
+            <div class="col-1">
+              <label for="inputOthers" class="">*City</label>            
+            </div>
+            <div class="col-6">
+              <select #newPatientCity id="inputCity" class="mydropdown">
+                    <option disabled="disabled">Select country first....</option>                  
+                    <option *ngFor="let city of cities" value="{{city?._id}}">{{city?.name}}</option>
+              </select>
+            </div>
+          </div>
           </div>
           <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
           <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step label="Additional Information">
-          <div class="form-group row">
-              <label for="inputOthers" class="col-sm-2 col-form-label">Other Notable Info</label>
-              <div class="col-sm-5">
-                <input type="text" class="form-control" id="inputOthers" placeholder="Other" #others>
+          <br>
+              <div class="md-form form-sm col-5">
+                <input mdbActive type="text" class="form-control" id="inputOthers"  #others>
+                <label for="inputOthers" class="smallmove">Other Notable Info</label>              
               </div>
-            </div>
           <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
           <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>

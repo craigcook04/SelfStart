@@ -251,7 +251,7 @@
                                                 </div>
                                             </form>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary btn-sm align-left" (click)="c('Close click'); editThePlan(currPlan, newName.value, newAuthorName.value, newGoalName.value, description.value, searchString.value);">Confirm</button>
+                                                <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); editThePlan(currPlan, newName.value, newAuthorName.value, newGoalName.value, description.value, searchString.value);">Confirm</button>
                                                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
                                             </div>
 
@@ -265,8 +265,8 @@
                                                 </button>
                                         </div>
                                         <div class="modal-body">
-                                            <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); removePlan(searchString.value);">Confirm</button>
-                                            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                                            <button type="button" class="btn btn-primary btn-sm" style="float:right" (click)="c('Close click'); removePlan(searchString.value);">Confirm</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" style="float:right" (click)="c('Close click')">Cancel</button>
 
                                         </div>
                                     </ng-template>
