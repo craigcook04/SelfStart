@@ -244,10 +244,16 @@
                               <hr>
                               <br>
                               <div *ngIf="needToChangeInfo">
-                                  <p>The old password that you inputted is incorrect</p>
-                                </div>
+                                  <p>Please fix the errors in the provided field to update your information.</p>
+                              </div>
+                              <div *ngIf="couldntProcessUpdateRequest">
+                                  <p>Sorry! We could not process your request. Please try again later.</p>
+                              </div>
+                              <div *ngIf="infoUpdated" class="success">
+                                  <p>You have successfully updated your information.</p>
+                              </div>
                               <br>
-                              <button class="btn btn-sm btn-default" (click)="UpdatePhysio(newPhysioFirstName.value, newPhysioLastName.value, newPhysioEmail.value)">Update Information</button>                              
+                              <button class="btn col-2 btn-sm btn-default" (click)="UpdatePhysio(newPhysioFirstName.value, newPhysioLastName.value, newPhysioEmail.value)">Update Information</button>                              
                           </form>
                         </mat-card>
                   </div>
@@ -304,7 +310,7 @@
                     <div class="success" *ngIf="successfullyChangedPassword">
                       <h4>You have successfully updated your password</h4>
                       <p>You can now log in</p>
-                      <button class="btn btn-sm btn-primary">Return to Log In</button>
+                      <button class="btn btn-sm btn-primary col-3">Return to Log In</button>
                     </div>
                   </mat-card>
                   <br>
