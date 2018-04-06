@@ -102,7 +102,7 @@
                     <div class="row">
                         <label class="form-inline col-2"><strong>Description</strong></label>
                         <div class="col">
-                            <textarea class="form-control md-textarea" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up..." rows="3" #descript></textarea>
+                            <input type="text" class="form-control" placeholder="Enter a short description outlining your injury/hindrance or whether this is a follow up" descript>
                         </div>
                     </div>
                     <br>
@@ -114,31 +114,31 @@
                                 Click Here to Select File(s) for Upload&hellip;
                                 <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
                             </label>
+                        </div>
+                    </div>
                             <td nowrap>
-                                <div>
-                                    <div class="col">
-                                        <button type="button" class="btn btn-success btn-sm" style="margin-left:auto; margin-right:auto;"
+                                <div style="margin-left:8em">
+                                    <!--<div class="col" style="text-align:center">-->
+                                        <button type="button" class="btn btn-success btn-sm"
                                         (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                                             <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
                                             <fa name="upload"></fa>
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm" style="margin-left:auto; margin-right:auto;"
+                                        <button type="button" class="btn btn-danger btn-sm"
                                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                                             <!--<span class="glyphicon glyphicon-trash"></span> Remove all-->
                                             <fa name="trash"></fa>
                                         </button>
-                                    </div>
+                                    <!--</div>-->
                                 </div>
                             </td>
                             <tr *ngFor="let item of uploader.queue">
                                 <td><strong>{{ item?.file?.name }}</strong></td>
                             </tr>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary btn-sm" (click)="saveAppointment(descript.value, 'Other Field'); bookModal.hide();">Submit</button>
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="bookModal.hide()">Close</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="bookModal.hide()">Cancel</button>
                 </div>
             </div>
         </div>
