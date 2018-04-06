@@ -179,7 +179,7 @@ export class CalendarComponent implements OnInit {
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
-      console.log("pop up modal here");
+      console.log(event);
       //this.modalData = { event, action };
       this.modalService.open(this.modalContent, { size: 'lg' });
     }

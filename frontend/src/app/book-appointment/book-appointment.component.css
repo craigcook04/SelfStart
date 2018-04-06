@@ -14,10 +14,11 @@
     text-align: center;
 }
 
-.modal{
-    height: 75%;
-    overflow: auto;
-    margin-top: 1rem;
+.modal-body{
+    /*height: 75%;*/
+    max-height: 470px;
+    overflow-y: auto;
+    /*margin-top: 1rem;*/
 }
 
 /*.modal-open .modal {*/
