@@ -97,7 +97,7 @@ export class GenerateReportComponent implements OnInit {
             let obj: string = element.dateCompleted;
             obj = obj.split('T')[0];
             this.assesmentDates.push(obj);
-            this.clientRatings.push(element.questions[0]);
+            this.clientRatings.push(element.questions[0].answer);
           })
           this.physioRatings.unshift(0);
           this.assesmentDates.unshift('Start of Time');

@@ -4,6 +4,9 @@
     margin: 2rem;
 }
 
+.slightright {
+    margin-left: 15px;
+}
 
 .mydropdown {
     display: block;

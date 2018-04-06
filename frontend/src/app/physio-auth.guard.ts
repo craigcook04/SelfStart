@@ -14,6 +14,9 @@ export class PhysioAuthGuard implements CanActivate {
       if(this.userAccountService.LoggedIn()) {
         var isauth = await this.userAccountService.GetAuthorization();
         console.log(isauth);
+        console.log(this.cookieService.get('ID'),
+        this.cookieService.get('session'),
+        this.cookieService.get('role'))
         this.userAccountService.RefreshSession().subscribe(data => {
           var retObj: any = data;
           if(retObj.success) {
@@ -25,6 +28,9 @@ export class PhysioAuthGuard implements CanActivate {
             this.cookieService.set('ID', id, 1/24);
             this.cookieService.set('session', session, 1/24);
             this.cookieService.set('role', role, 1/24);
+            console.log(this.cookieService.get('ID'),
+                        this.cookieService.get('session'),
+                        this.cookieService.get('role'))
           }
         })
         //render the component if the session token is valid and the session is given to a physiotherapist

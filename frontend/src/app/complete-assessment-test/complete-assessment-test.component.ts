@@ -32,7 +32,6 @@ export class CompleteAssessmentTestComponent implements OnInit {
               private cookieService: CookieService,
               private patientService: PatientService,
               private planService: RehabPlansService) {
-                this.config.max = 5;
                }
 
   ngOnInit() {
