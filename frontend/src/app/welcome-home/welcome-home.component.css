@@ -5,3 +5,12 @@
 .col-sm {
     padding: 2em;
 }
+
+.home-pic {
+    height: 150%;
+    width: 100%;
+}
+
+.scroll-text {
+    padding-top: 650px;
+}
