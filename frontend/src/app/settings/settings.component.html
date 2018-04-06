@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+  <mat-sidenav *ngIf="isClient" #sidenav mode="side" opened="true" style="background-color: #0275d8;">
     <mat-nav-list style="top: -10px;">
       <mat-list-item [routerLinkActive]="['active']">
         <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
@@ -37,6 +37,40 @@
       <br>
       <mat-divider class="dividers"></mat-divider>
     </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav *ngIf="isPhysio" #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+      <mat-nav-list style="top: -10px;">
+          <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../calendar']">Calendar</button>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../clients']">Client Profiles</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercises</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../rehabplans']">Rehabilitation Plans</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']">
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../assessmenttests']">Assessment Tests</button></mat-list-item>
+              <br>
+          <mat-divider class="dividers"></mat-divider>                
+          <mat-list-item [routerLinkActive]="['active']" >
+              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../settings']">Settings</button></mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+      </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
@@ -164,7 +198,59 @@
                         <button type="button" class="col-3 btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>      
                     </div>
                     </div>
-                  <div *ngIf="isPhysio"></div>
+                  <div *ngIf="isPhysio">
+                      <mat-card class="col-11 justify-content-center" style="margin-left: auto; margin-right: auto; text-align: center;">
+                          <mat-card-title>
+                              <b  style="color: #0275d8">
+                                  Update Account Information
+                              </b>
+                          </mat-card-title>
+                          <br>
+                        <form class="col-11">
+                            <div class="form-inline row">
+                                <label for="inputPhysioFirstName" class="col-2">First Name</label>
+                                <div class="col-9">
+                                  <input type="text" id="inputPhysioFirstName" placeholder="First Name" value="{{physio.givenName}}" (keyup)="closeWarning()" #newPhysioFirstName>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputPhysioLastName" class="col-2">Last Name</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputPhysioLastName" placeholder="Last Name" value="{{physio.familyName}}" (keyup)="closeWarning()" #newPhysioLastName>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputPhysioEmail" class="col-2">Email</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputPhysioEmail" placeholder="Email" value="{{physio.email}}" (keyup)="closeWarning()" #newPhysioEmail>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputDateHired" readonly class="col-2">Date Hired</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputDateHired" readonly placeholder="Date Hired" value="{{physio.dateHired | date: 'longDate'}}" (keyup)="closeWarning()" placement="left" ngbTooltip="This value cannot be changed">
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputDateFinished" class="col-2">Date Finished</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputDateFinished" readonly placeholder="Date Finished" value="{{physio.dateFinished | date: 'longDate'}}" (keyup)="closeWarning()" placement="left" ngbTooltip="This value cannot be changed">
+                                  </div>
+                              </div>
+                              <hr>
+                              <br>
+                              <div *ngIf="needToChangeInfo">
+                                  <p>The old password that you inputted is incorrect</p>
+                                </div>
+                              <br>
+                              <button class="btn btn-sm btn-default" (click)="UpdatePhysio(newPhysioFirstName.value, newPhysioLastName.value, newPhysioEmail.value)">Update Information</button>                              
+                          </form>
+                        </mat-card>
+                  </div>
                   <br>
                   </mat-tab>
             <mat-tab label="Change Password">

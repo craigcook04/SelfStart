@@ -45,6 +45,7 @@ export class SettingsComponent implements OnInit {
   provinces: any[];
   cities: any[];
   genders: any[];
+  needToChangeInfo: boolean;
 
   constructor(private route: ActivatedRoute,
               private cookieService: CookieService,
@@ -54,15 +55,18 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     var url = this.route.routeConfig.path;
-    if(url.includes('admin')) {
-      this.userAccountsService.GetAdminByUserID().subscribe(data => {
-        console.log(data);
-        var retObj: any = data;
-        this.admin = retObj.admin;
-      })
-    }
-    else if(url.includes('client')) {
-      this.isClient = true;        
+    // if(url.includes('admin')) {
+    //   this.isAdmin = true;
+    //   this.userAccountsService.GetAdminByUserID().subscribe(data => {
+    //     console.log(data);
+    //     var retObj: any = data;
+    //     this.admin = retObj.admin;
+    //   })
+    // }
+    if(url.includes('client')) {
+      this.isClient = true;   
+      this.isPhysio = false;  
+      this.patient = {};   
       this.patientService.GetPatient().subscribe(data => {
         console.log(data);
         var retObj: any = data;
@@ -72,10 +76,13 @@ export class SettingsComponent implements OnInit {
       })
     }
     else {
+      this.isPhysio = true;
+      this.isClient = false;
+      this.physio = {};
       this.physiotherapistService.GetPhysioByUserID().subscribe(data => {
         console.log(data);
         var retObj: any = data;
-        this.isPhysio = true;
+
         this.physio = retObj.physio;
       })
     }
@@ -136,6 +143,10 @@ export class SettingsComponent implements OnInit {
       this.cities = Object.assign([], retObj.cities);
       console.log(this.cities);
     })
+  }
+
+  closeWarning() {
+    this.cannotContinue = false;
   }
 
   ResetPassword(password: string, repeatPassword: string, tempPassword: string) {
@@ -285,6 +296,42 @@ export class SettingsComponent implements OnInit {
         //it was not successful
         this.showFailure = true;
       }
+    })
+
+  }
+
+  resetPhysioErrorMessages() {
+    var firstNameBox = document.getElementById('inputPhysioFirstName').style.borderColor = 'rgba(0,0,0,.15)';    
+    var lastNameBox = document.getElementById('inputPhysioLastName').style.borderColor = 'rgba(0,0,0,.15)'; 
+    var emailBox = document.getElementById('inputPhysioEmail').style.borderColor = 'rgba(0,0,0,.15)'; 
+  }
+
+  UpdatePhysio(firstname, lastname, email) {
+    var cannotContinue = false;
+    this.resetPhysioErrorMessages();
+    if(!firstname) {
+      var firstNameBox = document.getElementById('inputPhysioFirstName').style.borderColor = 'red';       
+      cannotContinue = true;
+    }
+
+    if(!lastname) {
+      var lastNameBox = document.getElementById('inputPhysioLastName').style.borderColor = 'red';       
+      cannotContinue = true;
+    }
+
+    if(!email) {
+      var emailBox = document.getElementById('inputPhysioEmail').style.borderColor = 'rgba(0,0,0,.15)';       
+      cannotContinue = true;
+    }
+
+    if(cannotContinue) {
+      this.needToChangeInfo = true;
+      return;
+    }
+
+    this.physiotherapistService.PhysioUpdateOwnInformation(firstname, lastname, email).subscribe(data => {
+      console.log(data);
+
     })
 
   }

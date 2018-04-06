@@ -89,4 +89,17 @@ export class PhysiotherapistService {
     var url = '/api/physiotherapist/getphysio/' + userID;
     return this.http.get(url);
   }
+
+  PhysioUpdateOwnInformation(firstname: string, lastname: string, email: string) {
+      var userID = this.cookieService.get('ID');
+      var url = '/api/physiotherapist/update/' + userID;
+      
+      var body = {
+        firstname: firstname,
+        lastname: lastname,
+        email: email
+      }
+
+      return this.http.put(url, body);
+  }
 }
