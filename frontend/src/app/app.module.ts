@@ -107,6 +107,7 @@ import { ClientHomeComponent } from './client-home/client-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PhysioHomeService } from './physio-home.service';
 import { TimeOffComponent } from './time-off/time-off.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { TimeOffComponent } from './time-off/time-off.component';
     SettingsComponent,
     GenerateReportComponent,
     TimeOffComponent,
+    ResourcesComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
+import { AssessmentTestService } from '../assessment-test.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -20,11 +21,16 @@ export class PhysioHomeComponent implements OnInit {
   appointments: any[];
   panelOpenState: boolean = false;
   numbPatients: any;
+  pendingTests: any;
+  numbTests: any;
+  display: boolean = false;
+  totalCompleted: any;
   
   constructor(private router: Router,
               private physioHomeService: PhysioHomeService,
               private cookieService: CookieService,
-              private patientService: PatientService) { }
+              private patientService: PatientService,
+              private testService: AssessmentTestService) { }
   
   ngOnInit() {
     //var j = 0;
@@ -36,21 +42,37 @@ export class PhysioHomeComponent implements OnInit {
       var obj: any = data;
       obj = obj.physiotherapist;
       this.physio = obj;
+
+      this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
+        let obj: any = data;
+        this.numbPatients = obj.total;
+      })
+
+      this.testService.GetOldestTests().subscribe(data => {
+        let obj: any = data;
+        let length = Math.ceil(obj.docs.length / 2);
+        this.numbTests = length;
+        console.log(obj.total);
+        this.totalCompleted = obj.total;
+        this.pendingTests = obj.docs.splice(0, length);
+        console.log(this.pendingTests);
+      })
     })
     this.appointments = [];
     //this.appoint = [];
-    console.log(today);
-     this.physioHomeService.GetAppointments(today).subscribe(data =>{
-      console.log(data);
-      var retObj:any = data;
-      this.appointments = retObj.appointment;
-      console.log(this.appointments);
-    })
 
-    this.patientService.getPhysioPatients(this.cookieService.get('ID')).subscribe(data =>{
-      let obj: any = data;
-      this.numbPatients = obj.total;
+    this.physioHomeService.GetAppointments(today).subscribe(data =>{
+       if(data === []){
+         return;
+       }
+      var retObj: any = data;
+      this.appointments = retObj.appointment;
     })
+  }
+
+  Show(){
+    console.log(this.display);
+    this.display = !this.display;
   }
   
   show(appointment: any){
