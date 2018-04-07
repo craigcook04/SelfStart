@@ -6,6 +6,7 @@ var router = express.Router();
 var AssessmentTest = require('../models/assessmentTest');
 var CompletedAssessment = require('../models/completedAssessmentTest');
 var InitialIntake = require('../models/initialIntake');
+let Account = require('../models/userAccount');
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -148,15 +149,11 @@ router.route ('/getCompleted')
             offset: Number(request.query.offset)
         };
         
+        
         CompletedAssessment.paginate(query, options, function(err, results) {
             if(err) {
                 console.log(err);
                 response.send(err);
-// =======
-//         AssessmentTest.find().populate('belongsTo').exec(function (error, assessmentTest) {
-//             if (error) {
-//                 response.send({error: error});
-// >>>>>>> 68ffc52ae9893ccf74363ccc9257eb369218d3f0
                 return;
             }
             
@@ -404,9 +401,29 @@ router.route('/initial/completed')
                     return;
                 }
                 
-                response.send({success: true, message: 'successfully filled out the initial intake form'});
-            });
-        });
+                Account.findOne({"_id": initialIntake.userID}, function(err, account){
+                    if(err){
+                        response.send({message: "Can't Find Patient"});
+                        return;
+                    }
+                    
+                    if(account.numbInitial === 0){
+                        response.send({appointmentsLeft: "none"});
+                        return;
+                    }
+                    
+                    --account.numbInitial;
+                    account.save(function(err){
+                        if(err){
+                            response.send({error: err});
+                            return;
+                        }
+                        
+                        response.send({success: true, message: 'successfully filled out the initial intake form'});  
+                    })
+                })
+            })
+        })
     });
     
 router.route('/initial/getbyid/:userID')
