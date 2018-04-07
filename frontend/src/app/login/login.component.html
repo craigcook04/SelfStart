@@ -1,11 +1,11 @@
 <div class="center">
-  <h1>Welcome! Please log in here</h1>
+  <h1>Self Start Login</h1>
 </div>
 <br>
 <br>
-<mat-card class="assessTest" style="background-color: rgb(244, 254, 255);">
+<mat-card class="assessTest" style="background-color: #bbdefb">
   <div class="container justify-content-center">
-    <div class="row col-11">
+    <div class="row">
     <!-- <div class="form-group row usandpass">
       <div class="col">
           <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
@@ -13,6 +13,8 @@
       </div> 
     </div> -->
     <div class="col-6">
+      <br>
+      <br>
       <div class="md-form usandpass">
           <i class="fa fa-user prefix"></i>
           <input mdbActive type="text" id="username" class="form-control" #username>
@@ -25,9 +27,12 @@
       </div>
       <div class="form-group row usandpass">
           <div class="col">
-            <button class="btn btn-block btn-default" (click)="Login(username.value, password.value)">Login</button> 
+            <button class="btn btn-block btn-indigo" style="margin-left: 5%;"(click)="Login(username.value, password.value)">Login</button> 
           </div> 
-        </div>
+      </div>
+      <br>      
+      <hr class="divider" style="margin-top: 0%; margin-left: -10%">
+      <p style="margin-left: 4rem;" class="cont forgotpass"><a [routerLink]="['forgotten']" >Forgot Password</a></p>            
         <div *ngIf="showFailure" class="dangeralrt">
             <p class="failureMessage">The username or password you entered is incorrect</p>
         </div>
@@ -39,14 +44,28 @@
         </div>
   </div>
   <div class="col-1">
-      <div style="border-left:1px solid #000;height:90%;"></div>
+      <div style="border-left:1px solid #4b0082;height:95%;"></div>
   </div>
-  <div class="col-6">
+  <div class="col-5">
+    <br>
     <h4>
       Don't have an Account? Sign up here!
     </h4>
-    <button class="btn btn-sm btn-default" [routerLink]="['../signup']">Sign Up</button>
-    <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
+    <p>It's as easy as clicking the button below and inserting simple information! Self Start is commited to 
+      providing the best therapy to aid you in your recover process. What are you waiting for? Sign up now!
+    </p>
+    <button class="btn btn-block btn-indigo col-7" [routerLink]="['../signup']">Sign Up</button>
+    <br>
+    <br>
+    <hr class="divider" style="margin-top: 5%; margin-left: -15%; margin-right: -10%">
+    <h4>
+      Need Help?
+    </h4>
+    <ul>
+      <li><a [routerLink]="['../faq']">Frequently Asked Questions</a></li>
+      <li><a [routerLink]="['../contactus']">Contact Us</a></li>
+      <li><a [routerLink]="['../services']">Our Services</a></li>
+    </ul>
   </div>
     <!-- <div class="form-group row usandpass">
       <div class="col">
