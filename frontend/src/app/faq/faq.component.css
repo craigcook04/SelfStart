@@ -13,3 +13,7 @@
     border-top: solid rgba(2,117,216, 0.4) 2px;
     padding-top: 1em;
 }
+
+#faq-list {
+    margin-bottom: 1em;
+}
