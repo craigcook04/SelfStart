@@ -1,11 +1,16 @@
-<h1>Register</h1>
-<h4>Welcome to Self Start! Please input your information so we can properly register your account</h4>
-
+<div style="margin-left: auto; margin-right: auto; text-align: center;">
+  <h1>Register</h1>
+  <h5>Welcome to Self Start! Please input your information so we can properly register your account</h5>
+</div>
+<hr style="width: 80%;">
+<br>
 <div class="container-fluid inputGroup">
   <form class="inputForm needs-validation" novalidate>
-      <p class="smallText">*Required Fields</p>
-      <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
+      
+      <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper" class="col-10" style="margin-left: auto; margin-right: auto;">
+          <p class="smallText">*Required Fields</p>
         <mat-step label="Username and Password">
+          
           <br>
             <div class="md-form form-sm col-5 slightright">
               <input mdbActive type="text" class="form-control" id="inputUsername"  #username required>
@@ -126,8 +131,9 @@
             </div>
           </div>
           </div>
-          <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
-          <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
+          <br>
+          <button class="btn btn-secondary btn-sm instepbtn slightright" matStepperPrevious>Previous</button>
+          <button class="btn btn-primary btn-sm instepbtn slightright" matStepperNext>Next</button>
         </mat-step>
         <mat-step  label="Contact Information">
           <br>

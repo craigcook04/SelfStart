@@ -40,6 +40,7 @@ export class PhysioHomeComponent implements OnInit {
     this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
+      console.log(obj);
       obj = obj.physiotherapist;
       this.physio = obj;
 
