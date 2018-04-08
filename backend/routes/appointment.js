@@ -160,12 +160,13 @@ router.route('/:current_date')
         
         Appointment.find({$and: [{"date": {$gte: moment(request.params.current_day).startOf('day').toDate()}}, 
         {"date": {$lte: moment(request.params.current_day).endOf('day').toDate()}}]}
-            ,function (error, appointment) {
+            ,function (error, appointments) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
-               response.json({appointment: appointment});
+               response.json({appointments: appointments});
             }
         });
     });

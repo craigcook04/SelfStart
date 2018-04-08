@@ -128,6 +128,19 @@ router.route('/appointment/:id')
                 })
             })
     });
+    
+router.route('/appointimages/:id')
+
+    .get(function(request, response){
+        Image.find({"appointment": request.params.id}, function(error, images){
+            if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            response.send({images: images});
+        })
+    })
 
 
 
