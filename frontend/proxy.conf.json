@@ -1,8 +1,6 @@
 {
    "/api/*": {
-
        "target": "https://se3350-jterp.c9users.io:8082",
-
        "secure": false,
        "changeOrigin": true,
        "logLevel": "info"

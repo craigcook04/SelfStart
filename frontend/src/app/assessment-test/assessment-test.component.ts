@@ -144,6 +144,7 @@ export class AssessmentTestComponent implements OnInit {
     this.manageTests = false;
     this.showPatients = false;
     var temp: string = "How Do you Feel Today"
+    this.questions = [];
     
     var tempQuestion = {
       questionText: temp,
@@ -289,6 +290,8 @@ export class AssessmentTestComponent implements OnInit {
   }
   open(content) {
     this.modalService.open(content, {size: 'lg'});
+    //content.show();
+    
   }
   
   openListOfPlans(){
@@ -399,6 +402,7 @@ export class AssessmentTestComponent implements OnInit {
       console.log(this.tests);
       
     });
+    this.questions = [];
   }
   view(planSel: any){
     console.log("wohooo");
@@ -558,22 +562,32 @@ export class AssessmentTestComponent implements OnInit {
     console.log(index);
     this.physioRating = index;
   }
-  assignFollowUp(physioComments: string){
+  assignFollowUp(){
     //this.patientService.
-    var pat: any;
-    var temp:any = this.selectedPlan;
-    this.patientService.GetAllPatients().subscribe(data => {
-      var retObj: any = data.docs;
-      pat = retObj[0];
-      console.log(pat);
-      console.log(temp);
-      console.log(physioComments)
-      this.assessmentTestService.completeTest(temp.name, temp.description, temp.dateCompleted, temp.dateCreated, temp.questions, this.physioRating, physioComments, pat._id).subscribe(data =>{
+    // var pat: any;
+    // var temp:any = this.selectedPlan;
+    // this.patientService.GetAllPatients().subscribe(data => {
+    //   var retObj: any = data.docs;
+    //   pat = retObj[0];
+    //   console.log(pat);
+    //   console.log(temp);
+    //   console.log(physioComments)
+    //   this.assessmentTestService.completeTest(temp.name, temp.description, temp.dateCompleted, temp.dateCreated, temp.questions, this.physioRating, physioComments, pat._id).subscribe(data =>{
+    //     console.log(data);
+    //   });
+    // });
+    
+    var temp: any = this.selectedPlan;
+    this.assessmentTestService.assignFollowUp(this.comments,this.physioRating, temp._id).subscribe(data =>{
+      console.log(data);
+      this.completedTests = new MatTableDataSource();
+      this.assessmentTestService.getAllCompleted().subscribe(data =>{
+        var retObj: any = data;
+        this.length1 = retObj.total;
+        this.completedTests.data = retObj.docs;
         console.log(data);
-      });
+      })
     });
-    
-    
   }
   closeInjury(finalThoughts:string){
     var temp: any = this.selectedPlan;

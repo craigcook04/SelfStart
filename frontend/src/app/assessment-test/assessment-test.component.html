@@ -48,7 +48,7 @@
                         <button class="btn btn-primary btn-block" (click)="enable();">Create a New Assessment Test</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary btn-block" (click)="showTable();">Manage an Existing Assessment Test</button>
+                        <button class="btn btn-primary btn-block" (click)="showTable();">Manage Assessment Tests</button>
                     </div>
                 </div>
                 <br>
@@ -57,8 +57,8 @@
                         <mat-tab label="All Assessment Tests">
                             <br><br>
                             <div class="example-header">
-                                <mat-form-field>
-                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" #searchString>
+                                <mat-form-field style="width:35%;">
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search all Tests" #searchString>
                                 </mat-form-field>
                             </div>
                             <mat-table [dataSource]="tests" matSort>
@@ -87,9 +87,9 @@
                                 <!--    </mat-cell>-->
                                 <!--</ng-container>-->
                                 <ng-container matColumnDef="View Test Results">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Details </mat-header-cell>
-                                    <mat-cell *matCellDef="let row">
-                                        <button type="button" class="btn btn-primary createbtn" (click)="view(row)">view</button>
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header style="text-align:center"> Details on Test </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" style="text-align:center">
+                                        <button type="button" class="btn btn-primary btn-sm" (click)="view(row)">view</button>
                                     </mat-cell>
                                 </ng-container>
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -100,8 +100,8 @@
                         <mat-tab label="Pending and Completed Tests">
                             <br><br>
                             <div class="example-header">
-                                <mat-form-field>
-                                    <input matInput (keyup)="applyFilter1($event.target.value)" placeholder="Filter" #searchString1>
+                                <mat-form-field style="width:35%;">
+                                    <input matInput (keyup)="applyFilter1($event.target.value)" placeholder="Search pending and completed tests" #searchString1>
                                 </mat-form-field>
                             </div>
                             <mat-table [dataSource]="completedTests" matSort>
@@ -123,16 +123,16 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="Status">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                                    <mat-header-cell *matHeaderCellDef mat-sort-headers style="text-align: center;"> Status </mat-header-cell>
                                     <mat-cell *matCellDef="let row">
                                         <p *ngIf="row.completed" style="color: green">completed</p>
-                                        <p *ngIf="!row.completed" style="color: yellow">pending</p>
+                                        <p *ngIf="!row.completed" style="color: blue">pending</p>
                                     </mat-cell>
                                 </ng-container>
                                 <ng-container matColumnDef="View Test Results">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Test Results </mat-header-cell>
-                                    <mat-cell *matCellDef="let row">
-                                        <button type="button" class="btn btn-primary createbtn" (click)="viewcomp(row)">view</button>
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header style="text-align:center;"> Test Results </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" style="text-align:center">
+                                        <button type="button" class="btn btn-primary btn-sm" (click)="viewcomp(row)">view</button>
                                     </mat-cell>
                                 </ng-container>
                                 <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
@@ -145,158 +145,189 @@
                 </mat-card>
 
                 <div style="margin-left: 2em;">
-                    <mat-card *ngIf="!showCreat" class="assessTest">
-                        <div>
-                            <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
-                                <p><b>Enter the name of the test: </b></p>
 
-                                <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-                                <br>
-                                <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+                    <mat-card *ngIf="!showCreat" class="col-11">
 
+                        <div *ngIf="!showCreat" style="width:50%">
+
+                            <h6><b>Enter the name of the test: </b></h6>
+                            <br>
+
+                            <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+                            <br>
+                            <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+
+                            <hr>
+                        </div>
+                        <div *ngIf="!showCreat" style="width:50%">
+                            <h6><b>Enter the description of the test: </b></h6>
+                            <br>
+
+                            <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+                            <br>
+                            <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+
+                            <hr>
+                        </div>
+                        <h6><b>Questions:</b></h6>
+                        <br>
+                        <ol *ngIf="!showPatients">
+                            <li *ngFor="let question of questions" style="margin-left: 2em; width:50%;">
+
+                                <label><b>{{question.questionText}}</b></label>
+                                <!--<button class="btn btn-outline-primary" style="float: right;" (click)="deleteQuestion(question)">Remove Question</button>-->
+
+                                <i *ngIf="question!=questions[0]" class="fa fa-chevron-up" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: blue;" (click)="moveUp(question)"></i>
+                                <i *ngIf="question!=questions[0]" class="fa fa-chevron-down" style="float: right; margin-right: 0.5em; margin-left: 0.5em;color: blue;" (click)="moveDown(question)"></i>
+                                <i *ngIf="question!=questions[0]" class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: red;" (click)="deleteQuestion(question)"></i>
+                                <i *ngIf="question!=questions[0]" class="fa fa-edit" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: edit;" (click)="editQ.show()"></i>
+
+
+                                <br><br><br>
+                                <ol>
+                                    <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em;">
+                                        {{options}}
+                                    </li>
+                                </ol>
                                 <hr>
-                            </div>
-                            <div *ngIf="!showCreat" style="margin-left:2em; width:50%">
-                                <p><b>Enter the description of the test: </b></p>
-
-                                <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
                                 <br>
-                                <!--<button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style = "margin-left: 2em; float: right;">Save Question</button>-->
+                                <!--<ng-template #editQ let-c="close" let-d="dismiss">-->
+                                <div mdbModal #editQ="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg mymodal" role="document">
+                                        <div class="modal-content mymodal" style="overflow-y: visible;">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Edit Question</h4>
+                                            </div>
+                                            <div class="modal-body" style="overflow-x: hidden; min-height: 78vh;">
+                                                <form>
+                                                    <div class="form-group row">
+                                                        <label for="inputQuestionText" class="col-sm-3 col-form-label">Question</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputQuestionText" value="{{question.questionText}}" placeholder="Question" #newPatientFirstName>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <ol>
+                                                            <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
+                                                                <label for="inputQuestionOption" class="col-sm-3 col-form-label"></label>
+                                                                <div class="col-sm-9">
+                                                                    <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteOption(options,question)"></i>
+                                                                    <input type="text" class="form-control" id="{{question.questionContent.indexOf(options)}}" value="{{options}}" placeholder="option" #editOption>
 
-                                <hr>
-                            </div>
-                            <ol *ngIf="!showPatients">
-                                <li *ngFor="let question of questions" style="margin-left: 2em; float: left; width: 50%;">
+                                                                </div>
+                                                            </li>
+                                                        </ol>
+                                                        <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(question);" style="margin-left: 2em; float: left;" *ngIf="question.questionCode == 'MC'">Add Option</button>
+                                                    </div>
 
-                                    <label><b>{{question.questionText}}</b></label>
-                                    <!--<button class="btn btn-outline-primary" style="float: right;" (click)="deleteQuestion(question)">Remove Question</button>-->
+                                                </form>
 
-                                    <i *ngIf="question!=questions[0]" class="fa fa-chevron-up" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="moveUp(question)"></i>
-                                    <i *ngIf="question!=questions[0]" class="fa fa-chevron-down" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="moveDown(question)"></i>
-                                    <i *ngIf="question!=questions[0]" class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteQuestion(question)"></i>
-                                    <i *ngIf="question!=questions[0]" class="fa fa-edit" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="open(editQ)"></i>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary btn-sm" (click)="updateQuestion(question); editQ.hide();">Confirm</button>
+                                                <button type="button" class="btn btn-secondary btn-sm" (click)="editQ.hide();">Cancel</button>
 
+                                            </div>
 
-                                    <br><br><br>
-                                    <ol>
-                                        <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
-                                            <p>{{options}}</p>
-                                        </li>
-                                    </ol>
-                                    <hr>
-                                    <br><br><br>
-                                    <ng-template #editQ let-c="close" let-d="dismiss">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Edit Question</h4>
+                                            <!--</ng-template>-->
                                         </div>
-                                        <div class="modal-body">
-                                            <form>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ol>
+                        <div></div>
+                        <br>
+                        <div>
+
+                            <!--<div class="container">-->
+                            <div class="row">
+
+                                <div *ngIf="showDrop" ngbDropdown class="col-5">
+                                    <br><br>
+                                    <!--<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>-->
+                                    <!--<div ngbDropdownMenu aria-labelledby="dropdownBasic1">-->
+                                    <h6>Choose Type of Question</h6>
+                                    <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
+                                    <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
+                                    <button class="dropdown-item" (click)="changeRA();">Rating</button>
+
+
+                                </div>
+
+                                <div class="col-7">
+
+                                    <div *ngIf="shortAnswer" style="margin-left:2em; width:90%;">
+                                        <mat-card>
+                                            <br><br>
+                                            <h6><b>Enter Your Short Answer Question</b></h6>
+
+                                            <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 90%; height: 100%" #newSAQuestion>
+                                            <br>
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="saveSAQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+                                            <br><br>
+                                            <hr>
+                                        </mat-card>
+                                    </div>
+
+                                    <div *ngIf="multipleChoice" style="width: 90%; margin-left: 2em;">
+                                        <mat-card>
+                                            <br><br>
+                                            <h6><b>Enter Your Multiple Choice Question</b></h6>
+                                            <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." style="margin-left: 2em; width: 90%; height: 100%" #newMAQuestion>
+
+                                            <br><br>
+                                            <div style="margin-left:2em">
                                                 <div class="form-group row">
-                                                    <label for="inputQuestionText" class="col-sm-3 col-form-label">Question</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="inputQuestionText" value="{{question.questionText}}" placeholder="Question" #newPatientFirstName>
+                                                    <label for="inputOption" class="col-sm-3 col-form-label">a)</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...." style=" width: 90%; height: 100%; " #newOption>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <ol>
-                                                        <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
-                                                            <label for="inputQuestionOption" class="col-sm-3 col-form-label"></label>
-                                                            <div class="col-sm-9">
-                                                                <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteOption(options,question)"></i>
-                                                                <input type="text" class="form-control" id="{{question.questionContent.indexOf(options)}}" value="{{options}}" placeholder="option" #editOption>
-
-                                                            </div>
-                                                        </li>
-                                                    </ol>
-                                                    <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(question);" style="margin-left: 2em; float: left;" *ngIf="question.questionCode == 'MC'">Add Option</button>
+                                                    <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." style=" width: 90%; height: 100%;" #newOption1>
+                                                    </div>
                                                 </div>
+                                                <div *ngFor="let option of options" class="form-group row">
+                                                    <label for="inputOption2" class="col-sm-3 col-form-label">{{option}})</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...." style="width: 90%; height: 100%;" #newOption2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="saveMCQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
 
-                                            </form>
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="addOption();" style="margin-left: 2em;">Add Option</button>
+                                            <br><br>
+                                            <hr>
+                                        </mat-card>
+                                    </div>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary btn-sm" (click)="updateQuestion(question); c('Close click');">Confirm</button>
-                                            <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+                                    <div *ngIf="rating" style="margin-left:2em; width: 90%;">
+                                        <mat-card>
+                                            <br><br>
+                                            <h6><b>Enter Your Rating Question(rating is out of 5)</b></h6>
 
-                                        </div>
+                                            <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 90%; height: 100%" #newRAQuestion>
+                                            <br><br>
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
+                                            <br><br>
+                                            <hr>
+                                        </mat-card>
+                                    </div>
 
-                                    </ng-template>
-                                </li>
-
-                            </ol>
-
-                            <br><br>
-
-
-                            <div *ngIf="showDrop" ngbDropdown style="margin-left:2em; width:50%;">
-                                <br><br>
-                                <!--<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle style="margin-left: 2em; float: left">{{type}}</button>-->
-                                <!--<div ngbDropdownMenu aria-labelledby="dropdownBasic1">-->
-                                <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
-                                <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
-                                <button class="dropdown-item" (click)="changeRA();">Rating</button>
-                                <!--</div>-->
-                                <!--<select>{{type}}-->
-                                <!--  <option> <button class="dropdown-item" (click)="changeSA();">Short Answer</button></option>-->
-                                <!--  <option><button class="dropdown-item" (click)="changeMC();">Multiple Choice</button></option>-->
-                                <!--  <option><button class="dropdown-item" (click)="changeRA();">Rating</button></option>-->
-                                <!--<option value="audi">Audi</option>-->
-                                <!--</select>-->
-                                <br><br>
-                                <!--<hr>-->
-                            </div>
-                            <br><br>
-
-                            <div *ngIf="shortAnswer" style="margin-left:2em; width:50%">
-                                <br><br>
-                                <p><b>Enter Your Short Answer Question</b></p>
-
-                                <input type="text" class="form-control" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
-                                <br>
-                                <button type="button" class="btn btn-primary createbtn" (click)="saveSAQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-                                <br><br>
-                                <hr>
-                            </div>
-                            <br><br><br>
-                            <div *ngIf="multipleChoice" style="width: 50%; margin-left: 2em;">
-                                <br><br>
-                                <p><b>Enter Your Multiple Choice Question</b></p>
-
-                                <input type="text" class="form-control" id="inputMCQuestion" placeholder="Enter The Question...." style="margin-left: 2em; width: 50%; height: 100%" #newMAQuestion>
-
-                                <br><br>
-                                <div class="form-group row">
-                                    <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
-                                    <input type="text" class="form-control" id="inputOption" placeholder="Enter The Option...." style=" width: 50%; height: 100%; " #newOption>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
-                                    <input type="text" class="form-control" id="inputOption2" placeholder="Enter The Option...." style=" width: 50%; height: 100%;" #newOption1>
-                                </div>
-                                <div *ngFor="let option of options" class="form-group row">
-                                    <label for="inputOption2" class="col-sm-3 col-form-label">{{option}})</label>
-                                    <input type="text" class="form-control" id="{{option}}" placeholder="Enter The Option...." style="width: 50%; height: 100%;" #newOption2>
-                                </div>
-                                <br><br>
-                                <button type="button" class="btn btn-primary createbtn" (click)="saveMCQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
 
-                                <button type="button" class="btn btn-primary createbtn" (click)="addOption();" style="margin-left: 2em; float: left;">Add Option</button>
-                                <br><br>
-                                <hr>
+
+
                             </div>
-                            <br><br><br>
-                            <div *ngIf="rating" style="margin-left:2em; width: 50%;">
-                                <br><br>
-                                <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
 
-                                <input type="text" class="form-control" id="inputRatingQuestion" placeholder="Enter The  Question...." style="margin-left: 2em; width: 50%; height: 100%" #newRAQuestion>
-                                <br><br>
-                                <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();" style="margin-left: 2em; float: right;">Save Question</button>
-                                <br><br>
-                                <hr>
-                            </div>
-                            <br><br><br>
+                            <!--</div>-->
 
+                            <br>
 
                             <div *ngIf="!showCreat" style="margin-left:2em; margin-top:2em; width:50%;">
                                 <button type="button" class="btn btn-primary createbtn" (click)="enableAddQuestion();" style="margin-left: 2em; float: left">Add New Question</button>
@@ -308,14 +339,14 @@
 
                         <ng-template #askIfAssign let-c="close" let-d="dismiss">
                             <div class="modal-header">
-                                <h4 class="modal-title">Would you like to save this plan to a specific patient?</h4>
+                                <h4 class="modal-title">You will now save the test to a specific rehab plan</h4>
                             </div>
                             <div class="modal-body">
                                 <p>Assigning a test to a rehab plan allows that patient who is assigned to that plan to answer the questions on this test. Is that something you would like to do?</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPlans();  c('Close click')">Yes</button>
-                                <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest(); showTable(); ">No</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="openListOfPlans();  c('Close click')">Ok</button>
+                                <!--<button type="button" class="btn btn-primary btn-sm" (click)="c('Close click'); createTest(); showTable(); ">No</button>-->
                                 <button type="button" style="float: left;" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
                             </div>
                         </ng-template>
@@ -368,21 +399,22 @@
                 <div *ngIf="viewDetails">
                     <mat-card class="assessTest">
                         <div class="center">
-                            <h2 style="color: #0275d8;">{{selectedPlan.name}}</h2>
+                            <h2 style="color: #0275d8;"><b style="color: black;">Test Name:</b> {{selectedPlan.name}}</h2>
                             <br>
-                            <h4 style="color: #0275d8;">{{selectedPlan.description}}</h4>
+                            <h4 style="color: #0275d8;"><b style="color: black;">Description: </b>{{selectedPlan.description}}</h4>
                             <br>
-                            <h5 style="color: #0275d8;">{{selectedPlan.belongsTo?.name}}</h5>
+                            <h5 style="color: #0275d8;"><b style="color: black;">rehab plan assigned: </b>{{selectedPlan.belongsTo?.name}}</h5>
                         </div>
                         <br><br><br>
                         <ol>
                             <li *ngFor="let question of selectedPlan.questions">
                                 <div>
-                                    <p><b>Question: </b>{{question.questionText}}</p>
+                                    <h6><b>Question: </b>{{question.questionText}}</h6>
                                 </div>
-                                <div>
-                                    <p><b>Answer: </b>{{question.answer}}</p>
-                                </div>
+                                <!--<div>-->
+                                <!--    <h6><b>Answer: </b>{{question.answer}}</h6>-->
+                                <!--</div>-->
+                                <br><br>
                             </li>
 
                         </ol>
@@ -415,7 +447,8 @@
                                     <span class="star" [class.filled]="fill === 100" (click)="SendBack(index)">&#9733;</span>
                                 </ng-template>
                             </ngb-rating>
-                            <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="showTable(); assignFollowUp(physioComments1.value);">Assign Followup</button>
+                            <br><br>
+                            <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="setphysioComments(physioComments1.value); open(followUp)">Assign Followup</button>
                             <button *ngIf="!selectedPlan.completed" class="btn btn-primary createbtn" (click)="open(closeTreatment); setphysioComments(physioComments1.value);">Close Treatment</button>
                         </div>
                         <div *ngIf="selectedPlan.completed">
@@ -425,10 +458,10 @@
                         <ol>
                             <li *ngFor="let question of selectedPlan.questions">
                                 <div>
-                                    <p><b>Question: </b>{{question.questionText}}</p>
+                                    <h6><b>Question: </b>{{question.questionText}}</h6>
                                 </div>
                                 <div>
-                                    <p><b>Answer: </b>{{question.answer}}</p>
+                                    <h6><b>Answer: </b>{{question.answer}}</h6>
                                 </div>
                             </li>
 
@@ -455,6 +488,20 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary btn-sm" (click)="closeInjury(finalThoughts.value); c('Close click'); showTable();">Confirm</button>
+                                <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
+
+                            </div>
+                        </ng-template>
+                        <ng-template #followUp let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Assign Follow up treatments</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <p>Are you sure you want to assign follow up to this treatment? you will be redirected to the rehab plans page.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="assignFollowUp(); c('Close click');" [routerLink]="['../rehabplans']">Confirm</button>
                                 <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
 
                             </div>
