@@ -1,6 +1,4 @@
-.exercises {
-    margin: 2.5em;
-}
+
 
 .exercisebtn {
     margin-left: 1em;
@@ -65,12 +63,6 @@
  .modal-button {
      float: right;
      margin-left: 75%;
- }
-
- .left-one{
-     float: left;
-     margin-left: 10%;
-     text-align: left;
  }
 
  .carousel {
@@ -162,12 +154,6 @@ h3 {
     text-align: center;
 }
 
-.appointments {
-    background: #f5f5f5;
-    padding: 1%;
-    border-radius: 5%;
-}
-
 .appoints {
     clear: both;
 }
@@ -178,13 +164,6 @@ h3 {
 
 .divider{
     margin-top: -25px;
-}
-
-  
-.right {
-    margin: 2px 10px;
-    /* display: inline; */
-    width: 50%;
 }
 
 .greyCard {

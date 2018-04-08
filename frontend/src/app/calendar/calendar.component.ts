@@ -27,6 +27,7 @@ import {
   format
 } from 'date-fns';
 import { CookieService } from 'ngx-cookie-service';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[];
   today: any;
   physio: any;
+  timeOfDay: any;
   
   colors: any = {
     red: {
@@ -99,7 +101,8 @@ export class CalendarComponent implements OnInit {
               private physioHomeService: PhysioHomeService,
               private apptService: AppointmentsService,
               private modalService: NgbModal,
-              private cookieService: CookieService) { 
+              private cookieService: CookieService,
+              private physioService: PhysiotherapistService) { 
                 
                 this.events$ = new Observable<Array<CalendarEvent<{ appointment: any }>>>();
                 this.events = [];
@@ -109,10 +112,10 @@ export class CalendarComponent implements OnInit {
     this.fetchEvents();
 
     
-    this.getTimeOfDay();
-    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.timeOfDay = this.getTimeOfDay();
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
       let obj: any = data;
-      this.physio = obj.physiotherapist;
+      this.physio = obj.physio;
     })
 
   }

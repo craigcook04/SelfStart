@@ -61,11 +61,11 @@
                                   <mat-list *ngIf="appointments?.length > 0">
                                       <mat-list-item *ngFor="let appointment of appointments">
                                           <div style="cursor: pointer;" class="col" (click)="AppointmentInfo(appointment, appointmentModal)">
-                                            <div matTooltip="Click to Display Appointment Info" matTooltipPosition="above" class="row justify-content-center">
+                                            <div class="row justify-content-center">
                                               <div class="col-1">
                                                   <i class="fa fa-calendar" style="color: #0275d8;"></i>
                                               </div>
-                                              <div class="col">
+                                              <div matTooltip="Click to Display Appointment Info" matTooltipPosition="above" class="col">
                                                 <h5><b>{{ appointment?.date | date:'MMM d, y, h:mm a' }}</b></h5>
                                               </div>
                                             </div>
@@ -181,4 +181,53 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>    
+
+        <!-- appointment modal-->
+        <div mdbModal #appointmentModal="mdb-modal" class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="row col">
+                        <div class="col">
+                            <h4 class="modal-title w-100" id="myModalLabel">Appointment Information</h4>
+                        </div>
+                        <div class="col-3">
+                            <mat-card-subtitle align="end">
+                                <b>{{ currAppointment?.date | date:'MMM d, y, h:mm a'}}</b>
+                            </mat-card-subtitle>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-body container">
+                      <div class="col">
+                        <b>Reason: </b> {{ currAppointment?.reason }}
+                      </div>
+                      <br>
+                      <div class="col">
+                        <b>Attached Images:</b>
+                      </div>
+                      <div>
+                        <mat-card class="col-md-6" *ngIf="appointImages?.length >= 1" style="margin-left: auto; margin-right: auto;">
+                          <ngb-carousel (pause)="!noPause" class="carousel" #carousel>
+                            <ng-template ngbSlide *ngFor="let image of appointImages">
+                              <img on-mouseover="noPause = !noPause" style="max-height: 600px;" mat-card-image src="data:image/png;base64,{{image.data}}">
+                            </ng-template>
+                          </ngb-carousel>
+                        </mat-card>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- ******************************** -->
+                          <!-- Crosshairs Button for future use -->
+                          <div>
+                              <a (click)="toggleClicked()" href="javascript:function%20fnStartCrosshair(sUrl)%20{var%20nScript%20=%20document.createElement('script');nScript.setAttribute('language','JavaScript');nScript.setAttribute('src',sUrl);document.body.appendChild(nScript);}fnStartCrosshair('//www.sprymedia.co.uk/design/crosshair/media/js/crosshair-loader.js');" class="button">
+                                <b *ngIf="!clicked">Crosshairs for Analysis</b>
+                                <b *ngIf="clicked">Remove Crosshairs</b>
+                              </a>
+                          </div>
+                        <button type="button" class="btn btn-primary btn-md waves-light" (click)="appointmentModal.hide(); appointImages = []" mdbRippleRadius>Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 

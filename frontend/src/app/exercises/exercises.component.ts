@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import { PhysioHomeService } from '../physio-home.service';
 import { CookieService } from 'ngx-cookie-service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 
 const URL = '/api/image';
@@ -51,7 +52,8 @@ export class ExercisesComponent implements OnInit {
                private physioHome: PhysioHomeService,
                private cookieService: CookieService,
                private sanitizer: DomSanitizer,
-               private iconRegistry: MatIconRegistry) { 
+               private iconRegistry: MatIconRegistry,
+               private physioService: PhysiotherapistService) { 
                 iconRegistry.addSvgIcon(
                   'dumbbell',
                   sanitizer.bypassSecurityTrustResourceUrl('../assets/images/dumbbell.svg'));
@@ -66,9 +68,9 @@ export class ExercisesComponent implements OnInit {
       console.log(obj.total);
       this.length = data.total;
     })
-    this.physioHome.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
       let obj: any = data;
-      this.physio = obj.physiotherapist;
+      this.physio = obj.physio;
     })
   }
 
