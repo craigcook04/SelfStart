@@ -184,8 +184,20 @@ export class CalendarComponent implements OnInit {
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
-    open(content){
+    open(content) {
       this.modalService.open(content, {size: "lg"});
+    }
+    
+    updateAppt() {
+      //this.physioHomeService.UpdateAppointment(id).subscribe(data => {
+        //console.log(data);
+      //});
+    }
+    
+    deleteAppt() {
+      //this.physioHomeService.DeleteAppointment(id).subscribe(data => {
+        //console.log(data);
+      //});
     }
     
     addEvent(): void {
@@ -233,10 +245,7 @@ export class CalendarComponent implements OnInit {
     //       });
     //     })
     // })
-  
-  
-  
-  
+    
   
     /*this.appointments = [];
     this.physioHomeService.GetAppointments().subscribe(data =>{
@@ -263,7 +272,7 @@ export class CalendarComponent implements OnInit {
   
   events: CalendarEvent[] = [
     {
-      title: 'Stephanie Pereira',
+      title: 'test',
       color: colors.blue,
       start: new Date("2018-04-20")
     }

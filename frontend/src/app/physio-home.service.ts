@@ -12,4 +12,13 @@ export class PhysioHomeService {
     GetAppointments(today: string) {
       return this.http.get('api/appointment/day/' + today);
     }
+    UpdateAppointment(id: string){
+      var body = {
+        
+      }
+      return this.http.put('api/appointment/' + id, body);
+    }
+    DeleteAppointment(id: string){
+      return this.http.delete('api/appointment/' + id);
+    }
 }
