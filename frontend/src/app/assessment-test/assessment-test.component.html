@@ -2,12 +2,34 @@
     <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
         <mat-nav-list style="top: -10px;">
             <mat-list-item [routerLinkActive]="['active']">
-                <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
+                <div class="row form-inline">
+                    <div class="col-2">
+                        <h5 class="btn-block" style="text-align: center; color:white;">
+                            <i class="fa fa-columns"></i>
+                        </h5>      
+                    </div>
+                    <div class="col">
+                        <h5 class="btn-block" style="text-align: center; color:white;" [routerLink]="['../home']">
+                                Dashboard
+                        </h5>
+                    </div>
+                </div>
             </mat-list-item>
             <br>
             <mat-divider class="dividers"></mat-divider>
             <mat-list-item [routerLinkActive]="['active']">
-                <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../calendar']">Calendar</button>
+                <div class="row form-inline">
+                    <div class="col-2">
+                        <h5 class="btn-block" style="text-align: center; color:white;">
+                            <i class="fa fa-calendar"></i>
+                        </h5>      
+                    </div>
+                    <div class="col">
+                        <h5 class="btn-block" style="text-align: center; color:white;" [routerLink]="['../calendar']">
+                            Calendar
+                        </h5>
+                    </div>
+                </div>
             </mat-list-item>
             <br>
             <mat-divider class="dividers"></mat-divider>

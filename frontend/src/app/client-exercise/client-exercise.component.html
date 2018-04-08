@@ -20,11 +20,6 @@
             <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../completetest']">Complete Assessment</button>
           </mat-list-item>
           <br>
-          <!-- <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Upload Photos</button>
-          </mat-list-item>
-          <br> -->
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
             <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../transactions']">Transactions</button>
@@ -37,7 +32,7 @@
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../resources']">Resources</button>
           </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
@@ -53,7 +48,6 @@
                  </p>
             </div>
           </div>
-           <br>
            <div class="page col-11">
              <mat-card style="min-height: 75vh;">
                 <div *ngIf="clientPlan" class="row">

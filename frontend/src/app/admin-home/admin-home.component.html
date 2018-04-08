@@ -19,26 +19,16 @@
 
           <mat-sidenav-content style="min-height:100vh;">
               <div>
-                  <mat-card class="col-11" style="margin-left: auto; margin-right: auto;">
-                        <mat-card-title style="text-align: center;">
-                          <h3><b>Welcome Administrator,</b></h3>
-                          <h5>What would you like to do today?</h5>
-                        </mat-card-title>
-                        <mat-card-subtitle>
-                            <div class="col">
-                                <!-- <div ngbDropdown class="d-inline-block">
-                                  <button style= left:10px; class="btn btn-outline-primary"  id="dropdownBasic1" ngbDropdownToggle>What would you like to do?</button>
-                                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button class="dropdown-item" (click) = "goToExercises()">Edit Exercises</button>
-                                    <button class="dropdown-item" (click) = "gotToPatients()">Edit Client Profiles</button>
-                                    <button class="dropdown-item" (click) = "goToDynamicForm()">Edit Dynamic Forms</button>
-                                    <button class="dropdown-item" (click) = "goToRehabPlans()">Edit Rehabilitation Plans</button>
-                                  </div>
-                                </div> -->
-                            </div>
-                        </mat-card-subtitle>
-                        <mat-divider></mat-divider>
-                        <br>
+                  <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+                      <br>
+                      <div style="margin-top: -10px;">
+                          <h3 class="title" style="color: #0275d8">
+                              <b style="color: #0275d8;">Welcome, Administrator.</b>
+                           </h3>
+                           <h5 class="quotes">What would you like to do today?</h5>
+                      </div>
+                    </div>
+                  <mat-card class="col-11 page" style="margin-left: auto; margin-right: auto;">
                         <mat-card-content>
                           <div class="row">
                               <mat-card class="col-6">
@@ -49,14 +39,25 @@
                                           <div class="names">
                                               <ul>
                                                 <li *ngFor="let user of resetUsers">
-                                                   <span class="lefts">{{user.userAccountName}}</span> 
+                                                   <span class="lefts">{{user?.userAccountName}}</span> 
                                                    <fa class="rights check" name="check" matTooltip="Confirm Reset for {{ user?.userAccountName }}" (click)="ResetPassword(user.userAccountName, resetModal)"></fa>
                                                    <ng-template #resetModal let-c="close" let-d="dismiss">
                                                       <div class="modal-header">
                                                         Reset Password Email Sent
                                                       </div>
                                                       <div class="modal-body">
-                                                        An email has been successfully sent to {{user.userAccountName}} so that they are able to recover their account
+                                                        An email has been successfully sent to {{user?.userAccountName}} so that they are able to recover their account.
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
+                                                      </div>
+                                                  </ng-template>
+                                                  <ng-template #allResetModal let-c="close" let-d="dismiss">
+                                                      <div class="modal-header">
+                                                        Reset Password Email Sent
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        An email has been successfully sent to all users requiring a reset, so that they are able to recover their account.
                                                       </div>
                                                       <div class="modal-footer">
                                                         <button type="button" class="btn btn-primary btn-med" (click)="c('Close click')">OK</button>          
@@ -64,8 +65,14 @@
                                                   </ng-template>
                                                 </li>
                                               </ul>
-                                              
                                             </div>
+                                        </div>
+                                        <br>
+                                        <div style="margin-left: auto; margin-right: auto; text-align: center;">
+                                          <button class="btn btn-info" (click)="ResetAllRequests(allResetModal)" [disabled]="resetUsers?.length == 0">
+                                            <b *ngIf="resetUsers?.length > 0"> Reset All Requests </b>
+                                            <b *ngIf="resetUsers?.length == 0"> No Requests Currently</b>
+                                          </button>
                                         </div>
                                   </div>
                                   <br>
@@ -82,9 +89,12 @@
                                                 <div class="col">
                                                     <h6><b> Number of Registered Physios: </b></h6>
                                                   </div>
-                                                  <div class="col">
+                                                  <div *ngIf="currPhysios" class="col">
                                                     <h4><b> {{ currPhysios }} </b></h4>
                                                   </div>
+                                                  <div *ngIf="!currPhysios" class="col">
+                                                      <h4><b> 0 </b></h4>
+                                                    </div>
                                                 </div>
                                                 <div class="divider">
                                                   <mat-divider></mat-divider>
@@ -97,9 +107,12 @@
                                                 <div class="col">
                                                     <h6><b> Number of Registered Clients: </b></h6>
                                                   </div>
-                                                  <div class="col">
+                                                  <div *ngIf="currPatients" class="col">
                                                     <h4><b> {{ currPatients }} </b></h4>
                                                   </div>
+                                                  <div *ngIf="!currPatients" class="col">
+                                                      <h4><b> 0 </b></h4>
+                                                    </div>
                                                 </div>
                                                 <div class="divider">
                                                   <mat-divider></mat-divider>
@@ -112,9 +125,12 @@
                                                 <div class="col">
                                                     <h6><b> Number of Unique Exercises: </b></h6>
                                                   </div>
-                                                  <div class="col">
+                                                  <div *ngIf="currExercises" class="col">
                                                       <h4> <b> {{ currExercises }} </b></h4>
                                                   </div>
+                                                  <div *ngIf="!currExercises" class="col">
+                                                      <h4><b> 0 </b></h4>
+                                                    </div>
                                                 </div>
                                                 <div class="divider">
                                                   <mat-divider></mat-divider>
@@ -127,8 +143,11 @@
                                                 <div class="col">
                                                     <h6><b> Number of Exercise Menus: </b></h6>
                                                   </div>
-                                                  <div class="col">
+                                                  <div *ngIf="currPlans" class="col">
                                                     <h4> <b> {{ currPlans }} </b></h4>
+                                                  </div>
+                                                  <div *ngIf="!currPlans" class="col">
+                                                    <h4><b> 0 </b></h4>
                                                   </div>
                                                 </div>
                                                 <div class="divider">
