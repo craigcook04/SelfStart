@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhysioHomeService } from '../physio-home.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PatientService } from '../patient.service';
+import { AssessmentTestService } from '../assessment-test.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -18,29 +20,59 @@ export class PhysioHomeComponent implements OnInit {
   activated: any;
   appointments: any[];
   panelOpenState: boolean = false;
+  numbPatients: any;
+  pendingTests: any;
+  numbTests: any;
+  display: boolean = false;
+  totalCompleted: any;
   
-  constructor(private router: Router, private physioHomeService: PhysioHomeService, private cookieService: CookieService) { }
+  constructor(private router: Router,
+              private physioHomeService: PhysioHomeService,
+              private cookieService: CookieService,
+              private patientService: PatientService,
+              private testService: AssessmentTestService) { }
   
   ngOnInit() {
     //var j = 0;
     var today = new Date();
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
-    this.physio = this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
-      obj = obj.docs;
+      obj = obj.physiotherapist;
       this.physio = obj;
+
+      this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
+        let obj: any = data;
+        this.numbPatients = obj.total;
+      })
+
+      this.testService.GetOldestTests().subscribe(data => {
+        let obj: any = data;
+        let length = Math.ceil(obj.docs.length / 2);
+        this.numbTests = length;
+        console.log(obj.total);
+        this.totalCompleted = obj.total;
+        this.pendingTests = obj.docs.splice(0, length);
+        console.log(this.pendingTests);
+      })
     })
     this.appointments = [];
     //this.appoint = [];
-    console.log(today);
-     this.physioHomeService.GetAppointments(today).subscribe(data =>{
-      console.log(data);
-      var retObj:any = data;
+
+    this.physioHomeService.GetAppointments(today).subscribe(data =>{
+       if(data === []){
+         return;
+       }
+      var retObj: any = data;
       this.appointments = retObj.appointment;
-      console.log(this.appointments);
-    });
+    })
+  }
+
+  Show(){
+    console.log(this.display);
+    this.display = !this.display;
   }
   
   show(appointment: any){

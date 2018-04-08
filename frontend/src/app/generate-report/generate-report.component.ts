@@ -48,7 +48,7 @@ export class GenerateReportComponent implements OnInit {
   physioRatings: Array<number> = [];
   clientRatings: Array<number> = [];
   assesmentDates: Array<any> = [];
-  chartLabels: Array<any> = [0, 1, 2, 3, 4, 5, 6, 7];
+  chartLabels: Array<any> = [];
 
   chartColors: Array<any> = [
     {
@@ -148,6 +148,21 @@ export class GenerateReportComponent implements OnInit {
       this.paymentHistory = retObj.payments;
     })
 
+    this.assessmentService.GetUsersInitialInjuries(userID).subscribe(data => {
+      console.log(data);
+      var retObj: any = data;
+      this.initialInjury = retObj.intakes[0];
+      this.assessmentService.GetFinalResults(userID, this.initialInjury.injuryNumber).subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        if(retObj.success) {
+          this.finalOutcome = retObj.results;
+        }
+        else {
+          this.finalOutcome = null;
+        }
+      })
+    })
     
 
     
@@ -156,6 +171,36 @@ export class GenerateReportComponent implements OnInit {
       let obj: any = data;
       this.currClient = obj.patient;
       console.log(this.currClient);
+
+      this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
+        console.log(data);
+        let obj: any = data;
+        this.completedTests = obj.completedTests;
+        if(this.completedTests.length > 1){
+          this.completedTests.forEach(element =>{
+            console.log(element);
+            this.physioRatings.push(element.physioRate);
+            let obj: string = element.dateCompleted;
+            obj = obj.split('T')[0];
+            this.assesmentDates.push(obj);
+            this.clientRatings.push(element.questions[0]);
+          })
+          this.physioRatings.unshift(0);
+          this.assesmentDates.unshift('Start of Time');
+          this.clientRatings.unshift(0);
+    
+          //set the chart datasets
+          this.chartDatasets = [
+            {data: this.physioRatings, label: "Physio Ratings"},
+            {data: this.clientRatings, label: "Client Ratings"}
+          ];
+          this.chartLabels = this.assesmentDates;
+  
+          return;
+        }
+  
+        this.singleTest == this.completedTests;
+      })
     })
   }
 

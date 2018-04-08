@@ -40,6 +40,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { SettingsComponent } from './settings/settings.component'
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { TimeOffComponent } from './time-off/time-off.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 //Later: add gueard to the routes that need to be protected
 //to do this append ,canActivate: [something] to an object
@@ -84,6 +85,7 @@ const routes: Routes = [
   {path: 'physio/settings', component: SettingsComponent},
   {path: 'physio/reports/:id', component: GenerateReportComponent},
   {path: 'physio/timeoff', component: TimeOffComponent},
+  {path: 'client/resources', component: ResourcesComponent},
   {path: '**', component: NotFoundComponent} //this NEEDS to be last
 ];
 

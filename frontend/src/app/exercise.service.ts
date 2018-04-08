@@ -25,13 +25,12 @@ export class ExerciseService {
     return this.httpClient.delete(url);
   }
 
-  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, media: any) : any {
+  UpdateExercise(id:string,  exName: string, descrip: string, objs: string, actSteps: string, loc: string, freq: number, dur: number, media: any) : any {
     // body of the exercise request
     var body ={
       name: exName,
       description: descrip,
       objectives: objs,
-      authorName: authName,
       actionSteps: actSteps,
       location: loc,
       frequency: freq,
@@ -43,12 +42,11 @@ export class ExerciseService {
     return this.httpClient.put(url, body);
   }
 
-  AddExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number, media: any) : any{
+  AddExercise(exName: string, descrip: string, objs: string, actSteps: string, loc: string, freq: number, dur: number, media: any) : any{
     var body ={
       name: exName,
       description: descrip,
       objectives: objs,
-      authorName: authName,
       actionSteps: actSteps,
       location: loc,
       frequency: freq,

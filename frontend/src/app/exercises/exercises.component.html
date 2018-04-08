@@ -1,5 +1,3 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
         <mat-nav-list style="top: -10px;">
@@ -40,20 +38,27 @@
             <br>
             <div style="margin-top: -10px;">
                 <h3 *ngIf="physio" class="title" style="color: #0275d8">
-                    Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
+                    Good {{ timeOfDay }}<a>, {{ physio?.givenName }}.</a>
                  </h3>
                  <p class="quote">
                    Welcome to your dashboard, what would you like to do today?
                  </p>
+                 <div style="margin-left: auto; margin-right: auto; text-align: center;" class="col-2">
+                   <hr>
+                   <b>{{ today | date:'shortTime'}}</b>
+                 </div>
             </div>
           </div>
           <br>
         <div style="min-height: 100vh;" class="page col-11">
             <mat-card style="min-height: 75vh;">
-            <div class="col-10" style="margin-left: auto; margin-right: auto;">
+            <div class="col-11" style="margin-left: auto; margin-right: auto;">
+              <mat-card-title style="color: #0275d8">
+                Exercises
+              </mat-card-title>
                   <div class='form-inline row'>
-                    <div class="row justify-content-start col-8">
-                        <div class='form-inline'>
+                    <div class="row justify-content-start row col-8">
+                        <div class='form-inline col-4'>
                             <div>
                                 <select #searchArea class="searchdropdown" id="searchDropdown">
                                     <option value='name'>Search By...</option>
@@ -63,14 +68,13 @@
                                   </select>
                             </div>
                           </div>
-                          <div class="form-inline col">
-                            <div class="input-group">
-                              <input class="col-9" type="text" class="form-control" placeholder="Search Term" (keyup)="SearchExercises(searchValue.value, searchArea.value)" aria-label="Search for exercise here..." #searchValue>
-                              <span class="col-1 input-group-btn">
-                                <button class="btn btn-primary" type="button" location="top" ngbTooltip="Search">
-                                  <fa name="search"></fa>
-                                </button>
-                              </span>
+                          <div class="form-inline col-6">
+                            <div class="input-group row form-inline">
+
+                                <input class="col-8" type="text" placeholder="Search" (keyup)="SearchExercises(searchValue.value, searchArea.value)" aria-label="Search for exercise here..." #searchValue>
+                                <span class="col">
+                                  <i style="color: #0275d8" class="fa fa-search" aria-hidden="true"></i>
+                                </span>
                             </div>
                           </div>
                     </div>
@@ -83,104 +87,97 @@
           
                 <ng-template #newmodal let-c="close" let-d="dismiss">
                     <div class="modal-header">
-                      <h4 class="modal-title">New Exercise</h4>
+                      <h4 class="modal-title"><b>Create a New Exercise</b></h4>
                     </div>
-                    <div class="modal-body">
-                      <span>Fill out the following...</span>
-                    <br><br>
+                    <div class="modal-body col-11" style="margin-left: auto; margin-right: auto; text-align: center;">
                       <div class="form-group row">
-                        <label for="inputName" class="col-sm-3 col-form-label"><b>Name</b></label>
-                        <div class="col-sm-9">
+                        <div class="col">
                           <input type="text" class="form-control" id="inputName" placeholder="Exercise Name" #name>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputDescrip" class="col-sm-3 col-form-label"><b>Description</b></label>
-                          <div class="col-sm-9">
+                          <div class="col">
                             <input type="text" class="form-control" id="inputDescrip" placeholder="Description" #description>
                           </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputObjs" class="col-sm-3 col-form-label"><b>Objectives</b></label>
-                        <div class="col-sm-9">
+                        <div class="col">
                             <input type="text" class="form-control" id="inputObjs" placeholder="Objectives" #objectives>
                           </div>
                       </div>
                       <div class="form-group row">
-                          <label for="inputAuthName" class="col-sm-3 col-form-label"><b>Author Name</b></label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputAuthName" placeholder="Author Name" #authorName>
+                          <div class="col">
+                              <input type="text" class="form-control" id="inputActSteps" placeholder="Action Steps (1. Do this 2. Do that)" #actionSteps>
                             </div>
                       </div>
                       <div class="form-group row">
-                          <label for="inputActSteps" class="col-sm-3 col-form-label"><b>Action Steps</b></label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputActSteps" placeholder="1. List Your Steps 2. Like This" #actionSteps>
+                          <div class="col">
+                              <input type="text" class="form-control" id="inputLoc" placeholder="Target Area (back, arm etc.)" #location>
                             </div>
                       </div>
                       <div class="form-group row">
-                          <label for="inputLoc" class="col-sm-3 col-form-label"><b>Location</b></label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputLoc" placeholder="Location" #location>
+                          <div class="col">
+                              <input type="text" class="form-control" id="inputFreq" placeholder="Sets" #frequency>
                             </div>
                       </div>
                       <div class="form-group row">
-                          <label for="inputFreq" class="col-sm-3 col-form-label"><b>Sets</b></label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" #frequency>
+                          <div class="col">
+                              <input type="text" class="form-control" id="inputDur" placeholder="Repetitions" #duration>
                             </div>
                       </div>
-                      <div class="form-group row">
-                          <label for="inputDur" class="col-sm-3 col-form-label"><b>Repetitions</b></label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" id="inputDur" placeholder="Duration" #duration>
-                            </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputMedia" class="col-sm-3 col-form-label"><b>Multimedia</b></label>
-                        <div class="col-sm-9">
-                          <label class="btn btn-block btn-file" id="inputMedia">
+                      <br>
+                      <div class="form-group" style="margin-left:auto; margin-right: auto;text-align: center;">
+                        <div class="col">
+                          <label class="btn btn-block btn-primary" id="inputMedia">
                             Click Here to Select File(s) for Upload&hellip;
                             <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" accept=".jpg, .png"  multiple>
                           </label>
-                          <td nowrap>
-                            <button type="button" class="btn btn-success btn-s"
+                        </div>
+                      </div>
+                      <div class="form-group" style="margin-left:auto; margin-right: auto;text-align: center;">
+                        <div class="col-10">
+                          <td nowrap class="row form-inline justify-content-center">
+                            <button type="button" class="btn btn-success col"
                             (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                               <span class="glyphicon glyphicon-upload"></span> Upload all
                             </button>
-                            <button type="button" class="btn btn-danger btn-m col-sm-10"
+                            <button type="button" class="btn btn-danger col"
                             (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                               <span class="glyphicon glyphicon-trash"></span> Remove all
                             </button>
-                            <tr *ngFor="let item of uploader.queue">
-                              <td><strong>{{ item?.file?.name }}</strong></td>
-                            </tr>
                           </td>
                         </div>
                       </div>
+                      <br>
+                      <ul class="form-group col" *ngFor="let item of uploader.queue">
+                        <ol><strong>{{ item?.file?.name }}</strong></ol>
+                      </ul>
                       <!-- above is the form for creating a new exercise, below the button to save it -->
-          
+                      <mat-divider></mat-divider>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-primary btn-sm" (click)="addExercise(name.value, description.value, objectives.value, authorName.value, actionSteps.value, location.value, frequency.value, duration.value); c('Close click') ">Add</button>
+                          <button type="button" class="btn btn-primary btn-sm" [disabled]="uploader.isUploading" (click)="addExercise(name.value, description.value, objectives.value, actionSteps.value, location.value, frequency.value, duration.value); c('Close click') ">Add</button>
                           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
                       </div>  
                     </div>
                   </ng-template>
               <br><br>
-          
+          <mat-card class="greyCard">
               <div>
                   <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, searchArea.value, $event)">
                   </mat-paginator>
               </div>
               <mat-accordion>
               <mat-expansion-panel *ngFor='let exercise of exercises' (click)="uploader.clearQueue()" (click)="show(exercise)">
-                <mat-expansion-panel-header (click)="getExerciseImages(exercise._id)">
-                    <mat-panel-title class="col-sm-3" style="color: #0275d8;"> 
-                      <h4>
-                          <strong>{{ exercise.name }} </strong> 
-                      </h4>
+                <mat-expansion-panel-header class="row" (click)="getExerciseImages(exercise._id)">
+                    <mat-panel-title class="col-6" style="top: 8px;"> 
+                      <h5 class="row">
+                          <div class="col-1">
+                              <mat-icon style="color: #0275d8" svgIcon="dumbbell"></mat-icon> &nbsp;
+                          </div>
+                          <strong class="col">{{ exercise.name }} </strong> 
+                      </h5>
                     </mat-panel-title>
-                    <mat-panel-description class="col-sm-11">
+                    <mat-panel-description style="top: 15px;" class="col-6">
                       <b>Target Area: </b> &nbsp; {{ exercise.location }}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
@@ -190,7 +187,7 @@
                     <div>
                       <mat-list-item class="form-group-row">
                         <div class="col-md-2">
-                            <b> Name: </b> 
+                            <b style="color: #0275d8"> Name: </b> 
                         </div>
                         <div class="col-md">
                             {{ exercise.name }}
@@ -198,7 +195,7 @@
                       </mat-list-item>
                       <mat-list-item class="form-group-row">
                           <div class="col-md-2">
-                              <b> Description: </b> 
+                              <b style="color: #0275d8"> Description: </b> 
                           </div>
                           <div class="col-md">
                               {{ exercise.description }} 
@@ -206,7 +203,7 @@
                       </mat-list-item>
                       <mat-list-item class="form-group-row">
                           <div class="col-md-2">
-                              <b> Objectives: </b> 
+                              <b style="color: #0275d8"> Objectives: </b> 
                           </div>
                           <div class="col-md">
                               {{ exercise.objectives }}
@@ -214,7 +211,7 @@
                       </mat-list-item>
                       <mat-list-item class="from-group-row">
                           <div class="col-md-2">
-                              <b> Author: </b> 
+                              <b style="color: #0275d8"> Author: </b> 
                           </div>
                           <div class="col-md">
                               {{ exercise.authorName }}
@@ -222,7 +219,7 @@
                       </mat-list-item>
                       <mat-list-item class="form-group-row">
                           <div class="col-md-2">
-                              <b> Action Steps: </b> 
+                              <b style="color: #0275d8"> Action Steps: </b> 
                           </div>
                           <div class="col-md">
                               {{ exercise.actionSteps }} 
@@ -230,13 +227,13 @@
                       </mat-list-item>
                       <mat-list-item class="form-group-row">
                           <div class="col-md-2">
-                              <b> Sets: </b> 
+                              <b style="color: #0275d8"> Sets: </b> 
                           </div>
                           <div class="col-md-4">
                               {{ exercise.frequency }} 
                           </div>
                           <div class="col-md-2">
-                              <b> Repititions: </b>  
+                              <b style="color: #0275d8"> Repititions: </b>  
                           </div>
                           <div class="col-md-4">
                               {{ exercise.duration }}  
@@ -244,7 +241,7 @@
                       </mat-list-item>
                       <mat-list-item class="form-group-row">
                           <div class="col-md-2">
-                              <b> Location: </b> 
+                              <b style="color: #0275d8"> Location: </b> 
                           </div>
                           <div class="col-md">
                               {{ exercise.location }}
@@ -261,6 +258,18 @@
                       </ng-template>
                     </ngb-carousel>
                   </mat-card>
+                  <div class="row form-inline" align="end">
+                      <div>
+                        <button (click)="open(delete)" class="btn btn-danger btn-sm">
+                          Delete
+                        </button>
+                      </div>
+                      <div>
+                        <button (click)="open(update)" class="btn btn-info btn-sm">
+                          Edit
+                        </button>
+                      </div>
+                    </div>
                 </div>
           
                   <!-- when physio wants to update an exercise -->
@@ -271,106 +280,92 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">
+                      <div class="modal-body col-11" style="margin-left: auto; margin-right: auto; text-align: center;">
                           <form>
                             <div class="form-group row">
-                              <label for="inputName" class="col-sm-3 col-form-label">Name</label>
-                              <div class="col-sm-9">
+                              <div class="col">
                                 <input type="text" class="form-control" id="inputName" placeholder="Exercise Name" value="{{ exercise.name }}" #newName>
                               </div>
                             </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputDescrip" class="col-sm-3 col-form-label">Description</label>
-                                <div class="col-sm-9">
+                                <div class="col">
                                   <input type="text" class="form-control" id="inputDescrip" placeholder="Description" value="{{ exercise.description }}" #newDescrip>
                                 </div>
                               </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputObj" class="col-sm-3 col-form-label">Objectives</label>
-                                <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="inputObj" placeholder="Description" value="{{ exercise.objectives }}" #newObj>
+                                <div class="col">
+                                  <input type="text" class="form-control" id="inputObj" placeholder="Objectives" value="{{ exercise.objectives }}" #newObj>
                                 </div>
                               </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputAuth" class="col-sm-3 col-form-label">Author Name</label>
-                                <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="inputAuth" placeholder="Author Name" value="{{ exercise.authorName }}" #newAuthName>
+                                <div class="col">
+                                  <input type="text" class="form-control" id="inputActSteps" placeholder="Action Steps" value="{{ exercise.actionSteps }}" #newActSteps>
                                 </div>
                               </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputActSteps" class="col-sm-3 col-form-label">Action Steps</label>
-                                <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="inputActSteps" placeholder="Description" value="{{ exercise.actionSteps }}" #newActSteps>
+                                <div class="col">
+                                  <input type="text" class="form-control" id="inputLoc" placeholder="Target Area" value="{{ exercise.location }}" #newLoc>
                                 </div>
                               </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputLoc" class="col-sm-3 col-form-label">Location</label>
-                                <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="inputLoc" placeholder="Location" value="{{ exercise.location }}" #newLoc>
+                                <div class="col">
+                                  <input type="text" class="form-control" id="inputFreq" placeholder="Sets" value="{{ exercise.frequency }}" #newFreq>
                                 </div>
                               </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputFreq" class="col-sm-3 col-form-label">Sets</label>
-                                <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="inputFreq" placeholder="Frequency" value="{{ exercise.frequency }}" #newFreq>
+                                <div class="col">
+                                  <input type="text" class="form-control" id="inputDur" placeholder="Repetitions" value="{{ exercise.duration }}" #newDur>
                                 </div>
                               </div>
                           </form>
                           <form>
                               <div class="form-group row">
-                                <label for="inputDur" class="col-sm-3 col-form-label">Repetitions</label>
-                                <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="inputDur" placeholder="Duration" value="{{ exercise.duration }}" #newDur>
-                                </div>
-                              </div>
-                          </form>
-                          <form>
-                              <div class="form-group row">
-                                <label for="inputMedia" class="col-sm-3 col-form-label">Multimedia</label>
-                                <div class="col-sm-9">
-                                  <label class="btn btn-block btn-file" id="inputMedia">
+                                <div class="col">
+                                  <label class="btn btn-block btn-primary" id="inputMedia">
                                     Click Here to Select File(s) for Upload&hellip;
                                     <input class="form-control" ng2FileSelect type="file" [uploader]="uploader" style="display: none;" multiple>
                                     <!-- <input class="form-control" ng2FileSelect type="file" style="display: none;" multiple (change)="uploadFiles(uploadFile)" ng-model="uploadFiles" #uploadFile> -->
                                   </label>
-                                  <td nowrap>
+                                  <td nowrap class="row form-inline justify-content-center">
                                     <button type="button" class="btn btn-success btn-s"
                                     (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                                       <span class="glyphicon glyphicon-upload"></span> Upload all
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-m col-sm-10"
+                                    <button type="button" class="btn btn-danger btn-s "
                                     (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                                       <span class="glyphicon glyphicon-trash"></span> Remove Queued Files
                                     </button>
-                                    <br><br><br>
-                                    <tr id="removeParent" *ngFor="let image of images">
-                                      <div id="removeMe">
-                                        <td><strong>{{ image.name }}</strong></td>
-                                        <button type="button" class="btn btn-danger btn-sm" (click)="deleteImage(image._id)" style="float: right; margin-right:10px;">X</button>
-                                      </div>
-                                    </tr>
-                                    <tr *ngFor="let item of uploader.queue">Upload:
-                                      <td><strong>{{ item?.file?.name }}</strong></td>
-                                    </tr>
+                                    <br><br>
                                   </td>
                                 </div>
                               </div>
                           </form>
+                          <tr class="form-inline" id="removeParent" *ngFor="let image of images">
+                              <div id="removeMe" class="row justify-content-center">
+                                <td style="top: 10px;" class="col"><strong>{{ image.name }}</strong></td>
+                                <button type="button" mat-mini-fab color='warn' (click)="deleteImage(image._id)">X</button>
+                              </div>
+                              <br>
+                            </tr>
+                            <br>
+                          <ul class="form-group col" *ngFor="let item of uploader.queue">
+                              <ol><strong>{{ item?.file?.name }}</strong></ol>
+                          </ul>
                       </div>
                       <div class="modal-footer">
-                        <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newAuthName.value, newActSteps.value, newLoc.value, newFreq.value); c('Close click')">Confirm</button>
+                        <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newActSteps.value, newLoc.value, newFreq.value); c('Close click')">Confirm</button>
                         <button id="modalButtons" type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
                       </div>
                     </ng-template> 
@@ -379,17 +374,14 @@
                     <!-- End of First Modal -->
           
                     <!-- The Second Modal which will be brought up when the physiotherapist wants to delete the patient-->
-                    <ng-template #delete let-c="close" let-d="dismiss">
-                      <div class="modal-header">
+                    <ng-template #delete let-c="close" let-d="dismiss" style="overflow-x: hidden;">
+                      <div class="modal-header" style="overflow-x: hidden;">
                         <h4 class="modal-title">Delete {{ exercise.name}}</h4>
-                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
                       </div>
-                      <div class="modal-body">
+                      <div class="modal-body" style="overflow-x: hidden;">
                         <p>Are you sure you wish to delete patient <b>{{exercise.name}}</b>. This action is cannot be undone. </p>
                       </div>
-                      <div class="modal-footer info">
+                      <div class="modal-footer" style="overflow-x: hidden;">
                         <br>
                         <button type="button" class="btn btn-primary btn-med" (click)="deleteExercise(exercise._id); c('Close click')">Delete</button>
                         <button type="button" class="btn btn-secondary btn-med" (click)="c('Close click')">Do No Delete</button>                  
@@ -398,10 +390,11 @@
                     <!-- End of First Modal -->
                   </mat-expansion-panel>
             </mat-accordion>
-            </div>
-            <br>
           </mat-card>
+        </div>
+        <br>
+      </mat-card>
             
-          </div>
-    </mat-sidenav-content>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

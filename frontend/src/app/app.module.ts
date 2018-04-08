@@ -25,8 +25,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { DynamicFormsService } from './dynamic-forms.service';
 import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 import { UserAccountsComponent } from './user-accounts/user-accounts.component';
-import {UserAccountsService} from './user-accounts.service';
-import {DpDatePickerModule} from 'ng2-date-picker';
+import { UserAccountsService } from './user-accounts.service';
+import { DpDatePickerModule } from 'ng2-date-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -105,7 +105,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { GenerateReportComponent } from './generate-report/generate-report.component';
 import { ClientHomeComponent } from './client-home/client-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { PhysioHomeService } from './physio-home.service';
 import { TimeOffComponent } from './time-off/time-off.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 @NgModule({
   declarations: [
@@ -147,6 +149,7 @@ import { TimeOffComponent } from './time-off/time-off.component';
     SettingsComponent,
     GenerateReportComponent,
     TimeOffComponent,
+    ResourcesComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -209,7 +212,8 @@ import { TimeOffComponent } from './time-off/time-off.component';
     PhysioAuthGuard,
     AdminAuthGuard,
     PaymentService,
-    RolesService],
+    RolesService,
+    PhysioHomeService],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
