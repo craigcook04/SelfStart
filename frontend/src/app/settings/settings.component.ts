@@ -46,6 +46,8 @@ export class SettingsComponent implements OnInit {
   cities: any[];
   genders: any[];
   needToChangeInfo: boolean;
+  infoUpdated: boolean;
+  couldntProcessUpdateRequest: boolean;
 
   constructor(private route: ActivatedRoute,
               private cookieService: CookieService,
@@ -308,6 +310,8 @@ export class SettingsComponent implements OnInit {
 
   UpdatePhysio(firstname, lastname, email) {
     var cannotContinue = false;
+    this.infoUpdated = false;
+    this.couldntProcessUpdateRequest = false;
     this.resetPhysioErrorMessages();
     if(!firstname) {
       var firstNameBox = document.getElementById('inputPhysioFirstName').style.borderColor = 'red';       
@@ -330,7 +334,15 @@ export class SettingsComponent implements OnInit {
     }
 
     this.physiotherapistService.PhysioUpdateOwnInformation(firstname, lastname, email).subscribe(data => {
-      console.log(data);
+      var retObj: any = data;
+      console.log('im in here')
+      console.log(retObj);
+      if(retObj.success == true) {
+        this.infoUpdated = true;
+      }
+      else {
+        this.couldntProcessUpdateRequest = true;
+      }
 
     })
 

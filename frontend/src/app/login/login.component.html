@@ -1,53 +1,81 @@
 <div class="center">
-  <h1>Welcome! Please log in here</h1>
+  <h1>Self Start Login</h1>
 </div>
 <br>
 <br>
-<mat-card class="assessTest">
-  <div class="row justify-content-center">
+<mat-card class="assessTest" style="background-color: #bbdefb">
+  <div class="container justify-content-center">
+    <div class="row">
     <!-- <div class="form-group row usandpass">
       <div class="col">
           <input type="text" class="form-control" id="inputUsername" placeholder="Username" #username>
           
       </div> 
     </div> -->
-    <div class="md-form usandpass">
-        <i class="fa fa-user prefix"></i>
-        <input mdbActive type="text" id="username" class="form-control" #username>
-        <label for="form2">Username</label>
-    </div>
-    <div class="md-form usandpass">
-        <i class="fa fa-lock prefix"></i>
-        <input mdbActive type="password" id="inputPassword" (keyup.enter)="Login(username.value, password.value)" class="form-control" #password>
-        <label for="form2">Password</label>
-    </div>
+    <div class="col-6">
+      <br>
+      <br>
+      <div class="md-form usandpass">
+          <i class="fa fa-user prefix"></i>
+          <input mdbActive type="text" id="username" class="form-control" #username>
+          <label for="form2">Username</label>
+      </div>
+      <div class="md-form usandpass">
+          <i class="fa fa-lock prefix"></i>
+          <input mdbActive type="password" id="inputPassword" (keyup.enter)="Login(username.value, password.value)" class="form-control" #password>
+          <label for="form2">Password</label>
+      </div>
+      <div class="form-group row usandpass">
+          <div class="col">
+            <button class="btn btn-block btn-indigo" style="margin-left: 5%;"(click)="Login(username.value, password.value)">Login</button> 
+          </div> 
+      </div>
+      <br>      
+      <hr class="divider" style="margin-top: 0%; margin-left: -9%">
+      <p style="margin-left: 4rem; color: #4b0082;" class="cont forgotpass"><a [routerLink]="['forgotten']" style="color: #4b0082;" >Forgot Password</a></p>            
+        <div *ngIf="showFailure" class="dangeralrt">
+            <p class="failureMessage">The username or password you entered is incorrect</p>
+        </div>
+        <div *ngIf="userIsDisabled" class="dangeralrt">
+            <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
+        </div>
+        <div *ngIf="needToVerify" class="dangeralrt">
+            <p class="failureMessage">You need to verify your account to continue, please go to your email and click the link. </p>              
+        </div>
+  </div>
+  <div class="col-1">
+      <div style="border-left:1px solid #4b0082;height:95%;"></div>
+  </div>
+  <div class="col-5">
+    <br>
+    <h4>
+      Don't have an Account? Sign up here!
+    </h4>
+    <p>It's as easy as clicking the button below and inserting simple information! Self Start is commited to 
+      providing the best therapy to aid you in your recover process. What are you waiting for? Sign up now!
+    </p>
+    <button class="btn btn-block btn-indigo col-7" [routerLink]="['../signup']">Sign Up</button>
+    <br>
+    <br>
+    <hr class="divider" style="margin-top: 5%; margin-left: -15%; margin-right: -10%">
+    <h4>
+      Need Help?
+    </h4>
+    <ul>
+      <li><a [routerLink]="['../faq']">Frequently Asked Questions</a></li>
+      <li><a [routerLink]="['../contactus']">Contact Us</a></li>
+      <li><a [routerLink]="['../services']">Our Services</a></li>
+      <li><a [routerLink]="['../howitworks']">How It Works</a></li>
+    </ul>
+  </div>
     <!-- <div class="form-group row usandpass">
       <div class="col">
         <input type="password" class="form-control" id="inputPassword" placeholder="Password" (keyup.enter)="Login(username.value, password.value)" #password>
       </div>
     </div> -->
-    <div class="form-group row usandpass">
-      <div class="col">
-        <button class="btn btn-block btn-default" (click)="Login(username.value, password.value)">Login</button> 
-      </div> 
-    </div>
-    <div *ngIf="showFailure" class="dangeralrt">
-        <p class="failureMessage">The username or password you entered is incorrect</p>
-    </div>
-    <div *ngIf="userIsDisabled" class="dangeralrt">
-        <p class="failureMessage">Your account has been disabled. Please contact the system adminstrator to re-enable your account</p>      
-    </div>
-    <div *ngIf="needToVerify" class="dangeralrt">
-        <p class="failureMessage">You need to verify your account to continue, please go to your email and click the link. </p>              
-    </div>
+    
   </div>
-  <hr>
-  <div>
-      <p class="cont"><a [routerLink]="['../signup']">Sign Up</a></p>
-      <p class="cont">||</p>
-      <p class="cont"><a [routerLink]="['forgotten']" >Forgot Password</a></p>
-  </div>
-
+</div>
 </mat-card>
 
 
