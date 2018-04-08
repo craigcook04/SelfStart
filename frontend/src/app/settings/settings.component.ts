@@ -283,16 +283,17 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.showSuccess = true;
+    this.showSuccess = false;
+    this.showFailure = false;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
       console.log(data);
 
       if(data.success) {
         //the update was successful
         this.showSuccess = true;
-        var closebtn: any= document.getElementById('closeBtn');
+        //var closebtn: any= document.getElementById('closeBtn');
         this.ResetErrorMessages();
-        closebtn.click();
+        //closebtn.click();
       }
       else{
         //it was not successful

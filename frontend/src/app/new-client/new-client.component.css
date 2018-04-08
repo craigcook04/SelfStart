@@ -49,6 +49,7 @@
 
 .hintText {
     font-size: 12px;
+    margin-left: 45px;
 }
 
 .smallText {
@@ -109,7 +110,7 @@ h4 {
 }
 
 .smallmove{
-    margin-left: 1em; 
+    margin-left: 45px;
 }
 
 .moveleft {
@@ -119,4 +120,8 @@ h4 {
 .movetop {
     position: relative;
     top: 10px;
+}
+
+.movebar {
+    margin-left: 25px;
 }

@@ -65,10 +65,17 @@ h4 {
 }
 
 .forgotpass {
-    font-size: 20px;
-    color: #4b0082;
+    font-size: 16px;
 }
 
-.title {
+.backtoblack {
+    color: black;
+    text-align: center;
     font-size: 40px;
+    font-weight: normal;
+}
+
+
+.title {
+    font-size: 70px;
 }
