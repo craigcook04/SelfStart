@@ -44,6 +44,8 @@ export class BookAppointmentComponent implements OnInit {
   hasMoreThanOneSymptom: boolean;
   hasOtherMedicalCondition: boolean;
   medicalTraumas: boolean;
+  needExplanation: boolean;
+  needDescription: boolean;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -147,10 +149,12 @@ export class BookAppointmentComponent implements OnInit {
 
   otherMedicalCondition(yesorno: boolean) {
     this.hasOtherMedicalCondition = yesorno;
+    this.needExplanation = yesorno;
   }
 
   otherMedicalTraumas(yesorno: boolean) {
     this.medicalTraumas = yesorno;
+    this.needDescription = yesorno;
   }
 
   SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, treatment: string, explainOther: string, symptoms: string, explainTraumas:string, occupation: string, hobbies: string, goals: string ) {

@@ -428,5 +428,5 @@ router.route('/account/getsalt/:id')
             response.send({success: true, salt: userAccount.salt});
         });
     });
-
+    
 module.exports = router;
