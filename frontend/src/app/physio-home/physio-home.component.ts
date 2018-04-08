@@ -42,7 +42,7 @@ export class PhysioHomeComponent implements OnInit {
     this.physioService.GetPhysioByUserID().subscribe(data =>{
       console.log(data);
       var obj: any = data;
-      obj = obj.physiotherapist;
+      obj = obj.physio;
       this.physio = obj;
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
@@ -52,24 +52,28 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
-        let length = Math.ceil(obj.docs.length / 2);
-        this.numbTests = length;
         console.log(obj.total);
+        let length;
+        if(obj.total > 5){
+          length = 5;
+        }
+        else{
+          length = obj.total;
+        }
+        this.numbTests = length;
         this.totalCompleted = obj.total;
-        this.pendingTests = obj.docs.splice(0, length);
-        console.log(this.pendingTests);
+        this.pendingTests = obj.docs.splice(0, 5);
+      })
+
+
+      this.physioHomeService.GetAppointments(today).subscribe(data =>{
+        console.log(data);
+        var retObj: any = data;
+        this.appointments = retObj.appointment;
       })
     })
     this.appointments = [];
     //this.appoint = [];
-
-    this.physioHomeService.GetAppointments(today).subscribe(data =>{
-       if(data === []){
-         return;
-       }
-      var retObj: any = data;
-      this.appointments = retObj.appointment;
-    })
   }
 
   Show(){

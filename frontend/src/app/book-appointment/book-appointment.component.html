@@ -45,8 +45,11 @@
                         <h3 *ngIf="client" class="title" style="color: #0275d8">
                             Good {{ timeOfDay }}<a *ngIf="client">, {{ client?.givenName }}.</a>
                         </h3>
-                        <p class="quote">
+                        <p class="quote" *ngIf="!upcomingAppoint">
                             Please select from the options below...
+                        </p>
+                        <p class="quote" *ngIf="upcomingAppoint">
+                            <b>Your next appointment is: </b>{{ upcomingAppoint?.date | date:"MMM d, y, h:mm a"}}
                         </p>
                     </div>
                 </div>
