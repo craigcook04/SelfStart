@@ -17,6 +17,7 @@ export class PhysioHomeComponent implements OnInit {
   
   physio: any;
   today: Date;
+  format: any;
   timeOfDay: string;
   activated: any;
   appointments: any[];
@@ -35,8 +36,9 @@ export class PhysioHomeComponent implements OnInit {
               private physioHomeService: PhysioHomeService) { }
   
   ngOnInit() {
-    //var j = 0;
-    var today = new Date();
+    this.today = new Date();
+    //this.format = this.today.toISOString();
+    this.format = this.formatDate(this.today);
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
@@ -66,7 +68,7 @@ export class PhysioHomeComponent implements OnInit {
       })
 
 
-      this.physioHomeService.GetAppointments(today).subscribe(data =>{
+      this.physioHomeService.GetAppointments(this.format).subscribe(data =>{
         console.log(data);
         var retObj: any = data;
         this.appointments = retObj.appointment;
@@ -89,6 +91,18 @@ export class PhysioHomeComponent implements OnInit {
       this.activated = appointment;
     }
     console.log(this.activated);
+  }
+  
+  formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
   
   getTimeOfDay(): string{

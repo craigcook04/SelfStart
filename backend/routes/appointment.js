@@ -173,6 +173,21 @@ router.route('/:current_date')
 //example from mongodb website for reference
 //db.inventory.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
 
+router.route('/day/:current_day')
+
+    .get(function (request, response) {
+        console.log(request.params.current_day);
+        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_day, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('day').toDate()}}, 
+        {"date": {$lte: moment(request.params.current_day, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('day').toDate()}}]}).sort({date: 1}).exec(function (error, appointment) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               response.json({appointment: appointment});
+            }
+        });
+    });
+
 router.route('/week/:current_week')
 
     .get(function (request, response) {
