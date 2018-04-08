@@ -50,53 +50,90 @@
                 </div>
           </div>
         </div>
-    <div style="min-height: 100vh;" class="page col-11">
-      <mat-card style="min-height: 75vh;">
-        <div>
-            <div id="cal">
-            <mwl-demo-utils-calendar-header
-              [(view)]="view"
-              [(viewDate)]="viewDate"
-              (viewDateChange)="fetchEvents()"
-              (viewChange)="fetchEvents()">
-            </mwl-demo-utils-calendar-header>
-            
-            <ng-template #loading>
-              <div class="text-center">
-                <i class="fa fa-spin fa-spinner fa-5x"></i>
+        <mat-tab-group>
+          <mat-tab label="Schedule">
+            <mat-card style="min-height: 75vh;">
+            <div>
+                <div id="cal">
+                <mwl-demo-utils-calendar-header
+                  [(view)]="view"
+                  [(viewDate)]="viewDate"
+                  (viewDateChange)="fetchEvents()"
+                  (viewChange)="fetchEvents()">
+                </mwl-demo-utils-calendar-header>
+                
+                <ng-template #loading>
+                  <div class="text-center">
+                    <i class="fa fa-spin fa-spinner fa-5x"></i>
+                    <br>
+                    Loading appointments...
+                  </div>
+                </ng-template>
+                
+                <div *ngIf="events$ | async; else loading; let events">
+                  <div [ngSwitch]="view">
+                    <mwl-calendar-month-view
+                      *ngSwitchCase="'month'"
+                      [viewDate]="viewDate"
+                      [events]="events"
+                      [activeDayIsOpen]="activeDayIsOpen"
+                      (dayClicked)="dayClicked($event.day)"
+                      (eventClicked)="eventClicked($event.event)">
+                    </mwl-calendar-month-view>
+                    <mwl-calendar-week-view
+                      *ngSwitchCase="'week'"
+                      [viewDate]="viewDate"
+                      [events]="events"
+                      (eventClicked)="eventClicked($event.event)">
+                    </mwl-calendar-week-view>
+                    <mwl-calendar-day-view
+                      *ngSwitchCase="'day'"
+                      [viewDate]="viewDate"
+                      [events]="events"
+                      (eventClicked)="eventClicked($event.event)">
+                    </mwl-calendar-day-view>
+                  </div>
+                </div>
+                </div>
                 <br>
-                Loading appointments...
-              </div>
-            </ng-template>
-            
-            <div *ngIf="events$ | async; else loading; let events">
-              <div [ngSwitch]="view">
-                <mwl-calendar-month-view
-                  *ngSwitchCase="'month'"
-                  [viewDate]="viewDate"
-                  [events]="events"
-                  [activeDayIsOpen]="activeDayIsOpen"
-                  (dayClicked)="dayClicked($event.day)"
-                  (eventClicked)="eventClicked($event.event)">
-                </mwl-calendar-month-view>
-                <mwl-calendar-week-view
-                  *ngSwitchCase="'week'"
-                  [viewDate]="viewDate"
-                  [events]="events"
-                  (eventClicked)="eventClicked($event.event)">
-                </mwl-calendar-week-view>
-                <mwl-calendar-day-view
-                  *ngSwitchCase="'day'"
-                  [viewDate]="viewDate"
-                  [events]="events"
-                  (eventClicked)="eventClicked($event.event)">
-                </mwl-calendar-day-view>
-              </div>
             </div>
-            </div>
-            <br>
-        </div>
-      </mat-card>
+          </mat-card></mat-tab>
+          <mat-tab label="Book Time Off">
+            <div class="col-md-6 col-sm-12 float-md-left d-inline mt-2">
+              <mat-card>
+                <mat-card-title>
+                  Beginning
+                </mat-card-title>
+                <mat-card-content>
+                    
+                </mat-card-content>
+              </mat-card>
+          </div>
+          <div class="col-md-6 col-sm-12 float-md-right d-inline mt-2">
+            <mat-card>
+              <mat-card-title>
+                End
+              </mat-card-title>
+              <mat-card-content>
+                  <!-- <div class="form-inline col">
+                      <div class="input-group">
+                        <input class="d-inline-flex" type="text" class="form-control" placeholder="HH">
+                        <span class="col-1">
+                            <fa name="clock"></fa>
+                        </span>
+                      </div>
+                    </div> -->
+                    <div class="md-form">
+                        <i class="fa fa-clock prefix"></i>
+                        <input mdbActive type="text" id="form2" class="form-control d-inline-flex">
+                        <label for="form2">HH</label>
+                    </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          </mat-tab>
+        </mat-tab-group>
+    <div style="min-height: 100vh;" class="page col-11">
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
@@ -184,115 +221,3 @@
     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
   </div>
 </ng-template>
-
-<!--<ng-template #modalContent let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Appointment Details</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div>
-      Client Name:
-      <pre></pre>
-    </div>
-    <div>
-      Date:
-      <pre></pre>
-    </div>
-    <div>
-      Type:
-      <pre></pre>
-    </div>
-    <div>
-      Reason:
-      <pre></pre>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="close()">Close</button>
-  </div>
-</ng-template>-->
-
-
-<!--<div id="cal">-->
-<!--  <mwl-demo-utils-calendar-header-->
-<!--    [(view)]="view"-->
-<!--    [(viewDate)]="viewDate"-->
-<!--    (viewDateChange)="fetchEvents()"-->
-<!--    (viewChange)="fetchEvents()">-->
-<!--  </mwl-demo-utils-calendar-header>-->
-  
-<!--  <ng-template #loading>-->
-<!--    <div class="text-center">-->
-<!--      <i class="fa fa-spin fa-spinner fa-5x"></i>-->
-<!--      <br>-->
-<!--      Loading appointments...-->
-<!--    </div>-->
-<!--  </ng-template>-->
-
-<!--  <div *ngIf="events$ | async; else loading; let events">-->
-<!--    <div [ngSwitch]="view">-->
-<!--      <mwl-calendar-month-view-->
-<!--        *ngSwitchCase="'month'"-->
-<!--        [viewDate]="viewDate"-->
-<!--        [events]="events"-->
-<!--        [activeDayIsOpen]="activeDayIsOpen"-->
-<!--        (dayClicked)="dayClicked($event.day)"-->
-<!--        (eventClicked)="eventClicked($event.event)"-->
-<!--        (eventTimesChanged)="eventTimesChanged($event)">-->
-<!--      </mwl-calendar-month-view>-->
-<!--      <mwl-calendar-week-view-->
-<!--        *ngSwitchCase="'week'"-->
-<!--        [viewDate]="viewDate"-->
-<!--        [events]="events"-->
-<!--        (eventClicked)="eventClicked($event.event)"-->
-<!--        (eventTimesChanged)="eventTimesChanged($event)">-->
-<!--      </mwl-calendar-week-view>-->
-<!--      <mwl-calendar-day-view-->
-<!--        *ngSwitchCase="'day'"-->
-<!--        [viewDate]="viewDate"-->
-<!--        [events]="events"-->
-<!--        (eventClicked)="eventClicked($event.event)"-->
-<!--        (eventTimesChanged)="eventTimesChanged($event)">-->
-<!--      </mwl-calendar-day-view>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<br><br>-->
-
-<!-- The Third Modal which will be brought up when the physiotherapist wants to email the patient-->
-<!--<div mdbModal #deleteModal="mdb-modal" class="modal fade mymodal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-<!--  <div class="modal-dialog modal-lg mymodal" role="document">-->
-<!--    <div class="modal-content mymodal">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Delete Appointment</h4>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <div class="form-group row">-->
-<!--          <p>Are you sure you would like to delete this appointment?</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-primary btn-med" (click)="deleteModal.hide(); " data-dismiss="modal" mdbRippleRadius>Delete</button>  -->
-<!--        <button type="button" class="btn btn-secondary btn-med" (click)="deleteModal.close();" data-dismiss="modal" mdbRippleRadius>Cancel</button>        -->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!-- End of Third Modal -->
-
-<!--<ng-template mdbModal #delModal="mdb-modal" class="modal fade mymodal" id="del" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true" #deleteModal>
-    <div class="modal-header" style="text-align: center;">
-        <h4 class="modal-title">Are you sure you want to remove this appointment?</h4>
-        <button type="button" class="close" aria-label="Close" (click)="c('Close click');">
-             <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');">Confirm</button>
-        <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-
-    </div>
-</ng-template>-->

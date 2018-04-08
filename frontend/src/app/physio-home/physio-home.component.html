@@ -169,9 +169,8 @@
                                       Pending Completed Assessment Tests
                                   </div>
                                   <div class="col-1">
-                                      <button mat-mini-fab color="warn"> 
-                                        <b *ngIf="numbTests">{{ numbTests}}</b>
-                                        <b *ngIf="!numbTests">0</b>
+                                      <button *ngIf="numbTests" mat-mini-fab color="warn"> 
+                                        <b>{{ numbTests}}</b>
                                       </button>
                                   </div>
                                 </div>
