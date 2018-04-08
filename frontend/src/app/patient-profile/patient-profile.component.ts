@@ -54,7 +54,11 @@ export class PatientProfileComponent implements OnInit {
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
               private emailService: EmailService,
-              private physioService: PhysiotherapistService) { }
+              private physioService: PhysiotherapistService) {
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+               }
 
   ngOnInit() {
     this.patient2 = {};

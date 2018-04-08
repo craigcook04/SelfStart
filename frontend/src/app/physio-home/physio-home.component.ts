@@ -38,7 +38,11 @@ export class PhysioHomeComponent implements OnInit {
               private patientService: PatientService,
               private testService: AssessmentTestService,
               private physioHomeService: PhysioHomeService,
-              private imageService: ImageService) { }
+              private imageService: ImageService) {
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+              }
   
   ngOnInit() {
     this.today = new Date();
@@ -47,7 +51,6 @@ export class PhysioHomeComponent implements OnInit {
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
-      console.log(data);
       var obj: any = data;
       obj = obj.physio;
       this.physio = obj;
@@ -86,7 +89,6 @@ export class PhysioHomeComponent implements OnInit {
   }
 
   Show(){
-    console.log(this.display);
     this.display = !this.display;
   }
   
@@ -97,7 +99,6 @@ export class PhysioHomeComponent implements OnInit {
     else{
       this.activated = appointment;
     }
-    console.log(this.activated);
   }
   
   formatDate(date) {

@@ -56,7 +56,9 @@ export class AssessmentTestComponent implements OnInit {
               private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig,
               private physioService: PhysiotherapistService) {
                 this.config.max = 10;
-                
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
               }
               
   

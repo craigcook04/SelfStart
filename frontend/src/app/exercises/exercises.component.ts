@@ -57,6 +57,9 @@ export class ExercisesComponent implements OnInit {
                 iconRegistry.addSvgIcon(
                   'dumbbell',
                   sanitizer.bypassSecurityTrustResourceUrl('../assets/images/dumbbell.svg'));
+                  setInterval(() => {
+                    this.today = new Date();
+                  }, 30000);  
                }
 
   ngOnInit() {

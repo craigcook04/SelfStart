@@ -19,7 +19,11 @@ export class RehabPlansComponent implements OnInit {
               private modalService: NgbModal, 
               private exerciseService: ExerciseService,
               private router: Router,
-              private physioService: PhysiotherapistService) { }
+              private physioService: PhysiotherapistService) { 
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+              }
 
   
 

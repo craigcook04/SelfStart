@@ -103,7 +103,9 @@ export class CalendarComponent implements OnInit {
               private modalService: NgbModal,
               private cookieService: CookieService,
               private physioService: PhysiotherapistService) { 
-                
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
                 this.events$ = new Observable<Array<CalendarEvent<{ appointment: any }>>>();
                 this.events = [];
               }
