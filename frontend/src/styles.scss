@@ -22,5 +22,18 @@ $button-text-color: white;
     color: $button-text-color !important;
     background: $secondary-color !important;
  }
+
+ .btn.btn-outline-secondary{
+    background: $button-text-color !important;
+    color: $secondary-color !important;
+    border: 2px solid $secondary-color !important;
+ }
+ 
+ .btn.btn-outline-secondary:hover{
+    background: $button-text-color !important;
+    color: $secondary-color !important;
+    border: 2px solid $secondary-color !important;
+  }
+  
  
 
