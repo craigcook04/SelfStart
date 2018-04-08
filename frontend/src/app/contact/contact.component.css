@@ -4,7 +4,6 @@
 }
 
 .card-body {
-    text-align: center;
     padding-bottom: 1em;
 }
 
@@ -15,4 +14,28 @@
 button {
     width: 200px;
     height: 50px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+
+#ask {
+    text-align: center;
+}
+
+#map {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.icons {
+    color: #0275d8;
+    margin-right: 1em;
+}
+
+.indent {
+    padding-top: 2em;
+    padding-left: 2em;
 }
