@@ -4,6 +4,7 @@ import { PhysioHomeService } from '../physio-home.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -27,17 +28,18 @@ export class PhysioHomeComponent implements OnInit {
   totalCompleted: any;
   
   constructor(private router: Router,
-              private physioHomeService: PhysioHomeService,
+              private physioService: PhysiotherapistService,
               private cookieService: CookieService,
               private patientService: PatientService,
-              private testService: AssessmentTestService) { }
+              private testService: AssessmentTestService,
+              private physioHomeService: PhysioHomeService) { }
   
   ngOnInit() {
     //var j = 0;
     var today = new Date();
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
-    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
       console.log(data);
       var obj: any = data;
       obj = obj.physiotherapist;
