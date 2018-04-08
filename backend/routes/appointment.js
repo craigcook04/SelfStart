@@ -177,16 +177,14 @@ router.route('/:current_date')
 router.route('/day/:current_day')
 
     .get(function (request, response) {
-        console.log(request.params.current_day);
-        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_day, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('day').toDate()}}, 
-        {"date": {$lte: moment(request.params.current_day, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('day').toDate()}}]}).sort({date: 1}).exec(function (error, appointment) {
+        Appointment.find({"date": {$gte: moment(request.params.current_day, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('day').toDate()}}).sort({date: 1}).exec(function(error, appointments){
             if (error) {
                response.send({error: error});
+               return;
             }
-            else {
-               response.json({appointment: appointment});
-            }
-        });
+            
+            response.json({appointments: appointments});
+        })
     });
 
 router.route('/week/:current_week')

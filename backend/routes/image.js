@@ -102,7 +102,7 @@ router.route('/appointment/:id')
                 return;
             }
             
-            Appointment.findByID(request.params.id, function(error, appointment){
+            Appointment.findById(request.params.id, function(error, appointment){
                 if(error){
                     response.send({error: error});
                     return;
