@@ -7,7 +7,8 @@ var imageSchema = new mongoose.Schema(
         name: String,
         type: String,
         data: String,
-        size: Number
+        size: Number,
+        appointment: String
     }
 );
 

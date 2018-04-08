@@ -33,7 +33,13 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.userAccountService.GetUsersWantingAPasswordReset().subscribe(data => {
-      this.resetUsers = Object.assign([], data);
+      console.log(data);
+      if(data === []){
+        return;
+      }
+
+      let obj: any = data;
+      this.resetUsers = obj;
     })
     this.physioService.getTherapists().subscribe(data =>{
       let obj: any = data;
@@ -73,7 +79,6 @@ export class AdminHomeComponent implements OnInit {
   }
 
   ResetPassword(username: string, resetModal) {
-    console.log('here');
     this.emailService.SendRecoveryEmail(username).subscribe(data => {
       console.log(data);
       this.modalService.open(resetModal);
@@ -82,6 +87,17 @@ export class AdminHomeComponent implements OnInit {
         this.resetUsers = Object.assign([], data);
       })
     })
+  }
+
+  ResetAllRequests(allResetModal){
+    this.resetUsers.forEach(element =>{
+      this.emailService.SendRecoveryEmail(element.userAccountName).subscribe(data => {
+        this.userAccountService.GetUsersWantingAPasswordReset().subscribe(data => {
+          this.resetUsers = Object.assign([], data);
+        })
+      })
+    })
+    this.modalService.open(allResetModal);
   }
   
 }

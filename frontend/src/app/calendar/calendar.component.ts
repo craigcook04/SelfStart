@@ -26,6 +26,7 @@ import {
   addDays,
   format
 } from 'date-fns';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -52,6 +53,8 @@ export class CalendarComponent implements OnInit {
   events$: Observable<Array<CalendarEvent<{ appointment: any }>>>;
   subscription: any;
   events: CalendarEvent[];
+  today: any;
+  physio: any;
   
   colors: any = {
     red: {
@@ -95,7 +98,8 @@ export class CalendarComponent implements OnInit {
               private http: HttpClient, 
               private physioHomeService: PhysioHomeService,
               private apptService: AppointmentsService,
-              private modalService: NgbModal) { 
+              private modalService: NgbModal,
+              private cookieService: CookieService) { 
                 
                 this.events$ = new Observable<Array<CalendarEvent<{ appointment: any }>>>();
                 this.events = [];
@@ -103,6 +107,14 @@ export class CalendarComponent implements OnInit {
   
   ngOnInit() {
     this.fetchEvents();
+
+    
+    this.getTimeOfDay();
+    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+      let obj: any = data;
+      this.physio = obj.physiotherapist;
+    })
+
   }
   
   fetchEvents(): void {
@@ -202,6 +214,16 @@ export class CalendarComponent implements OnInit {
       });
       this.refresh.next();
     }
+    
+    getTimeOfDay(): string{
+      this.today = new Date();
+      var hour = this.today.getHours();
+      if(hour < 13 && hour >= 0){ return "Morning"}
+      if(hour < 17){ return "Afternoon"}
+      else{ return "Evening"};
+    }
+    
+      
 }
     
     // const params = new HttpParams()
@@ -245,7 +267,8 @@ export class CalendarComponent implements OnInit {
       this.appointments = retObj.appointment;
       console.log(this.appointments);
     });*/
-  
+
+
   
   /*fetchEvents(){
     this.appointments = [];

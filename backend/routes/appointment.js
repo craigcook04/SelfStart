@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Appointment = require('../models/appointment');
+let Account = require('../models/userAccount');
 var moment = require('moment');
 moment().format();
 // var Session = require('../models/session');
@@ -41,7 +42,27 @@ router.route('/')
                 response.send(error);
             }
             
-            response.json({appointment: appointment});
+            Account.findOne({"_id": appointment.userID}, function(err, account){
+                if(err){
+                    response.send({message: "Can't Find Patient"});
+                    return;
+                }
+                
+                if(account.numbAppoint === 0){
+                    response.send({appointmentsLeft: "none"});
+                    return;
+                }
+                
+                --account.numbAppoint;
+                account.save(function(err){
+                    if(err){
+                        response.send({error: err});
+                        return;
+                    }
+                    
+                    response.send({appointment: appointment});        
+                })
+            })
         });
     })
 
