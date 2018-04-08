@@ -17,8 +17,17 @@
         </mat-nav-list>
     </mat-sidenav>
 
-  <mat-sidenav-content>
-    <mat-card style="margin-left: auto; margin-right: auto; min-height: 75vh;" class="col-11">
+  <mat-sidenav-content style="min-height:100vh;">
+      <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
+          <br>
+          <div style="margin-top: -10px;">
+              <h3 class="title" style="color: #0275d8">
+                  <b style="color: #0275d8;">Welcome, Administrator.</b>
+               </h3>
+               <h5 class="quotes">What would you like to do today?</h5>
+          </div>
+        </div>
+    <mat-card style="margin-left: auto; margin-right: auto; min-height: 75vh;" class="col-11 page">
       <h2>Manage Forms</h2>
       
       <button class="btn btn-primary createbtn" (click)="openEditor=true">New Form</button>

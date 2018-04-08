@@ -139,4 +139,9 @@ export class AssessmentTestService {
         var url = '/api/assessmentTest/getCompleted?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
         return this.http.get(url);
     }
+
+    GetOldestTests(){
+        var url = '/api/assessmentTest/getCompleted/?s=dateCompleted&sortorder=asc&offset=0';
+        return this.http.get(url);
+    }
 }
