@@ -131,6 +131,7 @@ export class BookAppointmentComponent implements OnInit {
         this.appointmentsLeft = this.client.account.numbAppoint;
         this.initialsLeft = this.client.account.numbInitial;
       })
+      // open success modal here
     })
   }
 

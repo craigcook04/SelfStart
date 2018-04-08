@@ -23,6 +23,7 @@ export class ClientHomeComponent implements OnInit {
   //currProgress: any = 69;
   completedTests: any;
   accountAge: any = 0;
+  appointImages: any;
 
   constructor(private patientService: PatientService,
               private cookieService: CookieService,
@@ -32,11 +33,9 @@ export class ClientHomeComponent implements OnInit {
               private appointmentService: AppointmentsService) { }
 
   ngOnInit() {
-    console.log(this.cookieService.get('ID'));
     this.timeOfDay = this.getTimeOfDay();
     //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
-      console.log(data);
       var obj: any = data;
       obj = obj.patient;
       this.client = obj;
@@ -50,15 +49,12 @@ export class ClientHomeComponent implements OnInit {
         console.log(this.currTest);
       })
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
+      this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
+        console.log(data);
+        let obj: any = data;
+        this.appointments = obj.appointments;
+      })
     })
-    this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
-      let obj: any = data;
-      this.appointments = obj.appointment;
-    })
-
-    // let day = new Date().getTime() - this.client.dateRegistered.getTime();
-    // this.accountAge = day;
-    // console.log(day);
   }
 
   getTimeOfDay(): string{
@@ -72,4 +68,6 @@ export class ClientHomeComponent implements OnInit {
   openSnackBar() {
     this.snackBar.open('Click the begin assessment button to get started.', "Ok");
   }
+
+
 }
