@@ -1,6 +1,10 @@
 {
    "/api/*": {
+<<<<<<< HEAD
        "target": "https://se3350-ablack65.c9users.io:8082",
+=======
+       "target": "https://se3350-sperei32.c9users.io:8082",
+>>>>>>> fc105565640b1338f91027988c553a8f489b11d2
        "secure": false,
        "changeOrigin": true,
        "logLevel": "info"

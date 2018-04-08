@@ -17,6 +17,7 @@ export class PhysioHomeComponent implements OnInit {
   
   physio: any;
   today: Date;
+  format: any;
   timeOfDay: string;
   activated: any;
   appointments: any[];
@@ -35,14 +36,15 @@ export class PhysioHomeComponent implements OnInit {
               private physioHomeService: PhysioHomeService) { }
   
   ngOnInit() {
-    //var j = 0;
-    var today = new Date();
+    this.today = new Date();
+    //this.format = this.today.toISOString();
+    this.format = this.formatDate(this.today);
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
       console.log(data);
       var obj: any = data;
-      obj = obj.physiotherapist;
+      obj = obj.physio;
       this.physio = obj;
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
@@ -52,24 +54,28 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
-        let length = Math.ceil(obj.docs.length / 2);
-        this.numbTests = length;
         console.log(obj.total);
+        let length;
+        if(obj.total > 5){
+          length = 5;
+        }
+        else{
+          length = obj.total;
+        }
+        this.numbTests = length;
         this.totalCompleted = obj.total;
-        this.pendingTests = obj.docs.splice(0, length);
-        console.log(this.pendingTests);
+        this.pendingTests = obj.docs.splice(0, 5);
+      })
+
+
+      this.physioHomeService.GetAppointments(this.format).subscribe(data =>{
+        console.log(data);
+        var retObj: any = data;
+        this.appointments = retObj.appointment;
       })
     })
     this.appointments = [];
     //this.appoint = [];
-
-    this.physioHomeService.GetAppointments(today).subscribe(data =>{
-       if(data === []){
-         return;
-       }
-      var retObj: any = data;
-      this.appointments = retObj.appointment;
-    })
   }
 
   Show(){
@@ -85,6 +91,18 @@ export class PhysioHomeComponent implements OnInit {
       this.activated = appointment;
     }
     console.log(this.activated);
+  }
+  
+  formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
   
   getTimeOfDay(): string{

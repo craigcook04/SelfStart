@@ -136,7 +136,7 @@ export class CalendarComponent implements OnInit {
         return appointment.map((appointment: any) => {
           
           var temp: CalendarEvent = {
-            title: "test",
+            title: appointment.reason, //this.physioHomeService.GetClientName(appointment.userID)
             start: new Date(appointment.date),
             color: this.colors.blue,
             actions: this.actions
@@ -191,13 +191,25 @@ export class CalendarComponent implements OnInit {
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
-      console.log("pop up modal here");
+      console.log(event);
       //this.modalData = { event, action };
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
-    open(content){
+    open(content) {
       this.modalService.open(content, {size: "lg"});
+    }
+    
+    updateAppt() {
+      //this.physioHomeService.UpdateAppointment(id).subscribe(data => {
+        //console.log(data);
+      //});
+    }
+    
+    deleteAppt() {
+      //this.physioHomeService.DeleteAppointment(id).subscribe(data => {
+        //console.log(data);
+      //});
     }
     
     addEvent(): void {
@@ -255,10 +267,7 @@ export class CalendarComponent implements OnInit {
     //       });
     //     })
     // })
-  
-  
-  
-  
+    
   
     /*this.appointments = [];
     this.physioHomeService.GetAppointments().subscribe(data =>{
@@ -286,7 +295,7 @@ export class CalendarComponent implements OnInit {
   
   events: CalendarEvent[] = [
     {
-      title: 'Stephanie Pereira',
+      title: 'test',
       color: colors.blue,
       start: new Date("2018-04-20")
     }
