@@ -68,6 +68,19 @@
       <li><a [routerLink]="['../howitworks']">How It Works</a></li>
     </ul>
   </div>
+
+  <ng-template #successfulModal let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Alert! Enable Cookies</h4>
+      </div>
+      <div class="modal-body">
+        <p>To use this site, you must have cookies enabled in your browser! Please enable cookies and refresh the page </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-med" (click)="c('Close click'); GoHome()">OK</button>        
+      </div>
+  </ng-template>
+  <button style="display: none" id="showEnableCookies" (click)="Open(successfulModal)"></button>
     <!-- <div class="form-group row usandpass">
       <div class="col">
         <input type="password" class="form-control" id="inputPassword" placeholder="Password" (keyup.enter)="Login(username.value, password.value)" #password>

@@ -43,8 +43,7 @@ export class PhysioHomeComponent implements OnInit {
       console.log(data);
       var obj: any = data;
       console.log(obj);
-      obj = obj.physiotherapist;
-      this.physio = obj;
+      this.physio = obj.physio;
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
         let obj: any = data;
@@ -53,11 +52,11 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
-        let length = Math.ceil(obj.docs.length / 2);
+        let length = Math.ceil(obj.docs.length);
         this.numbTests = length;
         console.log(obj.total);
         this.totalCompleted = obj.total;
-        this.pendingTests = obj.docs.splice(0, length);
+        this.pendingTests = obj.docs.splice(0, 5);
         console.log(this.pendingTests);
       })
     })

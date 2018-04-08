@@ -30,6 +30,7 @@ export class AppComponent {
                   this.isPhysio = false;
                 }
                 this.CheckRole();
+
               }
   
   goHome(){

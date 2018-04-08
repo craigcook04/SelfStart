@@ -3,6 +3,7 @@ import { UserAccountsService } from '../user-accounts.service';
 import { Router } from '@angular/router'
 import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from '../app.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,17 @@ export class LoginComponent implements OnInit {
   constructor(private userAccountsService: UserAccountsService,
               private router: Router,
               private cookieService: CookieService,
-              private appComponent: AppComponent) { }
+              private appComponent: AppComponent,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
     this.showFailure = false;
+    console.log(navigator.cookieEnabled);
+    
+  }
+
+  Open(modal) {
+    this.modalService.open(modal, {size: 'lg'});
   }
 
   Login(username: string, password: string) {
@@ -29,6 +37,14 @@ export class LoginComponent implements OnInit {
       var cityBox = document.getElementById('inputPassword').style.borderColor = 'red';    
       this.showFailure = true;
       return;      
+    }
+
+    if(!navigator.cookieEnabled) {
+      //user has cookies disabled
+      var button: any = document.getElementById('showEnableCookies').click();
+      console.log(button);
+      return;
+      //button
     }
 
     var cityBox = document.getElementById('inputPassword').style.borderColor = 'rgba(0,0,0,.15)';        
@@ -51,6 +67,7 @@ export class LoginComponent implements OnInit {
             this.appComponent.alterLoginState();
           }
           else {
+            console.log(retObj);
             if(retObj.role == "US" && retObj.verified == false ) {
               this.needToVerify = true;
               return;
@@ -71,6 +88,7 @@ export class LoginComponent implements OnInit {
               this.appComponent.alterLoginState();
               this.appComponent.toggleToAdmin();
               this.router.navigate(['../admin/home']);
+
               
             }
             else {
