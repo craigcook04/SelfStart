@@ -166,32 +166,33 @@
                     </button>
                 </div>
                 <div class="modal-body" style="overflow-x: hidden; max-height:460px;">
+                    <br>
                     <label>Where is the problem or symptom?</label>
                     <br>
                     <select #injuryarea class="mydropdown">
                             <option value="" disabled>Please select...</option>
-                            <option value="neck">neck</option>
-                            <option value="back">back</option>
-                            <option value="shoulder">shoulder</option>
-                            <option value="elbow">elbow</option>
-                            <option value="wrist/hand">wrist &/ hand</option>
-                            <option value="hip">hip</option>
-                            <option value="knee">knee</option>
-                            <option value="ankle">ankle</option>
-                            <option value="foot">foot</option>
-                            <option value="other">other</option>
+                            <option value="neck">Neck</option>
+                            <option value="back">Back</option>
+                            <option value="shoulder">Shoulder</option>
+                            <option value="elbow">Elbow</option>
+                            <option value="wrist/hand">Wrist and/or hand</option>
+                            <option value="hip">Hip</option>
+                            <option value="knee">Knee</option>
+                            <option value="ankle">Ankle</option>
+                            <option value="foot">Foot</option>
+                            <option value="other">Other</option>
                     </select>
                     <br>
                     <label>How would you describe your pain or symptom?</label>
                     <br>
                     <select #painScale class="mydropdown">
                             <option value="" disabled>Please select...</option>
-                            <option value="aching">aching</option>
-                            <option value="throbbing">throbbing</option>
-                            <option value="burning">burning</option>
-                            <option value="weak">weak</option>
-                            <option value="tight">tight</option>
-                            <option value="tense">tense</option>                            
+                            <option value="aching">Aching</option>
+                            <option value="throbbing">Throbbing</option>
+                            <option value="burning">Burning</option>
+                            <option value="weak">Weak</option>
+                            <option value="tight">Tight</option>
+                            <option value="tense">Tense</option>                            
                     </select>
                     <br>
                     <label>How did the pain or symptom begin?</label>
@@ -205,7 +206,7 @@
                     <br>
                     <label>What was the date of your injury?</label>
                     <div class="col">
-                        <input class="form-control" type="text" id="dateStarted" placeholder="Date Started" #dateStarted required>
+                        <input class="form-control" type="text" id="dateStarted" placeholder="Date" #dateStarted required>
                     </div>
                     <br>
                     <label>Please describe your injury:</label>
@@ -301,6 +302,7 @@
                     <div class="col">
                             <input class="form-control" type="text" id="explain" placeholder="Description" #explainOther required>
                     </div>
+                    <br>
                     <label>Are you experiencing any of following symptoms?</label>
                     <br>
                     <select #symptoms class="mydropdown">
@@ -310,7 +312,8 @@
                             <option value="chiropractor">Stiff</option>
                             <option value="osteopath">No change</option>
                     </select>
-                    <label>Do you have any other pertinent medical traumas or surgical history</label>
+                    <br>
+                    <label>Do you have any other pertinent medical traumas or surgical history?</label>
                     <mat-radio-group>
                             <div class="form-group row-inline" >
                                 <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
@@ -327,6 +330,7 @@
                     <div class="col">
                             <input class="form-control" type="text" id="occupation" placeholder="Occupation" #occupation required>
                     </div>
+                    <br>
                     <label>What are your favorite recreational activities or hobbies?</label>
                     <div class="col">
                             <input class="form-control" type="text" id="hobbies" placeholder="Activities" #hobbies required>
