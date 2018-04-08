@@ -3,6 +3,7 @@ var router = express.Router();
 var Image = require('../models/image');
 var fs  = require('fs');
 var multer = require('multer');
+var Appointment = require('../models/appointment')
 
 
 router.route('/')
@@ -100,6 +101,21 @@ router.route('/appointment/:id')
                 response.send({error: "Fucker"});
                 return;
             }
+            
+            Appointment.findByID(request.params.id, function(error, appointment){
+                if(error){
+                    response.send({error: error});
+                    return;
+                }
+                
+                appointment.images.push(image);
+                appointment.save(function(err){
+                    if(err){
+                    response.send({error: err});
+                    return;   
+                    }
+                })
+            })
             
             image.appointment = request.params.id;
             image.save(function(err){
