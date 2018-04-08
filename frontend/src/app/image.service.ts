@@ -29,4 +29,17 @@ export class ImageService {
     return this.httpClient.delete(url);
   }
 
+  GetAppointmentImages(id: string){
+    var url = '/api/image/appointimages/' + id;
+    return this.httpClient.get(url);
+  }
+
+  LinkAppointment(id: string, image: string){
+    var body = {
+      image: image
+    };
+    var url = '/api/image/appointment/' + id;
+    return this.httpClient.put(url, body);
+  }
+
 }

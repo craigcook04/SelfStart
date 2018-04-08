@@ -17,13 +17,13 @@
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"></script>-->
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css"></script>-->
 </head>
-<body>
-
+<body onloadstart="loading = true;">
+    <mat-spinner *ngIf="loading"></mat-spinner>
     <div id="mdb-preloader" class="flex-center">
         <div id="preloader-markup">
         </div>
     </div>
 
-  <app-root></app-root>
+  <app-root onload="loading = false;"></app-root>
 </body>
 </html>

@@ -13,10 +13,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
 
-
-const URL = "/api/image/bookappointment";
 const now = new Date();
-declare let paypal: any;
+const URL = '/api/image';
 
 @Component({
   selector: 'app-book-appointment',
@@ -44,6 +42,8 @@ export class BookAppointmentComponent implements OnInit {
   hasMoreThanOneSymptom: boolean;
   hasOtherMedicalCondition: boolean;
   medicalTraumas: boolean;
+  appointmentsLeft: any;
+  initialsLeft: any;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -59,18 +59,14 @@ export class BookAppointmentComponent implements OnInit {
   ngOnInit() {
     this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     
-    this.patientService.GetPatient().subscribe(data =>{
-      var temp: any = data;
-      this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
-      //console.log(data);
-      console.log("Client ID: " + temp.client._id);
+    this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       var obj: any = data;
+      console.log(data);
       obj = obj.patient;
       this.client = obj;
-      })
+      this.appointmentsLeft = this.client.account.numbAppoint;
+      this.initialsLeft = this.client.account.numbInitial;
     })
-    
-    
     
     this.timeOfDay = this.getTimeOfDay();
     this.ratePain = 0;
@@ -84,17 +80,6 @@ export class BookAppointmentComponent implements OnInit {
   StoreWeeklyPain(num: any) {
     this.weeklyPain = num + 1;
   }
-
-  // open(content) {
-
-  //   this.currContent = this.modalService.open(content, {size: "lg"});
-  //   console.log(this.currContent);
-  //   paypal.Button.render(this.paypalConfig, '#paypal-button-container');
-  //   if(content._def.references.book != null && content._def.references.book === 2){
-  //     this.paymentAmount = '0.01';
-  //   this.modalService.open(content, {size: "lg"});
-  //   }
-  // }
   
   setType(t){
     this.apptService.setType(t);
@@ -111,13 +96,11 @@ export class BookAppointmentComponent implements OnInit {
     content.show();
     console.log(value);
     if(value === '0.01'){
-      this.paymentAmount = value;
       this.currContent = "bookModal";
       this.type = "normal";
       this.apptService.setType(this.type);
     }
     if(value === '0.02'){
-      this.paymentAmount = value;
       this.currContent = "initialModal";
       this.type = "initial";
       this.apptService.setType(this.type);
@@ -127,9 +110,28 @@ export class BookAppointmentComponent implements OnInit {
   }
 
   saveAppointment(reason, other){
+    var fileNames = []; 
+    for(var i = 0; i < this.uploader.queue.length; i++){
+      fileNames[i] = this.uploader.queue[i].file.name;
+    }
+
     this.apptService.AddAppointment(this.cookieService.get('ID'), reason, other).subscribe(data => {
       console.log(data);
-      
+      if(this.uploader.queue.length > 0){
+        fileNames.forEach(element => {
+          console.log(element);
+          this.imageService.LinkAppointment(data.appointment._id, element).subscribe(data =>{
+          })
+        })
+      }
+      this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+        var obj: any = data;
+        obj = obj.patient;
+        this.client = obj;
+        this.appointmentsLeft = this.client.account.numbAppoint;
+        this.initialsLeft = this.client.account.numbInitial;
+      })
+      // open success modal here
     })
   }
 
@@ -182,7 +184,14 @@ export class BookAppointmentComponent implements OnInit {
     }
 
     this.assessmentTestService.CompletedInitialAppointment(InitialiInjuryObject).subscribe(data => {
-      console.log(data);
+      this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+        var obj: any = data;
+        console.log(data);
+        obj = obj.patient;
+        this.client = obj;
+        this.appointmentsLeft = this.client.account.numbAppoint;
+        this.initialsLeft = this.client.account.numbInitial;
+      })
     })
   }
   

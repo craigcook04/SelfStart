@@ -32,7 +32,7 @@
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../resources']">Resources</button>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
@@ -50,7 +50,6 @@
                </p>
           </div>
         </div>
-        <br>
         <div style="min-height: 100vh;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
@@ -65,20 +64,17 @@
                                   <p><b>No Appointments Currently Scheduled</b></p>
                                 </div>
                                 <mat-list *ngIf="appointments?.length > 0">
-                                    <mat-list-item class="listItems" *ngFor="let appointment of appointments">
-                                        <button class="btn-block button">
-                                          <div class="row">
+                                    <mat-list-item *ngFor="let appointment of appointments">
+                                        <div class="col">
+                                          <div class="row justify-content-center">
                                             <div class="col-1">
-                                                <i class="fas fa-calendar-alt" style="color: #0275d8;"></i>
+                                                <i class="fa fa-calendar" style="color: #0275d8;"></i>
                                             </div>
-                                            <div class="col-7">
-                                                <h5> <b>{{ appointment?.date | date:'mediumDate' }}</b> </h5>
+                                            <div class="col">
+                                              <h5><b>{{ appointment?.date | date:'yyyy-MM-dd HH:mm a' }}</b></h5>
                                             </div>
                                           </div>
-                                          <div class="divider">
-                                            <mat-divider></mat-divider>
-                                          </div>
-                                        </button>
+                                        </div>
                                       </mat-list-item>
                                 </mat-list>
                             </div>
