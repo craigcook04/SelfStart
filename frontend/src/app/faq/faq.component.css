@@ -4,9 +4,10 @@
 }
 
 .header {
-    color: #0275d8;
-    text-decoration: underline;
     text-transform: capitalize;
+    font-weight: 500;
+    padding-top: 2em;
+    padding-bottom: 1em;
 }
 
 .content {
@@ -15,5 +16,9 @@
 }
 
 #faq-list {
-    margin-bottom: 0;
+    margin-bottom: 2em;
+}
+
+.faq-pic {
+    margin-bottom: 2em;
 }

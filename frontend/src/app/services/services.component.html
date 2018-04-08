@@ -4,53 +4,132 @@
 
 <div class='container'>
     <div class='row justify-content-center'>
-        <div class='col-3' style='background-color: #e5f8ff;'>
-            <h5 class='display-12'>Assessment Package</h5>
-            <p class='content'>
-                <br><br>Initial consult via email & video conference<br><br>
-                Personal online account Therapy Plan - accessed on your account<br><br>
-                Education, Advice<br><br><br>
-                Price:     $150<br><br>
-            </p>
-            <div class='learn-more'>
-                <button type="button" class="btn btn-outline-primary waves-effect" [routerLink]="['../signup']">Learn More</button>
-            </div>
-        </div>
-        <div class='col-3' style='background-color: #fffde5;'>
-            <h5 class='display-12'>Assessment + 3 Sessions</h5>
-            <p class='content'>
-                Initial consult via email & video conference<br><br>
-                3 further online sessions via email &/ video conference<br><br>
-                Personal online account Therapy Plan - accessed on your account<br><br>
-                Education, Advice<br><br>
-                Price:     $350<br><br>
-            </p>
-            <div class='learn-more'>
-                <button type="button" class="btn btn-outline-primary waves-effect" [routerLink]="['../signup']">Learn More</button>
-            </div>
-        </div>
-        <div class='col-3' style='background-color: #ebffe5;'>
-            <h5 class='display-12'>Assessment + 6 Sessions</h5>
-            <p class='content'>
-                Initial consult via email & video conference<br><br>
-                6 further online sessions via email &/ video conference<br><br>
-                Personal online account Therapy Plan - accessed on your account<br><br>
-                Education, Advice<br><br>
-                Price:     $550<br><br>
-            </p>
-            <div class='learn-more'>
-                <button type="button" class="btn btn-outline-primary waves-effect" [routerLink]="['../signup']">Learn More</button>
-            </div>
-        </div>
+        <mat-card class="col-3" style="background-color: #e5f8ff; color: #0275d8;">
+          <mat-card-title class='service-title'>
+              <b>Assessment Package</b>
+          </mat-card-title>
+          <mat-divider></mat-divider>
+          <div class="col">
+                <mat-card-subtitle>
+                  <mat-list><br>
+                    <mat-list-item class="row align-items-center">
+                            Initial consult via email & video conference
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item class="row align-items-center">
+                            3 further online sessions via email & or video conference
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item class="row align-items-center">
+                            Personal online account Therapy Plan - accessed on your account
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item class="row align-items-center">
+                            Education, Advice
+                    </mat-list-item>
+                    <mat-list-item class="row align-items-center">
+                            <h5 class='price'>Price: $150</h5>
+                    </mat-list-item>
+                  </mat-list>
+                </mat-card-subtitle>
+                <mat-card-footer>
+                    <div class='sign-up'>
+                        <button type="button" class="btn btn-primary waves-effect" [routerLink]="['../signup']">Sign up</button>
+                    </div>
+                </mat-card-footer>
+          </div>
+        </mat-card>
+        <mat-card class="col-3" style="background-color: #e0f7fa; color: #0275d8;">
+          <mat-card-title class='service-title'>
+              <b>Assessment + 3 Sessions</b>
+          </mat-card-title>
+          <mat-divider></mat-divider>
+          <div class="col">
+                <mat-card-subtitle>
+                  <mat-list><br>
+                    <mat-list-item class="row align-items-center">
+                          Initial consult via email & video conference
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item class="row align-items-center">
+                            3 further online sessions via email & or video conference
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item class="row align-items-center">
+                            Personal online account Therapy Plan - accessed on your account
+                    </mat-list-item>
+                    <br>
+                    <mat-list-item class="row align-items-center">
+                            Education, Advice
+                    </mat-list-item>
+                    <mat-list-item class="row align-items-center">
+                            <h5 class='price'>Price: $350</h5>
+                    </mat-list-item>
+                  </mat-list>
+                </mat-card-subtitle>
+                <mat-card-footer>
+                    <div class='sign-up'>
+                        <button type="button" class="btn btn-primary waves-effect" [routerLink]="['../signup']">Sign up</button>
+                    </div>
+                </mat-card-footer>
+          </div>
+    </mat-card>
+    <mat-card class="col-3" style="background-color: #e0f2f1; color: #0275d8;">
+      <mat-card-title class='service-title'>
+          <b>Assessment + 6 Sessions</b>
+      </mat-card-title>
+      <mat-divider></mat-divider>
+      <div class="col">
+            <mat-card-subtitle>
+              <mat-list><br>
+                <mat-list-item class="row">
+                  Initial consult via email & video conference
+                </mat-list-item>
+                <br>
+                <mat-list-item class="row align-items-center">
+                        6 further online sessions via email & or video conference
+                </mat-list-item>
+                <br>
+                <mat-list-item class="row align-items-center">
+                        Personal online account Therapy Plan - accessed on your account
+                </mat-list-item>
+                <br>
+                <mat-list-item class="row align-items-center">
+                        Education, Advice
+                </mat-list-item>
+                <mat-list-item class="row align-items-center">
+                        <h5 class='price'>Price: $550</h5>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-subtitle>
+            <mat-card-footer>
+                <div class='sign-up'>
+                    <button type="button" class="btn btn-primary waves-effect" [routerLink]="['../signup']">Sign up</button>
+                </div>
+            </mat-card-footer>
+      </div>
+    </mat-card>
     </div>
 </div>
 
-<div class='container below'>
-    <div class="card">
-        <h5 class="card-header display-8 title">Single Follow up Appointments</h5>
-        <div class="card-body">
-            <h5 class="card-title">Pricing:</h5>
-            <p class="card-text">Within 3 months of initial consultation <span>$75</span></p>
+
+<div style="margin-left: auto; margin-right: auto; text-align:center;" class="row col-6 align-items-center below">
+    <mat-card class="col" style="background-color: #eeeeee; color: #0275d8;" >
+        <div class="row">
+          <div class="col">
+              <mat-card-title class="col">
+                  <b>Single Follow-up Session</b>
+                </mat-card-title>
+                <mat-card-subtitle class="col">
+                  <b>(Within 3 months of Initial Consultation)</b>
+                </mat-card-subtitle>
+          </div>
+          <mat-card-actions class="row justify-content-center col-4" align='end' id='follow-up'>
+              <button type='button' class="col btn btn-block btn-primary disabled">
+                  <h5>$75</h5>
+              </button>
+          </mat-card-actions>
         </div>
-    </div>
+    </mat-card>
 </div>
+
