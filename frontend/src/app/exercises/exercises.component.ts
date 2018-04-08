@@ -6,8 +6,11 @@ import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from '../image.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatIconRegistry } from '@angular/material';
 import { FormControl } from '@angular/forms';
+import { PhysioHomeService } from '../physio-home.service';
+import { CookieService } from 'ngx-cookie-service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 const URL = '/api/image';
@@ -32,6 +35,9 @@ export class ExercisesComponent implements OnInit {
   pageEvent: PageEvent;
   noPause = true;
   panelColor = new FormControl('blue');
+  physio: any;
+  today: Date;
+  timeOfDay: string;
 
 
   @ViewChild('carousel') carousel:NgbCarousel;
@@ -41,9 +47,18 @@ export class ExercisesComponent implements OnInit {
   constructor( private exerciseService: ExerciseService, 
                private modalService: NgbModal,
                private router: Router,
-               private imageService: ImageService) { }
+               private imageService: ImageService,
+               private physioHome: PhysioHomeService,
+               private cookieService: CookieService,
+               private sanitizer: DomSanitizer,
+               private iconRegistry: MatIconRegistry) { 
+                iconRegistry.addSvgIcon(
+                  'dumbbell',
+                  sanitizer.bypassSecurityTrustResourceUrl('../assets/images/dumbbell.svg'));
+               }
 
   ngOnInit() {
+    this.timeOfDay = this.getTimeOfDay();
     this.exerciseService.GetAllExercises().subscribe(data =>{
       // data comes back as exercise (singular!!!!!)
       var obj : any = data;
@@ -51,11 +66,19 @@ export class ExercisesComponent implements OnInit {
       console.log(obj.total);
       this.length = data.total;
     })
+    this.physioHome.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+      let obj: any = data;
+      this.physio = obj.physiotherapist;
+    })
   }
 
-  // setPageSizeOptions(setPageSizeOptionsInput: string) {
-  //   this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-  // }
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
+  }
 
   SetOffset( searchValue: string, searchArea: string, event: PageEvent){
     this.offset = event.pageIndex;
@@ -73,7 +96,7 @@ export class ExercisesComponent implements OnInit {
     this.modalService.open(content, {size: "lg"});
   }
 
-  updateExercise(id: string, exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number) {
+  updateExercise(id: string, exName: string, descrip: string, objs: string, actSteps: string, loc: string, freq: number, dur: number) {
 
     console.log(this.uploader.queue);
 
@@ -83,7 +106,7 @@ export class ExercisesComponent implements OnInit {
       fileNames[i] = this.uploader.queue[i].file.name;
     }
 
-    this.exerciseService.UpdateExercise(id, exName, descrip, objs, authName, actSteps, loc, freq, dur, fileNames)
+    this.exerciseService.UpdateExercise(id, exName, descrip, objs, actSteps, loc, freq, dur, fileNames)
     .subscribe(data =>{
       //now link images to exercise
 
@@ -95,48 +118,52 @@ export class ExercisesComponent implements OnInit {
           })
         })
       }
+
+      this.exerciseService.GetAllExercises().subscribe(data =>{
+        // data comes back as exercise (singular!!!!!)
+        var obj : any = data;
+        this.exercises = obj.docs;
+        console.log(obj.total);
+        this.length = data.total;
+      })
     })
   }
 
   deleteExercise(id: string) {
     this.exerciseService.DeleteExercise(id).subscribe(data => {
-      
-      this.exercises.forEach(element => {
-        var obj: any = element;
-        if(obj._id == id){
-          var index = this.exercises.indexOf(element);
-
-          this.exercises.splice(index, 1);
+      this.exerciseService.SearchExercises("", "name", this.offset, this.pageSize).subscribe(data =>{
+        if(data != []){
+          var obj: any = data;
+          console.log(obj.total);
+          this.exercises = obj.docs;
+          this.length = obj.total;
         }
-      });
+      })
     })
   }
 
-  addExercise(exName: string, descrip: string, objs: string, authName: string, actSteps: string, loc: string, freq: number, dur: number){
+  addExercise(exName: string, descrip: string, objs: string, actSteps: string, loc: string, freq: number, dur: number){
     
     var fileNames = []; 
     for(var i = 0; i < this.uploader.queue.length; i++){
       fileNames[i] = this.uploader.queue[i].file.name;
     }
     
-    this.exerciseService.AddExercise(exName, descrip, objs, authName, actSteps, loc, freq, dur, fileNames)
-    .subscribe(data =>{
-
+    this.exerciseService.AddExercise(exName, descrip, objs, actSteps, loc, freq, dur, fileNames).subscribe(data =>{
       if(this.uploader.queue.length > 0){
         fileNames.forEach(element => {
           this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
           })
         })
       }
-      //this.exercises.push(data.exercise);
-    })
-    this.exerciseService.SearchExercises("", "name", this.offset, this.pageSize).subscribe(data =>{
-      if(data != []){
-        var obj: any = data;
-        console.log(obj.total);
-        this.exercises = obj.docs;
-        this.length = obj.total;
-      }
+      this.exerciseService.SearchExercises("", "name", this.offset, this.pageSize).subscribe(data =>{
+        if(data != []){
+          var obj: any = data;
+          console.log(obj.total);
+          this.exercises = obj.docs;
+          this.length = obj.total;
+        }
+      })
     })
   }
 
@@ -150,9 +177,9 @@ export class ExercisesComponent implements OnInit {
 
   deleteImage( image: any){
     this.imageService.deleteImage(image).subscribe(data =>{
-      
+
       var index = this.images.indexOf(image);
-      this.images.splice(image, 1);
+      this.images.splice(index, 1);     
     })
   }
 
