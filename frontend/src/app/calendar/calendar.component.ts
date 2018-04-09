@@ -97,20 +97,11 @@ export class CalendarComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
-<<<<<<< HEAD
       /*label: '<i class="fa fa-fw fa-pencil"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.editEvent('Edited', event);
       }
     },*/
-=======
-    // {
-    //   label: '<i class="fa fa-fw fa-pencil"></i>',
-    //   onClick: ({ event }: { event: CalendarEvent }): void => {
-    //     this.editEvent('Edited', event);
-    //   }
-    // },
->>>>>>> 816b4bf3f2933accbca66eeecdba33414e087285
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -170,9 +161,8 @@ export class CalendarComponent implements OnInit {
       var newTitle: string;
 
         return appointment.map((appointment: any) => {
-<<<<<<< HEAD
           
-          var temp: CalendarEvent = {
+         /* var temp: CalendarEvent = {
             title: appointment.reason,//this.physioHomeService.GetClientName(appointment.userID)
             start: new Date(appointment.date),
             color: this.colors.blue,
@@ -181,17 +171,16 @@ export class CalendarComponent implements OnInit {
           this.events.push(temp);
           console.log("event: ");
           console.log(temp);
-          return temp;
+          return temp;*/
           
-=======
 
         //setTimeout(() => {
           var returnVal = this.apptService.GetPatientNames(appointment.userID).subscribe((data) => {
             var retObj: any = data;
-            console.log("this is what is returned", retObj);
+            //console.log("this is what is returned", retObj);
             //console.log(retObj.patient.givenName)
             if(appointment.type == "normal"){
-              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Regular";
+              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Normal";
             }else if (appointment.type == "initial"){
               newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Initial";
             }
@@ -222,7 +211,6 @@ export class CalendarComponent implements OnInit {
         //console.log("event: ");
         //console.log(temp);
         return temp;
->>>>>>> 816b4bf3f2933accbca66eeecdba33414e087285
         });
       })
     );
@@ -259,36 +247,23 @@ export class CalendarComponent implements OnInit {
       //this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
-<<<<<<< HEAD
     /*editEvent(action: string, event: CalendarEvent) {
       this.modalService.open(this.editModal, { size: 'lg' });
     }*/
     
     deleteEvent(action: string, event: CalendarEvent) {
+      //console.log(event);
       this.physioHomeService.deleteDate = event.start;
-=======
-    // editEvent(action: string, event: CalendarEvent) {
-    //   this.modalService.open(this.editModal, { size: 'lg' });
-    // }
-    
-    deleteEvent(action: string, event: CalendarEvent) {
-      console.log(event);
->>>>>>> 816b4bf3f2933accbca66eeecdba33414e087285
       this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
       //console.log(event);
       //this.modalData = { event, action };
-<<<<<<< HEAD
-      //console.log(event.start);
-=======
       //this.newClientName = 
       // this.myDate = 
       // this.newReason = 
       // this.newTypethis.events
-
->>>>>>> 816b4bf3f2933accbca66eeecdba33414e087285
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
@@ -337,8 +312,6 @@ export class CalendarComponent implements OnInit {
 
         this.justBooked = false;
       });
-      
     }
     
-      
 }

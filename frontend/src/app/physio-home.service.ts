@@ -13,9 +13,6 @@ export class PhysioHomeService {
     GetAppointments(today: string) {
       return this.http.get('api/appointment/day/' + today);
     }
-    GetClientName(userid: string) {
-      //return this.http.put('api/patient/getclient/' + userid);
-    }
     DeleteAppointment(){
       return this.http.delete('api/appointment/' + this.deleteDate);
     }
