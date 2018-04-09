@@ -4,6 +4,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { EmailService } from '../email.service'
 import * as moment from 'moment';
 import {PageEvent} from '@angular/material';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -43,13 +44,21 @@ export class PatientProfileComponent implements OnInit {
   length;
   pageSize = 10;
   pageSizeOptions = [10];
+  physio: any;
+  timeOfDay: any;
+  today: any;
 
   // MatPaginator Output
   pageEvent: PageEvent;
 
   constructor(private patientService: PatientService,
               private modalService: NgbModal,
-              private emailService: EmailService) { }
+              private emailService: EmailService,
+              private physioService: PhysiotherapistService) {
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+               }
 
   ngOnInit() {
     this.patient2 = {};
@@ -59,12 +68,24 @@ export class PatientProfileComponent implements OnInit {
       this.countries = Object.assign([], retObj.country);
     })
 
+    this.timeOfDay = this.getTimeOfDay();
     this.patientService.GetGenders().subscribe(data => {
       var retObj: any = data;
       this.genders = Object.assign([], retObj.gender);
     })
-   console.log('hi');
-   
+
+   this.physioService.GetPhysioByUserID().subscribe(data =>{
+    let obj: any = data;
+    this.physio = obj.physio;
+    })
+  }
+
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
   }
 
   SetPatient2(patient) {

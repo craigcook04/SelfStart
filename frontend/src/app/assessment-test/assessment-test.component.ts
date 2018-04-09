@@ -5,6 +5,7 @@ import { PatientService } from '../patient.service';
 import {RehabPlansService} from '../rehab-plans.service'
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 @Component({
   selector: 'app-assessment-test',
@@ -38,12 +39,12 @@ export class AssessmentTestComponent implements OnInit {
   completedTests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "View Test Results"];  
   displayedColumns1 = ["Patient", "Test Assigned", "Date Completed", "Status", "View Test Results"];  
-  
- 
+  today: any;
+  timeOfDay: any;
+  physio: any;
   length;
   pageSize = 10;
   pageSizeOptions = [10];
-  // var currOption = 'c';
   length1;
   length2;
   
@@ -52,15 +53,17 @@ export class AssessmentTestComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
-              private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig) {
+              private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig,
+              private physioService: PhysiotherapistService) {
                 this.config.max = 10;
-                
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
               }
               
   
 
   ngOnInit() {
-    console.log("in it");
     this.showDrop = false;
     this.type = "Type Of Question";
     this.options = [];
@@ -70,27 +73,30 @@ export class AssessmentTestComponent implements OnInit {
     this.selectedPlan =[];
     this.tests = new MatTableDataSource();
     this.completedTests = new MatTableDataSource();
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
+      let obj: any = data;
+      this.physio = obj.physio;
+    })
+    this.timeOfDay = this.getTimeOfDay();
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
       this.length = retObj.total;
       this.tests.data = retObj.docs;
-      console.log(this.tests);
-      console.log(data);
-      console.log(this.tests);
-      
     });
     this.assessmentTestService.getAllCompleted().subscribe(data =>{
       var retObj: any = data;
       this.length1 = retObj.total;
       this.completedTests.data = retObj.docs;
-      console.log(data);
     })
-
-    
   }
-  // ngAfterViewInit() {
-  //   this.tests.paginator = this.paginator;
-  // }
+
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
+  }
   
 
   /**

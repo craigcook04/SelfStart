@@ -55,42 +55,23 @@
                             <h4 style="color: #0275d8;"><b>Upcoming Appointments</b></h4>
                             <hr>
                             <div class="appoints">
-                                <div *ngIf="!appointments">
-                                  <p><b>No Appointments Currently Scheduled</b></p>
-                                </div>
-                                <!-- <mat-list *ngIf="appointments?.length > 0">
-                                    <mat-list-item class="listItems" *ngFor="let appointment of appointments">
-                                        <button class="btn-block button">
-                                          <div class="row">
-                                            <div class="col-1">
-                                                <i class="fas fa-calendar-alt" style="color: #0275d8;"></i>
-                                            </div>
-                                            <div class="col-7">
-                                                <h5> <b>{{ appointment?.date | date:'mediumDate' }}</b> </h5>
+                                <div *ngIf="appointments?.length < 1">
+                                    <p><b>No Appointments Currently Scheduled</b></p>
+                                  </div>
+                                  <mat-list *ngIf="appointments?.length > 0">
+                                      <mat-list-item *ngFor="let appointment of appointments">
+                                          <div style="cursor: pointer;" class="col" (click)="AppointmentInfo(appointment, appointmentModal)">
+                                            <div class="row justify-content-center">
+                                              <div class="col-1">
+                                                  <i class="fa fa-calendar" style="color: #0275d8;"></i>
+                                              </div>
+                                              <div matTooltip="Click to Display Appointment Info" matTooltipPosition="above" class="col">
+                                                <h5><b>{{ appointment?.date | date:'MMM d, y, h:mm a' }}</b></h5>
+                                              </div>
                                             </div>
                                           </div>
-                                          <div class="divider">
-                                            <mat-divider></mat-divider>
-                                          </div>
-                                        </button>
-                                      </mat-list-item>
-                                </mat-list> -->
-                                <div id="list" *ngFor = "let appt of appointments">
-                                    <mat-accordion>
-                                      <mat-expansion-panel>
-                                        <mat-expansion-panel-header>
-                                          <mat-panel-title>
-                                            {{appt?.userID}}
-                                          </mat-panel-title>
-                                          <mat-panel-description>
-                                            {{appt?.date | date:'shortTime'}}
-                                          </mat-panel-description>
-                                        </mat-expansion-panel-header>
-                                        <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Reason:  </b>{{appt?.reason}}</p>
-                                        <p style="font-size: 16px;text-align:left;"><b style="color: #0275d8;">Type:  </b>{{appt?.type}}</p>
-                                      </mat-expansion-panel>
-                                    </mat-accordion>
-                                </div>
+                                        </mat-list-item>
+                                  </mat-list>
                             </div>
                           </div>
                     </div>
@@ -166,7 +147,7 @@
                                   </div>
                                   <div class="col-1">
                                       <button *ngIf="numbTests" mat-mini-fab color="warn"> 
-                                        <b>{{ numbTests}}</b>
+                                        <b>{{ numbTests }}</b>
                                       </button>
                                   </div>
                                 </div>
@@ -200,4 +181,53 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>    
+
+        <!-- appointment modal-->
+        <div mdbModal #appointmentModal="mdb-modal" class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="row col">
+                        <div class="col">
+                            <h4 class="modal-title w-100" id="myModalLabel">Appointment Information</h4>
+                        </div>
+                        <div class="col-3">
+                            <mat-card-subtitle align="end">
+                                <b>{{ currAppointment?.date | date:'MMM d, y, h:mm a'}}</b>
+                            </mat-card-subtitle>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-body container">
+                      <div class="col">
+                        <b>Reason: </b> {{ currAppointment?.reason }}
+                      </div>
+                      <br>
+                      <div class="col">
+                        <b>Attached Images:</b>
+                      </div>
+                      <div>
+                        <mat-card class="col-md-6" *ngIf="appointImages?.length >= 1" style="margin-left: auto; margin-right: auto;">
+                          <ngb-carousel (pause)="!noPause" class="carousel" #carousel>
+                            <ng-template ngbSlide *ngFor="let image of appointImages">
+                              <img on-mouseover="noPause = !noPause" style="max-height: 600px;" mat-card-image src="data:image/png;base64,{{image.data}}">
+                            </ng-template>
+                          </ngb-carousel>
+                        </mat-card>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- ******************************** -->
+                          <!-- Crosshairs Button for future use -->
+                          <div>
+                              <a (click)="toggleClicked()" href="javascript:function%20fnStartCrosshair(sUrl)%20{var%20nScript%20=%20document.createElement('script');nScript.setAttribute('language','JavaScript');nScript.setAttribute('src',sUrl);document.body.appendChild(nScript);}fnStartCrosshair('//www.sprymedia.co.uk/design/crosshair/media/js/crosshair-loader.js');" class="button">
+                                <b *ngIf="!clicked">Crosshairs for Analysis</b>
+                                <b *ngIf="clicked">Remove Crosshairs</b>
+                              </a>
+                          </div>
+                        <button type="button" class="btn btn-primary btn-md waves-light" (click)="appointmentModal.hide(); appointImages = []" mdbRippleRadius>Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
