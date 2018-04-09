@@ -9,7 +9,6 @@ export class AuthService implements HttpInterceptor{
   constructor(private cookieService: CookieService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('in the interceptor')
     req = req.clone({
       setHeaders: {
         Authorization: this.cookieService.get('session')
