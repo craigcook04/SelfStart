@@ -536,7 +536,8 @@ router.route('/getspecific/:id')
     .get(function(request, response){
         Patient.findOne({"_id": request.params.id}).populate('rehabPlan').exec(function(err, patient){
             if(err){
-                response.send({error: err})
+                response.send({error: err});
+                return;
             }
             
             response.send({patient: patient});   
