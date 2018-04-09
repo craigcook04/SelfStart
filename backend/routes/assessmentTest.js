@@ -315,7 +315,7 @@ router.route('/completedtest/:id')
         let completedTest = new CompletedAssessment();
         completedTest.name = request.body.name;
         completedTest.description = request.body.descrip;
-        completedTest.completed = false;
+        completedTest.completed = true;
         let date = new Date();
         completedTest.dateCompleted = date;
         completedTest.physioRate = request.body.physioRate;
