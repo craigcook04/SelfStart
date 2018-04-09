@@ -36,7 +36,6 @@ export class CompleteAssessmentTestComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       console.log(data);
       var obj: any = data;
@@ -45,9 +44,14 @@ export class CompleteAssessmentTestComponent implements OnInit {
       this.currPlan = this.client.rehabPlan;
       this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
         let obj: any = data;
-        console.log(data);
-        this.assessmentTest = obj.rehabPlan.assessmentTests[0];
-        this.assessmentTestQuestions = obj.rehabPlan.assessmentTests[0].questions;
+        this.assessmentTest = [];
+        obj.rehabPlan.assessmentTests.forEach(element => {
+          if(element.completed === false){
+            this.assessmentTest.push(element)
+          }
+        });
+        this.currTest = this.assessmentTest[0];
+        this.assessmentTestQuestions = this.assessmentTest[0].questions;
         this.testLength = this.assessmentTestQuestions.length;
       })
     })

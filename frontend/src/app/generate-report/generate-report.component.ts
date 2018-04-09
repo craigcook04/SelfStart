@@ -135,6 +135,11 @@ export class GenerateReportComponent implements OnInit {
         var retObj: any = data;
         this.appointments = retObj.appointments;
       })
+      this.paymentService.GetPaymentHistory(this.patient.account._id).subscribe(data => {
+        console.log(data);
+        var retObj: any = data;
+        this.paymentHistory = retObj.payments;
+      })
       
     })
     var userID = this.cookieService.get('ID');
@@ -165,41 +170,41 @@ export class GenerateReportComponent implements OnInit {
 
     
 
-    this.patientService.GetSpecificPatient(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
-      let obj: any = data;
-      this.currClient = obj.patient;
-      console.log(this.currClient);
+    // this.patientService.GetSpecificPatient(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
+    //   let obj: any = data;
+    //   this.currClient = obj.patient;
+    //   console.log(this.currClient);
 
-      this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
-        console.log(data);
-        let obj: any = data;
-        this.completedTests = obj.completedTests;
-        if(this.completedTests.length > 1){
-          this.completedTests.forEach(element =>{
-            console.log(element);
-            this.physioRatings.push(element.physioRate);
-            let obj: string = element.dateCompleted;
-            obj = obj.split('T')[0];
-            this.assesmentDates.push(obj);
-            this.clientRatings.push(element.questions[0]);
-          })
-          this.physioRatings.unshift(0);
-          this.assesmentDates.unshift('Start of Time');
-          this.clientRatings.unshift(0);
+    //   this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
+    //     console.log(data);
+    //     let obj: any = data;
+    //     this.completedTests = obj.completedTests;
+    //     if(this.completedTests.length > 1){
+    //       this.completedTests.forEach(element =>{
+    //         console.log(element);
+    //         this.physioRatings.push(element.physioRate);
+    //         let obj: string = element.dateCompleted;
+    //         obj = obj.split('T')[0];
+    //         this.assesmentDates.push(obj);
+    //         this.clientRatings.push(element.questions[0]);
+    //       })
+    //       this.physioRatings.unshift(0);
+    //       this.assesmentDates.unshift('Start of Time');
+    //       this.clientRatings.unshift(0);
     
-          //set the chart datasets
-          this.chartDatasets = [
-            {data: this.physioRatings, label: "Physio Ratings"},
-            {data: this.clientRatings, label: "Client Ratings"}
-          ];
-          this.chartLabels = this.assesmentDates;
+    //       //set the chart datasets
+    //       this.chartDatasets = [
+    //         {data: this.physioRatings, label: "Physio Ratings"},
+    //         {data: this.clientRatings, label: "Client Ratings"}
+    //       ];
+    //       this.chartLabels = this.assesmentDates;
   
-          return;
-        }
+    //       return;
+    //     }
   
-        this.singleTest == this.completedTests;
-      })
-    })
+    //     this.singleTest == this.completedTests;
+    //   })
+    // })
   }
 
   CalculateAge(DOB: string) {
