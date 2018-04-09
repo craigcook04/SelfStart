@@ -5,6 +5,7 @@ import { RehabPlansService } from '../rehab-plans.service';
 import { MatSnackBar } from '@angular/material';
 import { UserAccountsService } from '../user-accounts.service';
 import { AppointmentsService } from '../appointments.service';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-client-home',
@@ -18,6 +19,7 @@ export class ClientHomeComponent implements OnInit {
   client: any;
   clientName: any;
   appointments: any;
+  currAppointment: any;
   currPlan: any;
   currTest: any;
   //currProgress: any = 69;
@@ -30,7 +32,8 @@ export class ClientHomeComponent implements OnInit {
               private planService: RehabPlansService,
               private snackBar: MatSnackBar,
               private accountService: UserAccountsService,
-              private appointmentService: AppointmentsService) { }
+              private appointmentService: AppointmentsService,
+              private imageService: ImageService) { }
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
@@ -67,6 +70,15 @@ export class ClientHomeComponent implements OnInit {
 
   openSnackBar() {
     this.snackBar.open('Click the begin assessment button to get started.', "Ok");
+  }
+
+  AppointmentInfo(appointment: any, content){
+    this.imageService.GetAppointmentImages(appointment._id).subscribe(data =>{
+      let obj: any = data;
+      this.appointImages = obj.images;
+    })
+    this.currAppointment = appointment;
+    content.show();
   }
 
 

@@ -38,11 +38,14 @@
                   Good {{ timeOfDay }}<a *ngIf="physio">, {{ physio?.givenName }}.</a>
                </h3>
                <p class="quote centerp">
-                 Welcome to your dashboard, what would you like to do today?
+                Manage the Current Users in the System, and Generate Reports for each individual.
                </p>
+               <div style="margin-left: auto; margin-right: auto; text-align: center;" class="col-2">
+                  <hr>
+                  <b>{{ today | date:'shortTime'}}</b>
+                </div>
           </div>
         </div>
-        <br>
     <div style="min-height: 100vh;" class="page col-11">
       <mat-card style="min-height: 75vh;">
         <mat-card-title>
