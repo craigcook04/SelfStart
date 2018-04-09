@@ -4,6 +4,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { RehabPlansService } from '../rehab-plans.service';
 import { MatSnackBar } from '@angular/material';
 import { UserAccountsService } from '../user-accounts.service';
+import { AppointmentsService } from '../appointments.service';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-client-home',
@@ -17,24 +19,26 @@ export class ClientHomeComponent implements OnInit {
   client: any;
   clientName: any;
   appointments: any;
+  currAppointment: any;
   currPlan: any;
   currTest: any;
   //currProgress: any = 69;
   completedTests: any;
   accountAge: any = 0;
+  appointImages: any;
 
   constructor(private patientService: PatientService,
               private cookieService: CookieService,
               private planService: RehabPlansService,
               private snackBar: MatSnackBar,
-              private accountService: UserAccountsService) { }
+              private accountService: UserAccountsService,
+              private appointmentService: AppointmentsService,
+              private imageService: ImageService) { }
 
   ngOnInit() {
-    console.log(this.cookieService.get('ID'));
     this.timeOfDay = this.getTimeOfDay();
     //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
-    this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
-      console.log(data);
+    this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       var obj: any = data;
       obj = obj.patient;
       this.client = obj;
@@ -48,15 +52,12 @@ export class ClientHomeComponent implements OnInit {
         console.log(this.currTest);
       })
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
+      this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
+        console.log(data);
+        let obj: any = data;
+        this.appointments = obj.appointments;
+      })
     })
-    this.patientService.GetPatientApppointments(this.cookieService.get('ID')).subscribe(data =>{
-      let obj: any = data;
-      this.appointments = obj.appointment;
-    })
-
-    // let day = new Date().getTime() - this.client.dateRegistered.getTime();
-    // this.accountAge = day;
-    // console.log(day);
   }
 
   getTimeOfDay(): string{
@@ -70,4 +71,15 @@ export class ClientHomeComponent implements OnInit {
   openSnackBar() {
     this.snackBar.open('Click the begin assessment button to get started.', "Ok");
   }
+
+  AppointmentInfo(appointment: any, content){
+    this.imageService.GetAppointmentImages(appointment._id).subscribe(data =>{
+      let obj: any = data;
+      this.appointImages = obj.images;
+    })
+    this.currAppointment = appointment;
+    content.show();
+  }
+
+
 }

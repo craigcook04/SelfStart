@@ -412,7 +412,7 @@ router.route('/unassignPlan/:id')
 router.route('/patientinfo/:id')
 
     .get(function(request, response){
-        Patient.findOne({"account": request.params.id}).populate('rehabPlan').populate('account').exec(function(err, patient){
+        Patient.findOne({"account": request.params.id}).populate('rehabPlan').populate('account').populate('appointments').exec(function(err, patient){
             if(err){
                 response.send({error: err});
                 return;
@@ -431,7 +431,22 @@ router.route('/patient/appointments/:id')
             }
             response.send({patient: patient});   
         })
-    })
+    });
+    
+router.route('/appointments/calInfo/:user_id')
+
+    .get(function(request, response){
+        Patient.findOne({"account": request.params.user_id}, function(err, patient){
+            console.log("here: " + request.params.user_id)
+            if(err){
+                response.send({error: err});
+            }else{
+            console.log(patient);
+            response.send({patient: patient});   
+            }
+        })
+    });
+    
     
     
 router.route('/admincreated')

@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Appointment = require('../models/appointment');
+let Account = require('../models/userAccount');
 var moment = require('moment');
 moment().format();
 // var Session = require('../models/session');
@@ -41,7 +42,27 @@ router.route('/')
                 response.send(error);
             }
             
-            response.json({appointment: appointment});
+            Account.findOne({"_id": appointment.userID}, function(err, account){
+                if(err){
+                    response.send({message: "Can't Find Patient"});
+                    return;
+                }
+                
+                if(account.numbAppoint === 0){
+                    response.send({appointmentsLeft: "none"});
+                    return;
+                }
+                
+                --account.numbAppoint;
+                account.save(function(err){
+                    if(err){
+                        response.send({error: err});
+                        return;
+                    }
+                    
+                    response.send({appointment: appointment});        
+                })
+            })
         });
     })
 
@@ -64,6 +85,26 @@ router.route('/')
                 }
             })
     })
+    
+router.route('/:appointment_date')
+
+    .get(function (request, response) {
+        Appointment.find({"date": request.params.appointment_date}, function (error, appointment) {
+            if (error) {
+                response.send(error);
+            }
+            
+            response.json({appointment: appointment});
+        });
+    })
+
+    .delete(function (request, response) {
+        Appointment.remove({"date": request.params.appointment_date}, function (error, deleted) {
+                if (!error) {
+                    response.json({appointment: deleted});
+                }
+            });
+    });
 
 //fetching a specific appointment. The options are to retrieve the appointment, update the appointment or delete the appointment
 
@@ -133,24 +174,56 @@ router.route('/client/appointments/:id')
         });
     });
     
+router.route('/timeoff')
+    .post(function (request, response) {
+        var appointment = new Appointment();
+        appointment.date = moment(request.body.date).toISOString();
+        appointment.endDate = moment(request.body.endDate).toISOString();
+        //appointment.reason = request.body.reason;
+        //appointment.other = request.body.other;
+        //appointment.userID = request.body.patient;
+        appointment.type = request.body.type;
+        
+        appointment.save(function (error) {
+            if (error) {
+                response.send(error);
+            }
+            response.send({appointment: appointment});
+        });
+    });
+    
 router.route('/:current_date')
 
     .get(function (request, response) {
         
         Appointment.find({$and: [{"date": {$gte: moment(request.params.current_day).startOf('day').toDate()}}, 
         {"date": {$lte: moment(request.params.current_day).endOf('day').toDate()}}]}
-            ,function (error, appointment) {
+            ,function (error, appointments) {
             if (error) {
                response.send({error: error});
+               return;
             }
             else {
-               response.json({appointment: appointment});
+               response.json({appointments: appointments});
             }
         });
     });
 
 //example from mongodb website for reference
 //db.inventory.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
+
+router.route('/day/:current_day')
+
+    .get(function (request, response) {
+        Appointment.find({"date": {$gte: moment(request.params.current_day, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('day').toDate()}}).sort({date: 1}).exec(function(error, appointments){
+            if (error) {
+               response.send({error: error});
+               return;
+            }
+            
+            response.json({appointments: appointments});
+        })
+    });
 
 router.route('/week/:current_week')
 

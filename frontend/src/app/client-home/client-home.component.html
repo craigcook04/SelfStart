@@ -32,7 +32,7 @@
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Resources</button>
+            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../resources']">Resources</button>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
@@ -50,7 +50,6 @@
                </p>
           </div>
         </div>
-        <br>
         <div style="min-height: 100vh;" class="page col-11">
           <mat-card style="min-height: 75vh;">
             <mat-card-content>
@@ -65,20 +64,17 @@
                                   <p><b>No Appointments Currently Scheduled</b></p>
                                 </div>
                                 <mat-list *ngIf="appointments?.length > 0">
-                                    <mat-list-item class="listItems" *ngFor="let appointment of appointments">
-                                        <button class="btn-block button">
-                                          <div class="row">
+                                    <mat-list-item *ngFor="let appointment of appointments">
+                                        <div style="cursor: pointer;" class="col" (click)="AppointmentInfo(appointment, appointmentModal)">
+                                          <div class="row justify-content-center">
                                             <div class="col-1">
-                                                <i class="fas fa-calendar-alt" style="color: #0275d8;"></i>
+                                                <i class="fa fa-calendar" style="color: #0275d8;"></i>
                                             </div>
-                                            <div class="col-7">
-                                                <h5> <b>{{ appointment?.date | date:'mediumDate' }}</b> </h5>
+                                            <div matTooltip="Click to Display Appointment Info" matTooltipPosition="above" class="col">
+                                              <h5><b>{{ appointment?.date | date:'MMM d, y, h:mm a' }}</b></h5>
                                             </div>
                                           </div>
-                                          <div class="divider">
-                                            <mat-divider></mat-divider>
-                                          </div>
-                                        </button>
+                                        </div>
                                       </mat-list-item>
                                 </mat-list>
                             </div>
@@ -293,3 +289,45 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+        <!-- modal for appointments -->
+        <div mdbModal #appointmentModal="mdb-modal" class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="row col">
+                        <div class="col">
+                            <h4 class="modal-title w-100" id="myModalLabel">Appointment Information</h4>
+                        </div>
+                        <div class="col-3">
+                            <mat-card-subtitle align="end">
+                                <b>{{ currAppointment?.date | date:'MMM d, y, h:mm a'}}</b>
+                            </mat-card-subtitle>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-body container">
+                      <div class="col">
+                        <b>Reason: </b> {{ currAppointment?.reason }}
+                      </div>
+                      <br>
+                      <div class="col">
+                        <b>Attached Images:</b>
+                      </div>
+                      <div>
+                        <mat-card class="col-md-6" *ngIf="appointImages?.length >= 1" style="margin-left: auto; margin-right: auto;">
+                          <ngb-carousel (pause)="!noPause" class="carousel" #carousel>
+                            <ng-template ngbSlide *ngFor="let image of appointImages">
+                              <img on-mouseover="noPause = !noPause" style="max-height: 600px;" mat-card-image src="data:image/png;base64,{{image.data}}">
+                            </ng-template>
+                          </ngb-carousel>
+                        </mat-card>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-md waves-light" (click)="appointmentModal.hide()" mdbRippleRadius>Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>

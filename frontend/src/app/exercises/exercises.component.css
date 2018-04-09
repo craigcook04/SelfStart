@@ -1,15 +1,8 @@
-.exercises {
-    margin: 2.5em;
-}
+
 
 .exercisebtn {
     margin-left: 1em;
     margin-bottom: 1em;
-}
-
-.info {
-    margin-left: 5%;
-    width:65%;
 }
 
 .calFormat{
@@ -67,12 +60,6 @@
      margin-left: 75%;
  }
 
- .left-one{
-     float: left;
-     margin-left: 10%;
-     text-align: left;
- }
-
  .carousel {
     margin: auto;
     width: 100%;
@@ -114,10 +101,11 @@
 }
 
 .searchdropdown {
-    height: 44px;
+    height: 40px;
     padding: 3px;
     padding-left: 0px;
-    border: solid 1px #E4E4E4;
+    border: none;
+    border-bottom: solid 1px rgb(189, 189, 189);
     border-radius: 3px;
     background-color: #fff;
     width: 200px;
@@ -127,8 +115,8 @@
     background-image: none;
     background-clip: padding-box;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    margin-left: 2.5rem;
-    margin-top: 2px;
+    margin-left: 1em;
+    margin-top: -4px;
 }
 
 .searchbar{
@@ -156,15 +144,9 @@ h3 {
     text-align: center;
 }
 
-p {
+.quote {
     font-size: 1.2em;
     text-align: center;
-}
-
-.appointments {
-    background: #f5f5f5;
-    padding: 1%;
-    border-radius: 5%;
 }
 
 .appoints {
@@ -179,10 +161,6 @@ p {
     margin-top: -25px;
 }
 
-  
-.right {
-    margin: 2px 10px;
-    /* display: inline; */
-    width: 50%;
+.greyCard {
+    background-color: #f5f5f5;
 }
-

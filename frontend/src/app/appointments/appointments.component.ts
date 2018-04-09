@@ -430,9 +430,17 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
                       document.getElementById(takenSlot[5]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
                   }
             }else if(this.weeklyBookings[i].type == "timeoff"){ //for booked off time slot
-              var takenSlot = [("slot"+dayNumber+timeCount)];
-              this.currentlyFilled.push(takenSlot[0]);
-              document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
+              var startDate = moment(this.weeklyBookings[i].date);
+              var endDate = moment(this.weeklyBookings[i].endDate);
+              var diff = endDate.diff(startDate, 'minutes');
+              var diffInt = (diff/15);
+              var takenSlot: string[];
+
+              for(var i = 0; i < diffInt; i++){
+                takenSlot = [("slot"+dayNumber+(timeCount + i))];
+                this.currentlyFilled.push(takenSlot[0]);
+                document.getElementById(takenSlot[0]).setAttribute("class", "btn btn-sm taken chooseTime disabled");
+              }
             }
             
             if(!(this.isStart) && (this.currentWeek == this.selectedWeek)){
