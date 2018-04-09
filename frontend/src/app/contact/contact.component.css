@@ -3,6 +3,11 @@
     margin: 0.5em;
 }
 
+.img {
+    height: 15em;
+    width: 15em;
+}
+
 .card-body {
     padding-bottom: 1em;
 }
@@ -26,16 +31,41 @@ button {
 }
 
 #map {
-    text-align: center;
-    margin-bottom: 3em;
+    align-content: center;
+    
+}
+
+#info {
+    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 .icons {
     color: #0275d8;
-    margin-right: 1em;
+    font-size: 300%;
+    padding-right: 0;
 }
 
 .indent {
-    padding-top: 2em;
-    padding-left: 2em;
+    padding-top: 5em;
+    padding-left: 5em;
 }
+
+#second {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.icon-word {
+    font-weight: 400;
+    align-content: center;
+    padding-bottom: 0;
+    font-size: x-large;
+    margin-left: 2em;
+}
+
+.tab {
+    margin-right: 2em;
+}
+
+

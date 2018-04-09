@@ -22,6 +22,7 @@ export class ClientHomeComponent implements OnInit {
   currAppointment: any;
   currPlan: any;
   currTest: any;
+  allTests: any;
   //currProgress: any = 69;
   completedTests: any;
   accountAge: any = 0;
@@ -48,7 +49,14 @@ export class ClientHomeComponent implements OnInit {
       }
       this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
         let obj: any = data;
-        this.currTest = obj.rehabPlan.assessmentTests[0];
+        console.log(data);
+        this.allTests = [];
+        obj.rehabPlan.assessmentTests.forEach(element =>{
+          if(element.completed === false){
+            this.allTests.push(element);
+          }
+        })
+        this.currTest = this.allTests[0];
         console.log(this.currTest);
       })
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
