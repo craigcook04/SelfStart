@@ -13,7 +13,7 @@ export class PatientService {
   constructor(private http: HttpClient,
               private encryptionService: EncryptionService,
               private cookieService: CookieService) { }
-
+  
   GetAllPatients() : any{
     var url = '/api/patient?s=familyName&sortorder=asc&offset=0';
     return this.http.get(url);
