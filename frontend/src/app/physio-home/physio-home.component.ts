@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
 import { PhysiotherapistService } from '../physiotherapist.service';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -17,33 +18,47 @@ export class PhysioHomeComponent implements OnInit {
   
   physio: any;
   today: Date;
+  format: any;
   timeOfDay: string;
   activated: any;
   appointments: any[];
+  currAppointment: any;
+  appointImages: any;
   panelOpenState: boolean = false;
   numbPatients: any;
   pendingTests: any;
   numbTests: any;
   display: boolean = false;
   totalCompleted: any;
+  clicked: boolean = false;
   
   constructor(private router: Router,
               private physioService: PhysiotherapistService,
               private cookieService: CookieService,
               private patientService: PatientService,
               private testService: AssessmentTestService,
-              private physioHomeService: PhysioHomeService) { }
+              private physioHomeService: PhysioHomeService,
+              private imageService: ImageService) {
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+              }
   
   ngOnInit() {
-    //var j = 0;
-    var today = new Date();
+    this.today = new Date();
+    //this.format = this.today.toISOString();
+    this.format = this.formatDate(this.today);
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
-      console.log(data);
       var obj: any = data;
+<<<<<<< HEAD
       console.log(obj);
       this.physio = obj.physio;
+=======
+      obj = obj.physio;
+      this.physio = obj;
+>>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
         let obj: any = data;
@@ -52,28 +67,41 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
+<<<<<<< HEAD
         let length = Math.ceil(obj.docs.length);
+=======
+        let length;
+        if(obj.total > 5){
+          length = 5;
+        }
+        else{
+          length = obj.total;
+        }
+>>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
         this.numbTests = length;
-        console.log(obj.total);
         this.totalCompleted = obj.total;
         this.pendingTests = obj.docs.splice(0, 5);
+<<<<<<< HEAD
         console.log(this.pendingTests);
+=======
+>>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
       })
-    })
-    this.appointments = [];
-    //this.appoint = [];
 
-    this.physioHomeService.GetAppointments(today).subscribe(data =>{
-       if(data === []){
-         return;
-       }
-      var retObj: any = data;
-      this.appointments = retObj.appointment;
+
+      this.physioHomeService.GetAppointments(this.format).subscribe(data =>{
+        var retObj: any = data;
+        let length;
+        if(retObj.appointments.length > 5){
+          this.appointments = retObj.appointments.splice(0, 5);
+        }
+        else{
+          this.appointments = retObj.appointments;
+        }
+      })
     })
   }
 
   Show(){
-    console.log(this.display);
     this.display = !this.display;
   }
   
@@ -84,7 +112,18 @@ export class PhysioHomeComponent implements OnInit {
     else{
       this.activated = appointment;
     }
-    console.log(this.activated);
+  }
+  
+  formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
   
   getTimeOfDay(): string{
@@ -95,22 +134,17 @@ export class PhysioHomeComponent implements OnInit {
     else{ return "Evening"};
   }
   
-  /*goToCalendar(){
-    this.router.navigate(['../calendar']);
+
+  AppointmentInfo(appointment: any, content){
+    this.imageService.GetAppointmentImages(appointment._id).subscribe(data =>{
+      let obj: any = data;
+      this.appointImages = obj.images;
+    })
+    this.currAppointment = appointment;
+    content.show();
   }
-  goToPatients(){
-    this.router.navigate(['../client']);
+
+  toggleClicked(){
+    this.clicked = !this.clicked;
   }
-  goToExercises(){
-    this.router.navigate(['../exercises']);
-  }
-  goToRehabPlans(){
-    this.router.navigate(['../rehabplans']);
-  }
-  goToTests(){
-    this.router.navigate(['../assessmenttest']);
-  }
-  goToReports(){
-  
-  }*/
 }

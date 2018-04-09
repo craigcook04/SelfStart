@@ -3,6 +3,7 @@ import { ExerciseService } from '../exercise.service';
 import {RehabPlansService} from '../rehab-plans.service'
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 
 
@@ -15,9 +16,14 @@ export class RehabPlansComponent implements OnInit {
 
 
   constructor(private rehabPlansService: RehabPlansService, 
-  private modalService: NgbModal, 
-  private exerciseService: ExerciseService,
-  private router: Router) { }
+              private modalService: NgbModal, 
+              private exerciseService: ExerciseService,
+              private router: Router,
+              private physioService: PhysiotherapistService) { 
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+              }
 
   
 
@@ -34,23 +40,36 @@ export class RehabPlansComponent implements OnInit {
   length2;
   pageSize = 10;
   pageSizeOptions = [10];
+  today: Date;
+  timeOfDay: string;
+  physio: any;
+
   ngOnInit() {
     this.rehabPlansService.getPlans().subscribe(data => {
-      console.log(data);
       this.total = data.total;
-      console.log(this.total);
       this.rehabPlans = Object.assign([], data.docs);
-      console.log(this.rehabPlans);
       this.currPlan = this.rehabPlans[0];
       this.exercisesInCurrPlan = this.currPlan.exerciseObjects;
     });
      this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
       this.length2 = retObj.total;
-      console.log(data);
       this.allExercises = Object.assign([], retObj.docs);
-      
     });
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
+      let obj: any = data;
+      this.physio = obj.physio;
+    })
+
+    this.timeOfDay = this.getTimeOfDay();
+  }
+
+  getTimeOfDay(): string{
+    this.today = new Date();
+    var hour = this.today.getHours();
+    if(hour < 13 && hour >= 0){ return "Morning"}
+    if(hour < 17){ return "Afternoon"}
+    else{ return "Evening"};
   }
   
   

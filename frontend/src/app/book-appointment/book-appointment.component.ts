@@ -46,6 +46,7 @@ export class BookAppointmentComponent implements OnInit {
   needDescription: boolean;
   appointmentsLeft: any;
   initialsLeft: any;
+  upcomingAppoint: any;
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -68,6 +69,13 @@ export class BookAppointmentComponent implements OnInit {
       this.client = obj;
       this.appointmentsLeft = this.client.account.numbAppoint;
       this.initialsLeft = this.client.account.numbInitial;
+    })
+
+    this.apptService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
+      let obj: any = data;
+      if(data != []){
+        this.upcomingAppoint = obj.appointments[0];
+      }
     })
     
     this.timeOfDay = this.getTimeOfDay();
