@@ -9,7 +9,18 @@ export class PhysioHomeService {
     GetPhysio(id: string) {
       return this.http.get('api/physiotherapist/' + id);
     }
-    GetAppointments(today) {
-      return this.http.get('api/appointment/' + today);
+    GetAppointments(today: string) {
+      return this.http.get('api/appointment/day/' + today);
+    }
+    GetClientName(userid: string) {
+      //return this.http.put('api/patient/getclient/' + userid);
+    }
+    UpdateAppointment(id: string){
+      var body = {
+      }
+      //return this.http.put('api/appointment/' + id, body);
+    }
+    DeleteAppointment(id: string){
+      //return this.http.delete('api/appointment/' + id);
     }
 }

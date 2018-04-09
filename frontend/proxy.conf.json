@@ -1,6 +1,10 @@
 {
    "/api/*": {
+<<<<<<< HEAD
        "target": "https://se3350-jterp.c9users.io:8082",
+=======
+       "target": "https://selfstart-mattnorthmore.c9users.io:8082",
+>>>>>>> 00788951076700640a2e8604975c42b86ebc8b0b
        "secure": false,
        "changeOrigin": true,
        "logLevel": "info"

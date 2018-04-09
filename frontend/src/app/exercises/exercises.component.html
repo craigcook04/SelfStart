@@ -150,7 +150,7 @@
                       </ul>
                       <!-- above is the form for creating a new exercise, below the button to save it -->
                       <mat-divider></mat-divider>
-                      <div class="modal-footer">
+                      <div style="overflow-x: hidden;" class="modal-footer">
                           <button type="button" class="btn btn-primary btn-sm" [disabled]="uploader.isUploading" (click)="addExercise(name.value, description.value, objectives.value, actionSteps.value, location.value, frequency.value, duration.value); c('Close click') ">Add</button>
                           <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>                
                       </div>  
@@ -167,19 +167,19 @@
                 <mat-expansion-panel-header class="row" (click)="getExerciseImages(exercise._id)">
                     <mat-panel-title class="col-6" style="top: 8px;"> 
                       <h5 class="row">
-                          <div class="col-1">
+                          <div class="col-2">
                               <mat-icon style="color: #0275d8" svgIcon="dumbbell"></mat-icon> &nbsp;
                           </div>
                           <strong class="col">{{ exercise.name }} </strong> 
                       </h5>
                     </mat-panel-title>
-                    <mat-panel-description style="top: 15px;" class="col-6">
+                    <mat-panel-description style="top: 15px;" class="col-5">
                       <b>Target Area: </b> &nbsp; {{ exercise.location }}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
           
                 <div>
-                  <mat-list class="info" style="margin-left: auto; margin-right: auto;">
+                  <mat-list class="col-8" style="margin-left: auto; margin-right: auto;">
                     <div>
                       <mat-list-item class="form-group-row">
                         <div class="col-md-2">
@@ -244,32 +244,32 @@
                           </div>
                       </mat-list-item>
                     </div>
+                    <br>
+                    <br>
+                    <mat-card *ngIf="images?.length >= 1" style="margin-left: auto; margin-right: auto;">
+                      <ngb-carousel (pause)="!noPause" class="carousel" #carousel>
+                        <ng-template ngbSlide *ngFor="let image of images">
+                          <img on-mouseover="noPause = !noPause" style="max-height: 600px;" mat-card-image src="data:image/png;base64,{{image.data}}">
+                        </ng-template>
+                      </ngb-carousel>
+                    </mat-card>
                   </mat-list>
-                  <br>
-                  <br>
-                  <mat-card class="col-md-6" *ngIf="images?.length >= 1" style="margin-left: auto; margin-right: auto;">
-                    <ngb-carousel (pause)="!noPause" class="carousel" #carousel>
-                      <ng-template ngbSlide *ngFor="let image of images">
-                        <img on-mouseover="noPause = !noPause" style="max-height: 600px;" mat-card-image src="data:image/png;base64,{{image.data}}">
-                      </ng-template>
-                    </ngb-carousel>
-                  </mat-card>
-                  <div class="row form-inline" align="end">
-                      <div>
-                        <button (click)="open(delete)" class="btn btn-danger btn-sm">
-                          Delete
-                        </button>
+                  <mat-action-row class="row form-inline">
+                      <div class="col-4">
+                        <div class="row justify-content-end">
+                            <button (click)="open(update)" class="btn btn-info btn-sm col">
+                                Edit
+                              </button>
+                              <button (click)="open(delete)" class="btn btn-danger btn-sm col">
+                                  Delete
+                              </button>
+                        </div>
                       </div>
-                      <div>
-                        <button (click)="open(update)" class="btn btn-info btn-sm">
-                          Edit
-                        </button>
-                      </div>
-                    </div>
+                    </mat-action-row>
                 </div>
           
                   <!-- when physio wants to update an exercise -->
-                  <ng-template #update let-c="close" let-d="dismiss">
+                  <ng-template style="overflow-x: hidden;" #update let-c="close" let-d="dismiss">
                       <div class="modal-header">
                         <h4 class="modal-title">Update {{exercise.name}}</h4>
                         <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
@@ -360,7 +360,9 @@
                               <ol><strong>{{ item?.file?.name }}</strong></ol>
                           </ul>
                       </div>
+
                       <div class="modal-footer">
+
                         <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newActSteps.value, newLoc.value, newFreq.value); c('Close click')">Confirm</button>
                         <button id="modalButtons" type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
                       </div>

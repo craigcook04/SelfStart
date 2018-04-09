@@ -44,6 +44,12 @@ export class BookAppointmentComponent implements OnInit {
   hasMoreThanOneSymptom: boolean;
   hasOtherMedicalCondition: boolean;
   medicalTraumas: boolean;
+<<<<<<< HEAD
+=======
+  appointmentsLeft: any;
+  initialsLeft: any;
+  upcomingAppoint: any;
+>>>>>>> 00788951076700640a2e8604975c42b86ebc8b0b
 
   constructor(private modalService: NgbModal,
               private router: Router,
@@ -68,6 +74,13 @@ export class BookAppointmentComponent implements OnInit {
       obj = obj.patient;
       this.client = obj;
       })
+    })
+
+    this.apptService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
+      let obj: any = data;
+      if(data != []){
+        this.upcomingAppoint = obj.appointments[0];
+      }
     })
     
     

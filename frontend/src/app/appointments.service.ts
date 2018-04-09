@@ -11,6 +11,7 @@ export class AppointmentsService {
 
   newType: any;
   newDate: Date;
+  endDate: Date;
   newPatient: any;
   newOther: any;
   newReason: any;
@@ -31,6 +32,11 @@ export class AppointmentsService {
   GetAppointmentsByMonth(month: any){
     var url = '/api/appointment/month/'+ month;
     return this.httpClient.get(url); 
+  }
+
+  GetPatientNames(apptID: any){
+    var url = '/api/patient/appointments/calInfo/' + apptID;
+    return this.httpClient.get(url);
   }
   
   
@@ -75,6 +81,24 @@ export class AppointmentsService {
   GetAppointmentsByPatientID(patientID: string) {
     var url = '/api/appointment/client/appointments/' + patientID;
     return this.httpClient.get(url);
+  }
+
+  saveTimeOff(startDate: Date, endDate: Date, startHour: any, startMin: any, endHour: any, endMin: any){
+
+    var sDate: any = moment(startDate).startOf('day').add((startHour-4), 'hours').startOf('hour').add(startMin, 'minutes').startOf('minute').toISOString();
+    var eDate: any = moment(endDate).startOf('day').add((endHour-4), 'hours').startOf('hour').add(endMin, 'minutes').startOf('minute').toISOString();
+
+    var body = {
+      date: sDate,
+      type: "timeoff",
+      endDate: eDate
+      
+      //This is where we have to link to images************
+      // images: images
+  }
+
+    var url = '/api/appointment/timeoff';
+    return this.httpClient.post(url, body);
   }
 
 }
