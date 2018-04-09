@@ -52,13 +52,8 @@ export class PhysioHomeComponent implements OnInit {
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
       var obj: any = data;
-<<<<<<< HEAD
       console.log(obj);
       this.physio = obj.physio;
-=======
-      obj = obj.physio;
-      this.physio = obj;
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
         let obj: any = data;
@@ -67,9 +62,6 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
-<<<<<<< HEAD
-        let length = Math.ceil(obj.docs.length);
-=======
         let length;
         if(obj.total > 5){
           length = 5;
@@ -77,14 +69,10 @@ export class PhysioHomeComponent implements OnInit {
         else{
           length = obj.total;
         }
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
         this.numbTests = length;
         this.totalCompleted = obj.total;
         this.pendingTests = obj.docs.splice(0, 5);
-<<<<<<< HEAD
         console.log(this.pendingTests);
-=======
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
       })
 
 
