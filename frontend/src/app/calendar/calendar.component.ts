@@ -95,12 +95,12 @@ export class CalendarComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.editEvent('Edited', event);
-      }
-    },
+    // {
+    //   label: '<i class="fa fa-fw fa-pencil"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.editEvent('Edited', event);
+    //   }
+    // },
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -231,9 +231,9 @@ export class CalendarComponent implements OnInit {
       //this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
-    editEvent(action: string, event: CalendarEvent) {
-      this.modalService.open(this.editModal, { size: 'lg' });
-    }
+    // editEvent(action: string, event: CalendarEvent) {
+    //   this.modalService.open(this.editModal, { size: 'lg' });
+    // }
     
     deleteEvent(action: string, event: CalendarEvent) {
       console.log(event);
