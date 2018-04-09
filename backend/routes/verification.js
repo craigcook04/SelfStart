@@ -6,6 +6,7 @@ var router = express.Router();
 var Temp = require('../models/temp');
 var Patient = require('../models/patient');
 var nodemailer = require('nodemailer');
+var UserAccount = require('../models/userAccount');
 // var Session = require('../models/session');
 
 // router.use(function(req, res, next){
@@ -136,12 +137,23 @@ router.route('/:accessCode')
                 }
                 
                 //set the user to verified
-                user.verified = true;
+                //user.verified = true;
                 
                 //save the user
-                user.save(function(err){
-                    if(err){
-                        response.send({message: "couldn't save user"});
+                UserAccount.findById(user.account, function(err, useraccount) {
+                    if(err) {
+                        response.send(err);
+                        return;
+                    }
+                    
+                    if(useraccount != null) {
+                        useraccount.verified = true;
+                        useraccount.save(function(err) {
+                            if(err) {
+                                response.send(err);
+                                return;
+                            }
+                        });
                     }
                 });
                 
