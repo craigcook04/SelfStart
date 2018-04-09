@@ -171,26 +171,9 @@
                 <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
               </select>
                   </div>
-<<<<<<< HEAD
+
                 </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-sm" (click)="NewPatient(makeChanges, successfulModal);">Confirm</button>
-              <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click')">Cancel</button>
-              <button class="hddn" (click)="c('Close click')" id='closeBtn0'></button>
-            </div>
-          </ng-template>
-          <ng-template #makeChanges let-c="close" let-d="dismiss">
-            <div class="modal-header">
-              <h4 class="modal-title">Error in Required Fields</h4>
-            </div>
-            <div class="modal-body">
-              <p>There are errors in some of the required fields. Please go through and fix them. </p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary btn-med" (click)="c('Close click');">OK</button>
-=======
+   
                 </form>
               </div>
               <div class="modal-footer">
@@ -224,7 +207,7 @@
 
             <div *ngIf="invalidSearchArea" class="failedSearch">
               Please enter a search area
->>>>>>> 00788951076700640a2e8604975c42b86ebc8b0b
+
             </div>
           </ng-template>
           <ng-template #successfulModal let-c="close" let-d="dismiss">
