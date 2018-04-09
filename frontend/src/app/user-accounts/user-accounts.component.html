@@ -232,7 +232,7 @@
                       </div>
                     </ng-template>
         
-                    <!-- <div *ngIf="invalidSearchArea" class="failedSearch">
+                    <div *ngIf="invalidSearchArea" class="failedSearch">
                       Please enter a search area
                     </div>
                     <div class='blockContainer'>
@@ -248,7 +248,7 @@
                       </div>
                       <div class="right">
                         <div class="input-group mb-3 searchbar" id="custom-search-input">
-                          <input type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" >
+                          <input  #searchValue type="text" class="form-control" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)">
                           <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="button">
                               <fa name="search"></fa>
@@ -256,13 +256,14 @@
                           </span>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
 
-                    <div class='form-inline row'>
+                    <!-- This is the layout for the patient search -->
+                    <!-- <div class='form-inline row'>
                         <div class="row justify-content-start row col-8">
                             <div class='form-inline col-4'>
                                 <div>
-                                    <select #searchArea class="searchdropdown" id="searchDropdown" (change)="RemoveError(); searchPatients(searchValue.value, searchArea.value)">
+                                    <select #searchArea class="searchdropdown" id="searchDropdown" (change)="searchPatients(searchValue.value, searchArea.value)">
                                         <option value='familyName'>Search by...</option>
                                         <option disabled='disabled'>----</option>
                                         <option value="givenName">First Name</option>
@@ -274,7 +275,7 @@
                               </div>
                               <div class="form-inline col-6">
                                 <div class="input-group row form-inline">
-                                    <input class="col-8" type="text" placeholder="Search" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+                                    <input class="col-8" matToolTip="Press Enter to Search"  type="text" placeholder="Search" (keyup.enter)="searchPatients(searchValue.value, searchArea.value)" placeholder="Search Term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
                                     <span class="col">
                                       <i style="color: #0275d8" class="fa fa-search" aria-hidden="true"  (click)="searchPatients(searchValue.value, searchArea.value)"  location="top" ngbTooltip="Search"></i>
                                     </span>
@@ -286,7 +287,7 @@
                                 <button type="button" class="btn btn-primary createbtn" (click)="open(newmodal)">Add New Client</button>         
                             </div>
                         </div>
-                      </div>
+                      </div> -->
 
                     <br> <br><br>
                     <mat-card class="greyCard mx-auto">
@@ -529,9 +530,6 @@
             <mat-tab label="Physiotherapists">
                 <mat-card class="col-11 page">
                     <br>
-                    <button type="button" class="btn btn-primary createbtn" (click)="open(newPhysiomodal)">Add New Physiotherapist</button>
-        
-                    <br>
                     <br><br>
         
                     <ng-template #newPhysiomodal let-c="close" let-d="dismiss">
@@ -667,6 +665,7 @@
                     <div *ngIf="invalidSearchArea" class="failedSearch">
                       Please enter a search area
                     </div>
+
                     <div class='blockContainer'>
                       <div class='left'>
                         <select #searchArea1 class="searchdropdown" id="searchDropdown">
@@ -689,6 +688,36 @@
                         </div>
                       </div>
                     </div>
+
+                      <!-- This is the layout for the physio search -->
+                    <!-- <div class='form-inline row'>
+                        <div class="row justify-content-start row col-8">
+                            <div class='form-inline col-4'>
+                                <div>
+                                    <select #searchArea1 class="searchdropdown" id="searchDropdown" (change)="searchPatients(searchValue.value, searchArea.value)">
+                                        <option value='familyName'>Search by...</option>
+                                        <option disabled='disabled'>----</option>
+                                        <option value="givenName">First Name</option>
+                                        <option value="familyName">Last Name</option>
+                                        <option value="email">Email</option>
+                                      </select>
+                                </div>
+                              </div>
+                              <div class="form-inline col-6">
+                                <div class="input-group row form-inline">
+                                    <input class="col-8" matToolTip="Press Enter to Search"  type="text" placeholder="Search" (keyup.enter)="searchPhysio(searchValue1.value, searchArea1.value)" placeholder="Search Term" aria-label="Search for patient here..." aria-describedby="basic-addon2" #searchValue>
+                                    <span class="col">
+                                      <i style="color: #0275d8" class="fa fa-search" aria-hidden="true"  (click)="searchPhysio(searchValue1.value, searchArea1.value)"  location="top" ngbTooltip="Search"></i>
+                                    </span>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-4 ml-auto">
+                            <div class="pull-right" style="margin-left: auto;">
+                              <button type="button" class="btn btn-primary createbtn" (click)="open(newPhysiomodal)">Add New Physiotherapist</button>         
+                            </div>
+                        </div>
+                      </div> -->
         
                     <br>
                     <br><br><br>
