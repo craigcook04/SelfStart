@@ -41,7 +41,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent') modalContent: any;
   @ViewChild('deleteModal') deleteModal: any;
-  @ViewChild('editModal') editModal: any;
+  /*@ViewChild('editModal') editModal: any;*/
   
   view: string = 'month';
   viewDate: Date = new Date();
@@ -77,12 +77,11 @@ export class CalendarComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
+      /*label: '<i class="fa fa-fw fa-pencil"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.editEvent('Edited', event);
       }
-    },
+    },*/
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -136,7 +135,7 @@ export class CalendarComponent implements OnInit {
         return appointment.map((appointment: any) => {
           
           var temp: CalendarEvent = {
-            title: appointment.reason, //this.physioHomeService.GetClientName(appointment.userID)
+            title: appointment.reason,//this.physioHomeService.GetClientName(appointment.userID)
             start: new Date(appointment.date),
             color: this.colors.blue,
             actions: this.actions
@@ -182,17 +181,19 @@ export class CalendarComponent implements OnInit {
       //this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
-    editEvent(action: string, event: CalendarEvent) {
+    /*editEvent(action: string, event: CalendarEvent) {
       this.modalService.open(this.editModal, { size: 'lg' });
-    }
+    }*/
     
     deleteEvent(action: string, event: CalendarEvent) {
+      this.physioHomeService.deleteDate = event.start;
       this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
-      console.log(event);
+      //console.log(event);
       //this.modalData = { event, action };
+      //console.log(event.start);
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
@@ -200,16 +201,16 @@ export class CalendarComponent implements OnInit {
       this.modalService.open(content, {size: "lg"});
     }
     
-    updateAppt() {
-      //this.physioHomeService.UpdateAppointment(id).subscribe(data => {
-        //console.log(data);
-      //});
-    }
+    /*updateAppt() {
+      this.physioHomeService.UpdateAppointment(id).subscribe(data => {
+        console.log(data);
+      });
+    }*/
     
     deleteAppt() {
-      //this.physioHomeService.DeleteAppointment(id).subscribe(data => {
-        //console.log(data);
-      //});
+      this.physioHomeService.DeleteAppointment().subscribe(data => {
+        console.log(data);
+      });
     }
     
     addEvent(): void {

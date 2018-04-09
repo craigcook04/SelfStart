@@ -142,16 +142,16 @@
   </div>
   <div class="modal-body">
     <div>
-      <p><b>Client Name: </b><!--{{appointment.userID}}--></p>
+      <p><b>Name: </b><!--{{appointment.userID}}--></p>
     </div>
     <div>
-      <p><b>Date: </b><!--{{appointment.date}}--></p>
+      <p><b>Date: </b>{{event.date}}</p>
     </div>
     <div>
       <p><b>Type: </b><!--{{appointment.type}}--></p>
     </div>
     <div>
-      <p><b>Description </b><!--{{appointment.reason}}--></p>
+      <p><b>Description: </b><!--{{appointment.reason}}--></p>
     </div>
   </div>
   <div class="modal-footer">
@@ -159,7 +159,7 @@
   </div>
 </ng-template>
 
-<ng-template #editModal let-c="close" let-d="dismiss">
+<!--<ng-template #editModal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">Edit Appointment</h4>
     <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
@@ -172,37 +172,33 @@
         <label class="col-sm-3 col-form-label"><b>Client Name</b></label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="name" placeholder="Name" #name>
-          <!--value="{{appointment.userID}}"-->
         </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"><b>Date</b></label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="date" placeholder="Date" #date>
-          <!--value="{{appointment.date}}"-->
         </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"><b>Type</b></label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="type" placeholder="Type" #type>
-          <!--value="{{appointment.type}}"-->
         </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"><b>Description</b></label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="reason" placeholder="Description" #reason>
-          <!--value="{{appointment.reason}}"-->
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="updateAppt();">Confirm</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');">Confirm</button>
     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
   </div>
-</ng-template>
+</ng-template>-->
 
 <ng-template #deleteModal let-c="close" let-d="dismiss">
   <div class="modal-header">
