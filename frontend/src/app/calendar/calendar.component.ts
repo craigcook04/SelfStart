@@ -75,6 +75,10 @@ export class CalendarComponent implements OnInit {
   newType: any;
   newReason: any;
   timeOfDay: any;
+  apptName: any;
+  apptDate: any;
+  apptType: any;
+  apptReason: any;
   
   colors: any = {
     red: {
@@ -253,6 +257,11 @@ export class CalendarComponent implements OnInit {
     
     deleteEvent(action: string, event: CalendarEvent) {
       //console.log(event);
+      if(event.meta.appointment.type == "normal"){
+              this.physioHomeService.NormalAppt(event.meta.appointment.userID);
+            }else if (event.meta.appointment.type == "initial"){
+              this.physioHomeService.InitialAppt(event.meta.appointment.userID);
+            }
       this.physioHomeService.deleteDate = event.start;
       this.modalService.open(this.deleteModal, { size: 'lg' });
     }
@@ -264,6 +273,18 @@ export class CalendarComponent implements OnInit {
       // this.myDate = 
       // this.newReason = 
       // this.newTypethis.events
+      
+      this.patientService.GetPatientInfo(event.meta.appointment.userID).subscribe(data =>{
+        let obj: any = data;
+        this.apptName = obj.patient.givenName + " " + obj.patient.familyName;
+        })
+      this.apptDate = event.meta.appointment.date;
+      this.apptType = event.meta.appointment.type;
+      this.apptReason = event.meta.appointment.reason;
+      
+      //this.physioHomeService.findDate = event.start;
+      //this.physioHomeService.FindAppointment().subscribe(data => {
+      //});
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     

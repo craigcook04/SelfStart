@@ -219,16 +219,16 @@
   </div>
   <div class="modal-body">
     <div>
-      <p><b>Name: </b><!--{{appointment.userID}}--></p>
+      <p><b>Name: </b>{{apptName}}</p>
     </div>
     <div>
-      <p><b>Date: </b><!--{{event.date}}--></p>
+      <p><b>Date: </b>{{apptDate | date:'fullDate'}} {{apptDate | date:'shortTime'}}</p>
     </div>
     <div>
-      <p><b>Type: </b><!--{{appointment.type}}--></p>
+      <p><b>Appointment Type: </b>{{apptType}}</p>
     </div>
     <div>
-      <p><b>Description: </b><!--{{appointment.reason}}--></p>
+      <p><b>Description: </b>{{apptReason}}</p>
     </div>
   </div>
   <div class="modal-footer">

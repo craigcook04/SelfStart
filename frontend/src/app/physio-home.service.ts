@@ -13,7 +13,13 @@ export class PhysioHomeService {
     GetAppointments(today: string) {
       return this.http.get('api/appointment/day/' + today);
     }
-    DeleteAppointment(){
+    NormalAppt(userid: string) {
+      return this.http.put('api/userAccount/appointments/normal/' + userid);
+    }
+    InitialAppt(userid: string) {
+      return this.http.put('api/userAccount/appointments/initial/' + userid);
+    }
+    DeleteAppointment() {
       return this.http.delete('api/appointment/' + this.deleteDate);
     }
 }
