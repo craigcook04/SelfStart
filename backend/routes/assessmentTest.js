@@ -439,6 +439,38 @@ router.route('/initial/getbyid/:userID')
         });
     });
 
+router.route('/assignFollowup/:id')
+
+    .put(function(request,response){
+        CompletedAssessment.findById(request.params.id,function(error,completedAssessment){
+             if(error){
+                response.send({error: error});
+                return;
+            }
+            
+            if(completedAssessment == null) {
+                response.send({success: true, message: "could not retrieve the assessment test"});
+                return;
+            }
+            
+            completedAssessment.physioRate = request.body.physioRate;
+            completedAssessment.physioDescription = request.body.physioDescription;
+            completedAssessment.completed = true;
+            completedAssessment.dateClosed = new Date();
+            completedAssessment.finalThoughts = request.body.finalThoughts;
+            completedAssessment.treatmentClosed = false;
+            completedAssessment.save(function(err) {
+                if(err) {
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.json({assessmentTest: completedAssessment, success: true});
+            });
+            
+        })
+    })
+
 router.route('/closeTreatment/:id')
 
     .put(function(request, response){
@@ -454,6 +486,7 @@ router.route('/closeTreatment/:id')
             }
             
             completedAssessment.physioRate = request.body.physioRate;
+            completedAssessment.physioDescription = request.body.physioDescription;
             completedAssessment.completed = true;
             completedAssessment.dateClosed = new Date();
             completedAssessment.finalThoughts = request.body.finalThoughts;
