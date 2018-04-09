@@ -33,6 +33,11 @@ export class AppointmentsService {
     var url = '/api/appointment/month/'+ month;
     return this.httpClient.get(url); 
   }
+
+  GetPatientNames(apptID: any){
+    var url = '/api/patient/appointments/calInfo/' + apptID;
+    return this.httpClient.get(url);
+  }
   
   
   AddAppointment(patient: any, reason: string, other: string): any{
