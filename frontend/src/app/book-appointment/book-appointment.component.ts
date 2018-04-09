@@ -44,12 +44,9 @@ export class BookAppointmentComponent implements OnInit {
   hasMoreThanOneSymptom: boolean;
   hasOtherMedicalCondition: boolean;
   medicalTraumas: boolean;
-<<<<<<< HEAD
-=======
   appointmentsLeft: any;
   initialsLeft: any;
   upcomingAppoint: any;
->>>>>>> 00788951076700640a2e8604975c42b86ebc8b0b
 
   constructor(private modalService: NgbModal,
               private router: Router,
