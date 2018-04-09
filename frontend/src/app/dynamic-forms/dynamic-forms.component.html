@@ -2,18 +2,54 @@
 
     <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
         <mat-nav-list style="top: -10px;">
-          <mat-list-item [routerLinkActive]="['active']">
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
-          </mat-list-item>
-          <br>
-          <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']">
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../useraccounts']">Manage User Accounts</button>
-          </mat-list-item>
-          <br>
-          <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Manage Dynamic Forms</button></mat-list-item>
+            <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../home']">
+                <div class="row form-inline">
+                    <div class="col-1">
+                        <h5 class="btn-block" style="text-align: center; color:white;">
+                            <i class="fa fa-th-large"></i>
+                        </h5>      
+                    </div>
+                    <div class="col">
+                        <h5 class="btn-block" style="text-align: left; color:white;">
+                          &nbsp;Dashboard
+                        </h5>
+                    </div>
+                </div>
+            </mat-list-item>
+            <br>
+            <mat-divider class="dividers"></mat-divider>
+            <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../useraccounts']">
+                <div class="row form-inline">
+                    <div class="col-1">
+                        <h5 class="btn-block" style="text-align: center; color:white;">
+                            <i class="fa fa-users"></i>
+                        </h5>      
+                    </div>
+                    <div class="col">
+                        <h5 class="btn-block" style="margin-left: 3px; color:white;">
+                            Manage User Accounts
+                        </h5>
+                    </div>
+                </div>
+            </mat-list-item>
+            <br>
+            <mat-divider class="dividers"></mat-divider>
+            <mat-list-item [routerLinkActive]="['active']">
+                <div class="row form-inline">
+                    <div class="col-1">
+                        <h5 class="btn-block" style="text-align: center; color:white;">
+                            <i class="fa fa-calendar"></i>
+                        </h5>      
+                    </div>
+                    <div class="col">
+                        <h5 class="btn-block" style=" color:white;">
+                            Manage Dynamic Forms
+                        </h5>
+                    </div>
+                </div>
+            </mat-list-item>
+            <br>
+            <mat-divider class="dividers"></mat-divider>
         </mat-nav-list>
     </mat-sidenav>
 
@@ -28,7 +64,8 @@
           </div>
         </div>
     <mat-card style="margin-left: auto; margin-right: auto; min-height: 75vh;" class="col-11 page">
-      <h2>Manage Forms</h2>
+      <h1 style="color: #0275d8;">Manage Forms</h1>
+      <br><br>
       
       <button class="btn btn-primary createbtn" (click)="openEditor=true">New Form</button>
       <mat-card *ngIf="openEditor" class="formEditor">
