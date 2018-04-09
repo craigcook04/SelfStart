@@ -189,6 +189,7 @@ import { ResourcesComponent } from './resources/resources.component';
     MatExpansionModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatSliderModule,
     MatTabsModule,
     MatProgressBarModule,
     MatSelectModule,

@@ -1,14 +1,19 @@
-<h1>Register</h1>
-<h4>Welcome to Self Start! Please input your information so we can properly register your account</h4>
-
+<div style="margin-left: auto; margin-right: auto; text-align: center;">
+  <h1>Register</h1>
+  <h5>Welcome to Self Start! Please input your information so we can properly register your account</h5>
+</div>
+<hr style="width: 80%;">
+<br>
 <div class="container-fluid inputGroup">
   <form class="inputForm needs-validation" novalidate>
-      <p class="smallText">*Required Fields</p>
-      <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
+      
+      <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper" class="col-10" style="margin-left: auto; margin-right: auto;">
+          <p class="smallText">*Required Fields</p>
         <mat-step label="Username and Password">
+          
           <br>
-            <div class="md-form form-sm col-5 slightright">
-              <input mdbActive type="text" class="form-control" id="inputUsername"  #username required>
+            <div class="md-form form-sm col-6 slightright">
+              <input mdbActive type="text" class="form-control movebar" id="inputUsername"  #username required>
               <label for="inputUsername" class="smallmove">*Username </label>              
               <div class="invalInput" *ngIf="invalidUsername">
                 Please enter a valid username
@@ -21,8 +26,8 @@
         <div class='invalInput' *ngIf=""></div>
           <br>
           <br>
-            <div class="md-form form-sm col-5 slightright">
-                  <input mdbActive type="password" class="form-control" id="inputPassword"  #password required>
+            <div class="md-form form-sm col-6 slightright">
+                  <input mdbActive type="password" class="form-control movebar" id="inputPassword"  #password required>
                   <label for="inputPassword" class="smallmove">*Password </label>
                   <div class="hintText" *ngIf="!invalidPassword">
                     Passwords must match.
@@ -31,8 +36,8 @@
         <hr class='dvder'>
         <br>
         <br>
-              <div class="md-form form-sm col-5 slightright">
-                <input mdbActive type="password" class="form-control" id="inputRepeatPassword" #repeatPassword required>
+              <div class="md-form form-sm col-6 slightright">
+                <input mdbActive type="password" class="form-control movebar" id="inputRepeatPassword" #repeatPassword required>
                 <label for="inputRepeatPassword" class="smallmove">*Repeat Password </label>
                 <div class="invalInput" *ngIf="invalidPassword">
                   Please fix the password fields so that they match
@@ -42,8 +47,8 @@
         </mat-step>
         <mat-step  label="Personal Information">
           <br>
-            <div class="md-form form-sm col-5 slightright">
-              <input mdbActive type="text" class="form-control" id="inputFirstName"  #firstName>
+            <div class="md-form form-sm col-6 slightright">
+              <input mdbActive type="text" class="form-control movebar" id="inputFirstName"  #firstName>
               <label for="inputFirstName" class="smallmove">*First Name </label>            
               <div class="invalInput" *ngIf="invalidFirstname">
                 Please enter a valid Last Name
@@ -52,8 +57,8 @@
           <hr class='dvder'>
           <br>
           <br>
-            <div class="md-form form-sm col-5 slightright">
-              <input mdbActive type="text" class="form-control" id="inputLastName" #lastName>
+            <div class="md-form form-sm col-6 slightright">
+              <input mdbActive type="text" class="form-control movebar" id="inputLastName" #lastName>
               <label for="inputLastName" class="smallmove">*Last Name</label>            
               <div class="invalInput" *ngIf="invalidLastname">
                 Please enter a valid First Name
@@ -62,8 +67,8 @@
           <hr class='dvder'>
           <br>
           <br>
-            <div class="md-form form-sm col-5 slightright">
-              <input mdbActive type="email" class="form-control" id="inputEmail"  #email>
+            <div class="md-form form-sm col-6 slightright ">
+              <input mdbActive type="email" class="form-control movebar" id="inputEmail"  #email>
               <label for="inputEmail" class="smallmove">*Email</label>            
               <div class="invalInput" *ngIf="invalidEmail">
                 Please enter a valid Email
@@ -126,8 +131,9 @@
             </div>
           </div>
           </div>
-          <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
-          <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
+          <br>
+          <button class="btn btn-secondary btn-sm instepbtn slightright" matStepperPrevious>Previous</button>
+          <button class="btn btn-primary btn-sm instepbtn slightright" matStepperNext>Next</button>
         </mat-step>
         <mat-step  label="Contact Information">
           <br>
@@ -168,8 +174,8 @@
           <hr class='dvder'>
           <br>
           <br>
-            <div class="md-form form-sm col-5 slightright">
-              <input mdbActive type="text" class="form-control" id="inputPhoneNumber"  #phoneNumber>
+            <div class="md-form form-sm col-6 slightright">
+              <input mdbActive type="text" class="form-control movebar" id="inputPhoneNumber"  #phoneNumber>
               <label for="inputPhoneNumber" class="smallmove">*Phone Number</label>            
               <div class="invalInput" *ngIf="invalidPhoneNumber">
                   Please enter a valid Phone Number
@@ -230,17 +236,18 @@
             </div>
           </div>
           </div>
+          <br>
           <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
           <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
         </mat-step>
         <mat-step label="Additional Information">
           <br>
-              <div class="md-form form-sm col-5">
-                <input mdbActive type="text" class="form-control" id="inputOthers"  #others>
+              <div class="md-form form-sm col-6">
+                <input mdbActive type="text" class="form-control movebar" id="inputOthers"  #others>
                 <label for="inputOthers" class="smallmove">Other Notable Info</label>              
               </div>
-          <button class="btn btn-secondary btn-sm instepbtn" matStepperPrevious>Previous</button>
-          <button class="btn btn-primary btn-sm instepbtn" matStepperNext>Next</button>
+          <button class="btn btn-secondary btn-sm instepbtn slightright" matStepperPrevious>Previous</button>
+          <button class="btn btn-primary btn-sm instepbtn slightright" matStepperNext>Next</button>
         </mat-step>
         <mat-step label="Done">
             <ng-template #makeChanges let-c="close" let-d="dismiss">

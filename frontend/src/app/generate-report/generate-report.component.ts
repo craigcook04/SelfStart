@@ -137,9 +137,7 @@ export class GenerateReportComponent implements OnInit {
       })
       
     })
-
     var userID = this.cookieService.get('ID');
-  
 
     console.log("id",userID);
     this.paymentService.GetPaymentHistory(userID).subscribe(data => {
@@ -236,7 +234,7 @@ export class GenerateReportComponent implements OnInit {
 
   }
 
-  EmailReport(){
+  EmailReport(message: string){
     let doc = new jsPDF();
     
         let specialElementHandlers = {
@@ -253,8 +251,9 @@ export class GenerateReportComponent implements OnInit {
         });
 
         let pdf = doc.output('datauristring');
+        var pdfName = this.currClient.familyName + "_" + this.currClient.givenName + ".pdf"
     
-        this.emailService.SendPDFToClient(pdf, 'none', 'none', 'none').subscribe(data => {
+        this.emailService.SendPDFToClient(pdf, this.currClient.email, message, pdfName).subscribe(data => {
           console.log(data);
         })
   }

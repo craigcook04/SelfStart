@@ -192,11 +192,12 @@
                           <hr>
                           <br>
                         </form>
+                        <div *ngIf="showSuccess" class="success">You have successfully updated your information</div>
+                        <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
+                        <button type="button" class="col-3 btn btn-primary btn-md" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, patient?.country?._id, patient?.province?._id,patient?.city?._id, newGender.value, newAddress.value); ">Confirm</button>      
                       </mat-card>
                       <br>
-                        <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
-                        <button type="button" class="col-3 btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>      
-                    </div>
+                     </div>
                     </div>
                   <div *ngIf="isPhysio">
                       <mat-card class="col-11 justify-content-center" style="margin-left: auto; margin-right: auto; text-align: center;">
@@ -261,12 +262,13 @@
                   </mat-tab>
             <mat-tab label="Change Password">
                   <mat-card style="min-height: 100vh; margin-left: auto; margin-right: auto; text-align: center;" class="page col-11">
-                        <mat-card-title>
+                      <br>    
+                      <mat-card-title>
                             <b style="color: #0275d8">
                                 Change Password
                             </b>
                         </mat-card-title>
-                        <br>
+                        
                     <div class="col-11" style="margin-left: auto; margin-right: auto; text-align: center;" *ngIf="!successfullyChangePassword">
                       <mat-card-subtitle>
                         <p>Please enter your old password and the new password you would like for your account.</p>
@@ -301,17 +303,15 @@
                       <div *ngIf="incorrectOldPassword">
                         <p>The old password that you inputted is incorrect</p>
                       </div>
-                      <br>
                       <hr>
+                      <div class="success" *ngIf="successfullyChangedPassword">
+                          <h4>You have successfully updated your password</h4>
+                        </div>
                       <mat-card-actions align="center">
-                        <button class="col-3 btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value, tempPassword.value)">Change</button>
+                        <button class="col-3 btn btn-md btn-primary" (click)="ResetPassword(password.value, repeatPassword.value, tempPassword.value)">Change</button>
                       </mat-card-actions>
                     </div>
-                    <div class="success" *ngIf="successfullyChangedPassword">
-                      <h4>You have successfully updated your password</h4>
-                      <p>You can now log in</p>
-                      <button class="btn btn-sm btn-primary col-3">Return to Log In</button>
-                    </div>
+                    
                   </mat-card>
                   <br>
             </mat-tab>

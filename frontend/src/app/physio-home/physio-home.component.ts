@@ -4,6 +4,7 @@ import { PhysioHomeService } from '../physio-home.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -27,21 +28,22 @@ export class PhysioHomeComponent implements OnInit {
   totalCompleted: any;
   
   constructor(private router: Router,
-              private physioHomeService: PhysioHomeService,
+              private physioService: PhysiotherapistService,
               private cookieService: CookieService,
               private patientService: PatientService,
-              private testService: AssessmentTestService) { }
+              private testService: AssessmentTestService,
+              private physioHomeService: PhysioHomeService) { }
   
   ngOnInit() {
     //var j = 0;
     var today = new Date();
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
-    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
       console.log(data);
       var obj: any = data;
-      obj = obj.physiotherapist;
-      this.physio = obj;
+      console.log(obj);
+      this.physio = obj.physio;
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
         let obj: any = data;
@@ -50,11 +52,11 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
-        let length = Math.ceil(obj.docs.length / 2);
+        let length = Math.ceil(obj.docs.length);
         this.numbTests = length;
         console.log(obj.total);
         this.totalCompleted = obj.total;
-        this.pendingTests = obj.docs.splice(0, length);
+        this.pendingTests = obj.docs.splice(0, 5);
         console.log(this.pendingTests);
       })
     })

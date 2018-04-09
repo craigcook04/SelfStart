@@ -51,6 +51,8 @@ export class CompleteAssessmentTestComponent implements OnInit {
         this.testLength = this.assessmentTestQuestions.length;
       })
     })
+
+    this.value = [];
     // this.assessmentTestService.GetPlans().subscribe(data => {
     //   var retObj: any = data;
     //   console.log(retObj);
@@ -67,8 +69,11 @@ export class CompleteAssessmentTestComponent implements OnInit {
     this.MCAnswers[i] = content;
   }
 
-  SendBack(rating, i) {
-    this.MCAnswers[i] = rating + 1;
+  value: any[];
+  SendBack(i) {
+    console.log("hi");
+    console.log(this.value);
+    this.MCAnswers[i] = this.value[i] + 1;
   }
 
   Open(modal) {

@@ -4,7 +4,7 @@ import { PatientService } from '../patient.service';
 import { Router } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { PageEvent } from '@angular/material';
-
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-assign-plan',
@@ -32,7 +32,8 @@ export class AssignPlanComponent implements OnInit {
 
   constructor( private rehabPlanService: RehabPlansService,
                private router: Router,
-               private patientService: PatientService) { }
+               private patientService: PatientService,
+               private emailService: EmailService) { }
 
   ngOnInit() {
     this.rehabPlanService.getPlans().subscribe(data =>{
@@ -149,6 +150,12 @@ export class AssignPlanComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.clientList);
       })
       this.clients.push(obj.patient);
+
+      console.log("the new patient", obj.patient);
+      this.emailService.EmailClientAboutNewRehabPlan(obj.patient.givenName + " " + obj.patient.familyName, plan.name, obj.patient.email).subscribe(data => {
+        console.log(obj.patient.givenName + " " + obj.patient.familyName, plan.name, obj.patient.email);
+        console.log(data);
+      })
     })
   }
 

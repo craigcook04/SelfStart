@@ -5,6 +5,7 @@ import { PatientService } from '../patient.service';
 import {RehabPlansService} from '../rehab-plans.service'
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-assessment-test',
@@ -52,7 +53,8 @@ export class AssessmentTestComponent implements OnInit {
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
-              private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig) {
+              private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig,
+              private emailService: EmailService) {
                 this.config.max = 10;
                 
               }
@@ -354,6 +356,7 @@ export class AssessmentTestComponent implements OnInit {
     for (var i = 0; i<listOfClients.length; i++){
       clientIds.push(listOfClients[i].value);
     }
+
     for (var i = 0; i<clientIds.length; i++){
       this.assessmentTestService.createPlanwithAssignedTest(this.name, this.description, this.questions,clientIds[i]).subscribe(data => {
         console.log(data);
@@ -364,7 +367,11 @@ export class AssessmentTestComponent implements OnInit {
           console.log("i hope this works!");
         });
       });
+      this.emailService.EmailClientsAboutNewAssessmentTest(clientIds[i], this.name).subscribe(data => {
+        console.log(data);
+      })
     }
+    
     this.tests = new MatTableDataSource();
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;

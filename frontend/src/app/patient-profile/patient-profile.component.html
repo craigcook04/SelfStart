@@ -145,8 +145,8 @@
                 </div> 
                   <mat-action-row>
                       <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#updateModal" (click)="updateModal.show();SetPatient2(patient); " mdbRippleRadius>Edit</button>
-                      <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="SetPatient2(patient); deleteModal.show()" mdbRippleRadius>Delete</button>   
-                      <button class="btn btn-primary btn-sm patientbtn" [routerLink]="['../reports/' + patient._id]">View Generated Report</button>
+                      <button class="btn btn-delete btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="SetPatient2(patient); deleteModal.show()" mdbRippleRadius>Delete</button>   
+                      <button class="btn btn-default btn-sm patientbtn" [routerLink]="['../reports/' + patient._id]">View Generated Report</button>
                   </mat-action-row>
             </mat-expansion-panel>
           </mat-accordion>
