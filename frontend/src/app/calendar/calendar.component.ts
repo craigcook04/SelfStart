@@ -279,7 +279,7 @@ export class CalendarComponent implements OnInit {
     
     deleteAppt() {
       this.physioHomeService.DeleteAppointment().subscribe(data => {
-        console.log(data);
+        //console.log(data);
       });
     }
     

@@ -199,7 +199,7 @@
             </div>-->
           </mat-card-content>
           <div style="position:relative; right:-10px;">
-          <button class="btn btn-primary" (click)="saveTimeOff(fromDate.value, toDate.value);">
+          <button class="btn btn-primary" (click)="saveTimeOff(fromDate.value, toDate.value); open(bookModal);">
             Save Time Off
           </button>
           </div>
@@ -285,7 +285,19 @@
     </button>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm" (click)="deleteAppt(); c('Close click');">Confirm</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="deleteAppt(); c('Close click');" onClick="window.location.reload()">Confirm</button>
     <button type="button" class="btn btn-secondary btn-sm" (click)="c('Close click');">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #bookModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Time off successfully booked!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click'); ">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm" (click)="c('Close click');" onClick="window.location.reload()">Close</button>
   </div>
 </ng-template>
