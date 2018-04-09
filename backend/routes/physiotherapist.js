@@ -268,4 +268,32 @@ router.route('/getphysio/:userid')
         });
     });
     
+router.route('/update/:userid')
+    .put(function(request, response) {
+        Physiotherapist.findOne({'account': request.params.userid}, function(err, physio) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(physio == null) {
+                response.send({success: false, message: 'could not update physio'});
+                return;
+            }
+            
+            physio.givenName = request.body.firstname;
+            physio.familyName = request.body.lastname;
+            physio.email = request.body.email;
+             
+            physio.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({success: true, message: 'you have succesfully updated your account', updatedPhysio: physio});
+            });
+        });
+    });
+    
 module.exports = router;

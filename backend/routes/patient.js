@@ -66,6 +66,7 @@ router.route('/')
         userAccount.lastLoggedIn = new Date();
         userAccount.numbInitial = 0;
         userAccount.numbAppoint = 0;
+        userAccount.verified = false;
         userAccount.userCode = "US"; //this is a user account
         console.log(userAccount.encryptedPassword);
         UserAccount.find({'userAccountName': userAccount.userAccountName}, function(err, retpatient) {

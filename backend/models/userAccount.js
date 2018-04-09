@@ -7,6 +7,7 @@ var userAccountSchema = mongoose.Schema(
         userAccountName: String,
         encryptedPassword: String,
         salt: String, 
+        verified: Boolean,
         needToChangePass: Boolean,
         isDisabled: Boolean, 
         resetRequestSent: Boolean, 
