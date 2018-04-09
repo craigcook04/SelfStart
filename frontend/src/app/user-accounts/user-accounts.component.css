@@ -6,10 +6,33 @@ h2 {
     margin-top: -20px;
 }
 
+.page{
+    margin-left: auto;
+    margin-right: auto;
+    top: -30px;
+}
+
+.jumbotron {
+    padding: 0.6em 0.6em;
+}
+
+h3 {
+    font-size: 2em;
+    text-align: center;
+}
+
+.quotes {
+    font-size: 1.2em;
+    text-align: center;
+}
 
 .tab{
     width: 90%;
     margin-left: 60px;
+}
+
+.hddn{
+    display: none;
 }
 
 
@@ -56,23 +79,7 @@ ul{
     color: red;
     font-size: 12px;
 }
-.mydropdown {
-    display: block;
-    height: 40px;
-    width: 100%;
-    padding: .5rem, .75rem;
-    padding-left: .5rem;
-    font-size: 1rem;
-    line-height: 1.25;
-    color: #464a4c;
-    background-color: #ffffff;
-    background-image: none;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 5px;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
 
-}
 .failedSearch {
     margin-left: 3.5em;
     color: red;
@@ -107,10 +114,11 @@ ul{
 }
 
 .searchdropdown {
-    height: 44px;
+    height: 40px;
     padding: 3px;
     padding-left: 0px;
-    border: solid 1px #E4E4E4;
+    border: none;
+    border-bottom: solid 1px rgb(189, 189, 189);
     border-radius: 3px;
     background-color: #fff;
     width: 200px;
@@ -120,8 +128,8 @@ ul{
     background-image: none;
     background-clip: padding-box;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    margin-left: 2.5rem;
-    margin-top: 2px;
+    margin-left: 1em;
+    margin-top: -4px;
 }
 .patients {
     margin-left: 3em;

@@ -1,41 +1,118 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
         <mat-nav-list style="top: -10px;">
-            <mat-list-item [routerLinkActive]="['active']">
-              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
-            </mat-list-item>
+            <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../home']">
+              <div class="row form-inline">
+                  <div class="col-2">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          <i class="fa fa-th-large"></i>
+                      </h5>      
+                  </div>
+                  <div class="col">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                        Dashboard
+                      </h5>
+                  </div>
+              </div>
+          </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']">
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercise Menu</button>
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../exercises']">
+              <div class="row form-inline">
+                  <div class="col-2">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          <i class="fa fa-id-card"></i>
+                      </h5>      
+                  </div>
+                  <div class="col">
+                      <h5 class="btn-block" style="margin-left: 3px; color:white;">
+                          Exercise Menu
+                      </h5>
+                  </div>
+              </div>
+          </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']"  [routerLink]="['../bookappointment']">
+              <div class="row form-inline">
+                  <div class="col-2">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          <i class="fa fa-calendar"></i>
+                      </h5>      
+                  </div>
+                  <div class="col">
+                      <h5 class="btn-block" style=" color:white;">
+                          Book Appointment
+                      </h5>
+                  </div>
+              </div>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
           <mat-list-item [routerLinkActive]="['active']">
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../bookappointment']">Book Appointment</button>
+              <div class="row form-inline">
+                  <div class="col-1">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          <i class="fa fa-wpforms"></i>
+                      </h5>      
+                  </div>
+                  <div class="col">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          Complete Assessment
+                      </h5>
+                  </div>
+              </div>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;">Complete Assessment</button>
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../transactions']">
+              <div class="row form-inline">
+                  <div class="col-2">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          <i class="fa fa-shopping-cart"></i>
+                      </h5>      
+                  </div>
+                  <div class="col">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                        Transactions
+                      </h5>
+                  </div>
+              </div>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../transactions']">Transactions</button>
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../settings']">
+              <div class="row form-inline">
+                  <div class="col-2">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                          <i class="fa fa-wrench"></i>
+                      </h5>      
+                  </div>
+                  <div class="col">
+                      <h5 class="btn-block" style="text-align: center; color:white;">
+                        Settings
+                      </h5>
+                  </div>
+              </div>
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button [routerLink]="['../settings']" style="color:white;">Settings</button>
-          </mat-list-item>
-          <br>
-          <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-            <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../resources']">Resources</button>
-          </mat-list-item>
-          <br>
-          <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../resources']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-bars"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                      Resources
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+        <br>
+        <mat-divider class="dividers"></mat-divider>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -55,23 +132,23 @@
           </div>
       <mat-card style="min-height: 100vh;" class="col-11 page">
             <br>
-            <mat-card *ngIf="assessmentTest" class="assessTest">
+            <mat-card *ngIf="currTest" class="assessTest">
               <mat-card-title>
-              <p><b>Name: </b> <span>{{assessmentTest.name}}</span></p>
+              <p><b>Name: </b> <span>{{currTest?.name}}</span></p>
             </mat-card-title>
             <mat-card-subtitle>
-              <p><b>Description: </b> <span>{{assessmentTest.description}} </span></p>
+              <p><b>Description: </b> <span>{{currTest?.description}} </span></p>
             </mat-card-subtitle>
               <hr>
               <mat-card-content>
               <div *ngFor="let q of assessmentTestQuestions; let i = index">
                 <div *ngIf="q.questionCode == 'SA'">
-                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>
+                  <p><b>{{i + 1}}) {{q?.questionText}}</b></p>
                   <label>Response:</label>
                   <textarea class="form-control myta" rows="5" id="question{{i}}" value="{{q.answer}}"> </textarea>
                 </div>
                 <div *ngIf="q.questionCode == 'MC'">
-                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>
+                  <p><b>{{i + 1}}) {{q?.questionText}}</b></p>
                   <br>
                   <mat-radio-group id="question{{i}}">
                       <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row-inline mcchoices">
@@ -82,7 +159,7 @@
                 </div>
                 <br>
                 <div *ngIf="q.questionCode == 'RA'">
-                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>    
+                  <p><b>{{i + 1}}) {{q?.questionText}}</b></p>    
                   <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
                       <ng-template let-fill="fill" let-index="index">
                         <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
