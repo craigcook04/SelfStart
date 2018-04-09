@@ -75,16 +75,16 @@
             <b>Clients Currently using this Plan:</b>
           </h6>
           <mat-list class="currList">
-              <mat-list-item class="listItems" *ngFor="let client of clients">
+              <mat-list-item class="listItems col" *ngFor="let client of clients">
                   <button class="btn-block clientList">
                       <div class="row">
-                        <div class="col-sm-1">
+                        <div class="col-1">
                             <i class="fa fa-user"></i> &nbsp;
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-6">
                             <h5><b>Client: </b> &nbsp; {{ client?.familyName }}, {{ client?.givenName }} </h5>
                         </div>
-                        <div class="pull-right delete">
+                        <div class="col delete" align="end">
                           <i class="fa fa-times-circle" (click)="removePatient(client)"></i>
                         </div>
                       </div>
@@ -97,7 +97,7 @@
             <br>
             <div>
               <mat-form-field>
-                <input matInput (keyup)="applyFilter(searchValue.value)" placeholder="Search for Clients..." #searchValue>
+                <input matInput (keyup)="applyFilter(searchValue.value)" placeholder="Search by Last Name..." #searchValue>
               </mat-form-field>
               <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event" (page)="SetOffset(searchValue.value, $event)"></mat-paginator>
               <mat-table [dataSource]="dataSource" class="searchList" matSort>

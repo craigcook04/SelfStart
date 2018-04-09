@@ -30,6 +30,7 @@ import {
 import { CookieService } from 'ngx-cookie-service';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { PatientService } from '../patient.service';
+import { PhysiotherapistService } from '../physiotherapist.service';
 
 
 @Component({
@@ -73,6 +74,7 @@ export class CalendarComponent implements OnInit {
   myDate: Date;
   newType: any;
   newReason: any;
+  timeOfDay: any;
   
   colors: any = {
     red: {
@@ -118,8 +120,11 @@ export class CalendarComponent implements OnInit {
               private apptService: AppointmentsService,
               private modalService: NgbModal,
               private cookieService: CookieService,
-              private patientService: PatientService) { 
-                
+              private patientService: PatientService, 
+              private physioService: PhysiotherapistService) { 
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
                 this.events$ = new Observable<Array<CalendarEvent<{ appointment: any }>>>();
                 this.events = [];
               }
@@ -128,10 +133,10 @@ export class CalendarComponent implements OnInit {
     this.fetchEvents();
 
     
-    this.getTimeOfDay();
-    this.physioHomeService.GetPhysio(this.cookieService.get('ID')).subscribe(data =>{
+    this.timeOfDay = this.getTimeOfDay();
+    this.physioService.GetPhysioByUserID().subscribe(data =>{
       let obj: any = data;
-      this.physio = obj.physiotherapist;
+      this.physio = obj.physio;
     })
 
   }
@@ -251,8 +256,20 @@ export class CalendarComponent implements OnInit {
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
-    open(content){
+    open(content) {
       this.modalService.open(content, {size: "lg"});
+    }
+    
+    updateAppt() {
+      //this.physioHomeService.UpdateAppointment(id).subscribe(data => {
+        //console.log(data);
+      //});
+    }
+    
+    deleteAppt() {
+      //this.physioHomeService.DeleteAppointment(id).subscribe(data => {
+        //console.log(data);
+      //});
     }
     
     addEvent(): void {
