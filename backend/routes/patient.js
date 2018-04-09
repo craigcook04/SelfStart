@@ -431,7 +431,22 @@ router.route('/patient/appointments/:id')
             }
             response.send({patient: patient});   
         })
-    })
+    });
+    
+router.route('/appointments/calInfo/:user_id')
+
+    .get(function(request, response){
+        Patient.findOne({"account": request.params.user_id}, function(err, patient){
+            console.log("here: " + request.params.user_id)
+            if(err){
+                response.send({error: err});
+            }else{
+            console.log(patient);
+            response.send({patient: patient});   
+            }
+        })
+    });
+    
     
     
 router.route('/admincreated')

@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
 import { PhysiotherapistService } from '../physiotherapist.service';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-physio-home',
@@ -21,19 +22,27 @@ export class PhysioHomeComponent implements OnInit {
   timeOfDay: string;
   activated: any;
   appointments: any[];
+  currAppointment: any;
+  appointImages: any;
   panelOpenState: boolean = false;
   numbPatients: any;
   pendingTests: any;
   numbTests: any;
   display: boolean = false;
   totalCompleted: any;
+  clicked: boolean = false;
   
   constructor(private router: Router,
               private physioService: PhysiotherapistService,
               private cookieService: CookieService,
               private patientService: PatientService,
               private testService: AssessmentTestService,
-              private physioHomeService: PhysioHomeService) { }
+              private physioHomeService: PhysioHomeService,
+              private imageService: ImageService) {
+                setInterval(() => {
+                  this.today = new Date();
+                }, 30000);  
+              }
   
   ngOnInit() {
     this.today = new Date();
@@ -42,9 +51,8 @@ export class PhysioHomeComponent implements OnInit {
     this.timeOfDay = this.getTimeOfDay();
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
-      console.log(data);
       var obj: any = data;
-      obj = obj.physiotherapist;
+      obj = obj.physio;
       this.physio = obj;
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
@@ -54,26 +62,33 @@ export class PhysioHomeComponent implements OnInit {
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
-        let length = Math.ceil(obj.docs.length / 2);
+        let length;
+        if(obj.total > 5){
+          length = 5;
+        }
+        else{
+          length = obj.total;
+        }
         this.numbTests = length;
-        console.log(obj.total);
         this.totalCompleted = obj.total;
-        this.pendingTests = obj.docs.splice(0, length);
-        console.log(this.pendingTests);
+        this.pendingTests = obj.docs.splice(0, 5);
       })
-    })
-    this.appointments = [];
-    console.log(this.today);
-    console.log(this.format);
-     this.physioHomeService.GetAppointments(this.format).subscribe(data =>{
-      console.log(data);
-      var retObj:any = data;
-      this.appointments = retObj.appointment;
+
+
+      this.physioHomeService.GetAppointments(this.format).subscribe(data =>{
+        var retObj: any = data;
+        let length;
+        if(retObj.appointments.length > 5){
+          this.appointments = retObj.appointments.splice(0, 5);
+        }
+        else{
+          this.appointments = retObj.appointments;
+        }
+      })
     })
   }
 
   Show(){
-    console.log(this.display);
     this.display = !this.display;
   }
   
@@ -84,7 +99,6 @@ export class PhysioHomeComponent implements OnInit {
     else{
       this.activated = appointment;
     }
-    console.log(this.activated);
   }
   
   formatDate(date) {
@@ -107,22 +121,17 @@ export class PhysioHomeComponent implements OnInit {
     else{ return "Evening"};
   }
   
-  /*goToCalendar(){
-    this.router.navigate(['../calendar']);
+
+  AppointmentInfo(appointment: any, content){
+    this.imageService.GetAppointmentImages(appointment._id).subscribe(data =>{
+      let obj: any = data;
+      this.appointImages = obj.images;
+    })
+    this.currAppointment = appointment;
+    content.show();
   }
-  goToPatients(){
-    this.router.navigate(['../client']);
+
+  toggleClicked(){
+    this.clicked = !this.clicked;
   }
-  goToExercises(){
-    this.router.navigate(['../exercises']);
-  }
-  goToRehabPlans(){
-    this.router.navigate(['../rehabplans']);
-  }
-  goToTests(){
-    this.router.navigate(['../assessmenttest']);
-  }
-  goToReports(){
-  
-  }*/
 }
