@@ -6,25 +6,8 @@ var router = express.Router();
 var Patient = require('../models/patient');
 var UserAccount = require('../models/userAccount');
 var ResetEmail = require('../models/resetEmail');
-// var Session = require('../models/session');
+    
 
-// router.use(function(req, res, next){
-//   // do logging
-//   Session.findOne(req.params.token, function(err, session) {
-//       if(err) {
-//           res.send(err);
-//           return;
-//       }
-//       if(session == null) {
-//         res.status(401).send({error: "Unauthorized to access this content"});
-//         return;
-//       }
-//       else{
-//           //the user has a valid session token
-//           next();
-//       }
-//   });
-// });
 
 //generic route for fetching all patients
 
@@ -106,50 +89,64 @@ router.route('/')
     })
 
     .get(function (request, response) {
-        var query = {};
-        if(request.query.s == "ID"){
-            
-            query['ID'] = Number(request.query.q);
-        }
-        else if(request.query.q != null || request.query.q != undefined) {
-            //if the query string isn't null, set the query to search for the query string
-            var search = '^' + request.query.q;
-            var regexexp = new RegExp(search, 'i');
-            query[request.query.s] = regexexp;
-        }
-        else{
-            query = {};
-        }
-        
-        var sortOrder;
-        if(request.query.sortorder == 'asc') {
-            sortOrder = 1;
-        }
-        else {
-            sortOrder = -1;
-        }
-        
-        var myparameter = request.query.s;
-        var sort ={};
-        sort[myparameter] = sortOrder;
-        var options = 
-        {
-            sort: sort,
-            populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
-            limit: 10,
-            offset: Number(request.query.offset)
-        };
-        
-        Patient.paginate(query, options, function(err, results) {
-            if(err) {
-                console.log(err);
-                response.send(err);
+        Session.findOne({nonce: request.header('Authorization')}, function(err, session) {
+              if(err) {
+                  response.send(err);
+                  return;
+              }
+              if(session == null) {
+                response.status(401).send({error: "Unauthorized to access this content"});
                 return;
-            }
-            
-            response.send(results);
-        });
+              }
+              else{
+                  var query = {};
+                if(request.query.s == "ID"){
+                    
+                    query['ID'] = Number(request.query.q);
+                }
+                else if(request.query.q != null || request.query.q != undefined) {
+                    //if the query string isn't null, set the query to search for the query string
+                    var search = '^' + request.query.q;
+                    var regexexp = new RegExp(search, 'i');
+                    query[request.query.s] = regexexp;
+                }
+                else{
+                    query = {};
+                }
+                
+                var sortOrder;
+                if(request.query.sortorder == 'asc') {
+                    sortOrder = 1;
+                }
+                else {
+                    sortOrder = -1;
+                }
+                
+                var myparameter = request.query.s;
+                var sort ={};
+                sort[myparameter] = sortOrder;
+                var options = 
+                {
+                    sort: sort,
+                    populate: [{path: 'account', select: 'userAccountName'}, 'country', 'city', 'province', 'gender'],
+                    limit: 10,
+                    offset: Number(request.query.offset)
+                };
+                
+                Patient.paginate(query, options, function(err, results) {
+                    if(err) {
+                        console.log(err);
+                        response.send(err);
+                        return;
+                    }
+                    
+                    response.send(results);
+                });
+      }
     });
+});
+    
+    
 
 //fetching a specific patient
 
@@ -219,6 +216,13 @@ router.route('/:patient_id')
             }
         );
     });
+
+var Session = require('../models/session');
+
+router.use(function(req, res, next){
+  console.log(req.header('Authorization'))
+  
+});
     
 //search for a specific patient
 router.route('/findpatient/search')
