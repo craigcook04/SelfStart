@@ -163,22 +163,13 @@
         <div class="modal-dialog modal-lg mymodal" role="document">
             <div class="modal-content mymodal" style="overflow-y: visible;">
                 <div class="modal-header">
-<<<<<<< HEAD
                     <h3 class="modal-title" id="bookModalLabel"><b>Book Your Initial Consultation...</b></h3>
-=======
-                    <h5 class="modal-title" id="bookModalLabel"><b>Book Your Initial Consultation</b></h5>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <button type="button" class="close" (click)="initialModal.hide()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-<<<<<<< HEAD
                 <div class="modal-body" style="overflow-x: hidden; min-height: 78vh;">
                     <label class="mylabel">Where is the problem or symptom?</label>
-=======
-                <div class="modal-body" style="overflow-x: hidden; max-height:460px;">
-                    <label>Where is the problem or symptom?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #injuryarea class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -194,12 +185,8 @@
                             <option value="other">other</option>
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">
                     <label class="mylabel">How would you describe your pain or symptom?</label>
-=======
-                    <label>How would you describe your pain or symptom?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #painScale class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -211,12 +198,8 @@
                             <option value="tense">tense</option>                            
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                    
                     <label class="mylabel">How did the pain or symptom begin?</label>
-=======
-                    <label>How did the pain or symptom begin?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #started class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -225,7 +208,6 @@
                             <option value="it just started one day">it just started one day</option>
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                    
                     <label class="form-inline mylabel"><strong>What was the date of your injury?</strong></label>
                     <div class="col">
@@ -239,48 +221,23 @@
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">    
                     <br>                
                     <label class="form-inline mylabel"><strong>How would you rate your pain right now out of 10?</strong></label>
-=======
-                    <label>What was the date of your injury?</label>
-                    <div class="col">
-                        <input class="form-control" type="text" id="dateStarted" placeholder="Date Started" #dateStarted required>
-                    </div>
-                    <br>
-                    <label>Please describe your injury:</label>
-                    <div class="col">
-                        <input class="form-control" type="text" id="description" placeholder="Description" #describe required>
-                    </div>
-                    <br>
-                    <label>How would you rate your pain right now out of 10?</label>
-                    <br>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <ngb-rating [(rate)]="currentRate" id="ratePain" class="ratingstars">
                             <ng-template let-fill="fill" let-index="index">
                               <span class="star" [class.filled]="fill === 100" (click)="StorePainRating(index)">&#x025CB;</span>
                             </ng-template>
                     </ngb-rating> 
-<<<<<<< HEAD
                     <br>
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">    
                     <br>                    
                     <label class="form-inline mylabel"><strong>Please rate your pains over the last 7 days (0-10)?</strong></label>
-=======
-                    <br><br>
-                    <label>Please rate your pain over the last 7 days:</label>
-                    <br>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <ngb-rating [(rate)]="currentRate" id="last7days" class="ratingstars">
                             <ng-template let-fill="fill" let-index="index">
                               <span class="star" [class.filled]="fill === 100" (click)="StoreWeeklyPain(index)"><div class="circle"></div></span>
                             </ng-template>
                     </ngb-rating>
-<<<<<<< HEAD
                     <br>
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">What aggravates your pain?</label>
-=======
-                    <br><br>
-                    <label>What aggravates your pain?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #aggravates class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -290,12 +247,8 @@
                             <option value="lying down">Lying down</option>                            
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">What can you do that helps ease  your pain or make you feel better- even if only temporarily?</label>
-=======
-                    <label>What can you do that helps ease your pain or make you feel better? Even if only temporarily.</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #easePain class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -305,12 +258,8 @@
                             <option value="lying down">Lying down</option>                            
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">How is your pain in the morning?</label>
-=======
-                    <label>How is your pain in the morning?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #morningPain class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -321,12 +270,8 @@
                             <option value="the morning is my best time">The morning is my best time</option>                            
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">How is your pain in the evening?</label>
-=======
-                    <label>How is your pain in the evening?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #eveningPain class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -337,12 +282,8 @@
                             <option value="the evening is my best time">The evening is my best time</option>                            
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">Have you sought treatment for this condition with other professionals?</label>
-=======
-                    <label>Have you sought treatment for this condition with other professionals?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #treatment class="mydropdown">
                             <option value="" disabled>Please select...</option>
@@ -352,33 +293,24 @@
                             <option value="osteopath">Osteopath</option>
                     </select>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">Do you have more than one symptom or any other pains in your body?</label>
-=======
-                    <label>Do you have more than one symptom or any other pains in your body?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <mat-radio-group>
                             <div class="form-group row-inline" >
                                 <mat-radio-button class="mcchoices" value='yes' (click)="moreThanOneSymptom(true)">yes</mat-radio-button>
                                 <mat-radio-button class="mcchoices" value='no' (click)="moreThanOneSymptom(false)">no</mat-radio-button>                                
                             </div>
                     </mat-radio-group>
-<<<<<<< HEAD
                     <br>
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">     
                     <br>                   
                     <label>Do you have any other medical conditions</label>
-=======
-                    <label>Do you have any other medical conditions?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <mat-radio-group>
                             <div class="form-group row-inline" >
                                 <mat-radio-button class="mcchoices" value='yes' (click)="otherMedicalCondition(true);">yes</mat-radio-button>
                                 <mat-radio-button class="mcchoices" value='no' (click)="otherMedicalCondition(false);">no</mat-radio-button>                                
                             </div>
                     </mat-radio-group>
-<<<<<<< HEAD
                     <div *ngIf="needExplanation" class="container">
                         <div class="row">
                             <div class="col-2">
@@ -391,13 +323,6 @@
                                     <label for="explain">explanation...</label>                                  
                             </div>
                         </div>
-=======
-                    <label>
-                        Please explain:
-                    </label>
-                    <div class="col">
-                            <input class="form-control" type="text" id="explain" placeholder="Description" #explainOther required>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     </div>
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">Are you experiencing any of following symptoms?</label>
@@ -409,14 +334,10 @@
                             <option value="chiropractor">Stiff</option>
                             <option value="osteopath">No change</option>
                     </select>
-<<<<<<< HEAD
                     <br>
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                        
                     <label class="mylabel">Do you have  any other pertinent medical traumas or surgical history</label>
                     <br>
-=======
-                    <label>Do you have any other pertinent medical traumas or surgical history</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <mat-radio-group>
                             <div class="form-group row-inline" >
                                 <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
@@ -424,7 +345,6 @@
                                 <mat-radio-button class="mcchoices" value='no' (click)="otherMedicalTraumas(false);">no</mat-radio-button>                                
                             </div>
                     </mat-radio-group>
-<<<<<<< HEAD
                     <div *ngIf="needDescription" class="container">
                         <div class="row">
                             <div class="col-2">
@@ -437,16 +357,6 @@
                         </div>
                     </div>
                     <div class="col">
-=======
-                    <label>Please Explain:</label>
-                    <div class="col">
-                            <input class="form-control" type="text" id="description" placeholder="Description" #explainTraumas required>
-                    </div>
-                    <br>
-                    <label>What is your occupation?</label>
-                    <div class="col">
-                            <input class="form-control" type="text" id="occupation" placeholder="Occupation" #occupation required>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     </div>
                     <br>
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                                            
@@ -462,12 +372,8 @@
                             <input class="form-control" type="text" id="hobbies" placeholder="Activities" #hobbies required>
                     </div>
                     <br>
-<<<<<<< HEAD
                     <hr style="border-color: #0275d8; margin-left: 1em; margin-right: 1em;">                                            
                     <label class="mylabel">What are your goals for this treatment?</label>
-=======
-                    <label>What are your goals for this treatment?</label>
->>>>>>> edc722b65ecb15759fc8f891e59666cd34acb4bb
                     <br>
                     <select #goals class="mydropdown">
                             <option value="" disabled>Please select...</option>
