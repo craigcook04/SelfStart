@@ -29,6 +29,7 @@ import {
 } from 'date-fns';
 import { CookieService } from 'ngx-cookie-service';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { PatientService } from '../patient.service';
 import { PhysiotherapistService } from '../physiotherapist.service';
 
 
@@ -58,6 +59,7 @@ export class CalendarComponent implements OnInit {
   meridianTwo = true;
   justBooked = false;
   myTabIndex = 0;
+  newTitle: any;
   
   activeDayIsOpen: boolean = false;
   myAppointmentDates: Object[];
@@ -68,6 +70,10 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[];
   today: any;
   physio: any;
+  newClientName: any;
+  myDate: Date;
+  newType: any;
+  newReason: any;
   timeOfDay: any;
   
   colors: any = {
@@ -91,12 +97,12 @@ export class CalendarComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.editEvent('Edited', event);
-      }
-    },
+    // {
+    //   label: '<i class="fa fa-fw fa-pencil"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.editEvent('Edited', event);
+    //   }
+    // },
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -114,6 +120,7 @@ export class CalendarComponent implements OnInit {
               private apptService: AppointmentsService,
               private modalService: NgbModal,
               private cookieService: CookieService,
+              private patientService: PatientService, 
               private physioService: PhysiotherapistService) { 
                 setInterval(() => {
                   this.today = new Date();
@@ -134,7 +141,7 @@ export class CalendarComponent implements OnInit {
 
   }
   
-  fetchEvents(): void {
+   fetchEvents(){
     const getStart: any = {
       month: startOfMonth,
       week: startOfWeek,
@@ -151,25 +158,53 @@ export class CalendarComponent implements OnInit {
     
     this.events$ = this.apptService.GetAppointmentsByMonth(cur)
     .pipe(map(({appointment}: {appointment: any[]}) => {
-      
+
+      var newTitle: string;
+
         return appointment.map((appointment: any) => {
-          
-          var temp: CalendarEvent = {
-            title: appointment.reason, //this.physioHomeService.GetClientName(appointment.userID)
-            start: new Date(appointment.date),
-            color: this.colors.blue,
-            actions: this.actions
-          };
-          this.events.push(temp);
-          console.log("event: ");
-          console.log(temp);
-          return temp;
-          
+
+        //setTimeout(() => {
+          var returnVal = this.apptService.GetPatientNames(appointment.userID).subscribe((data) => {
+            var retObj: any = data;
+            console.log("this is what is returned", retObj);
+            //console.log(retObj.patient.givenName)
+            if(appointment.type == "normal"){
+              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Regular";
+            }else if (appointment.type == "initial"){
+              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Initial";
+            }
+            else{
+              newTitle = "TIME OFF";
+            }
+            //console.log(newTitle);
+          });
+
+        //}, 5000);
+
+          let temp: CalendarEvent = {
+          title: "",
+          start: new Date(appointment.date),
+          color: this.colors.blue,
+          actions: this.actions,
+          meta: {
+            appointment: appointment
+          }
+        };
+
+        this.patientService.GetPatientInfo(temp.meta.appointment.userID).subscribe(data =>{
+          let obj: any = data;
+          temp.title = obj.patient.givenName + " " + obj.patient.familyName + " | " + temp.start.getHours() + ":" + temp.start.getMinutes();
+        })
+
+        this.events.push(temp);
+        //console.log("event: ");
+        //console.log(temp);
+        return temp;
         });
       })
     );
 
-      console.log(this.myAppointmentDates);
+      //console.log(this.myAppointmentDates);
     }
     
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -201,9 +236,9 @@ export class CalendarComponent implements OnInit {
       //this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
-    editEvent(action: string, event: CalendarEvent) {
-      this.modalService.open(this.editModal, { size: 'lg' });
-    }
+    // editEvent(action: string, event: CalendarEvent) {
+    //   this.modalService.open(this.editModal, { size: 'lg' });
+    // }
     
     deleteEvent(action: string, event: CalendarEvent) {
       console.log(event);
@@ -213,6 +248,11 @@ export class CalendarComponent implements OnInit {
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
       console.log(event);
       //this.modalData = { event, action };
+      //this.newClientName = 
+      // this.myDate = 
+      // this.newReason = 
+      // this.newTypethis.events
+
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
@@ -254,7 +294,6 @@ export class CalendarComponent implements OnInit {
       if(hour < 17){ return "Afternoon"}
       else{ return "Evening"};
     }
-
 
     saveTimeOff(startDate: Date, endDate: Date){
       this.apptService.saveTimeOff(startDate, endDate, this.time.hour, this.time.minute, this.timeTwo.hour, this.timeTwo.minute).subscribe(data => {
