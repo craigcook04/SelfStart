@@ -101,11 +101,11 @@ ul{
     display: inline;
     width: 200px;
 }
-
-
-.greyCard {
+/* .greyCard {
     width: 95%;
 }
+    background-color: lightgrey;
+} */
 .myPaginator {
     margin-left: 3.7em;
     margin-right: 3.7em;
