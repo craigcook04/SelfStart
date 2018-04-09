@@ -407,3 +407,7 @@ h3 {
 .divider{
     margin-top: -25px;
 }
+
+.addpaddingbot {
+    padding-bottom: 5px;
+}
