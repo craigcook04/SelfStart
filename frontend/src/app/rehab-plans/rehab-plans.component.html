@@ -142,8 +142,10 @@
                                                     <b style="color: #0275d8;"> {{ currPlan?.name }}</b>
                                                 </div>
                                                 <div align="end" class="col">
-                                                    <i class="fa fa-edit" style="color: #0275d8;" (click)="open(editPlan)"></i>
-                                                    <i class="fa fa-trash" style="color:red;" (click)="open(delete)"></i>
+                                                    <button class = "btn btn-primary btn-sm" (click)="open(editPlan)">Edit</button>
+                                                    <button class = "btn btn-secondary btn-sm" (click)="open(delete)">Delete</button>
+                                                    <!--<i class="fa fa-edit" style="color: #0275d8;" (click)="open(editPlan)"></i>-->
+                                                    <!--<i class="fa fa-trash" style="color:red;" (click)="open(delete)"></i>-->
                                                 </div>
                                             </div>
                                         </mat-card-title>
@@ -186,9 +188,12 @@
                                                     <div class="col-sm-6">
                                                         <h5><b>Exercise: </b> &nbsp; {{ exercise?.name }} </h5>
                                                     </div>
+                                                    <!--<div style = "text-align: right;">-->
+                                                    <div class="col-6">
                                                     <div class="pull-right delete">
-                                                        <i class="fa fa-times-circle" (click)="removeExercise(exercise, searchString.value)"></i>
-                                                      </div>
+                                                        <i class="fa fa-times-circle"  style = "float:right;"(click)="removeExercise(exercise, searchString.value)"></i>
+                                                    </div>
+                                                    </div>
                                                   </div>
                                                   <div class="divider">
                                                     <mat-divider></mat-divider>

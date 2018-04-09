@@ -6,11 +6,11 @@
                     <div class="col-2">
                         <h5 class="btn-block" style="text-align: center; color:white;">
                             <i class="fa fa-columns"></i>
-                        </h5>      
+                        </h5>
                     </div>
                     <div class="col">
                         <h5 class="btn-block" style="text-align: center; color:white;" [routerLink]="['../home']">
-                                Dashboard
+                            Dashboard
                         </h5>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                     <div class="col-2">
                         <h5 class="btn-block" style="text-align: center; color:white;">
                             <i class="fa fa-calendar"></i>
-                        </h5>      
+                        </h5>
                     </div>
                     <div class="col">
                         <h5 class="btn-block" style="text-align: center; color:white;" [routerLink]="['../calendar']">
@@ -73,7 +73,7 @@
                         <button class="btn btn-primary btn-block" (click)="showTable();">Manage Assessment Tests</button>
                     </div>
                 </div>
-                <br>
+                <br><br>
                 <mat-card *ngIf="manageTests && showCreat" class="col">
                     <mat-tab-group style="min-height: 75vh;">
                         <mat-tab label="All Assessment Tests">
@@ -172,7 +172,7 @@
 
                         <div *ngIf="!showCreat" style="width:50%">
 
-                            <h6><b>Enter the name of the test: </b></h6>
+                            <h6><b style="color: #0275d8;">Enter the name of the test: </b></h6>
                             <br>
 
                             <input type="text" class="form-control" id="name" placeholder="Enter Name...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
@@ -182,7 +182,7 @@
                             <hr>
                         </div>
                         <div *ngIf="!showCreat" style="width:50%">
-                            <h6><b>Enter the description of the test: </b></h6>
+                            <h6><b style="color: #0275d8;">Enter the description of the test: </b></h6>
                             <br>
 
                             <input type="text" class="form-control" id="description" placeholder="Enter description...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
@@ -191,7 +191,7 @@
 
                             <hr>
                         </div>
-                        <h6><b>Questions:</b></h6>
+                        <h6><b style="color: #0275d8;">Questions:</b></h6>
                         <br>
                         <ol *ngIf="!showPatients">
                             <li *ngFor="let question of questions" style="margin-left: 2em; width:50%;">
@@ -202,7 +202,7 @@
                                 <i *ngIf="question!=questions[0]" class="fa fa-chevron-up" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: blue;" (click)="moveUp(question)"></i>
                                 <i *ngIf="question!=questions[0]" class="fa fa-chevron-down" style="float: right; margin-right: 0.5em; margin-left: 0.5em;color: blue;" (click)="moveDown(question)"></i>
                                 <i *ngIf="question!=questions[0]" class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: red;" (click)="deleteQuestion(question)"></i>
-                                <i *ngIf="question!=questions[0]" class="fa fa-edit" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: edit;" (click)="editQ.show()"></i>
+                                <i *ngIf="question!=questions[0]" class="fa fa-edit" style="float: right; margin-right: 0.5em; margin-left: 0.5em; color: edit;" data-toggle="modal" data-target="#editQ"(click)="setQedit(question);editQ.show();"></i>
 
 
                                 <br><br><br>
@@ -214,47 +214,47 @@
                                 <hr>
                                 <br>
                                 <!--<ng-template #editQ let-c="close" let-d="dismiss">-->
-                                <div mdbModal #editQ="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg mymodal" role="document">
-                                        <div class="modal-content mymodal" style="overflow-y: visible;">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Edit Question</h4>
-                                            </div>
-                                            <div class="modal-body" style="overflow-x: hidden; min-height: 78vh;">
-                                                <form>
-                                                    <div class="form-group row">
-                                                        <label for="inputQuestionText" class="col-sm-3 col-form-label">Question</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" class="form-control" id="inputQuestionText" value="{{question.questionText}}" placeholder="Question" #newPatientFirstName>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <ol>
-                                                            <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">
-                                                                <label for="inputQuestionOption" class="col-sm-3 col-form-label"></label>
-                                                                <div class="col-sm-9">
-                                                                    <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteOption(options,question)"></i>
-                                                                    <input type="text" class="form-control" id="{{question.questionContent.indexOf(options)}}" value="{{options}}" placeholder="option" #editOption>
+                                <!--<div mdbModal #editQ="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-hidden="true">-->
+                                <!--    <div class="modal-dialog modal-lg mymodal" role="document">-->
+                                <!--        <div class="modal-content mymodal" style="overflow-y: visible;">-->
+                                <!--            <div class="modal-header">-->
+                                <!--                <h4 class="modal-title">Edit Question</h4>-->
+                                <!--            </div>-->
+                                <!--            <div class="modal-body" style="overflow-x: hidden; min-height: 78vh;">-->
+                                <!--                <form>-->
+                                <!--                    <div class="form-group row">-->
+                                <!--                        <label for="inputQuestionText" class="col-sm-3 col-form-label">Question</label>-->
+                                <!--                        <div class="col-sm-9">-->
+                                <!--                            <input type="text" class="form-control" id="inputQuestionText" value="{{question.questionText}}" placeholder="Question" #newPatientFirstName>-->
+                                <!--                        </div>-->
+                                <!--                    </div>-->
+                                <!--                    <div class="form-group row">-->
+                                <!--                        <ol>-->
+                                <!--                            <li type="a" *ngFor="let options of question.questionContent" style="margin-left: 2em">-->
+                                <!--                                <label for="inputQuestionOption" class="col-sm-3 col-form-label"></label>-->
+                                <!--                                <div class="col-sm-9">-->
+                                <!--                                    <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteOption(options,question)"></i>-->
+                                <!--                                    <input type="text" class="form-control" id="{{question.questionContent.indexOf(options)}}" value="{{options}}" placeholder="option" #editOption>-->
 
-                                                                </div>
-                                                            </li>
-                                                        </ol>
-                                                        <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(question);" style="margin-left: 2em; float: left;" *ngIf="question.questionCode == 'MC'">Add Option</button>
-                                                    </div>
+                                <!--                                </div>-->
+                                <!--                            </li>-->
+                                <!--                        </ol>-->
+                                <!--                        <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(question);" style="margin-left: 2em; float: left;" *ngIf="question.questionCode == 'MC'">Add Option</button>-->
+                                <!--                    </div>-->
 
-                                                </form>
+                                <!--                </form>-->
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary btn-sm" (click)="updateQuestion(question); editQ.hide();">Confirm</button>
-                                                <button type="button" class="btn btn-secondary btn-sm" (click)="editQ.hide();">Cancel</button>
+                                <!--            </div>-->
+                                <!--            <div class="modal-footer">-->
+                                <!--                <button type="button" class="btn btn-primary btn-sm" (click)="updateQuestion(question); editQ.hide();">Confirm</button>-->
+                                <!--                <button type="button" class="btn btn-secondary btn-sm" (click)="editQ.hide();">Cancel</button>-->
 
-                                            </div>
+                                <!--            </div>-->
 
-                                            <!--</ng-template>-->
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--</ng-template>-->
+                                <!--        </div>-->
+                                <!--    </div>-->
+                                <!--</div>-->
                             </li>
 
                         </ol>
@@ -535,3 +535,44 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
+<div mdbModal #editQ="mdb-modal" class="modal fade mymodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg mymodal" role="document">
+        <div class="modal-content mymodal">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Question</h4>
+            </div>
+            <div class="modal-body mymodal">
+                <form>
+                    <div class="form-group row">
+                        <label for="inputQuestionText" class="col-sm-3 col-form-label">Question</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputQuestionText" value="{{qEdit?.questionText}}" placeholder="Question" #newPatientFirstName>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <ol>
+                            <li type="a" *ngFor="let options of qEdit?.questionContent" style="margin-left: 2em">
+                                <label for="inputQuestionOption" class="col-sm-3 col-form-label"></label>
+                                <div class="col-sm-9">
+                                    <i class="fa fa-minus-circle" style="float: right; margin-right: 0.5em; margin-left: 0.5em;" (click)="deleteOption(options, qEdit)"></i>
+                                    <input type="text" class="form-control" id="{{qEdit?.questionContent.indexOf(options)}}" value="{{options}}" placeholder="option" #editOption>
+
+                                </div>
+                            </li>
+                        </ol>
+                        <button type="button" class="btn btn-primary createbtn" (click)="addOptionInEdit(qEdit);" style="margin-left: 2em; float: left;" *ngIf="qEdit?.questionCode == 'MC'">Add Option</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer mymodal">
+                <button type="button" class="btn btn-primary btn-sm" (click)="updateQuestion(qEdit); editQ.hide();">Confirm</button>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="editQ.hide();">Cancel</button>
+
+            </div>
+
+            <!--</ng-template>-->
+        </div>
+    </div>
+</div>

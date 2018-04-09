@@ -35,6 +35,7 @@ export class AssessmentTestComponent implements OnInit {
   physioRating: number =0;
   pageInfo: string;
   comments: string;
+  qEdit: any;
   tests = new MatTableDataSource();
   completedTests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "View Test Results"];  
@@ -293,6 +294,9 @@ export class AssessmentTestComponent implements OnInit {
     //content.show();
     
   }
+  setQedit(Q:any){
+    this.qEdit = Q;
+  }
   
   openListOfPlans(){
      var temp:any = document.getElementById('name');
@@ -503,7 +507,9 @@ export class AssessmentTestComponent implements OnInit {
   }
   addOptionInEdit(Q: any){
     var index = this.questions.indexOf(Q);
-    this.questions[index].questionContent.push("");
+    if(this.questions[index].questionContent.length<=10){
+      this.questions[index].questionContent.push("");
+    }
   }
   
   SwitchPageEvent(pageEvent: any, searchString: string) {
