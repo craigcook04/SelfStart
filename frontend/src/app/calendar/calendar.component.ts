@@ -8,6 +8,7 @@ import { AppointmentsService } from '../appointments.service';
 import { Subject } from 'rxjs/Subject';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
+import * as moment from 'moment';
 import { CalendarEvent,
          CalendarEventAction,
          CalendarEventTimesChangedEvent
@@ -27,6 +28,8 @@ import {
   format
 } from 'date-fns';
 import { CookieService } from 'ngx-cookie-service';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { PatientService } from '../patient.service';
 import { PhysiotherapistService } from '../physiotherapist.service';
 
 
@@ -46,6 +49,17 @@ export class CalendarComponent implements OnInit {
   
   view: string = 'month';
   viewDate: Date = new Date();
+
+  time: NgbTimeStruct = {hour: 8, minute: 30, second: 0};
+  timeTwo: NgbTimeStruct = {hour: 5, minute: 30, second: 0};
+  hourStep = 1;
+  minuteStep = 15;
+  secondStep = 0;
+  meridian = true;
+  meridianTwo = true;
+  justBooked = false;
+  myTabIndex = 0;
+  newTitle: any;
   
   activeDayIsOpen: boolean = false;
   myAppointmentDates: Object[];
@@ -56,6 +70,10 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[];
   today: any;
   physio: any;
+  newClientName: any;
+  myDate: Date;
+  newType: any;
+  newReason: any;
   timeOfDay: any;
   
   colors: any = {
@@ -79,12 +97,12 @@ export class CalendarComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.editEvent('Edited', event);
-      }
-    },
+    // {
+    //   label: '<i class="fa fa-fw fa-pencil"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.editEvent('Edited', event);
+    //   }
+    // },
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -102,6 +120,7 @@ export class CalendarComponent implements OnInit {
               private apptService: AppointmentsService,
               private modalService: NgbModal,
               private cookieService: CookieService,
+              private patientService: PatientService, 
               private physioService: PhysiotherapistService) { 
                 setInterval(() => {
                   this.today = new Date();
@@ -122,7 +141,7 @@ export class CalendarComponent implements OnInit {
 
   }
   
-  fetchEvents(): void {
+   fetchEvents(){
     const getStart: any = {
       month: startOfMonth,
       week: startOfWeek,
@@ -134,28 +153,58 @@ export class CalendarComponent implements OnInit {
       week: endOfWeek,
       day: endOfDay
     }[this.view];
+
+    var cur: any = moment(this.viewDate).startOf('month').add(1, 'day').toISOString();
     
-    this.events$ = this.apptService.GetAppointmentsByMonth("2018-04-04")
+    this.events$ = this.apptService.GetAppointmentsByMonth(cur)
     .pipe(map(({appointment}: {appointment: any[]}) => {
-      
+
+      var newTitle: string;
+
         return appointment.map((appointment: any) => {
-          
-          var temp: CalendarEvent = {
-            title: appointment.reason, //this.physioHomeService.GetClientName(appointment.userID)
-            start: new Date(appointment.date),
-            color: this.colors.blue,
-            actions: this.actions
-          };
-          this.events.push(temp);
-          console.log("event: ");
-          console.log(temp);
-          return temp;
-          
+
+        //setTimeout(() => {
+          var returnVal = this.apptService.GetPatientNames(appointment.userID).subscribe((data) => {
+            var retObj: any = data;
+            console.log("this is what is returned", retObj);
+            //console.log(retObj.patient.givenName)
+            if(appointment.type == "normal"){
+              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Regular";
+            }else if (appointment.type == "initial"){
+              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Initial";
+            }
+            else{
+              newTitle = "TIME OFF";
+            }
+            //console.log(newTitle);
+          });
+
+        //}, 5000);
+
+          let temp: CalendarEvent = {
+          title: "",
+          start: new Date(appointment.date),
+          color: this.colors.blue,
+          actions: this.actions,
+          meta: {
+            appointment: appointment
+          }
+        };
+
+        this.patientService.GetPatientInfo(temp.meta.appointment.userID).subscribe(data =>{
+          let obj: any = data;
+          temp.title = obj.patient.givenName + " " + obj.patient.familyName + " | " + temp.start.getHours() + ":" + temp.start.getMinutes();
+        })
+
+        this.events.push(temp);
+        //console.log("event: ");
+        //console.log(temp);
+        return temp;
         });
       })
     );
 
-      console.log(this.myAppointmentDates);
+      //console.log(this.myAppointmentDates);
     }
     
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -187,17 +236,23 @@ export class CalendarComponent implements OnInit {
       //this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
-    editEvent(action: string, event: CalendarEvent) {
-      this.modalService.open(this.editModal, { size: 'lg' });
-    }
+    // editEvent(action: string, event: CalendarEvent) {
+    //   this.modalService.open(this.editModal, { size: 'lg' });
+    // }
     
     deleteEvent(action: string, event: CalendarEvent) {
+      console.log(event);
       this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
       console.log(event);
       //this.modalData = { event, action };
+      //this.newClientName = 
+      // this.myDate = 
+      // this.newReason = 
+      // this.newTypethis.events
+
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
@@ -223,7 +278,7 @@ export class CalendarComponent implements OnInit {
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
         color: this.colors.red,
-        draggable: true,
+        draggable: false,
         resizable: {
           beforeStart: true,
           afterEnd: true
@@ -239,143 +294,15 @@ export class CalendarComponent implements OnInit {
       if(hour < 17){ return "Afternoon"}
       else{ return "Evening"};
     }
+
+    saveTimeOff(startDate: Date, endDate: Date){
+      this.apptService.saveTimeOff(startDate, endDate, this.time.hour, this.time.minute, this.timeTwo.hour, this.timeTwo.minute).subscribe(data => {
+        //console.log(data);
+
+        this.justBooked = false;
+      });
+      
+    }
     
       
 }
-    
-    // const params = new HttpParams()
-    //   .set(
-    //     'primary_release_date.gte',
-    //     format(getStart(this.viewDate), 'YYYY-MM-DD')
-    //   )
-    //   .set(
-    //     'primary_release_date.lte',
-    //     format(getEnd(this.viewDate), 'YYYY-MM-DD')
-    //   );
-      //.set('api_key', '0ec33936a68018857d727958dca1424f');
-    
-    
-    //this.events$ = 
-    
-    // this.apptService.GetAppointmentsByMonth(this.viewDate).subscribe(data =>{
-    //   console.log("HERE: " + data);
-    //   map(({ results }: { results: Appointment[] }) => {
-    //       return results.map((appointment: Appointment) => {
-    //         return {
-    //           reason: appointment.reason,
-    //           date: new Date(appointment.date),
-    //           color: colors.yellow,
-    //           meta: {
-    //             appointment
-    //           }
-    //         };
-    //       });
-    //     })
-    // })
-    
-  
-    /*this.appointments = [];
-    this.physioHomeService.GetAppointments().subscribe(data =>{
-      console.log(data);
-      var retObj:any = data;
-      this.appointments = retObj.appointment;
-      console.log(this.appointments);
-    });*/
-
-
-  
-  /*fetchEvents(){
-    this.appointments = [];
-    this.events = [];
-    this.physioHomeService.GetAppointments().subscribe(data =>{
-      console.log(data);
-      var retObj:any = data;
-      this.appointments = retObj.appointment;
-      console.log(this.appointments);
-      for(var i=0; appointment.length; i++){
-        events[i]=[{title:appointment[i].reason, color:blue, start:new Date(appointment[i].date)}];
-      }
-    });
-  }
-  
-  events: CalendarEvent[] = [
-    {
-      title: 'test',
-      color: colors.blue,
-      start: new Date("2018-04-20")
-    }
-  ];
-
-  eventClicked({ event }: { event: CalendarEvent }): void {
-    console.log('Event clicked', event);
-  }*/
-
-   //fetchEvents(): void {
-    /*const getStart: any = {
-      month: startOfMonth,
-      week: startOfWeek,
-      day: startOfDay
-    }[this.view];
-
-    const getEnd: any = {
-      month: endOfMonth,
-      week: endOfWeek,
-      day: endOfDay
-    }[this.view];*/
-  
-    /*this.asyncEvents$ = this.http.get<DateEvent[]>('api/appointment')
-      .pipe(map(res => { 
-        return res.map(appointment => { 
-          return {
-              title: appointment.reason,
-              start: new Date(appointment.date),
-              color: colors.blue,
-              meta: {
-                appointment
-              },
-              allDay: true
-            };
-        });
-      }));*/
-      
-  //   this.events$ = this.http
-  //     .get('api/appointment')
-  //     .pipe(
-  //       map(({ results }: { results: Appointment[] }) => {
-  //         return results.map((appointment: Appointment) => {
-  //           return {
-  //             title: appointment.reason,
-  //             start: new Date(appointment.date),
-  //             color: colors.blue,
-  //             meta: {
-  //               appointment
-  //             }
-  //           };
-  //         });
-  //       })
-  //     );
-  // }
-
-  /*dayClicked({
-    date,
-    events
-  }: {
-    date: Date;
-    events: Array<CalendarEvent<{ appointment: Appointment }>>;
-  }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-        this.viewDate = date;
-      }
-    }
-  }*/
-
-  /*eventClicked(event: CalendarEvent<{ appointment: Appointment }>): void {
-    
-  }*/

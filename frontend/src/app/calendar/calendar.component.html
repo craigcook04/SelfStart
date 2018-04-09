@@ -50,7 +50,7 @@
                 </div>
           </div>
         </div>
-        <mat-tab-group>
+        <mat-tab-group (selectedIndex)="myTabIndex" #par>
           <mat-tab label="Schedule">
             <mat-card style="min-height: 75vh;">
             <div>
@@ -99,42 +99,110 @@
             </div>
           </mat-card></mat-tab>
           <mat-tab label="Book Time Off">
-            <div class="col-md-6 col-sm-12 float-md-left d-inline mt-2">
+          <mat-card>
+          <mat-card-content class="d-flex">
+            <div class="col-md-6 col-sm-12 float-md-left mt-2">
+            
               <mat-card>
                 <mat-card-title>
-                  Beginning
+                  From
                 </mat-card-title>
-                <mat-card-content>
-                    
+                <mat-card-content style="height: auto;">
+                  <div class="form-group row">
+                    <!-- <label for="inputTargDate" class="col-sm-3 col-form-label"><b>From</b></label> -->
+                    <!-- <div class="col-sm-9">
+                        <div class="calFormat">
+                          <input class="form-control" value="" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                              </button>
+                            </div>
+                        </div>
+                    </div> -->
+                    <form class="form-inline">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input class="form-control" style="padding: 0; padding-bottom: 0.6rem; padding-top: 0.5rem; font-size: 1rem; line-height: 1;" placeholder="yyyy-mm-dd"
+                                   name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" #fromDate>
+                            <div class="input-group-append ml-0">
+                              <button class="btn btn-outline-primary" (click)="d.toggle()" type="button">
+                                Choose Date
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                  </div>
+                  <hr>
+                  <div class="form-group row">
+                    <!-- <label for="inputTargDate" class="col-sm-3 col-form-label"><b>From</b></label> -->
+                    <div class="col-sm-9">
+                      <ngb-timepicker [(ngModel)]="time" [seconds]="false"
+                      [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [meridian]="meridian"></ngb-timepicker>
+                    </div>
+                  </div>
                 </mat-card-content>
               </mat-card>
           </div>
           <div class="col-md-6 col-sm-12 float-md-right d-inline mt-2">
             <mat-card>
               <mat-card-title>
-                End
+                To
               </mat-card-title>
-              <mat-card-content>
-                  <!-- <div class="form-inline col">
-                      <div class="input-group">
-                        <input class="d-inline-flex" type="text" class="form-control" placeholder="HH">
-                        <span class="col-1">
-                            <fa name="clock"></fa>
-                        </span>
-                      </div>
-                    </div> -->
-                    <div class="md-form">
-                        <i class="fa fa-clock prefix"></i>
-                        <input mdbActive type="text" id="form2" class="form-control d-inline-flex">
-                        <label for="form2">HH</label>
+              <mat-card-content style="height: auto;">
+              <div class="form-group row">
+                <!-- <label for="inputTargDate" class="col-sm-3 col-form-label"><b>To</b></label> -->
+                <!-- <div class="col-sm-9">
+                    <div class="calFormat">
+                      <input class="form-control" value="" name="dpTwo" [(ngModel)]="modelTwo" ngbDatepicker #m="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" (click)="m.toggle()" type="button">
+                            <fa name="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></fa>
+                          </button>
+                        </div>
                     </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
+                </div> -->
+                <form class="form-inline">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input class="form-control" style="padding: 0; padding-bottom: 0.6rem; padding-top: 0.5rem; font-size: 1rem; line-height: 1;" placeholder="yyyy-mm-dd"
+                               name="dp" [(ngModel)]="modelTwo" ngbDatepicker #m="ngbDatepicker" #toDate>
+                        <div class="input-group-append ml-0">
+                          <button class="btn btn-outline-primary" (click)="m.toggle()" type="button">
+                            Choose Date
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+              </div>
+              <hr>
+              <div class="form-group row">
+                <!-- <label for="inputTargDate" class="col-sm-3 col-form-label"><b>From</b></label> -->
+                <div class="col-sm-9">
+                  <ngb-timepicker [(ngModel)]="timeTwo" [seconds]="false"
+                  [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [meridian]="meridianTwo"></ngb-timepicker>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+            </div>
+            <div class="col-md-6 col-sm-12 d-block mt-2">
+                <mat-card>
+                    <div class="row">
+                      <div class="col-12 d-block">
+                          <button class="btn btn-primary" (click)="saveTimeOff(fromDate.value, toDate.value);">
+                              Save Time Off
+                          </button>
+                      </div>
+                    </div>
+                  </mat-card>
+            </div>
+          </mat-card-content>
+          </mat-card>
           </mat-tab>
         </mat-tab-group>
-    <div style="min-height: 100vh;" class="page col-11">
-    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
