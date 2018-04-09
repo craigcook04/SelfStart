@@ -238,9 +238,10 @@
                   </div>
                   <div *ngIf="q.questionCode == 'MC'">
                     <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>
-                    <br>
-                        <div *ngFor="let qcontent of q.questionContent; let j = index" class="form-group row mcchoices">
-                            <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}}) {{qcontent}}</label>
+                        <div class="form-group row mcchoices">
+                          <ul>
+                            <li for="{{option}}" *ngFor="let qcontent of q.questionContent; let j = index" class="col-form-label mctext">{{NumToChar(j)}}) {{qcontent}}</li>
+                          </ul>
                         </div>
                   </div>
                   <br>

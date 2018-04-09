@@ -95,15 +95,24 @@
                   </div>
               </div>
           </mat-list-item>
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../settings']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-cog"></i>                        
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style=" color:white;">
+                     Settings
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
-          <mat-list-item [routerLinkActive]="['active']" >
-              <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../settings']">Settings</button></mat-list-item>
-            <br>
-            <mat-divider class="dividers"></mat-divider>
-        </mat-nav-list>
+          </mat-nav-list>
     </mat-sidenav>
-
   <mat-sidenav-content>
       <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
           <br>
@@ -237,7 +246,7 @@
                 </div> 
                   <mat-action-row>
                       <button class="btn btn-primary btn-sm patientbtn" data-toggle="modal" data-target="#updateModal" (click)="updateModal.show();SetPatient2(patient); " mdbRippleRadius>Edit</button>
-                      <button class="btn btn-delete btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="SetPatient2(patient); deleteModal.show()" mdbRippleRadius>Delete</button>   
+                      <button class="btn btn-danger btn-sm patientbtn" data-toggle="modal" data-target="#deleteModal" (click)="SetPatient2(patient); deleteModal.show()" mdbRippleRadius>Delete</button>   
                       <button class="btn btn-default btn-sm patientbtn" [routerLink]="['../reports/' + patient._id]">View Generated Report</button>
                   </mat-action-row>
             </mat-expansion-panel>
