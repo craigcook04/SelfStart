@@ -31,3 +31,7 @@ h3 {
     font-size: 1.2em;
     text-align: center;
 }
+
+.btn.btn-link{
+    color: #4285F4 !important;
+}
