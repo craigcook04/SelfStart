@@ -6,6 +6,7 @@ var router = express.Router();
 var Appointment = require('../models/appointment');
 let Account = require('../models/userAccount');
 var moment = require('moment');
+var UserAccount = require('../models/userAccount');
 moment().format();
 // var Session = require('../models/session');
 
@@ -156,7 +157,57 @@ router.route('/:appointment_id')
         );
     });
     
-
+router.route('/appointments/normal/:id')
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            if(account == null) {
+                response.send({success: true, message: 'couldnt find user', userID: request.params.id});
+                return;
+            }
+            
+            //console.log(request.body);
+            account.numbAppoint += 1;
+            //account.numbInitial += 1;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.json({account: account});
+            })
+        })
+    });
+    
+router.route('/appointments/initial/:id')
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            if(account == null) {
+                response.send({success: true, message: 'couldnt find user', userID: request.params.id});
+                return;
+            }
+            
+            //console.log(request.body);
+            
+            account.numbInitial += 1;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.json({account: account});
+            })
+        })
+    });
 router.route('/client/appointments/:id')
     .get(function(request, response) {
         Appointment.find({'userID': request.params.id}, function(err, appointments) {
