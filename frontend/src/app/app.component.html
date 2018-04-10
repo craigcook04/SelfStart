@@ -57,8 +57,7 @@
                 <li *ngIf="!showLogin && isClient" class="nav-item" id='right-items' [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['client/bookappointment']"><i class="fa fa-calendar"></i> Book Appointment</a>
                 </li>    
-                <li *ngIf="!showLogin && isPhysio" class="nav-item" id="right-items" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/physio/timeoff']"><i class="fa fa-calendar"></i>Book Time Off</a>
+                <li *ngIf="!showLogin && isPhysio" class="nav-item moveright" id="right-items" [routerLinkActive]="['active']">
                 </li>
                 <li *ngIf="!showLogin && isAdmin" class="nav-item  moveright" id='right-items' [routerLinkActive]="['active']">
 
