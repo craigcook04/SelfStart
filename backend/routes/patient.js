@@ -220,8 +220,21 @@ router.route('/:patient_id')
 var Session = require('../models/session');
 
 router.use(function(req, res, next){
-  console.log(req.header('Authorization'))
-  
+  console.log(req.header('Authorization'));
+  Session.findOne({nonce: req.header('Authorization')}, function(err, session) {
+      if(err) {
+          res.send(err);
+          return;
+      }
+      if(session == null) {
+        res.status(401).send({error: "Unauthorized to access this content"});
+        return;
+      }
+      else{
+          //the user has a valid session token
+          next();
+      }
+  });
 });
     
 //search for a specific patient
