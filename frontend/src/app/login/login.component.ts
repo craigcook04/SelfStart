@@ -62,11 +62,11 @@ export class LoginComponent implements OnInit {
             this.router.navigate([url]);
             this.appComponent.alterLoginState();
           }
-          else {
-            if(retObj.role == "US" && retObj.verified == false ) {
-              this.needToVerify = true;
-              return;
-            }
+          
+            // if(retObj.role == "US" && retObj.verified == false ) {
+            //   this.needToVerify = true;
+            //   return;
+            // }
             //expires in 1 hour, expires takes days so 1 hour is 1/24
             this.cookieService.set('ID', retObj.userID, 1/24);
             this.cookieService.set('session', retObj1.nonce, 1/24);
@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['../physio/home']);
               
             }
-          }
+          
         }
         else{ 
 
