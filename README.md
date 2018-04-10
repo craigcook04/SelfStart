@@ -1,7 +1,19 @@
 
 Loop Solutions Inc.
 ==================
+Important Information For SE3350 Tester: to be able to access the features of this site, you will need to have valid accounts. For the 
+physio and client, you can create one yourself or choose to use one we already have: 
 
+Client: username - clientcraig
+        password - 123
+        
+Physiotherapist: username - physiosam   
+                 password - 123
+                 
+For the administrator, one cannot be created but instead an already registered one needs to be used
+
+Admin: username - adminsam  
+       password - selfstart
 
 <img src="https://github.com/UWOECE-SE-Classes/Loop-Solutions-Inc/blob/master/Loop%20Solutions.jpg" width="400">
 
