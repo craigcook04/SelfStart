@@ -102,8 +102,6 @@ export class ExercisesComponent implements OnInit {
 
   updateExercise(id: string, exName: string, descrip: string, objs: string, actSteps: string, loc: string, freq: number, dur: number) {
 
-    console.log(this.uploader.queue);
-
     var fileNames = []; 
     for(var i = 0; i < this.uploader.queue.length; i++){
       fileNames[i] = this.uploader.queue[i].file.name;
