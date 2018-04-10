@@ -188,7 +188,7 @@ export class GenerateReportComponent implements OnInit {
       'elementHandlers': specialElementHandlers
     });
 
-    doc.save(this.currClient.familyName + "_" + this.currClient.givenName + ".pdf");
+    doc.save(this.patient.familyName + "_" + this.patient.givenName + ".pdf");
 
   }
 
@@ -209,9 +209,9 @@ export class GenerateReportComponent implements OnInit {
         });
 
         let pdf = doc.output('datauristring');
-        var pdfName = this.currClient.familyName + "_" + this.currClient.givenName + ".pdf"
+        var pdfName = this.patient.familyName + "_" + this.patient.givenName + ".pdf"
     
-        this.emailService.SendPDFToClient(pdf, this.currClient.email, message, pdfName).subscribe(data => {
+        this.emailService.SendPDFToClient(pdf, this.patient.email, message, pdfName).subscribe(data => {
         })
   }
 
