@@ -113,15 +113,12 @@ export class BookAppointmentComponent implements OnInit {
   }
 
   determineAge(){
-    console.log("HERE");
     var age = document.querySelector('dp').innerHTML;
-    console.log(age);
   }
 
 
   open(content: any, value: any) {
     content.show();
-    console.log(value);
     if(value === '0.01'){
       this.paymentAmount = value;
       this.currContent = "bookModal";
@@ -140,7 +137,6 @@ export class BookAppointmentComponent implements OnInit {
 
   saveAppointment(reason, other){
     this.apptService.AddAppointment(this.cookieService.get('ID'), reason, other).subscribe(data => {
-      console.log(data);
       
     })
   }
@@ -196,7 +192,6 @@ export class BookAppointmentComponent implements OnInit {
     }
 
     this.assessmentTestService.CompletedInitialAppointment(InitialiInjuryObject).subscribe(data => {
-      console.log(data);
     })
   }
   

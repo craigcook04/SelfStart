@@ -168,23 +168,10 @@ export class CalendarComponent implements OnInit {
 
         return appointment.map((appointment: any) => {
           
-         /* var temp: CalendarEvent = {
-            title: appointment.reason,//this.physioHomeService.GetClientName(appointment.userID)
-            start: new Date(appointment.date),
-            color: this.colors.blue,
-            actions: this.actions
-          };
-          this.events.push(temp);
-          console.log("event: ");
-          console.log(temp);
-          return temp;*/
-          
-
-        //setTimeout(() => {
+        
           var returnVal = this.apptService.GetPatientNames(appointment.userID).subscribe((data) => {
             var retObj: any = data;
-            //console.log("this is what is returned", retObj);
-            //console.log(retObj.patient.givenName)
+           
             if(appointment.type == "normal"){
               newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Normal";
             }else if (appointment.type == "initial"){
@@ -193,10 +180,8 @@ export class CalendarComponent implements OnInit {
             else{
               newTitle = "TIME OFF";
             }
-            //console.log(newTitle);
           });
 
-        //}, 5000);
 
           let temp: CalendarEvent = {
           title: "",
@@ -214,14 +199,11 @@ export class CalendarComponent implements OnInit {
         })
 
         this.events.push(temp);
-        //console.log("event: ");
-        //console.log(temp);
         return temp;
         });
       })
     );
 
-      //console.log(this.myAppointmentDates);
     }
     
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -285,12 +267,7 @@ export class CalendarComponent implements OnInit {
     open(content) {
       this.modalService.open(content, {size: "lg"});
     }
-    
-    /*updateAppt() {
-      this.physioHomeService.UpdateAppointment(id).subscribe(data => {
-        console.log(data);
-      });
-    }*/
+   
     
     deleteAppt() {
       if(this.dType == "normal"){
@@ -299,10 +276,8 @@ export class CalendarComponent implements OnInit {
               this.physioHomeService.InitialAppt(this.dUser);
             }
       this.physioHomeService.DeleteAppointment().subscribe(data => {
-        //console.log(data);
       });
       this.physioHomeService.SendEmail().subscribe(data => {
-        //console.log(data);
       });
     }
     
@@ -331,7 +306,6 @@ export class CalendarComponent implements OnInit {
 
     saveTimeOff(startDate: Date, endDate: Date){
       this.apptService.saveTimeOff(startDate, endDate, this.time.hour, this.time.minute, this.timeTwo.hour, this.timeTwo.minute).subscribe(data => {
-        //console.log(data);
 
         this.justBooked = false;
       });
