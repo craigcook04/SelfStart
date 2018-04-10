@@ -77,8 +77,6 @@ export class RehabPlansComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.rehabPlansService.SearchPlans(filterValue, 0).subscribe(data => {
-      console.log(data);
-      //this.total = (data.total);
       var retObj : any = data;
       this.total = retObj.total;
       
@@ -88,7 +86,6 @@ export class RehabPlansComponent implements OnInit {
   }
   
   createPlan(planName: string, descript: string, author: string, goalOfPlan: string){
-    //var timeFrame = year + '/' + month + '/' + day;
 
     var body = {
       name: planName,
@@ -96,14 +93,9 @@ export class RehabPlansComponent implements OnInit {
       authorName: author,
       goal: goalOfPlan
     };
-    console.log("hello");
-    console.log(body);
     this.rehabPlansService.CreatePlan(body).subscribe(data =>{
-      console.log(data);
-      //window.location.reload();
       
       this.rehabPlansService.getPlans().subscribe(data => {
-        console.log(data);
         this.total = data.total;
         this.rehabPlans = Object.assign([], data.docs)
       });
@@ -122,13 +114,11 @@ export class RehabPlansComponent implements OnInit {
   loadAllExercises(){
     this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
-      console.log(data);
       this.allExercises = Object.assign([], retObj.docs);
     });
   }
   
   updateExercises(){
-    console.log(this.allExercises);
   }
 
   goBack(){
@@ -136,22 +126,16 @@ export class RehabPlansComponent implements OnInit {
   }
   
   addExercise( exerciseToBeAdded: any, searchString: any){
-    console.log("in comp.");
-    console.log(exerciseToBeAdded);
     var flag = true;
-    console.log(this.exercisesInCurrPlan);
     for (var i =0; i<this.exercisesInCurrPlan.length; i++){
       if(this.exercisesInCurrPlan[i]._id == exerciseToBeAdded._id){
         flag = false;
-        console.log(flag);
       }
     }
-    console.log(this.exercisesInCurrPlan.indexOf(exerciseToBeAdded));
     var ID = this.currPlan._id;
     if (flag != false){
       this.rehabPlansService.addExercise(ID, exerciseToBeAdded).subscribe(data => {
         var retObj: any = data;
-        console.log(retObj);
         this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.rehabPlans = Object.assign([], retObj.docs);
@@ -166,7 +150,6 @@ export class RehabPlansComponent implements OnInit {
   removePlan(searchString){
     var ID = this.currPlan._id;
     this.rehabPlansService.removePlan(ID).subscribe(data => {
-      console.log(data);
      this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
           this.total = retObj.total;
@@ -177,14 +160,12 @@ export class RehabPlansComponent implements OnInit {
     
     });
     this.rehabPlansService.removeClientFromPlan(ID).subscribe(data => {
-      console.log(data);
     });
     
     
   }
 
   editThePlan(plan: any, newName: string, newAuthorName: string, newGoalName: string, newDescription: string, searchString){
-    console.log("in the function");
     plan.name = newName;
     plan.authorName = newAuthorName;
     plan.goal = newGoalName;
@@ -194,7 +175,6 @@ export class RehabPlansComponent implements OnInit {
     // plan.timeFrameToComplete = newTimeFrame;
 
     this.rehabPlansService.updatePlan(plan).subscribe(data =>{
-      console.log(data);
       //window.location.reload();
       this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
           var retObj : any = data;
@@ -207,12 +187,8 @@ export class RehabPlansComponent implements OnInit {
     
   }
   removeExercise(exer: any, searchString: any){
-    console.log("in the component")
-    console.log(this.currPlan.exerciseObjects.indexOf(exer));
     this.currPlan.exerciseObjects.splice(this.currPlan.exerciseObjects.indexOf(exer),1);
-    console.log(this.currPlan.exerciseObjects);
     this.rehabPlansService.updatePlan(this.currPlan).subscribe(data =>{
-      console.log(data)
       
       this.rehabPlansService.SearchPlans(searchString, this.offset).subscribe(data => {
         var retObj : any = data;
@@ -235,14 +211,11 @@ export class RehabPlansComponent implements OnInit {
     
     this.exerciseService.GetAllExercises().subscribe(data =>{
       var retObj: any = data;
-      console.log(data);
       this.allExercises = Object.assign([], retObj.docs);
     });
   } 
 
   switchPage(event: any, searchString: any){
-    console.log("teting123");
-    console.log(event);
     if (this.pageIndex<event.pageIndex){
       this.offset+=10;
       this.pageIndex++;
@@ -282,7 +255,6 @@ export class RehabPlansComponent implements OnInit {
   }
    SwitchPageEvent(pageEvent: any, searchString: string) {
     this.offset2 = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchExecises(searchString);
   }
 }

@@ -1,6 +1,6 @@
 {
    "/api/*": {
-       "target": "https://se3350-sperei32.c9users.io:8082",
+       "target": "https://se3350finalproject-sammallabone.c9users.io:8082",
        "secure": false,
        "changeOrigin": true,
        "logLevel": "info"

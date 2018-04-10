@@ -44,6 +44,8 @@ export class BookAppointmentComponent implements OnInit {
   hasMoreThanOneSymptom: boolean;
   hasOtherMedicalCondition: boolean;
   medicalTraumas: boolean;
+  needExplanation: boolean;
+  needDescription: boolean;
   appointmentsLeft: any;
   initialsLeft: any;
   upcomingAppoint: any;
@@ -111,15 +113,12 @@ export class BookAppointmentComponent implements OnInit {
   }
 
   determineAge(){
-    console.log("HERE");
     var age = document.querySelector('dp').innerHTML;
-    console.log(age);
   }
 
 
   open(content: any, value: any) {
     content.show();
-    console.log(value);
     if(value === '0.01'){
       this.paymentAmount = value;
       this.currContent = "bookModal";
@@ -138,7 +137,6 @@ export class BookAppointmentComponent implements OnInit {
 
   saveAppointment(reason, other){
     this.apptService.AddAppointment(this.cookieService.get('ID'), reason, other).subscribe(data => {
-      console.log(data);
       
     })
   }
@@ -157,10 +155,12 @@ export class BookAppointmentComponent implements OnInit {
 
   otherMedicalCondition(yesorno: boolean) {
     this.hasOtherMedicalCondition = yesorno;
+    this.needExplanation = yesorno;
   }
 
   otherMedicalTraumas(yesorno: boolean) {
     this.medicalTraumas = yesorno;
+    this.needDescription = yesorno;
   }
 
   SubmitInitialInjuryForm(injuryarea: string, painScale: string, started: string, dateStarted: string, describe: string, aggravates: string, easePain: string, morningPain: string, eveningPain: string, treatment: string, explainOther: string, symptoms: string, explainTraumas:string, occupation: string, hobbies: string, goals: string ) {
@@ -192,7 +192,6 @@ export class BookAppointmentComponent implements OnInit {
     }
 
     this.assessmentTestService.CompletedInitialAppointment(InitialiInjuryObject).subscribe(data => {
-      console.log(data);
     })
   }
   

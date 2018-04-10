@@ -7,25 +7,25 @@ var router = express.Router();
 var Administrator = require('../models/administrator');
 var UserAccount = require('../models/userAccount');
 const crypto = require('crypto');
-// var Session = require('../models/session');
+var Session = require('../models/session');
 
-// router.use(function(req, res, next){
-//   // do logging
-//   Session.findOne(req.params.token, function(err, session) {
-//       if(err) {
-//           res.send(err);
-//           return;
-//       }
-//       if(session == null) {
-//         res.status(401).send({error: "Unauthorized to access this content"});
-//         return;
-//       }
-//       else{
-//           //the user has a valid session token
-//           next();
-//       }
-//   });
-// });
+router.use(function(req, res, next){
+  // do logging
+  Session.findOne({nonce: req.header('Authorization')}, function(err, session) {
+      if(err) {
+          res.send(err);
+          return;
+      }
+      if(session == null) {
+        res.status(401).send({error: "Unauthorized to access this content"});
+        return;
+      }
+      else{
+          //the user has a valid session token
+          next();
+      }
+  });
+});
 
 router.route('/')
 

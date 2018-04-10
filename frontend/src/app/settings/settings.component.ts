@@ -45,6 +45,9 @@ export class SettingsComponent implements OnInit {
   provinces: any[];
   cities: any[];
   genders: any[];
+  needToChangeInfo: boolean;
+  infoUpdated: boolean;
+  couldntProcessUpdateRequest: boolean;
 
   constructor(private route: ActivatedRoute,
               private cookieService: CookieService,
@@ -54,28 +57,24 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     var url = this.route.routeConfig.path;
-    if(url.includes('admin')) {
-      this.userAccountsService.GetAdminByUserID().subscribe(data => {
-        console.log(data);
-        var retObj: any = data;
-        this.admin = retObj.admin;
-      })
-    }
-    else if(url.includes('client')) {
-      this.isClient = true;        
+    
+    if(url.includes('client')) {
+      this.isClient = true;   
+      this.isPhysio = false;  
+      this.patient = {};   
       this.patientService.GetPatient().subscribe(data => {
-        console.log(data);
         var retObj: any = data;
         this.patient = retObj.client.docs[0];
-        console.log("yo", retObj.client.docs[0])
               
       })
     }
     else {
+      this.isPhysio = true;
+      this.isClient = false;
+      this.physio = {};
       this.physiotherapistService.GetPhysioByUserID().subscribe(data => {
-        console.log(data);
         var retObj: any = data;
-        this.isPhysio = true;
+
         this.physio = retObj.physio;
       })
     }
@@ -98,12 +97,10 @@ export class SettingsComponent implements OnInit {
     this.patientService.GetCities(provinceId).subscribe(data => {
       var retObj: any = data;
       this.cities = Object.assign([], retObj.cities);
-      console.log(this.cities);
     })
   }
 
   SetProvinceBox(provinceBox, cityBox){
-    console.log(provinceBox, cityBox)
     // a new country has been selected so remove all entries from the province and city boxes 
     provinceBox.selectedIndex = -1;
     cityBox.selectedIndex = -1;
@@ -120,7 +117,6 @@ export class SettingsComponent implements OnInit {
      this.patientService.GetProvinces(countryId).subscribe(data => {
       var retObj: any = data;
       this.provinces = Object.assign([], retObj.province);
-      console.log(data);
       this.GetCities(retObj.province[0]._id);
     })
   }
@@ -134,13 +130,15 @@ export class SettingsComponent implements OnInit {
     this.patientService.GetCities(provinceId).subscribe(data => {
       var retObj: any = data;
       this.cities = Object.assign([], retObj.cities);
-      console.log(this.cities);
     })
+  }
+
+  closeWarning() {
+    this.cannotContinue = false;
   }
 
   ResetPassword(password: string, repeatPassword: string, tempPassword: string) {
     var cannotContinue = false;
-    console.log('hello');
     if(!tempPassword) {
       var tempPasswordBox = document.getElementById('inputTempPassword').style.borderColor = 'red';
       cannotContinue = true;
@@ -159,7 +157,6 @@ export class SettingsComponent implements OnInit {
     }
 
     if(password != repeatPassword && !cannotContinue) {
-      console.log('passwords dont match');
       this.passwordsDontMatch = true;
       return;
     }
@@ -169,14 +166,11 @@ export class SettingsComponent implements OnInit {
     }
 
     var userId = this.cookieService.get('ID');
-    console.log(userId);
     this.patientService.GetSalt(userId).subscribe(data => {
       var retObj: any = data;
-      console.log(retObj)
       if(retObj.success == true){
         this.patientService.ChangePassword(userId, password, tempPassword, retObj.salt).subscribe(data => {
           var retObj: any = data;
-          console.log("returned", data);
           if(retObj.success) {
             this.successfullyChangedPassword = true;            
           }
@@ -222,7 +216,6 @@ export class SettingsComponent implements OnInit {
     var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
     this.cannotContinue = false;
-    console.log(phoneNumber, newAddress)
     if(badFormatWithNumbers.test(firstName) || !firstName) {
       var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'red';    
       this.invalidFirstname = true;
@@ -243,7 +236,6 @@ export class SettingsComponent implements OnInit {
 
     if(!newAddress) {
       var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'red';
-      console.log(newAddress);
       this.invalidAddress = true;
       this.cannotContinue = true;
     }
@@ -270,21 +262,65 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.showSuccess = true;
+    this.showSuccess = false;
+    this.showFailure = false;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
-      console.log(data);
 
       if(data.success) {
         //the update was successful
         this.showSuccess = true;
-        var closebtn: any= document.getElementById('closeBtn');
+        //var closebtn: any= document.getElementById('closeBtn');
         this.ResetErrorMessages();
-        closebtn.click();
+        //closebtn.click();
       }
       else{
         //it was not successful
         this.showFailure = true;
       }
+    })
+
+  }
+
+  resetPhysioErrorMessages() {
+    var firstNameBox = document.getElementById('inputPhysioFirstName').style.borderColor = 'rgba(0,0,0,.15)';    
+    var lastNameBox = document.getElementById('inputPhysioLastName').style.borderColor = 'rgba(0,0,0,.15)'; 
+    var emailBox = document.getElementById('inputPhysioEmail').style.borderColor = 'rgba(0,0,0,.15)'; 
+  }
+
+  UpdatePhysio(firstname, lastname, email) {
+    var cannotContinue = false;
+    this.infoUpdated = false;
+    this.couldntProcessUpdateRequest = false;
+    this.resetPhysioErrorMessages();
+    if(!firstname) {
+      var firstNameBox = document.getElementById('inputPhysioFirstName').style.borderColor = 'red';       
+      cannotContinue = true;
+    }
+
+    if(!lastname) {
+      var lastNameBox = document.getElementById('inputPhysioLastName').style.borderColor = 'red';       
+      cannotContinue = true;
+    }
+
+    if(!email) {
+      var emailBox = document.getElementById('inputPhysioEmail').style.borderColor = 'rgba(0,0,0,.15)';       
+      cannotContinue = true;
+    }
+
+    if(cannotContinue) {
+      this.needToChangeInfo = true;
+      return;
+    }
+
+    this.physiotherapistService.PhysioUpdateOwnInformation(firstname, lastname, email).subscribe(data => {
+      var retObj: any = data;
+      if(retObj.success == true) {
+        this.infoUpdated = true;
+      }
+      else {
+        this.couldntProcessUpdateRequest = true;
+      }
+
     })
 
   }

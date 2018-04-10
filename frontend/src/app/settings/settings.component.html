@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+  <mat-sidenav *ngIf="isClient" #sidenav mode="side" opened="true" style="background-color: #0275d8;">
     <mat-nav-list style="top: -10px;">
         <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../home']">
           <div class="row form-inline">
@@ -114,6 +114,121 @@
     <br>
     <mat-divider class="dividers"></mat-divider>
     </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav *ngIf="isPhysio" #sidenav mode="side" opened="true" style="background-color: #0275d8;">
+      <mat-nav-list style="top: -10px;">
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../home']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-th-large"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                      Dashboard
+                    </h5>
+                </div>
+            </div>
+          </mat-list-item>
+          <!-- <br class="customBr"> -->
+        <mat-divider class="dividers1"></mat-divider>
+        <mat-list-item [routerLinkActive]="['active']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-calendar"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        Calendar
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+        <!-- <br class="customBr"> -->
+        <mat-divider class="dividers1"></mat-divider>
+        <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../clients']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-address-book"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        Client Profiles
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+        <!-- <br class="customBr"> -->
+        <mat-divider class="dividers1"></mat-divider>
+        <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../exercises']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-id-card"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        Exercises
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+        <!-- <br class="customBr"> -->
+        <mat-divider class="dividers1"></mat-divider>
+        <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../rehabplans']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-archive"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style=" color:white;">
+                      Rehabilitation Plans
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+        <!-- <br class="customBr"> -->
+        <mat-divider class="dividers1"></mat-divider>
+        <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../assessmenttests']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-paste"></i>
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="color:white;">
+                      Assessment Tests
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+        <!-- <br class="customBr"> -->
+        <mat-divider class="dividers1"></mat-divider>
+        <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../settings']">
+          <div class="row form-inline">
+              <div class="col-2">
+                  <h5 class="btn-block" style="text-align: center; color:white;">
+                      <i class="fa fa-cog"></i>                        
+                  </h5>      
+              </div>
+              <div class="col">
+                  <h5 class="btn-block" style="margin-left: 10px; color:white;">
+                   Settings
+                  </h5>
+              </div>
+          </div>
+      </mat-list-item>
+        <mat-divider class="dividers1"></mat-divider>
+      </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
@@ -235,23 +350,83 @@
                           <hr>
                           <br>
                         </form>
+                        <div *ngIf="showSuccess" class="success">You have successfully updated your information</div>
+                        <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
+                        <button type="button" class="col-3 btn btn-primary btn-md" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, patient?.country?._id, patient?.province?._id,patient?.city?._id, newGender.value, newAddress.value); ">Confirm</button>      
                       </mat-card>
                       <br>
-                        <div *ngIf="cannotContinue" class="fixchanges"><p class="failureMessage">Error! Please fix the errors in the form before continuing</p></div>
-                        <button type="button" class="col-3 btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName.value, newLastName.value, patient.ID, newEmail.value, newBirthDate.value, newPostalCode.value, newPhoneNumber.value, newOthers.value, newCountry.value, newProvince.value, newCity.value, newGender.value, newAddress.value); ">Confirm</button>      
+                     </div>
                     </div>
-                    </div>
-                  <div *ngIf="isPhysio"></div>
+                  <div *ngIf="isPhysio">
+                      <mat-card class="col-11 justify-content-center" style="margin-left: auto; margin-right: auto; text-align: center;">
+                          <mat-card-title>
+                              <b  style="color: #0275d8">
+                                  Update Account Information
+                              </b>
+                          </mat-card-title>
+                          <br>
+                        <form class="col-11">
+                            <div class="form-inline row">
+                                <label for="inputPhysioFirstName" class="col-2">First Name</label>
+                                <div class="col-9">
+                                  <input type="text" id="inputPhysioFirstName" placeholder="First Name" value="{{physio.givenName}}" (keyup)="closeWarning()" #newPhysioFirstName>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputPhysioLastName" class="col-2">Last Name</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputPhysioLastName" placeholder="Last Name" value="{{physio.familyName}}" (keyup)="closeWarning()" #newPhysioLastName>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputPhysioEmail" class="col-2">Email</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputPhysioEmail" placeholder="Email" value="{{physio.email}}" (keyup)="closeWarning()" #newPhysioEmail>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputDateHired" readonly class="col-2">Date Hired</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputDateHired" readonly placeholder="Date Hired" value="{{physio.dateHired | date: 'longDate'}}" (keyup)="closeWarning()" placement="left" ngbTooltip="This value cannot be changed">
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-inline row">
+                                  <label for="inputDateFinished" class="col-2">Date Finished</label>
+                                  <div class="col-9">
+                                    <input type="text" id="inputDateFinished" readonly placeholder="Date Finished" value="{{physio.dateFinished | date: 'longDate'}}" (keyup)="closeWarning()" placement="left" ngbTooltip="This value cannot be changed">
+                                  </div>
+                              </div>
+                              <hr>
+                              <br>
+                              <div *ngIf="needToChangeInfo">
+                                  <p>Please fix the errors in the provided field to update your information.</p>
+                              </div>
+                              <div *ngIf="couldntProcessUpdateRequest">
+                                  <p>Sorry! We could not process your request. Please try again later.</p>
+                              </div>
+                              <div *ngIf="infoUpdated" class="success">
+                                  <p>You have successfully updated your information.</p>
+                              </div>
+                              <br>
+                              <button class="btn col-2 btn-sm btn-default" (click)="UpdatePhysio(newPhysioFirstName.value, newPhysioLastName.value, newPhysioEmail.value)">Update Information</button>                              
+                          </form>
+                        </mat-card>
+                  </div>
                   <br>
                   </mat-tab>
             <mat-tab label="Change Password">
                   <mat-card style="min-height: 100vh; margin-left: auto; margin-right: auto; text-align: center;" class="page col-11">
-                        <mat-card-title>
+                      <br>    
+                      <mat-card-title>
                             <b style="color: #0275d8">
                                 Change Password
                             </b>
                         </mat-card-title>
-                        <br>
+                        
                     <div class="col-11" style="margin-left: auto; margin-right: auto; text-align: center;" *ngIf="!successfullyChangePassword">
                       <mat-card-subtitle>
                         <p>Please enter your old password and the new password you would like for your account.</p>
@@ -286,17 +461,15 @@
                       <div *ngIf="incorrectOldPassword">
                         <p>The old password that you inputted is incorrect</p>
                       </div>
-                      <br>
                       <hr>
+                      <div class="success" *ngIf="successfullyChangedPassword">
+                          <h4>You have successfully updated your password</h4>
+                        </div>
                       <mat-card-actions align="center">
-                        <button class="col-3 btn btn-sm btn-primary" (click)="ResetPassword(password.value, repeatPassword.value, tempPassword.value)">Change</button>
+                        <button class="col-3 btn btn-md btn-primary" (click)="ResetPassword(password.value, repeatPassword.value, tempPassword.value)">Change</button>
                       </mat-card-actions>
                     </div>
-                    <div class="success" *ngIf="successfullyChangedPassword">
-                      <h4>You have successfully updated your password</h4>
-                      <p>You can now log in</p>
-                      <button class="btn btn-sm btn-primary">Return to Log In</button>
-                    </div>
+                    
                   </mat-card>
                   <br>
             </mat-tab>

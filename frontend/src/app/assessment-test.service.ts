@@ -25,10 +25,12 @@ export class AssessmentTestService {
         var url = '/api/assessmentTest?s=name&sortorder=asc&offset=0';
         return this.http.get(url);
     }
+    
     search(searchString: string, searchArea: string, offset, ascvsdesc){
         var url = '/api/assessmentTest?q=' + searchString + '&s=' + searchArea + '&sortorder=' + ascvsdesc + '&offset=' + offset;
         return this.http.get(url);
     }
+
     createPlanwithAssignedTest(name1: string, description1: string, questions1: any[], clientId: string){
         var url = '/api/assessmentTest';
         var body = {
@@ -100,7 +102,6 @@ export class AssessmentTestService {
     CompletedInitialAppointment(completedTest: any) {
         var url = '/api/assessmentTest/initial/completed';
         var body = completedTest;
-        console.log(body)
         return this.http.post(url, body);
     }
 
@@ -126,8 +127,6 @@ export class AssessmentTestService {
         return this.http.get(url);
     }
     linktoPlan(ID: any, rehabID:any){
-        console.log("rehabid: " + rehabID);
-        console.log("ass testId: " +ID)
         var url = '/api/rehabPlans/assignTest/'+rehabID;
         var body = {
             assessmentTests: ID

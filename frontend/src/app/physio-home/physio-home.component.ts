@@ -52,13 +52,17 @@ export class PhysioHomeComponent implements OnInit {
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
       var obj: any = data;
-      obj = obj.physio;
-      this.physio = obj;
+      this.physio = obj.physio;
 
-      this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
-        let obj: any = data;
-        this.numbPatients = obj.total;
-      })
+      // this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
+      //   let obj: any = data;
+      //   this.numbPatients = obj.total;
+      // })
+
+      this.patientService.GetAllPatients().subscribe(data => {
+        var retObj: any = data;
+        this.numbPatients = retObj.total;
+      });
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;

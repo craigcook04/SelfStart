@@ -62,9 +62,7 @@ export class PhysiotherapistService {
 
   updatePhysio(givenName1: string, familyName1: string, email1: string, ID1: string, dateHired1: string, dateFinished1: string, _id1: string){
       //var string1 = therapist._id;
-      //console.log(string1);
       var url = '/api/physiotherapist/' + _id1;
-      console.log(url);
       var body = {
           ID: ID1,
           familyName: familyName1,
@@ -88,5 +86,18 @@ export class PhysiotherapistService {
 
     var url = '/api/physiotherapist/getphysio/' + userID;
     return this.http.get(url);
+  }
+
+  PhysioUpdateOwnInformation(firstname: string, lastname: string, email: string) {
+      var userID = this.cookieService.get('ID');
+      var url = '/api/physiotherapist/update/' + userID;
+      
+      var body = {
+        firstname: firstname,
+        lastname: lastname,
+        email: email
+      }
+
+      return this.http.put(url, body);
   }
 }

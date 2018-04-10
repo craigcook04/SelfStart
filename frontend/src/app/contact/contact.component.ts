@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  messageSent: boolean;
+  constructor(private emailService: EmailService) { }
 
   ngOnInit() {
+  }
+
+  SendQuestion(firstname, lastname, email, question) {
+    this.messageSent = false;
+    if(!firstname || !lastname || !email || !question) {
+      return;
+    }
+
+    this.emailService.AskAnExpert(firstname, lastname, email, question).subscribe(data => {
+      this.messageSent = true;
+    })
   }
 
 }

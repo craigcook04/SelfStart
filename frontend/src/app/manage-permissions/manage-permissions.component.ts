@@ -23,7 +23,6 @@ export class ManagePermissionsComponent implements OnInit {
     this.difPermissions = [];
     this.rolesService.GetAllRoles().subscribe(data => {
       var retObj: any = data;
-      console.log(retObj);
       this.roles = retObj.roles;
 
       this.rolesService.GetAllPermissions().subscribe(data => {
@@ -75,7 +74,6 @@ export class ManagePermissionsComponent implements OnInit {
     this.currentRole.permission.push(newPermission);
     this.setRolePermissions(this.currentRole);
     this.rolesService.UpdateRolePermissions(this.currentRole._id, this.currentRole.permission).subscribe(data => {
-      console.log(data);
     })
   }
 
@@ -90,7 +88,6 @@ export class ManagePermissionsComponent implements OnInit {
     this.currentRole.permission.splice(this.currentRole.permission.indexOf(newPermission), 1);
     this.setRolePermissions(this.currentRole);
     this.rolesService.UpdateRolePermissions(this.currentRole._id, this.currentRole.permission).subscribe(data => {
-      console.log(data);
     })
   }
 }

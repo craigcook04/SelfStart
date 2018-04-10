@@ -7,25 +7,26 @@ var AssessmentTest = require('../models/assessmentTest');
 var CompletedAssessment = require('../models/completedAssessmentTest');
 var InitialIntake = require('../models/initialIntake');
 let Account = require('../models/userAccount');
-// var Session = require('../models/session');
+var Session = require('../models/session');
 
-// router.use(function(req, res, next){
-//   // do logging
-//   Session.findOne(req.params.token, function(err, session) {
-//       if(err) {
-//           res.send(err);
-//           return;
-//       }
-//       if(session == null) {
-//         res.status(401).send({error: "Unauthorized to access this content"});
-//         return;
-//       }
-//       else{
-//           //the user has a valid session token
-//           next();
-//       }
-//   });
-// });
+
+router.use(function(req, res, next){
+  // do logging
+  Session.findOne({nonce: req.header('Authorization')}, function(err, session) {
+      if(err) {
+          res.send(err);
+          return;
+      }
+      if(session == null) {
+        res.status(401).send({error: "Unauthorized to access this content"});
+        return;
+      }
+      else{
+          //the user has a valid session token
+          next();
+      }
+  });
+});
 
 router.route('/')
 
@@ -318,7 +319,7 @@ router.route('/completedtest/:id')
         completedTest.completed = true;
         let date = new Date();
         completedTest.dateCompleted = date;
-        completedTest.physioRate = request.body.physioRate;
+        completedTest.physioRate = 0;
         completedTest.physioDescription = '';
         completedTest.questions = request.body.questions;
         completedTest.userID = request.params.id;

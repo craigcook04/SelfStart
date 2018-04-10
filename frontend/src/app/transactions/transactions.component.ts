@@ -33,7 +33,6 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
-    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       var obj: any = data;
       obj = obj.patient;
@@ -124,7 +123,6 @@ export class TransactionsComponent implements OnInit {
         this.paymentService.GetPaymentHistory(this.cookieService.get('ID')).subscribe(data =>{
           let obj: any = data;
           this.payments = obj.payments;
-          console.log(this.payments);
         })
         let count1, count2: number = 0;
         if(this.paymentAmount === '550') { count1 = 6; count2 = 1};
@@ -132,7 +130,6 @@ export class TransactionsComponent implements OnInit {
         if(this.paymentAmount === '150') { count2 = 1;};
         if(this.paymentAmount === '75')  { count1 = 1;};
         this.accountService.SetAppointmentCounter(this.cookieService.get('ID'), count1, count2).subscribe(data =>{
-          console.log(data);
         })
       })
       return;

@@ -1,5 +1,5 @@
 .assessTest {
-    width: 60%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     
@@ -49,4 +49,33 @@
     width: 85%;
     margin-top: 1%;
     margin-left: 10%;
+}
+
+li > a {
+    color: black;
+}
+
+.divider {
+    border-color: #4b0082;
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.forgotpass {
+    font-size: 16px;
+}
+
+.backtoblack {
+    color: black;
+    text-align: center;
+    font-size: 40px;
+    font-weight: normal;
+}
+
+
+.title {
+    font-size: 70px;
 }

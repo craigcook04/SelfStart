@@ -338,5 +338,112 @@ router.route('/update/sendpdf')
         });
     });
     
+router.route('/rehabplan/notify')
+    .post(function(request, response) {
+        var url = ""; //fix this
+        var body = `<h1>New Rehab Plan</h1>
+                    <p>Hello ${request.body.name}!</p>
+                    <p>You have recently been assigned the exercise menu: ${request.body.rehabPlanName}</p>
+                    <p>Please sign in to your account on Self Start to view the new exercise menu</p>
+                    <p><a href="${url}">Click here</a> to return home to Self Start </p>
+                    <p>Have a nice day! </p>
+                    <br>
+                    <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" />
+                    
+                    `;
+                    
+        console.log(request.body.toEmail);
+        var to = request.body.toEmail;
+        var mailOptions = {
+            to: to,
+            subject: "SelfStart - New Exercise Menu",
+            html: body,
+        };
+        
+        smtpTransport.sendMail(mailOptions, function(error, resp) {
+            if(error) {
+                response.send(error);
+                return;
+            }
+            
+            console.log(resp);
+            response.send({success: true, message: "Sent Mail!"});
+        });
+    });
+    
+router.route('/assessmenttest/notify/:plan_id')
+    .post(function(request, response) {
+        Patient.find({"rehabPlan": request.params.plan_id}, function (error, patients) {
+            if (error) {
+               response.send({error: error});
+            }
+            else {
+               var url = ""; //fix this
+               
+                    
+                console.log(request.body.toEmail);
+                for(var i = 0; i < patients.length; i++) {
+                    var body = `<h1>New Rehab Plan</h1>
+                    <p>Hello ${patients[i].givenName} ${patients[i].familyName}!</p>
+                    <p>You have recently been assigned a new Assessment Test: ${request.body.assessmenttest}</p>
+                    <p>Please sign in to your account on Self Start to complete the new assessment test</p>
+                    <p><a href="${url}">Click here</a> to return home to Self Start </p>
+                    <p>Have a nice day! </p>
+                    <br>
+                    <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" />
+                    
+                    `;
+                    var to = patients[i].email;
+                    var mailOptions = {
+                        to: to,
+                        subject: "SelfStart - Assessment Test Assigned",
+                        html: body,
+                    };
+                    
+                    smtpTransport.sendMail(mailOptions, function(error, resp) {
+                        if(error) {
+                            response.send(error);
+                            return;
+                        }
+                        
+                        console.log(resp);
+                       
+                    });
+                }
+                
+                 response.send({success: true, message: "Sent Mail!"});
+            }
+        });
+    });
+    
+router.route('/expert/ask')
+    .post(function(request, response) {
+        var url = ""; //fix this
+        var body = `<h2>Ask an Expert Question</h2>
+                    <p>Question from: ${request.body.name}</p>
+                    <p>Provided reply address: ${request.body.email} </p>
+                    <p><b>Question</b></p>
+                    <p>${request.body.question}</p>
+                    
+                    `;
+                    
+        var to = "loopsolutionsuwo@gmail.com"
+        var mailOptions = {
+            to: to,
+            subject: "SelfStart - New Exercise Menu",
+            html: body,
+        };
+        
+        smtpTransport.sendMail(mailOptions, function(error, resp) {
+            if(error) {
+                response.send(error);
+                return;
+            }
+            
+            console.log(resp);
+            response.send({success: true, message: "Sent Mail!"});
+        });
+    });
+    
 module.exports = router;
 

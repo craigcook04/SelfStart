@@ -45,7 +45,6 @@ export class ClientsOfTherapistComponent implements OnInit {
   
   ngOnInit() {
     this.physioId=((this.location.path()).split("/",3))[2];
-    console.log(this.physioId);
     this.physiotherapistService.getInfo(this.physioId).subscribe(data =>{
       var retObj: any = data;
       this.therapist = Object.assign([], retObj.physiotherapist);
@@ -55,12 +54,10 @@ export class ClientsOfTherapistComponent implements OnInit {
       console.log(data);
       var retObj: any = data;
       this.clients = Object.assign([], retObj.docs);
-      console.log('hello');
-      // console.log(this.patients);
+      
     });
     this.patientService.GetAllPatients().subscribe(data => {
         this.allClients = Object.assign([], data.docs);
-        console.log(data);
     });
 
     this.patientService.GetGenders().subscribe(data => {
@@ -80,7 +77,6 @@ export class ClientsOfTherapistComponent implements OnInit {
     else{
       this.activated = client;
     }
-    console.log(this.activated);
     
   }
   open(content) {
@@ -94,7 +90,6 @@ export class ClientsOfTherapistComponent implements OnInit {
     })
   }
   clear(){
-    console.log("in here");
   
     
   }
@@ -162,7 +157,6 @@ export class ClientsOfTherapistComponent implements OnInit {
 
   }
    deletePatient(ID: string) {
-    console.log(ID);
     this.patientService.DeletePatient(ID).subscribe(data => {
       var retObj: any = data;
       if(retObj.success){
@@ -175,7 +169,6 @@ export class ClientsOfTherapistComponent implements OnInit {
         this.patientService.getPhysioPatients(this.physioId).subscribe(data => {
           var retObj: any = data;
           this.clients = Object.assign([], retObj.patient);
-          console.log(data);
         });
       }
       else { 
@@ -250,7 +243,6 @@ export class ClientsOfTherapistComponent implements OnInit {
     others = others.value;
     var address: any = document.getElementById('inputAddress');
     address = address.value;
-   // console.log(healthCardNumber, maritalStatus, occupation);
     this.ResetErrorMessages();
     var cannotContinue: boolean = false; //if there are any errors in the form this stops from sending the request from the server
     if(password != repeatPassword || !password || !repeatPassword){
@@ -333,18 +325,14 @@ export class ClientsOfTherapistComponent implements OnInit {
     }
 
     this.newClientService.CreateClientWithPhysioAssigned(username, password, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city,this.physioId,address).subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
         this.newClientService.SendToVerification(retObj.patient._id, email,firstName,lastName).subscribe(data => {
-          console.log(data);
         })
          this.patientService.getPhysioPatients(this.physioId).subscribe(data => {
-           console.log(data);
            var retObj: any = data;
           this.clients = Object.assign([], retObj.docs);
-          console.log('hello');
-      // console.log(this.patients);
+         
     });
       }
       else {
