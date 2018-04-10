@@ -35,6 +35,8 @@ export class AssessmentTestComponent implements OnInit {
   offset2: number = 0;
   physioRating: number =0;
   pageInfo: string;
+  comments: string;
+  qEdit: any;
   tests = new MatTableDataSource();
   completedTests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "View Test Results"];  
@@ -82,6 +84,11 @@ export class AssessmentTestComponent implements OnInit {
       var retObj: any = data;
       this.length = retObj.total;
       this.tests.data = retObj.docs;
+
+      console.log(this.tests);
+      console.log(data);
+      console.log(this.tests);    
+      //khjcgfhghggdhgfh
     });
     this.assessmentTestService.getAllCompleted().subscribe(data =>{
       var retObj: any = data;
@@ -148,6 +155,7 @@ export class AssessmentTestComponent implements OnInit {
     this.manageTests = false;
     this.showPatients = false;
     var temp: string = "How Do you Feel Today"
+    this.questions = [];
     
     var tempQuestion = {
       questionText: temp,
@@ -293,6 +301,11 @@ export class AssessmentTestComponent implements OnInit {
   }
   open(content) {
     this.modalService.open(content, {size: 'lg'});
+    //content.show();
+    
+  }
+  setQedit(Q:any){
+    this.qEdit = Q;
   }
   
   openListOfPlans(){
@@ -403,6 +416,7 @@ export class AssessmentTestComponent implements OnInit {
       console.log(this.tests);
       
     });
+    this.questions = [];
   }
   view(planSel: any){
     console.log("wohooo");
@@ -503,7 +517,9 @@ export class AssessmentTestComponent implements OnInit {
   }
   addOptionInEdit(Q: any){
     var index = this.questions.indexOf(Q);
-    this.questions[index].questionContent.push("");
+    if(this.questions[index].questionContent.length<=10){
+      this.questions[index].questionContent.push("");
+    }
   }
   
   SwitchPageEvent(pageEvent: any, searchString: string) {
@@ -562,26 +578,36 @@ export class AssessmentTestComponent implements OnInit {
     console.log(index);
     this.physioRating = index;
   }
-  assignFollowUp(physioComments: string){
+  assignFollowUp(){
     //this.patientService.
-    var pat: any;
-    var temp:any = this.selectedPlan;
-    this.patientService.GetAllPatients().subscribe(data => {
-      var retObj: any = data.docs;
-      pat = retObj[0];
-      console.log(pat);
-      console.log(temp);
-      console.log(physioComments)
-      this.assessmentTestService.completeTest(temp.name, temp.description, temp.dateCompleted, temp.dateCreated, temp.questions, this.physioRating, physioComments, pat._id).subscribe(data =>{
-        console.log(data);
-      });
-    });
+    // var pat: any;
+    // var temp:any = this.selectedPlan;
+    // this.patientService.GetAllPatients().subscribe(data => {
+    //   var retObj: any = data.docs;
+    //   pat = retObj[0];
+    //   console.log(pat);
+    //   console.log(temp);
+    //   console.log(physioComments)
+    //   this.assessmentTestService.completeTest(temp.name, temp.description, temp.dateCompleted, temp.dateCreated, temp.questions, this.physioRating, physioComments, pat._id).subscribe(data =>{
+    //     console.log(data);
+    //   });
+    // });
     
-    
-  }
-  closeInjury(physioComments:string, finalThoughts:string){
     var temp: any = this.selectedPlan;
-    this.assessmentTestService.closeInjury(physioComments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
+    this.assessmentTestService.assignFollowUp(this.comments,this.physioRating, temp._id).subscribe(data =>{
+      console.log(data);
+      this.completedTests = new MatTableDataSource();
+      this.assessmentTestService.getAllCompleted().subscribe(data =>{
+        var retObj: any = data;
+        this.length1 = retObj.total;
+        this.completedTests.data = retObj.docs;
+        console.log(data);
+      })
+    });
+  }
+  closeInjury(finalThoughts:string){
+    var temp: any = this.selectedPlan;
+    this.assessmentTestService.closeInjury(this.comments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
       console.log(data);
       this.completedTests = new MatTableDataSource();
       this.assessmentTestService.getAllCompleted().subscribe(data =>{
@@ -593,5 +619,7 @@ export class AssessmentTestComponent implements OnInit {
     });
   }
   
-  
+  setphysioComments(comments: string){
+    this.comments = comments;
+  }
 }

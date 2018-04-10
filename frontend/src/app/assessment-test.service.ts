@@ -82,7 +82,15 @@ export class AssessmentTestService {
         return this.http.post(url, body);
     }
     
-
+    assignFollowUp(physioComments: string, physioRating: number, testId: any){
+        var url = '/api/assessmentTest/assignFollowup/' + testId;
+        var body = {
+            physioDescription: physioComments,
+            physioRate: physioRating,
+            //finalThoughts: finalThoughts
+        }
+        return this.http.put(url,body);
+    }
 
     GetCompletedTests(id: string){
         var url = '/api/assessmentTest/getresults/' + id;

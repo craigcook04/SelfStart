@@ -1,4 +1,3 @@
-
 <mat-sidenav-container style="min-height: 100vh;">
 
   <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
@@ -466,7 +465,7 @@
                                 <div *ngIf="cannotContinue" class="fixchanges">
                                   <p class="failureMessage">Error! Please fix the errors in the form before continuing</p>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName1.value, newLastName1.value, patient1.ID, newEmail1.value, newBirthDate1.value, newPostalCode1.value, newPhoneNumber1.value, newOthers1.value, newCountry1.value, newProvince1.value, newCity1.value, newGender1.value, newAddress1.value); ">Confirm</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="updatePatient(patient._id, newFirstName1.value, newLastName1.value, patient.ID, newEmail1.value, newBirthDate1.value, newPostalCode1.value, newPhoneNumber1.value, newOthers1.value, newCountry1.value, newProvince1.value, newCity1.value, newGender1.value, newAddress1.value); ">Confirm</button>
                                 <button type="button" class="btn btn-secondary btn-sm" (click)="ResetErrorMessages(); c('Close click'); ">Cancel</button>
                                 <button class="hddn" (click)="c('Close click')" id='closeBtn'></button>
                               </div>
@@ -665,7 +664,6 @@
                     <!-- <div *ngIf="invalidSearchArea" class="failedSearch">
                       Please enter a search area
                     </div>
-
                     <div class='blockContainer'>
                       <div class='left'>
                         <select #searchArea1 class="searchdropdown" id="searchDropdown">
