@@ -62,7 +62,6 @@ export class BookAppointmentComponent implements OnInit {
 
 
   ngOnInit() {
-    this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     
     this.patientService.GetPatient().subscribe(data =>{
       var temp: any = data;

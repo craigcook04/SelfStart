@@ -114,8 +114,8 @@ export class ClientExerciseComponent implements OnInit {
     doc.text( 30, 30, "Images:");
     this.images.forEach(image => {
 
-      if(image.type === 'PNG' || image.type === "png"){ var imgData = 'data:image/png;base64,' + image.data;}
-      if(image.type === 'JPG' || image.type === "jpg"){ var imgData = 'data:image/jpg;base64,' + image.data;}
+      if(image.type === 'PNG' || image.type === "png"){ console.log("png"); var imgData = 'data:image/png;base64,' + image.data;}
+      if(image.type === 'JPG' || image.type === "jpg"){ console.log("jpg"); var imgData = 'data:image/jpg;base64,' + image.data;}
 
       if(vert == 0){
         vert = 40;
@@ -123,6 +123,7 @@ export class ClientExerciseComponent implements OnInit {
       else{
         vert = 140;
       }
+      console.log(imgData);
       doc.addImage(imgData, 'PNG', 50, vert, 100, 100);
     });
 
