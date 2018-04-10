@@ -64,43 +64,7 @@ router.route('/')
             response.send({success: true, message: "Sent Mail!"});
         });
     });
-
-router.route('/appointment')
-    .post(function(request, response){
-        var options = {  
-            weekday: "long", year: "numeric", month: "short",  
-            day: "numeric", hour: "2-digit", minute: "2-digit"  
-        }; 
-        var mydate = new Date(request.body.date).toLocaleTimeString("en-us", options)
-        var body = `<body style="background: whitesmoke; text-align: center">
-                    <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Self Start</h1>
-                    <h4>Hello ${request.body.name},</h4>
-                    <h4>Your appointment on
-                    ${mydate}
-                    has been cancelled by your Self Start specialist.
-                    Please contact them for more details or try re-booking your appointment for another time.</h4>
-                    <h4>We apologize for the inconvience.</h4>
-                    <br>
-                    <h4>Have a nice day!</h4>
-                    <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
-                    </body>
-                    `;
-        var mailOptions = {
-            to: request.body.toEmail,
-            subject: 'Self Start - Cancelled Appointment',
-            html: body
-        };
-        
-        smtpTransport.sendMail(mailOptions, function(error, resp) {
-            if(error) {
-                console.log(error);
-                response.send(error);
-                return;
-            }
-            response.send({success: true, message: "Sent Mail!"});
-        });
-    });
-
+    
 router.route('/forgotten')
     .post(function(request, response) {
        UserAccount.findOne({userAccountName: request.body.username}, function(err, useraccount) {
@@ -345,7 +309,6 @@ router.route('/rehabplan/notify')
                     <p>Hello ${request.body.name}!</p>
                     <p>You have recently been assigned the exercise menu: ${request.body.rehabPlanName}</p>
                     <p>Please sign in to your account on Self Start to view the new exercise menu</p>
-                    <p><a href="${url}">Click here</a> to return home to Self Start </p>
                     <p>Have a nice day! </p>
                     <br>
                     <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" />
@@ -387,7 +350,6 @@ router.route('/assessmenttest/notify/:plan_id')
                     <p>Hello ${patients[i].givenName} ${patients[i].familyName}!</p>
                     <p>You have recently been assigned a new Assessment Test: ${request.body.assessmenttest}</p>
                     <p>Please sign in to your account on Self Start to complete the new assessment test</p>
-                    <p><a href="${url}">Click here</a> to return home to Self Start </p>
                     <p>Have a nice day! </p>
                     <br>
                     <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" />
