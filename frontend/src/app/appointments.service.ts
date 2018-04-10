@@ -25,7 +25,7 @@ export class AppointmentsService {
   }
   
   GetAppointmentsByWeek(week: any){
-    var url = '/api/appointment/week/' + moment(week).format("YYYY-MM-DD").toString();
+    var url = '/api/appointment/week/' + moment(week).toISOString();
     return this.httpClient.get(url);
   }
   
