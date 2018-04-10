@@ -7,8 +7,9 @@
 }
 
 .home-pic {
-    height: 150%;
     width: 100%;
+    min-height: 92vh;
+    max-height: 92vh;
 }
 
 .scroll-text {
@@ -16,5 +17,6 @@
 }
 
 i {
-    font-size: xx-large;
+    font-size: 400%;
 }
+

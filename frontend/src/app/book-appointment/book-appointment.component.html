@@ -1,42 +1,119 @@
 <mat-sidenav-container>
         <mat-sidenav #sidenav mode="side" opened="true" style="background-color: #0275d8;">
-                <mat-nav-list style="top: -10px;">
-                    <mat-list-item [routerLinkActive]="['active']">
-                      <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../home']">Dashboard</button>
+            <mat-nav-list style="top: -10px;">
+                    <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../home']">
+                        <div class="row form-inline">
+                            <div class="col-2">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    <i class="fa fa-th-large"></i>
+                                </h5>      
+                            </div>
+                            <div class="col">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                  Dashboard
+                                </h5>
+                            </div>
+                        </div>
                     </mat-list-item>
-                  <br>
-                  <mat-divider class="dividers"></mat-divider>
-                  <mat-list-item [routerLinkActive]="['active']">
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../exercises']">Exercise Menu</button>
+                    <br>
+                    <mat-divider class="dividers"></mat-divider>
+                    <mat-list-item [routerLinkActive]="['active']"  [routerLink]="['../exercises']">
+                        <div class="row form-inline">
+                            <div class="col-2">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    <i class="fa fa-id-card"></i>
+                                </h5>      
+                            </div>
+                            <div class="col">
+                                <h5 class="btn-block" style="margin-left: 3px; color:white;">
+                                    Exercise Menu
+                                </h5>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <br>
+                    <mat-divider class="dividers"></mat-divider>
+                    <mat-list-item [routerLinkActive]="['active']">
+                        <div class="row form-inline">
+                            <div class="col-2">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    <i class="fa fa-calendar"></i>
+                                </h5>      
+                            </div>
+                            <div class="col">
+                                <h5 class="btn-block" style=" color:white;">
+                                    Book Appointment
+                                </h5>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <br>
+                    <mat-divider class="dividers"></mat-divider>
+                    <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../completetest']">
+                        <div class="row form-inline">
+                            <div class="col-1">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    <i class="fa fa-wpforms"></i>
+                                </h5>      
+                            </div>
+                            <div class="col">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    Complete Assessment
+                                </h5>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <br>
+                    <mat-divider class="dividers"></mat-divider>
+                    <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../transactions']">
+                        <div class="row form-inline">
+                            <div class="col-2">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </h5>      
+                            </div>
+                            <div class="col">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                  Transactions
+                                </h5>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <br>
+                    <mat-divider class="dividers"></mat-divider>
+                    <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../settings']">
+                        <div class="row form-inline">
+                            <div class="col-2">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                    <i class="fa fa-wrench"></i>
+                                </h5>      
+                            </div>
+                            <div class="col">
+                                <h5 class="btn-block" style="text-align: center; color:white;">
+                                  Settings
+                                </h5>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <br>
+                    <mat-divider class="dividers"></mat-divider>
+                    <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../resources']">
+                      <div class="row form-inline">
+                          <div class="col-2">
+                              <h5 class="btn-block" style="text-align: center; color:white;">
+                                  <i class="fa fa-bars"></i>
+                              </h5>      
+                          </div>
+                          <div class="col">
+                              <h5 class="btn-block" style="text-align: center; color:white;">
+                                Resources
+                              </h5>
+                          </div>
+                      </div>
                   </mat-list-item>
                   <br>
                   <mat-divider class="dividers"></mat-divider>
-                  <mat-list-item [routerLinkActive]="['active']">
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;">Book Appointment</button>
-                  </mat-list-item>
-                  <br>
-                  <mat-divider class="dividers"></mat-divider>
-                  <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../completetest']">Complete Assessment</button>
-                  </mat-list-item>
-                  <br>
-                  <mat-divider class="dividers"></mat-divider>
-                  <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../transactions']">Transactions</button>
-                  </mat-list-item>
-                  <br>
-                  <mat-divider class="dividers"></mat-divider>
-                  <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../settings']">Settings</button>
-                  </mat-list-item>
-                  <br>
-                  <mat-divider class="dividers"></mat-divider>
-                  <mat-list-item [routerLinkActive]="['active']" >
-                    <button class="btn-primary btn-block" mat-raised-button style="color:white;" [routerLink]="['../resources']">Resources</button>
-                  </mat-list-item>
-                  <br>
-                  <mat-divider class="dividers"></mat-divider>
-              </mat-nav-list>
+            </mat-nav-list>
             </mat-sidenav>
             <mat-sidenav-content>
                 <div style="background-color: #F5F5F5;" class="jumbotron container-fluid">
@@ -138,12 +215,14 @@
                                         <button type="button" class="btn btn-success btn-sm"
                                         (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                                             <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
-                                            <fa name="upload"></fa>
+                                            <!--<fa name="upload"></fa>-->
+                                            Upload
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm"
                                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                                             <!--<span class="glyphicon glyphicon-trash"></span> Remove all-->
-                                            <fa name="trash"></fa>
+                                            <!--<fa name="trash"></fa>-->
+                                            Delete
                                         </button>
                                 </div>
                             </td>
@@ -169,32 +248,33 @@
                     </button>
                 </div>
                 <div class="modal-body" style="overflow-x: hidden; max-height:460px;">
+                    <br>
                     <label>Where is the problem or symptom?</label>
                     <br>
                     <select #injuryarea class="mydropdown">
                             <option value="" disabled>Please select...</option>
-                            <option value="neck">neck</option>
-                            <option value="back">back</option>
-                            <option value="shoulder">shoulder</option>
-                            <option value="elbow">elbow</option>
-                            <option value="wrist/hand">wrist &/ hand</option>
-                            <option value="hip">hip</option>
-                            <option value="knee">knee</option>
-                            <option value="ankle">ankle</option>
-                            <option value="foot">foot</option>
-                            <option value="other">other</option>
+                            <option value="neck">Neck</option>
+                            <option value="back">Back</option>
+                            <option value="shoulder">Shoulder</option>
+                            <option value="elbow">Elbow</option>
+                            <option value="wrist/hand">Wrist and/or hand</option>
+                            <option value="hip">Hip</option>
+                            <option value="knee">Knee</option>
+                            <option value="ankle">Ankle</option>
+                            <option value="foot">Foot</option>
+                            <option value="other">Other</option>
                     </select>
                     <br>
                     <label>How would you describe your pain or symptom?</label>
                     <br>
                     <select #painScale class="mydropdown">
                             <option value="" disabled>Please select...</option>
-                            <option value="aching">aching</option>
-                            <option value="throbbing">throbbing</option>
-                            <option value="burning">burning</option>
-                            <option value="weak">weak</option>
-                            <option value="tight">tight</option>
-                            <option value="tense">tense</option>                            
+                            <option value="aching">Aching</option>
+                            <option value="throbbing">Throbbing</option>
+                            <option value="burning">Burning</option>
+                            <option value="weak">Weak</option>
+                            <option value="tight">Tight</option>
+                            <option value="tense">Tense</option>                            
                     </select>
                     <br>
                     <label>How did the pain or symptom begin?</label>
@@ -208,7 +288,7 @@
                     <br>
                     <label>What was the date of your injury?</label>
                     <div class="col">
-                        <input class="form-control" type="text" id="dateStarted" placeholder="Date Started" #dateStarted required>
+                        <input class="form-control" type="text" id="dateStarted" placeholder="Date" #dateStarted required>
                     </div>
                     <br>
                     <label>Please describe your injury:</label>
@@ -304,6 +384,7 @@
                     <div class="col">
                             <input class="form-control" type="text" id="explain" placeholder="Description" #explainOther required>
                     </div>
+                    <br>
                     <label>Are you experiencing any of following symptoms?</label>
                     <br>
                     <select #symptoms class="mydropdown">
@@ -313,7 +394,8 @@
                             <option value="chiropractor">Stiff</option>
                             <option value="osteopath">No change</option>
                     </select>
-                    <label>Do you have any other pertinent medical traumas or surgical history</label>
+                    <br>
+                    <label>Do you have any other pertinent medical traumas or surgical history?</label>
                     <mat-radio-group>
                             <div class="form-group row-inline" >
                                 <!-- <label for="{{option}}" class="col-form-label mctext">{{NumToChar(j)}})</label> -->
@@ -330,6 +412,7 @@
                     <div class="col">
                             <input class="form-control" type="text" id="occupation" placeholder="Occupation" #occupation required>
                     </div>
+                    <br>
                     <label>What are your favorite recreational activities or hobbies?</label>
                     <div class="col">
                             <input class="form-control" type="text" id="hobbies" placeholder="Activities" #hobbies required>

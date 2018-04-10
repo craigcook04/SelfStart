@@ -45,7 +45,7 @@ import { PhysiotherapistService } from '../physiotherapist.service';
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent') modalContent: any;
   @ViewChild('deleteModal') deleteModal: any;
-  @ViewChild('editModal') editModal: any;
+  /*@ViewChild('editModal') editModal: any;*/
   
   view: string = 'month';
   viewDate: Date = new Date();
@@ -75,6 +75,12 @@ export class CalendarComponent implements OnInit {
   newType: any;
   newReason: any;
   timeOfDay: any;
+  apptName: any;
+  apptDate: any;
+  apptType: any;
+  apptReason: any;
+  dUser: any;
+  dType: any;
   
   colors: any = {
     red: {
@@ -97,12 +103,11 @@ export class CalendarComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
-    // {
-    //   label: '<i class="fa fa-fw fa-pencil"></i>',
-    //   onClick: ({ event }: { event: CalendarEvent }): void => {
-    //     this.editEvent('Edited', event);
-    //   }
-    // },
+      /*label: '<i class="fa fa-fw fa-pencil"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.editEvent('Edited', event);
+      }
+    },*/
     {
       label: '<i class="fa fa-fw fa-times" (click)="open(deleteModal)"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
@@ -162,14 +167,26 @@ export class CalendarComponent implements OnInit {
       var newTitle: string;
 
         return appointment.map((appointment: any) => {
+          
+         /* var temp: CalendarEvent = {
+            title: appointment.reason,//this.physioHomeService.GetClientName(appointment.userID)
+            start: new Date(appointment.date),
+            color: this.colors.blue,
+            actions: this.actions
+          };
+          this.events.push(temp);
+          console.log("event: ");
+          console.log(temp);
+          return temp;*/
+          
 
         //setTimeout(() => {
           var returnVal = this.apptService.GetPatientNames(appointment.userID).subscribe((data) => {
             var retObj: any = data;
-            console.log("this is what is returned", retObj);
+            //console.log("this is what is returned", retObj);
             //console.log(retObj.patient.givenName)
             if(appointment.type == "normal"){
-              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Regular";
+              newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Normal";
             }else if (appointment.type == "initial"){
               newTitle = "Client: " + (retObj.patient.givenName) + " " + (retObj.patient.familyName); + " | Time: " + (appointment.date) + " | Type: Initial";
             }
@@ -193,7 +210,7 @@ export class CalendarComponent implements OnInit {
 
         this.patientService.GetPatientInfo(temp.meta.appointment.userID).subscribe(data =>{
           let obj: any = data;
-          temp.title = obj.patient.givenName + " " + obj.patient.familyName + " | " + temp.start.getHours() + ":" + temp.start.getMinutes();
+          temp.title = obj.patient.givenName + " " + obj.patient.familyName /*+ " | " + temp.start.getHours() + ":" + temp.start.getMinutes()*/;
         })
 
         this.events.push(temp);
@@ -236,22 +253,31 @@ export class CalendarComponent implements OnInit {
       //this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
-    // editEvent(action: string, event: CalendarEvent) {
-    //   this.modalService.open(this.editModal, { size: 'lg' });
-    // }
+    /*editEvent(action: string, event: CalendarEvent) {
+      this.modalService.open(this.editModal, { size: 'lg' });
+    }*/
     
     deleteEvent(action: string, event: CalendarEvent) {
-      console.log(event);
+      this.dUser = event.meta.appointment.userID;
+      this.dType = event.meta.appointment.type;
+      this.patientService.GetPatientInfo(event.meta.appointment.userID).subscribe(data =>{
+        let obj: any = data;
+        this.physioHomeService.emailAddress = obj.patient.email;
+        this.physioHomeService.clientName = obj.patient.givenName;
+      })
+      this.physioHomeService.deleteDate = event.start;
       this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
-      console.log(event);
-      //this.modalData = { event, action };
-      //this.newClientName = 
-      // this.myDate = 
-      // this.newReason = 
-      // this.newTypethis.events
+      this.patientService.GetPatientInfo(event.meta.appointment.userID).subscribe(data =>{
+        let obj: any = data;
+        this.apptName = obj.patient.givenName + " " + obj.patient.familyName;
+        })
+        
+      this.apptDate = event.meta.appointment.date;
+      this.apptType = event.meta.appointment.type;
+      this.apptReason = event.meta.appointment.reason;
 
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
@@ -260,16 +286,24 @@ export class CalendarComponent implements OnInit {
       this.modalService.open(content, {size: "lg"});
     }
     
-    updateAppt() {
-      //this.physioHomeService.UpdateAppointment(id).subscribe(data => {
-        //console.log(data);
-      //});
-    }
+    /*updateAppt() {
+      this.physioHomeService.UpdateAppointment(id).subscribe(data => {
+        console.log(data);
+      });
+    }*/
     
     deleteAppt() {
-      //this.physioHomeService.DeleteAppointment(id).subscribe(data => {
+      if(this.dType == "normal"){
+              this.physioHomeService.NormalAppt(this.dUser);
+            }else if (this.dType == "initial"){
+              this.physioHomeService.InitialAppt(this.dUser);
+            }
+      this.physioHomeService.DeleteAppointment().subscribe(data => {
         //console.log(data);
-      //});
+      });
+      this.physioHomeService.SendEmail().subscribe(data => {
+        //console.log(data);
+      });
     }
     
     addEvent(): void {
@@ -301,8 +335,6 @@ export class CalendarComponent implements OnInit {
 
         this.justBooked = false;
       });
-      
     }
     
-      
 }

@@ -715,6 +715,8 @@ export class UserAccountsComponent implements OnInit {
   }
 
    searchPatients(searchString: string, searchArea: string) {
+     console.log(searchString);
+     console.log(searchArea);
     var ascvsdesc = 'asc';
     if(this.ascendingOrd == true) {
       ascvsdesc = 'asc';
