@@ -82,17 +82,13 @@ export class GenerateReportComponent implements OnInit {
     var patientID = this.activatedRoute.snapshot.paramMap.get("id");
     this.patientService.GetPatientByPatientID(patientID).subscribe(data => {
       var retObj: any = data;
-      console.log(data);
       this.patient = retObj.patient;
       this.rehabPlan = this.patient.rehabPlan;
-      console.log("IDDDDD: ", this.patient.account._id);
       this.assessmentService.GetCompletedTests(this.patient.account._id).subscribe(data =>{
-        console.log(data);
         let obj: any = data;
         this.completedTests = obj.completedTests;
         if(this.completedTests.length > 1){
           this.completedTests.forEach(element =>{
-            console.log(element);
             this.physioRatings.push(element.physioRate);
             let obj: string = element.dateCompleted;
             obj = obj.split('T')[0];
@@ -116,11 +112,9 @@ export class GenerateReportComponent implements OnInit {
         this.singleTest == this.completedTests;
       })
       this.assessmentService.GetUsersInitialInjuries(this.patient.account._id).subscribe(data => {
-        console.log(data);
         var retObj: any = data;
         this.initialInjury = retObj.intakes[0];
         this.assessmentService.GetFinalResults(userID, this.initialInjury.injuryNumber).subscribe(data => {
-          console.log(data);
           var retObj: any = data;
           if(retObj.success) {
             this.finalOutcome = retObj.results;
@@ -131,12 +125,10 @@ export class GenerateReportComponent implements OnInit {
         })
       })
       this.appointmentService.GetAppointmentsByPatientID(this.patient.account._id).subscribe(data => {
-        console.log('appointments:',data);
         var retObj: any = data;
         this.appointments = retObj.appointments;
       })
       this.paymentService.GetPaymentHistory(this.patient.account._id).subscribe(data => {
-        console.log(data);
         var retObj: any = data;
         this.paymentHistory = retObj.payments;
       })
@@ -144,19 +136,15 @@ export class GenerateReportComponent implements OnInit {
     })
     var userID = this.cookieService.get('ID');
 
-    console.log("id",userID);
     this.paymentService.GetPaymentHistory(userID).subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.paymentHistory = retObj.payments;
     })
 
     this.assessmentService.GetUsersInitialInjuries(userID).subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.initialInjury = retObj.intakes[0];
       this.assessmentService.GetFinalResults(userID, this.initialInjury.injuryNumber).subscribe(data => {
-        console.log(data);
         var retObj: any = data;
         if(retObj.success) {
           this.finalOutcome = retObj.results;
@@ -170,41 +158,6 @@ export class GenerateReportComponent implements OnInit {
 
     
 
-    // this.patientService.GetSpecificPatient(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
-    //   let obj: any = data;
-    //   this.currClient = obj.patient;
-    //   console.log(this.currClient);
-
-    //   this.assessmentService.GetCompletedTests(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(data =>{
-    //     console.log(data);
-    //     let obj: any = data;
-    //     this.completedTests = obj.completedTests;
-    //     if(this.completedTests.length > 1){
-    //       this.completedTests.forEach(element =>{
-    //         console.log(element);
-    //         this.physioRatings.push(element.physioRate);
-    //         let obj: string = element.dateCompleted;
-    //         obj = obj.split('T')[0];
-    //         this.assesmentDates.push(obj);
-    //         this.clientRatings.push(element.questions[0]);
-    //       })
-    //       this.physioRatings.unshift(0);
-    //       this.assesmentDates.unshift('Start of Time');
-    //       this.clientRatings.unshift(0);
-    
-    //       //set the chart datasets
-    //       this.chartDatasets = [
-    //         {data: this.physioRatings, label: "Physio Ratings"},
-    //         {data: this.clientRatings, label: "Client Ratings"}
-    //       ];
-    //       this.chartLabels = this.assesmentDates;
-  
-    //       return;
-    //     }
-  
-    //     this.singleTest == this.completedTests;
-    //   })
-    // })
   }
 
   CalculateAge(DOB: string) {
@@ -259,7 +212,6 @@ export class GenerateReportComponent implements OnInit {
         var pdfName = this.currClient.familyName + "_" + this.currClient.givenName + ".pdf"
     
         this.emailService.SendPDFToClient(pdf, this.currClient.email, message, pdfName).subscribe(data => {
-          console.log(data);
         })
   }
 
@@ -288,7 +240,6 @@ export class GenerateReportComponent implements OnInit {
 
   EmailPatientSummary(toEmail: string, message: string) {
     let doc = new jsPDF();
-    console.log(toEmail, message);
     let specialElementHandlers = {
        '#editor': function(element, renderer){
         return true;
@@ -302,11 +253,9 @@ export class GenerateReportComponent implements OnInit {
     });
 
     let pdf = doc.output('datauristring');
-    console.log(pdf);
     
     var pdfName = `${this.patient.givenName}${this.patient.familyName}-SummaryReport.pdf`;
     this.emailService.SendPDFToClient(pdf, toEmail, message, pdfName).subscribe(data => {
-       console.log(data);
     })
   }
 

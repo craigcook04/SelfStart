@@ -52,7 +52,6 @@ export class PhysioHomeComponent implements OnInit {
     // this.cookieService.set('ID', "5a9dcb37b06b922a572fb840");
     this.physioService.GetPhysioByUserID().subscribe(data =>{
       var obj: any = data;
-      console.log(obj);
       this.physio = obj.physio;
 
       this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
@@ -72,7 +71,6 @@ export class PhysioHomeComponent implements OnInit {
         this.numbTests = length;
         this.totalCompleted = obj.total;
         this.pendingTests = obj.docs.splice(0, 5);
-        console.log(this.pendingTests);
       })
 
 

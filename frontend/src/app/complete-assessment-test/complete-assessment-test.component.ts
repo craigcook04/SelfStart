@@ -37,7 +37,6 @@ export class CompleteAssessmentTestComponent implements OnInit {
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
     this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
-      console.log(data);
       var obj: any = data;
       obj = obj.patient;
       this.client = obj;
@@ -75,8 +74,7 @@ export class CompleteAssessmentTestComponent implements OnInit {
 
   value: any[];
   SendBack(i) {
-    console.log("hi");
-    console.log(this.value);
+    
     this.MCAnswers[i] = this.value[i] + 1;
   }
 
@@ -101,7 +99,6 @@ export class CompleteAssessmentTestComponent implements OnInit {
     }
       var userID = this.cookieService.get('ID');
       this.assessmentTestService.CreateCompletedTest(userID, this.assessmentTest.name, this.assessmentTest.description, this.assessmentTestQuestions).subscribe(data => {
-        console.log(data);
       })
   }
 

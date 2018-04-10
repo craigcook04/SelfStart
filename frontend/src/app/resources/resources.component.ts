@@ -20,7 +20,6 @@ export class ResourcesComponent implements OnInit {
     this.timeOfDay = this.getTimeOfDay();
     //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
-      console.log(data);
       var obj: any = data;
       obj = obj.patient;
       this.client = obj;

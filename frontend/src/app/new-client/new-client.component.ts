@@ -70,7 +70,6 @@ export class NewClientComponent implements OnInit {
     this.patientService.GetProvinces(countryId).subscribe(data => {
      var retObj: any = data;
      this.provinces = Object.assign([], retObj.province);
-     console.log(data);
      this.GetCities(retObj.province[0]._id);
    })
  }
@@ -203,7 +202,6 @@ export class NewClientComponent implements OnInit {
     }
 
     var DOB = yearDOB + '/' + monthDOB + '/' + dayDOB;
-    console.log(DOB);
     if(DOB == "//") {
       var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'red';
       var DOBBox2 = document.getElementById('inputmonthDOB').style.borderColor = 'red';
@@ -265,11 +263,9 @@ export class NewClientComponent implements OnInit {
 
     this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
 
-      console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
         this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
-          console.log(data);
           document.body.style.cursor = 'default';
           this.modalService.open(successModal, {size: 'lg'})
         })

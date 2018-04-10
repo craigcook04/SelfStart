@@ -68,7 +68,6 @@ export class ExercisesComponent implements OnInit {
       // data comes back as exercise (singular!!!!!)
       var obj : any = data;
       this.exercises = obj.docs;
-      console.log(obj.total);
       this.length = data.total;
     })
     this.physioService.GetPhysioByUserID().subscribe(data =>{
@@ -107,7 +106,6 @@ export class ExercisesComponent implements OnInit {
 
     var fileNames = []; 
     for(var i = 0; i < this.uploader.queue.length; i++){
-      console.log(this.uploader.queue[i].file.name);
       fileNames[i] = this.uploader.queue[i].file.name;
     }
 
@@ -115,10 +113,8 @@ export class ExercisesComponent implements OnInit {
     .subscribe(data =>{
       //now link images to exercise
 
-      console.log(fileNames);
       if(this.uploader.queue.length > 0){
         fileNames.forEach(element => {
-          console.log(element);
           this.imageService.sendExerciseID(data.exercise._id, element).subscribe(data =>{
           })
         })
@@ -128,7 +124,6 @@ export class ExercisesComponent implements OnInit {
         // data comes back as exercise (singular!!!!!)
         var obj : any = data;
         this.exercises = obj.docs;
-        console.log(obj.total);
         this.length = data.total;
       })
     })
@@ -139,7 +134,6 @@ export class ExercisesComponent implements OnInit {
       this.exerciseService.SearchExercises("", "name", this.offset, this.pageSize).subscribe(data =>{
         if(data != []){
           var obj: any = data;
-          console.log(obj.total);
           this.exercises = obj.docs;
           this.length = obj.total;
         }
@@ -164,7 +158,6 @@ export class ExercisesComponent implements OnInit {
       this.exerciseService.SearchExercises("", "name", this.offset, this.pageSize).subscribe(data =>{
         if(data != []){
           var obj: any = data;
-          console.log(obj.total);
           this.exercises = obj.docs;
           this.length = obj.total;
         }
@@ -207,7 +200,6 @@ export class ExercisesComponent implements OnInit {
   }
 
   openSearchArea(searchArea: any){
-    console.log(searchArea);
     searchArea.show();
   }
 

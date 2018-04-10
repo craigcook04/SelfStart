@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.showFailure = false;
-    console.log(navigator.cookieEnabled);
     
   }
 
@@ -42,7 +41,6 @@ export class LoginComponent implements OnInit {
     if(!navigator.cookieEnabled) {
       //user has cookies disabled
       var button: any = document.getElementById('showEnableCookies').click();
-      console.log(button);
       return;
       //button
     }
@@ -56,10 +54,8 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        console.log("initialConnection", data);
         this.userAccountsService.Login(username, password, retObj1.nonce, retObj1.salt).subscribe(data => {
         var retObj: any = data;
-        console.log("returned", data);
         if(retObj.success == true) {
           if(retObj.changePass == true) {
             var url = '../login/recover/' + retObj.userID;
@@ -67,7 +63,6 @@ export class LoginComponent implements OnInit {
             this.appComponent.alterLoginState();
           }
           else {
-            console.log(retObj);
             if(retObj.role == "US" && retObj.verified == false ) {
               this.needToVerify = true;
               return;

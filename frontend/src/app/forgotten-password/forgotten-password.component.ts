@@ -27,7 +27,6 @@ export class ForgottenPasswordComponent implements OnInit {
       return;
     }
     this.userAccountService.RequestResetPassword(inputUsername).subscribe(data => {
-      console.log(data);
       var retObj :any = data;
       if(retObj.success == true) {
         this.inputtedUsername = true;
