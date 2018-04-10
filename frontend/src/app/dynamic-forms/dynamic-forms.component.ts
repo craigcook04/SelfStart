@@ -35,7 +35,9 @@ export class DynamicFormsComponent implements OnInit {
   name: string;
   description: string;
   currOption: string = 'c';
-
+  editquestion: any = {};
+  chosenForm: any;
+  myform: any = {};
   constructor(private dynamicFormsService: DynamicFormsService,
               private modalService: NgbModal,
               private router: Router) { }
@@ -56,6 +58,16 @@ export class DynamicFormsComponent implements OnInit {
     this.questions = [];
   }
 
+  EditQuestion(index, questions, form) {
+    console.log("passed", form);
+    this.editquestion = form.questions[index];
+    this.chosenForm = form;
+  }
+
+  SetMyForm(form) {
+    this.myform = form;
+  }
+
   changeSA(){
     this.type = "Short Answer";
     this.shortAnswer =true;
@@ -68,6 +80,10 @@ export class DynamicFormsComponent implements OnInit {
     this.shortAnswer =false;
     this.multipleChoice = true;
     this.rating = false;
+  }
+
+  SaveChanges(value ) {
+
   }
 
   changeRA(){
@@ -116,6 +132,7 @@ export class DynamicFormsComponent implements OnInit {
     console.log(this.optionText);
     console.log(this.questions);
   }
+
   saveSAQuestion(){
     var temp: any = document.getElementById('inputShortAnswerQuestion');
     temp = temp.value;
@@ -147,6 +164,60 @@ export class DynamicFormsComponent implements OnInit {
     this.rating = false;
     this.type = "type of question";
     console.log(this.questions);
+  }
+
+  SendUpdate(questiontext) {
+    if(this.editquestion.questionType = "MC") {
+      for(var a = 0; a < this.editquestion.questionContent.length; a++) {
+        var input: any = document.getElementById('editquestion' + a);
+        this.editquestion.questionContent[a] = input.value
+      }
+    }
+
+    this.editquestion.questionText = questiontext;
+
+    this.dynamicFormsService.UpdateForm(this.chosenForm._id, this.chosenForm.name, this.chosenForm.description, this.chosenForm.questions).subscribe(data => {
+
+    })
+  }
+
+  AddAnotherQuestion(questionType) {
+    if(questionType=="SA") {
+      this.saveSAQuestion();
+    }
+    else if(questionType == "MC") {
+      this.saveMCQuestion();
+    }
+    else {
+      this.saveRatingQuestion();
+    }
+
+    this.myform.questions.push(this.questions[0]);
+    this.dynamicFormsService.UpdateForm(this.myform._id, this.myform.name, this.myform.description, this.myform.questions).subscribe(data => {
+
+      this.openEditor = false;
+      this.showDrop = false;
+      this.rating = false;
+      this.multipleChoice = false;
+      this.shortAnswer =  false;
+      this.type = "type of question";
+      this.showCreat = true;
+      this.optionText = [];
+      this.options =[];
+      this.questions = [];
+    })
+  }
+
+  SetQuestion(questionType) {
+    if(questionType == "RA") {
+      this.changeRA();
+    }
+    else if(questionType == "SA") {
+      this.changeSA();
+    }
+    else {
+      this.changeMC();
+    }
   }
 
   NumToChar(n) {

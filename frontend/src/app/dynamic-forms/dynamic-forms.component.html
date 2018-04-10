@@ -110,15 +110,13 @@
               </div>
             </div>
           <hr>
-          <div *ngIf="showDrop" ngbDropdown>
-              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{type}}</button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button class="dropdown-item" (click)="changeSA();">Short Answer</button>
-                  <button class="dropdown-item" (click)="changeMC();">Multiple Choice</button>
-                  <button class="dropdown-item" (click)="changeRA();">Rating</button>
-              </div>
-              <br><br>
-          </div>
+          <select *ngIf="showDrop" class="mydropdown" (change)="SetQuestion(newQuestionType.value)" #newQuestionType>
+                  <option disabled>Select Type...</option>
+                  <option disabled>------------</option>
+                  <option value="SA">Short Answer</option>
+                  <option value="MC">Multiple Choice</option>
+                  <option value="RA">Rating</option>
+          </select>
           
           <div *ngIf="shortAnswer">
               <p><b>Enter Your Short Answer Question</b></p>
@@ -155,7 +153,7 @@
               <button type="button" class="btn btn-primary createbtn" (click)="saveRatingQuestion();">Save Question</button>
               <br><br>
           </div>
-          <button class="btn btn-sm btn-primary" (click)="showDrop=true">Add Question</button>
+          <button *ngIf="!showDrop" class="btn btn-sm btn-primary" (click)="showDrop=true">Add Question</button>
           <br>
           <hr>
           <mat-card-actions align="end">
@@ -228,27 +226,29 @@
                   <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>         
                 </div>
               </ng-template>
-            
+              <hr class="breaker">              
               <h6><b>Name: </b>{{form.name}}</h6>
               <h6><b>Description: </b>{{form.description}}</h6>
+              <br>
               <h6>Questions: </h6>
+              <br>
               <div *ngFor="let q of form?.questions; let i = index" class="qs">
                   <div *ngIf="q.questionCode == 'SA'">
-                    <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}        <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions, form.name, form.description)"></fa></p>
+                    <p><b>Question {{i + 1}} - Short Answer: </b> {{q.questionText}}        <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions, form.name, form.description)"></fa> <i class="fa fa-edit" ngbTooltip="Edit question" (click)="EditQuestion(i, form?.questions, form); questionModal.show();"></i></p>
                   </div>
                   <div *ngIf="q.questionCode == 'MC'">
-                    <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>
+                    <p><b>Question {{i + 1}} - Multiple Choice: </b> {{q.questionText}}       <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa><i class="fa fa-edit" ngbTooltip="Edit question" (click)="EditQuestion(i, form?.questions, form); questionModal.show();"></i></p>
                         <div class="form-group row mcchoices">
                           <ul>
                             <li for="{{option}}" *ngFor="let qcontent of q.questionContent; let j = index" class="col-form-label mctext">{{NumToChar(j)}}) {{qcontent}}</li>
                           </ul>
                         </div>
                   </div>
-                  <br>
                   <div *ngIf="q.questionCode == 'RA'">
-                    <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa></p>    
+                    <p><b>Question {{i + 1}} - Rating: </b> {{q.questionText}} <fa name="times" class="removebtn" ngbTooltip="Remove question" (click)="RemoveQuestion(i, form._id, form?.questions)"></fa><i class="fa fa-edit" ngbTooltip="Edit question" (click)="EditQuestion(i, form?.questions, form); questionModal.show();"></i></p>    
                   </div>
                 </div>
+                <button class="btn btn-sm btn-primary" (click)="SetMyForm(form); addQuestionModal.show();">Add Another Question</button>                                
                 <button class="btn btn-sm btn-primary" (click)="open(yousure)">Delete Form</button>
               <form>
                 <div >
@@ -333,3 +333,96 @@
     <br>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+
+<div mdbModal #questionModal="mdb-modal" class="modal fade mymodal" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg mymodal" role="document">
+    <div class="modal-content mymodal">
+    <div class="modal-header">
+      <h4 class="modal-title">Edit Question: </h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row">
+        <label *ngIf="editquestion?.questionCode == 'SA'" class="col-sm-3 col-form-label"><b>Question Type:</b> &nbsp; Short Answer</label>
+        <label *ngIf="editquestion?.questionCode == 'MC'" class="col-sm-3 col-form-label"><b>Question Type:</b> &nbsp; Multiple Choice</label>
+        <label *ngIf="editquestion?.questionCode == 'RA'" class="col-sm-3 col-form-label"><b>Question Type:</b> &nbsp; Rating</label>        
+      </div>
+      <div class="form-group row">
+        <label for="inputSubject" class="col-sm-3 col-form-label"><b>Question Text: </b> </label>
+        <br>
+        <div class="col-sm-7">
+          <input type="text" class="form-control" id="inputSubject" value="{{editquestion?.questionText}}" #questionText>
+        </div>
+      </div>
+      <div *ngIf="editquestion.questionCode == 'MC'" class="form-group row">
+          <label for="inputSubject" class="col-sm-3 col-form-label"><b>Question Text: </b> </label>
+          <br>
+          <input style="margin-left: 1em; width: 50%" type="text" *ngFor="let c of editquestion.questionContent; let j = index" id="editquestion{{j}}" value="{{c}}" />        
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-med" (click)="SendUpdate(questionText.value); questionModal.hide()" data-dismiss="modal" mdbRippleRadius>Update</button>  
+      <button type="button" class="btn btn-secondary btn-med" (click)="questionModal.hide()" data-dismiss="modal" mdbRippleRadius>Cancel</button>        
+    </div>
+  </div>
+  </div>
+  </div>
+
+
+  <div mdbModal #addQuestionModal="mdb-modal" class="modal fade mymodal" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="questionModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg mymodal" role="document">
+      <div class="modal-content mymodal">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Question To {{myform.name}}: </h4>
+      </div>
+      <div class="modal-body">
+        <select class="mydropdown" (change)="SetQuestion(addQuestionType.value)" #addQuestionType>
+              <option disabled>Select Type...</option>
+              <option disabled>------------</option>
+              <option value="SA">Short Answer</option>
+              <option value="MC">Multiple Choice</option>
+              <option value="RA">Rating</option>
+        </select>
+        <br>
+        <div *ngIf="shortAnswer">
+          <p><b>Enter Your Short Answer Question</b></p>
+          <input type="text" class="form-control myinput" id="inputShortAnswerQuestion" placeholder="Enter The Short Answer Question...." style="margin-left: 2em; width: 50%; height: 100%" #newSAQuestion>
+          <br>
+          <br><br>
+        </div>
+        <div *ngIf="multipleChoice">
+          <p><b>Enter Your Multiple Choice Question</b></p>
+          <br>
+          <input type="text" class="form-control myinput" id="inputMCQuestion" placeholder="Enter The Question...." #newMAQuestion>
+          <br>
+          <div class="form-group row">
+              <label for="inputOption1" class="col-sm-3 col-form-label">a)</label>
+              <input type="text" class="form-control myinput" id="inputOption" placeholder="Enter The Option...."  #newOption>
+          </div>
+          <div class="form-group row">
+              <label for="inputOption2" class="col-sm-3 col-form-label">b)</label>
+              <input type="text" class="form-control myinput" id="inputOption2" placeholder="Enter The Option...." #newOption1>
+          </div>
+          <div *ngFor="let option of options" class="form-group row">
+              <label class="col-sm-3 col-form-label">{{option}})</label>
+              <input type="text" class="form-control myinput" id="{{option}}" placeholder="Enter The Option...."  #newOption2>
+          </div>
+          <button type="button" class="btn btn-primary createbtn" (click)="addOption();">Add Option</button>          
+        </div>
+        <div *ngIf="rating">
+          <p><b>Enter Your Rating Question(rating is out of 5)</b></p>
+          <input type="text" class="form-control myinput" id="inputRatingQuestion" placeholder="Enter The  Question...." #newRAQuestion>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-med" (click)="AddAnotherQuestion(addQuestionType.value); addQuestionModal.hide()" data-dismiss="modal" mdbRippleRadius>Add</button>  
+        <button type="button" class="btn btn-secondary btn-med" (click)="addQuestionModal.hide()" data-dismiss="modal" mdbRippleRadius>Cancel</button>        
+      </div>
+    </div>
+    </div>
+    </div>
+
+
+
