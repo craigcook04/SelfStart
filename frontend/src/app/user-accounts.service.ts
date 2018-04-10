@@ -63,7 +63,6 @@ export class UserAccountsService {
   LoggedIn(){
     //All this route does it check if the user has a session token, if they do true is returned but if the cookie is null return false
     var sessionCookie = this.cookieService.get('session');
-    console.log(sessionCookie);
     if(!sessionCookie) {
       return false;
     }

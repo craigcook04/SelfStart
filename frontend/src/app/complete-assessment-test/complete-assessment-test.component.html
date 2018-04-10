@@ -122,10 +122,10 @@
                 <h3 *ngIf="client" class="title" style="color: #0275d8">
                     Good {{ timeOfDay }}<a *ngIf="client">, {{ client?.givenName }}.</a>
                  </h3>
-                 <p *ngIf="assessmentTest" class="quote">
+                 <p *ngIf="assessmentTest" class="quote myp">
                    Looks like you've got a test to complete, please fill out the following...
                  </p>
-                 <p *ngIf="!assessmentTest" class="quote">
+                 <p *ngIf="!assessmentTest" class="quote myp">
                     You've not been assigned an assessment test, check back soon!
                  </p>
             </div>
@@ -145,7 +145,7 @@
                 <div *ngIf="q.questionCode == 'SA'">
                   <p><b>{{i + 1}}) {{q?.questionText}}</b></p>
                   <label>Response:</label>
-                  <textarea class="form-control myta" rows="5" id="question{{i}}" value="{{q.answer}}"> </textarea>
+                  <textarea ngModel class="form-control myta" style="width: 75%" placeholder="Your response..." rows="5" id="question{{i}}"></textarea>                      
                 </div>
                 <div *ngIf="q.questionCode == 'MC'">
                   <p><b>{{i + 1}}) {{q?.questionText}}</b></p>
@@ -159,12 +159,22 @@
                 </div>
                 <br>
                 <div *ngIf="q.questionCode == 'RA'">
-                  <p><b>{{i + 1}}) {{q?.questionText}}</b></p>    
-                  <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
+                  <p><b>{{i + 1}}) {{q.questionText}}</b></p>    
+                  <!-- <ngb-rating [(rate)]="currentRate" id="question{{i}}" class="ratingstars">
                       <ng-template let-fill="fill" let-index="index">
                         <span class="star" [class.filled]="fill === 100" (click)="SendBack(index, i)">&#9733;</span>
                       </ng-template>
-                  </ngb-rating> 
+                  </ngb-rating>  -->
+                  <p>Selected Value: {{value[i]}}</p>              
+                  <mat-slider
+                  class="example-margin myTa"
+                  [max]="10"
+                  [min]="1"
+                  [(ngModel)]="value[i]"
+                  (change)="SendBack(i)"
+                  [step]="1">
+              </mat-slider>
+              <br>
                 </div>
               </div>
             

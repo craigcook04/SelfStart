@@ -96,6 +96,22 @@
               </div>
           </mat-list-item>
           <br>
+          <mat-divider class="dividers"></mat-divider>          
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../settings']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-cog"></i>                        
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="margin-left: 10px; color:white;">
+                     Settings
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+          <br>
           <mat-divider class="dividers"></mat-divider>
         </mat-nav-list>
     </mat-sidenav>
@@ -107,7 +123,7 @@
                     Good {{ timeOfDay }}<a>, {{ physio?.givenName }}.</a>
                  </h3>
                  <p class="quote">
-                    Edit, Delete, or Create a new Exercise.
+                   Welcome to your dashboard, what would you like to do today?
                  </p>
                  <div style="margin-left: auto; margin-right: auto; text-align: center;" class="col-2">
                    <hr>
@@ -115,6 +131,7 @@
                  </div>
             </div>
           </div>
+          <br>
         <div style="min-height: 100vh;" class="page col-11">
             <mat-card style="min-height: 75vh;">
             <div class="col-11" style="margin-left: auto; margin-right: auto;">
@@ -150,7 +167,7 @@
                     </div>
                   </div>
           
-                <ng-template style="overflow-x: hidden;" #newmodal let-c="close" let-d="dismiss">
+                <ng-template #newmodal let-c="close" let-d="dismiss">
                     <div class="modal-header">
                       <h4 class="modal-title"><b>Create a New Exercise</b></h4>
                     </div>
@@ -429,7 +446,9 @@
                               <ol><strong>{{ item?.file?.name }}</strong></ol>
                           </ul>
                       </div>
-                      <div style="overflow-x: hidden;" class="modal-footer">
+
+                      <div class="modal-footer">
+
                         <button id="modalButtons" type="button" class="btn btn-primary btn-sm modal-button" [disabled]="uploader.isUploading" (click)="updateExercise( exercise._id, newName.value , newDescrip.value, newObj.value, newActSteps.value, newLoc.value, newFreq.value); c('Close click')">Confirm</button>
                         <button id="modalButtons" type="button" class="btn btn-secondary btn-sm modal-button" (click)="c('Close click')">Cancel</button>                
                       </div>

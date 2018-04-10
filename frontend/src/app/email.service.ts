@@ -27,12 +27,44 @@ export class EmailService {
   }
 
   SendPDFToClient(pdf, toEmail, message, fileName) {
-    var url = 'api/email/update/sendpdf';
+    var url = '/api/email/update/sendpdf';
     var body = {
       pdf: pdf,
       toEmail: toEmail,
       message: message,
       fileName: fileName
+    }
+
+    return this.http.post(url, body);
+  }
+
+  EmailClientAboutNewRehabPlan(name, rehabPlanName, toEmail) {
+    var url = '/api/email/rehabplan/notify';
+    var body = {
+      name: name,
+      rehabPlanName: rehabPlanName,
+      toEmail: toEmail
+    }
+
+    return this.http.post(url, body);
+  }
+
+  EmailClientsAboutNewAssessmentTest(planid: string, assessmenttest: string) {
+    var url = "/api/email/assessmenttest/notify/" + planid;
+    var body = {
+      assessmenttest: assessmenttest
+    }
+
+    return this.http.post(url, body);
+  }
+
+  AskAnExpert(firstname: string, lastname: string, email: string, question: string) {
+    var name = firstname + " " + lastname;
+    var url = "/api/email/expert/ask"
+    var body = {
+      name: name,
+      email: email,
+      question: question
     }
 
     return this.http.post(url, body);

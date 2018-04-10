@@ -49,7 +49,6 @@ export class ClientHomeComponent implements OnInit {
       }
       this.planService.GetCurrentAssesmentTest(obj.rehabPlan._id).subscribe(data =>{
         let obj: any = data;
-        console.log(data);
         this.allTests = [];
         obj.rehabPlan.assessmentTests.forEach(element =>{
           if(element.completed === false){
@@ -57,11 +56,9 @@ export class ClientHomeComponent implements OnInit {
           }
         })
         this.currTest = this.allTests[0];
-        console.log(this.currTest);
       })
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
       this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
-        console.log(data);
         let obj: any = data;
         this.appointments = obj.appointments;
       })

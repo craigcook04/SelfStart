@@ -5,25 +5,25 @@ var express = require('express');
 var router = express.Router();
 var Physiotherapist = require('../models/physiotherapist');
 var UserAccount = require('../models/userAccount');
-// var Session = require('../models/session');
+var Session = require('../models/session');
 
-// router.use(function(req, res, next){
-//   // do logging
-//   Session.findOne(req.params.token, function(err, session) {
-//       if(err) {
-//           res.send(err);
-//           return;
-//       }
-//       if(session == null) {
-//         res.status(401).send({error: "Unauthorized to access this content"});
-//         return;
-//       }
-//       else{
-//           //the user has a valid session token
-//           next();
-//       }
-//   });
-// });
+router.use(function(req, res, next){
+  // do logging
+  Session.findOne({nonce: req.header('Authorization')}, function(err, session) {
+      if(err) {
+          res.send(err);
+          return;
+      }
+      if(session == null) {
+        res.status(401).send({error: "Unauthorized to access this content"});
+        return;
+      }
+      else{
+          //the user has a valid session token
+          next();
+      }
+  });
+});
 
 router.route('/')
 
@@ -265,6 +265,34 @@ router.route('/getphysio/:userid')
             }
             
             response.send({success: true, physio: physio});
+        });
+    });
+    
+router.route('/update/:userid')
+    .put(function(request, response) {
+        Physiotherapist.findOne({'account': request.params.userid}, function(err, physio) {
+            if(err) {
+                response.send(err);
+                return;
+            }
+            
+            if(physio == null) {
+                response.send({success: false, message: 'could not update physio'});
+                return;
+            }
+            
+            physio.givenName = request.body.firstname;
+            physio.familyName = request.body.lastname;
+            physio.email = request.body.email;
+             
+            physio.save(function(err) {
+                if(err) {
+                    response.send(err);
+                    return;
+                }
+                
+                response.send({success: true, message: 'you have succesfully updated your account', updatedPhysio: physio});
+            });
         });
     });
     

@@ -30,6 +30,7 @@ export class AppComponent {
                   this.isPhysio = false;
                 }
                 this.CheckRole();
+
               }
   
   goHome(){
@@ -88,7 +89,6 @@ export class AppComponent {
     this.isClient = false;
     this.isPhysio = false; 
     this.userAccountsService.LogOut(session).subscribe(data => {
-        console.log(data);
     });
     document.body.style.cursor = "wait";    
     let router2 = this.router;

@@ -5,6 +5,7 @@ import { PatientService } from '../patient.service';
 import {RehabPlansService} from '../rehab-plans.service'
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { EmailService } from '../email.service';
 import { PhysiotherapistService } from '../physiotherapist.service';
 
 @Component({
@@ -35,6 +36,8 @@ export class AssessmentTestComponent implements OnInit {
   offset2: number = 0;
   physioRating: number =0;
   pageInfo: string;
+  comments: string;
+  qEdit: any;
   tests = new MatTableDataSource();
   completedTests = new MatTableDataSource();
   displayedColumns = ["Patient", "Plan Assigned", "Date", "View Test Results"];  
@@ -54,6 +57,7 @@ export class AssessmentTestComponent implements OnInit {
 
   constructor(private assessmentTestService: AssessmentTestService,  private modalService: NgbModal,
               private patientService: PatientService, private rehabPlanService: RehabPlansService, private config: NgbRatingConfig,
+              private emailService: EmailService,
               private physioService: PhysiotherapistService) {
                 this.config.max = 10;
                 setInterval(() => {
@@ -122,7 +126,6 @@ export class AssessmentTestComponent implements OnInit {
     //this.tests.filter = filterValue;
     this.searchPlans(filterValue);
  
-    // this.questions.push(question);
   }
   searchPlans(searchString:string){
     
@@ -148,6 +151,7 @@ export class AssessmentTestComponent implements OnInit {
     this.manageTests = false;
     this.showPatients = false;
     var temp: string = "How Do you Feel Today"
+    this.questions = [];
     
     var tempQuestion = {
       questionText: temp,
@@ -165,7 +169,6 @@ export class AssessmentTestComponent implements OnInit {
     this.showDrop = true;
   }
   changeSA(){
-    console.log("fdasfdsa");
     this.type = "Short Answer";
     this.shortAnswer =true;
     this.multipleChoice = false;
@@ -184,7 +187,6 @@ export class AssessmentTestComponent implements OnInit {
     this.rating = true;
   }
   addOption(){
-     console.log(this.currOption);
      if (this.options.length<=8){
       this.options.push(this.currOption);
       this.currOption = String.fromCharCode(this.currOption.charCodeAt(0) + 1);
@@ -219,8 +221,7 @@ export class AssessmentTestComponent implements OnInit {
     this.multipleChoice = false;
     this.type = "type of question";
     
-    console.log(this.optionText);
-    console.log(this.questions);
+   
   }
   saveSAQuestion(){
     var temp: any = document.getElementById('inputShortAnswerQuestion');
@@ -264,15 +265,12 @@ export class AssessmentTestComponent implements OnInit {
     
     
     this.assessmentTestService.createPlan(this.name, this.description, this.questions).subscribe(data => {
-      console.log(data);
     });
     this.tests = new MatTableDataSource();
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
       this.tests.data = retObj.assessmentTest;
-      console.log(this.tests);
-      console.log(data);
-      console.log(this.tests);
+      
       
     });
     this.showDrop = false;
@@ -293,6 +291,11 @@ export class AssessmentTestComponent implements OnInit {
   }
   open(content) {
     this.modalService.open(content, {size: 'lg'});
+    //content.show();
+    
+  }
+  setQedit(Q:any){
+    this.qEdit = Q;
   }
   
   openListOfPlans(){
@@ -313,10 +316,8 @@ export class AssessmentTestComponent implements OnInit {
    this.manageTests = false;
    
    this.rehabPlanService.getPlans().subscribe(data => {
-     console.log(data);
      this.length2 = data.total;
      this.clients = Object.assign([], data.docs);
-     console.log(this.clients);
    });
    this.showPatients = true;
    
@@ -343,41 +344,38 @@ export class AssessmentTestComponent implements OnInit {
    this.manageTests = false;
   
    this.patientService.GetAllPatients().subscribe(data => {
-      console.log(data);
       this.clients = Object.assign([], data.docs);
-      console.log('hello');
-      // console.log(this.patients);
-      console.log(this.clients);
+      
     });
    
     this.showPatients = true;
     
   }
   assignTest(listOfClients: any[]){
-    console.log(listOfClients);
     var clientIds: string[] = [];
     
     for (var i = 0; i<listOfClients.length; i++){
       clientIds.push(listOfClients[i].value);
     }
+
     for (var i = 0; i<clientIds.length; i++){
       this.assessmentTestService.createPlanwithAssignedTest(this.name, this.description, this.questions,clientIds[i]).subscribe(data => {
         console.log(data);
         var retObj: any = data;
         retObj = retObj.assessmentTest;
         this.assessmentTestService.linktoPlan(retObj._id, retObj.belongsTo).subscribe(data1 =>{
-          console.log(data1);
-          console.log("i hope this works!");
+          
         });
       });
+      this.emailService.EmailClientsAboutNewAssessmentTest(clientIds[i], this.name).subscribe(data => {
+      })
     }
+    
     this.tests = new MatTableDataSource();
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
       this.tests.data = retObj.assessmentTest;
-      console.log(this.tests);
-      console.log(data);
-      console.log(this.tests);
+      
       
     });
     this.showCreat = true;
@@ -386,7 +384,6 @@ export class AssessmentTestComponent implements OnInit {
     this.questions = [];
     this.showPatients = false;
     this.manageTests = false;
-    console.log(clientIds);
   }
   showTable(){
     this.viewDetails = false;
@@ -398,21 +395,17 @@ export class AssessmentTestComponent implements OnInit {
     this.assessmentTestService.getTests().subscribe(data => {
       var retObj: any = data;
       this.tests.data = retObj.docs;
-      console.log(this.tests);
-      console.log(data);
-      console.log(this.tests);
+      
       
     });
+    this.questions = [];
   }
   view(planSel: any){
-    console.log("wohooo");
-    //console.log(id);
     this.selectedPlan = planSel;
     this.manageTests = false;
     this.viewDetails = true;
     this.viewDetailsCompleted = false;
     
-    console.log(this.selectedPlan);
     //this.managaeTests = false;
     
   }
@@ -422,16 +415,12 @@ export class AssessmentTestComponent implements OnInit {
     this.viewDetails = false;
     this.viewDetailsCompleted = true;
     
-    console.log(this.selectedPlan);
     
     
   }
   deleteQuestion(que: any){
-    console.log(que);
     var index = this.questions.indexOf(que);
-    console.log(index);
     this.questions.splice(index,1);
-    console.log(this.questions);
   }
   
   
@@ -463,7 +452,6 @@ export class AssessmentTestComponent implements OnInit {
   }
   moveUp(q: any){
     var index = this.questions.indexOf(q);
-    console.log(index);
     if (index!=1){
       var temp = this.questions[index-1];
       this.questions[index-1] = q;
@@ -472,7 +460,6 @@ export class AssessmentTestComponent implements OnInit {
   }
   moveDown(q:any){
     var index = this.questions.indexOf(q);
-    console.log(index);
     if (index!=this.questions.length - 1){
       var temp = this.questions[index+1];
       this.questions[index+1] = q;
@@ -495,7 +482,6 @@ export class AssessmentTestComponent implements OnInit {
     if (this.questions[index].questionContent != null){
       for (var i=0; i<this.questions[index].questionContent.length; i++){
         var opt:any  = document.getElementById(i.toString());
-        console.log(opt.value);
         this.questions[index].questionContent[i] = opt.value;
       }
     }
@@ -503,23 +489,22 @@ export class AssessmentTestComponent implements OnInit {
   }
   addOptionInEdit(Q: any){
     var index = this.questions.indexOf(Q);
-    this.questions[index].questionContent.push("");
+    if(this.questions[index].questionContent.length<=10){
+      this.questions[index].questionContent.push("");
+    }
   }
   
   SwitchPageEvent(pageEvent: any, searchString: string) {
     this.offset = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchTests(searchString);
   }
   SwitchPageEvent1(pageEvent: any, searchString: string) {
     this.offset1 = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchCompletedTests(searchString);
   }
   
    SwitchPageEvent2(pageEvent: any, searchString: string) {
     this.offset2 = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchPlans(searchString);
   }
 
@@ -559,39 +544,34 @@ export class AssessmentTestComponent implements OnInit {
     });
   }
   SendBack(index: any){
-    console.log(index);
     this.physioRating = index;
   }
-  assignFollowUp(physioComments: string){
-    //this.patientService.
-    var pat: any;
-    var temp:any = this.selectedPlan;
-    this.patientService.GetAllPatients().subscribe(data => {
-      var retObj: any = data.docs;
-      pat = retObj[0];
-      console.log(pat);
-      console.log(temp);
-      console.log(physioComments)
-      this.assessmentTestService.completeTest(temp.name, temp.description, temp.dateCompleted, temp.dateCreated, temp.questions, this.physioRating, physioComments, pat._id).subscribe(data =>{
-        console.log(data);
-      });
-    });
+  assignFollowUp(){
     
     
-  }
-  closeInjury(physioComments:string, finalThoughts:string){
     var temp: any = this.selectedPlan;
-    this.assessmentTestService.closeInjury(physioComments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
-      console.log(data);
+    this.assessmentTestService.assignFollowUp(this.comments,this.physioRating, temp._id).subscribe(data =>{
       this.completedTests = new MatTableDataSource();
       this.assessmentTestService.getAllCompleted().subscribe(data =>{
         var retObj: any = data;
         this.length1 = retObj.total;
         this.completedTests.data = retObj.docs;
-        console.log(data);
+      })
+    });
+  }
+  closeInjury(finalThoughts:string){
+    var temp: any = this.selectedPlan;
+    this.assessmentTestService.closeInjury(this.comments, temp._id,this.physioRating,finalThoughts).subscribe(data =>{
+      this.completedTests = new MatTableDataSource();
+      this.assessmentTestService.getAllCompleted().subscribe(data =>{
+        var retObj: any = data;
+        this.length1 = retObj.total;
+        this.completedTests.data = retObj.docs;
       })
     });
   }
   
-  
+  setphysioComments(comments: string){
+    this.comments = comments;
+  }
 }

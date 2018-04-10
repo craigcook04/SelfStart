@@ -13,7 +13,6 @@ export class AdminAuthGuard implements CanActivate {
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
       if(this.userAccountService.LoggedIn()) {
         var isauth = await this.userAccountService.GetAuthorization();
-        console.log(isauth);
         this.userAccountService.RefreshSession().subscribe(data => {
           var retObj: any = data;
           if(retObj.success) {
@@ -25,6 +24,8 @@ export class AdminAuthGuard implements CanActivate {
             this.cookieService.set('ID', id, 1/24);
             this.cookieService.set('session', session, 1/24);
             this.cookieService.set('role', role, 1/24);
+
+            
           }
         })
         //render the component if the session token is valid and the session is given to a physiotherapist

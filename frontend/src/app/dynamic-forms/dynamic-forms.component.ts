@@ -35,7 +35,9 @@ export class DynamicFormsComponent implements OnInit {
   name: string;
   description: string;
   currOption: string = 'c';
-
+  editquestion: any = {};
+  chosenForm: any;
+  myform: any = {};
   constructor(private dynamicFormsService: DynamicFormsService,
               private modalService: NgbModal,
               private router: Router) { }
@@ -43,7 +45,6 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit() {
     this.dynamicFormsService.GetAllForms().subscribe(data =>{
       this.forms = Object.assign([], data.form);
-      console.log(data);
     })
     
     this.editMode = false;
@@ -54,6 +55,15 @@ export class DynamicFormsComponent implements OnInit {
     this.options = [];
     this.optionText = [];
     this.questions = [];
+  }
+
+  EditQuestion(index, questions, form) {
+    this.editquestion = form.questions[index];
+    this.chosenForm = form;
+  }
+
+  SetMyForm(form) {
+    this.myform = form;
   }
 
   changeSA(){
@@ -70,6 +80,10 @@ export class DynamicFormsComponent implements OnInit {
     this.rating = false;
   }
 
+  SaveChanges(value ) {
+
+  }
+
   changeRA(){
     this.type = "Rating";
     this.shortAnswer =false;
@@ -78,7 +92,6 @@ export class DynamicFormsComponent implements OnInit {
   }
 
   addOption(){
-     console.log(this.currOption);
      if (this.options.length<=8){
       this.options.push(this.currOption);
       this.currOption = String.fromCharCode(this.currOption.charCodeAt(0) + 1);
@@ -112,10 +125,9 @@ export class DynamicFormsComponent implements OnInit {
     this.showDrop = false;
     this.multipleChoice = false;
     this.type = "type of question";
-    
-    console.log(this.optionText);
-    console.log(this.questions);
+
   }
+
   saveSAQuestion(){
     var temp: any = document.getElementById('inputShortAnswerQuestion');
     temp = temp.value;
@@ -146,7 +158,60 @@ export class DynamicFormsComponent implements OnInit {
     this.showDrop = false;
     this.rating = false;
     this.type = "type of question";
-    console.log(this.questions);
+  }
+
+  SendUpdate(questiontext) {
+    if(this.editquestion.questionType = "MC") {
+      for(var a = 0; a < this.editquestion.questionContent.length; a++) {
+        var input: any = document.getElementById('editquestion' + a);
+        this.editquestion.questionContent[a] = input.value
+      }
+    }
+
+    this.editquestion.questionText = questiontext;
+
+    this.dynamicFormsService.UpdateForm(this.chosenForm._id, this.chosenForm.name, this.chosenForm.description, this.chosenForm.questions).subscribe(data => {
+
+    })
+  }
+
+  AddAnotherQuestion(questionType) {
+    if(questionType=="SA") {
+      this.saveSAQuestion();
+    }
+    else if(questionType == "MC") {
+      this.saveMCQuestion();
+    }
+    else {
+      this.saveRatingQuestion();
+    }
+
+    this.myform.questions.push(this.questions[0]);
+    this.dynamicFormsService.UpdateForm(this.myform._id, this.myform.name, this.myform.description, this.myform.questions).subscribe(data => {
+
+      this.openEditor = false;
+      this.showDrop = false;
+      this.rating = false;
+      this.multipleChoice = false;
+      this.shortAnswer =  false;
+      this.type = "type of question";
+      this.showCreat = true;
+      this.optionText = [];
+      this.options =[];
+      this.questions = [];
+    })
+  }
+
+  SetQuestion(questionType) {
+    if(questionType == "RA") {
+      this.changeRA();
+    }
+    else if(questionType == "SA") {
+      this.changeSA();
+    }
+    else {
+      this.changeMC();
+    }
   }
 
   NumToChar(n) {
@@ -155,11 +220,9 @@ export class DynamicFormsComponent implements OnInit {
   }
 
   RemoveQuestion(num, formID, questions, name, description) {
-    console.log(num, formID, questions);
-    console.log(questions[num]);
+   
     questions.splice(num, 1);
     this.dynamicFormsService.UpdateForm(formID, name, description, questions).subscribe(data => {
-      console.log(data);
     })
 
   }
@@ -181,10 +244,8 @@ export class DynamicFormsComponent implements OnInit {
     }
 
     this.dynamicFormsService.CreateNewForm(name, description, this.questions).subscribe(data => {
-      console.log(data);
       this.dynamicFormsService.GetAllForms().subscribe(data => {
         this.forms = Object.assign([], data.form);
-        console.log(data);
         
       });
 
@@ -225,11 +286,9 @@ export class DynamicFormsComponent implements OnInit {
   
   deleteForm(ID: string) {
     this.dynamicFormsService.DeleteForm(ID).subscribe(data => {
-      console.log(data);
       //update the list to reflect deletion
       this.dynamicFormsService.GetAllForms().subscribe(data =>{
       this.forms = Object.assign([], data.form);
-      console.log(data);
       })
       
     })
@@ -241,14 +300,11 @@ export class DynamicFormsComponent implements OnInit {
   }
   
   createQuestion(questionText: string, helpDescription: string, order: Number, formID: string, qType: string){
-    console.log(questionText, helpDescription, order, formID, qType);
     this.dynamicFormsService.CreateQuestion(questionText, helpDescription, order, formID, qType).subscribe(data => {
-      console.log(data);
       
       this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
         var retObj: any = data;
         this.questions = Object.assign([], retObj.question);
-        console.log(data);
       })
       
     })
@@ -256,13 +312,11 @@ export class DynamicFormsComponent implements OnInit {
   
   createType(name: string, questionID: string){
     this.dynamicFormsService.CreateType(name, questionID).subscribe(data => {
-      console.log(data);
     })
   }
   
   getTypes(){
     this.dynamicFormsService.GetTypes().subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.types = Object.assign([], retObj.questionType);
     })
@@ -270,7 +324,6 @@ export class DynamicFormsComponent implements OnInit {
   
   getTypeId(name: string){
     this.dynamicFormsService.GetTypeID(name).subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.tempQID = retObj._id;
     })
@@ -279,7 +332,6 @@ export class DynamicFormsComponent implements OnInit {
   
   updateQuestion(id: string, questionText: string, helpDescription: string, order: Number, formID: string, questionType: string){
     this.dynamicFormsService.UpdateQuestion(id, questionText, helpDescription, order, formID, questionType).subscribe(data => {
-      console.log(data);
       this.getFormQuestions(formID);
     })
   }
@@ -288,13 +340,8 @@ export class DynamicFormsComponent implements OnInit {
   //This is working
   deleteQuestion(ID: string, formID: string){
     this.dynamicFormsService.DeleteQuestion(ID).subscribe(data => {
-      console.log(data);
       
-      // this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
-      //   var retObj: any = data;
-      //   this.questions = Object.assign([], retObj.question);
-      //   console.log(data);
-      // })
+      
       this.getFormQuestions(formID);
     })   
   }
@@ -304,7 +351,6 @@ export class DynamicFormsComponent implements OnInit {
     this.dynamicFormsService.GetFormQuestions(formID).subscribe(data => {
       var retObj: any = data;
       this.questions = Object.assign([], retObj.question);
-      console.log(data);
     })
   }
   

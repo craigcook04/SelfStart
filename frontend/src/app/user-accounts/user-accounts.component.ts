@@ -565,7 +565,6 @@ export class UserAccountsComponent implements OnInit {
     //if this if statement is triggered, there are errors in the code
     if(this.cannotContinue) {
       this.modalService.open(makeChanges, {size: 'lg'});
-      //stepper.reset();
       return;
     }
 
@@ -591,15 +590,10 @@ export class UserAccountsComponent implements OnInit {
       }
       else {
         //the user will be shown an error in the creation problem along the lines of there being a server problem.
-        //stepper.reset();
         var usernameBox = document.getElementById('inputPhysioUsername').style.borderColor = 'red';
-        //this.invalidUsername = true;
       }
       this.physiotherapistService.getTherapists().subscribe(data => {
-          // console.log(data);
           this.length1 = data.total;
-          // this.clients = Object.assign([], data.docs)
-          // console.log(this.clients);
           var retObj: any = data;
           this.therapists = Object.assign([], data.docs);
         });
@@ -757,7 +751,6 @@ export class UserAccountsComponent implements OnInit {
       this.length = retObj.total;
       this.clients = Object.assign([], data.docs);
       this.length = retObj.total;
-      //console.log(this.patients);
       this.totalPatients = retObj.total;
     });
   }
@@ -773,7 +766,6 @@ export class UserAccountsComponent implements OnInit {
       this.length1 = retObj.total;
       this.therapists = Object.assign([], data.docs);
       //this.length = retObj.total;
-      //console.log(this.patients);
       //this.totalPatients = retObj.total;
     });
   }

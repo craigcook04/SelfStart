@@ -97,6 +97,22 @@
           </mat-list-item>
           <br>
           <mat-divider class="dividers"></mat-divider>
+          <mat-list-item [routerLinkActive]="['active']" [routerLink]="['../settings']">
+            <div class="row form-inline">
+                <div class="col-2">
+                    <h5 class="btn-block" style="text-align: center; color:white;">
+                        <i class="fa fa-cog"></i>                        
+                    </h5>      
+                </div>
+                <div class="col">
+                    <h5 class="btn-block" style="margin-left: 10px; color:white;">
+                     Settings
+                    </h5>
+                </div>
+            </div>
+        </mat-list-item>
+          <br>
+          <mat-divider class="dividers"></mat-divider>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -116,7 +132,7 @@
             <mat-card-content>
               <br>
               <mat-tab-group>
-                <mat-tab label="Patient Report">
+                <mat-tab label="Client Report">
                   <div style="margin-left: auto; margin-right: auto; text-align: center;" class="row col-11">
                     <mat-card class="col">
                         <div>
@@ -156,14 +172,14 @@
 
                     <mat-card class="col">
                         <mat-card-title>
-                            <b style="color: #0275d8;">Generate Patient Report</b>
+                            <b style="color: #0275d8;">Generate Client Report</b>
                         </mat-card-title>
                         <mat-divider></mat-divider>
                         <mat-card-content>
                           <div>
                             <br>
                             <mat-card-subtitle>
-                              <h4>Based off the Completed Assessment Test Results, provide any insight and recommendations to the patient:</h4>
+                              <h4>Based off the Completed Assessment Test Results, provide any insight and recommendations to the client:</h4>
                             </mat-card-subtitle>
                             <br>
                             <div class="form-group">
@@ -175,7 +191,7 @@
                               <button class="col-3 btn btn-primary" [disabled]="completedTests.length == 0" (click)="PrintReport()">
                                 Print
                               </button>
-                              <button class="col-3 btn btn-primary" [disabled]="completedTests.length == 0" (click)="EmailReport()" (click)="emailModal.show()" >
+                              <button class="col-3 btn btn-primary" [disabled]="completedTests.length == 0" (click)="emailModal.show()" >
                                 Email
                               </button>
                             </div>
@@ -204,27 +220,13 @@
                           <p><b>Your Physiotherapists Recommendation:</b></p>
                           <p>{{ textAreaVal.value }}</p>
                   </div>
-                  <!-- <div #test2>
-                      <mat-list>
-                          <div class="row">
-                              <div class="col-2">
-                                  <b>Exercises in Menu:</b>
-                                 <br/>
-                                </div>
-                                <mat-list-item class="col" *ngFor="let exercise of currClient?.rehabPlan?.exerciseObjects; let i= index;">
-                                  <mat-card-subtitle>
-                                    {{ i + 1 }}. {{ exercise?.name }}
-                                  </mat-card-subtitle>
-                                </mat-list-item>
-                          </div>
-                      </mat-list>
-                  </div> -->
                 </mat-tab>
-                <mat-tab  label="Patient Summary Report">
+                <mat-tab  label="Client Summary Report">
                   <div class="col-11 centerme">
                     <mat-card>
                         <br>
-                        <h3><b>Patient Summary Report</b></h3> 
+                        <h3><b>Client Summary Report</b></h3> 
+                        <hr>
                         <br>
                         <div class="container">
                             <div class="row">
@@ -383,7 +385,7 @@
                           </div>
                   <br> 
                 </mat-tab>
-                <mat-tab label="Visualize Patient Progress">
+                <mat-tab label="Visualize Client Progress">
                   <div class="col-11 centerme">
                     <mat-card>
                         <br>
@@ -468,10 +470,6 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-
         <!-- Confirmation modal for email -->
         <div mdbModal #emailModal="mdb-modal" class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
@@ -479,8 +477,12 @@
                     <div class="modal-header">
                         <h4 class="modal-title w-100" id="myModalLabel">Email sent to {{ currClient?.givenName }}</h4>
                     </div>
+                    <div class="modal-body">
+                        <p>Message to be included in the email: </p>
+                        <textarea #emailBody2='ngModel' ngModel class="form-control" placeholder="Additional comments..." rows="5"></textarea>                      
+                      </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm waves-light" (click)="emailModal.hide()" mdbRippleRadius>Ok</button>
+                        <button type="button" class="btn btn-primary btn-sm waves-light" (click)="emailModal.hide(); EmailReport(emailBody2.value)" mdbRippleRadius>Ok</button>
                     </div>
                 </div>
             </div>
@@ -493,9 +495,9 @@
                         <h4 class="modal-title w-100" id="myModalLabel">Email {{ patient?.givenName }} {{patient?.familyName}}</h4>
                     </div>
                     <div class="modal-body">
-                      <p>Message to be included in the email: </p>
-                      <textarea #emailBody='ngModel' ngModel class="form-control" placeholder="Additional comments..." rows="5"></textarea>                      
-                    </div>
+                        <p>Message to be included in the email: </p>
+                        <textarea #emailBody='ngModel' ngModel class="form-control" placeholder="Additional comments..." rows="5"></textarea>                      
+                      </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary btn-sm waves-light" (click)="EmailPatientSummary(patient.email, emailBody.value); emailSummaryModal.hide()" mdbRippleRadius>Send Email</button>
                         <button type="button" class="btn btn-primary btn-sm waves-light" (click)="emailSummaryModal.hide()" mdbRippleRadius>Cancel</button>

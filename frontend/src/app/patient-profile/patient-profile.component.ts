@@ -89,13 +89,11 @@ export class PatientProfileComponent implements OnInit {
   }
 
   SetPatient2(patient) {
-    console.log(patient)
     this.patient2 = patient;
   }
 
   SwitchPageEvent(pageEvent: any, searchString: string, searchArea: string) {
     this.offset = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchPatients(searchString, searchArea);
   }
 
@@ -105,12 +103,10 @@ export class PatientProfileComponent implements OnInit {
     this.ascendingOrd = true;
     
     this.patientService.GetAllPatients().subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.patients = Object.assign([], data.docs);
       this.patient2 = this.patients[0];
       this.length = retObj.total;
-      console.log(this.patients);
       this.totalPatients = retObj.total;
     });
   }
@@ -122,7 +118,6 @@ export class PatientProfileComponent implements OnInit {
   SetDate(DOB: string) {
     var textbox: any = document.getElementById('datepick');
     textbox.value = DOB;
-    console.log(DOB);
   }
   ResetErrorMessages() {
     //Reset all the error messages. Then new ones will be shown if some still exist
@@ -149,7 +144,6 @@ export class PatientProfileComponent implements OnInit {
     var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
     this.cannotContinue = false;
-    console.log(phoneNumber, newAddress)
     if(badFormatWithNumbers.test(firstName) || !firstName) {
       var firstnameBox = document.getElementById('inputFirstName').style.borderColor = 'red';    
       this.invalidFirstname = true;
@@ -170,7 +164,6 @@ export class PatientProfileComponent implements OnInit {
 
     if(!newAddress) {
       var newAddressBox = document.getElementById('inputAddress').style.borderColor = 'red';
-      console.log(newAddress);
       this.invalidAddress = true;
       this.cannotContinue = true;
     }
@@ -199,12 +192,10 @@ export class PatientProfileComponent implements OnInit {
 
     this.showSuccess = true;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
-      console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
         this.patients = Object.assign([], data.docs);
         this.length = data.total;
-        console.log(data);
       });
 
       if(data.success) {
@@ -237,7 +228,6 @@ export class PatientProfileComponent implements OnInit {
   }
 
   deletePatient(ID: string) {
-    console.log(ID);
     this.patientService.DeletePatient(ID).subscribe(data => {
       var retObj: any = data;
       if(retObj.success){
@@ -267,7 +257,6 @@ export class PatientProfileComponent implements OnInit {
     }
     this.patientService.SearchPatient(searchString, searchArea, this.offset, ascvsdesc).subscribe(data => {
       if(data != []) {
-        console.log(data);
         var retObj : any = data;
         this.patients = Object.assign([], retObj.docs);
         this.length = retObj.total;
@@ -284,7 +273,6 @@ export class PatientProfileComponent implements OnInit {
 
   HideMessage() {
     //hide all messages, if there are any
-    console.log('hide messages');
     this.showSuccess = false;
     this.showFailure = false;
     this.showDeleteSuccess = false;
@@ -325,7 +313,6 @@ export class PatientProfileComponent implements OnInit {
      this.patientService.GetProvinces(countryId).subscribe(data => {
       var retObj: any = data;
       this.provinces = Object.assign([], retObj.province);
-      console.log(data);
       this.GetCities(retObj.province[0]._id);
     })
   }
@@ -343,7 +330,6 @@ export class PatientProfileComponent implements OnInit {
   }
 
   NewPatient(firstName: string, lastName: string, patientID: string, email: string, DOB: string, postalCode: string, phoneNumber: string, maritalStatus: string, healthCardNumber: string, occupation: string, others: string, newCountry: string, newProvince: string, newCity: string, newGender: string) {
-    //console.log(firstName, lastName, patientID, email, DOB,  postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender);
     this.patientService.CreatePatient(firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, maritalStatus, healthCardNumber, occupation, others, newCountry, newProvince, newCity, newGender).subscribe(data => {
       var retObj: any = data;
       if(retObj.success) {
@@ -356,7 +342,6 @@ export class PatientProfileComponent implements OnInit {
       //reload the new patient list
       this.patientService.GetAllPatients().subscribe(data => {
         this.patients = Object.assign([], data.docs);
-        console.log(this.patients);
       });
     })
   }
@@ -369,7 +354,6 @@ export class PatientProfileComponent implements OnInit {
       this.patientService.GetProvinces(countryID._id).subscribe(data => {
         var retObj: any = data;
         this.provinces = Object.assign([], retObj.province);
-        console.log(data);
         this.GetCities(retObj.province[0]._id);
       })
     })
@@ -378,7 +362,6 @@ export class PatientProfileComponent implements OnInit {
 
   SendEmail(toEmail: String, emailSubject: String, emailBody: String) { 
     this.emailService.SendEmail(toEmail, emailSubject, emailBody).subscribe(data => {
-        console.log(data);
         var retObj: any = data;
         if(retObj.success == true) {
           this.emailSuccess = true;

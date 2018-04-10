@@ -208,6 +208,12 @@ router.route('/account/login')
            }
            console.log(user);
            user.lastLoggedIn = new Date();
+           user.save(function(err) {
+               if(err){
+                   response.send(err);
+                   return;
+               }
+           })
            var inputPassDecrypted = user.decrypt(request.body.encryptedpass);
            var hashedPassword = user.decrypt(user.encryptedPassword);
            var sentDecryptedNonce = user.decrypt(request.body.encryptednonce);
@@ -227,7 +233,8 @@ router.route('/account/login')
                        return;
                    }
                    else{
-                         response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id});
+                       console.log(user.verified);
+                         response.send({success: true, changePass: false, message: "Congratulations you are now logged in", role: user.userCode, username: user.userAccountName, userID: user._id, verified: user.verified});
                          return;
                    }
                    
@@ -396,6 +403,64 @@ router.route('/appointments/:id')
             })
         })
     });
+    
+router.route('/appointments/normal/:id')
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            if(account == null) {
+                response.send({success: true, message: 'couldnt find user', userID: request.params.id});
+                return;
+            }
+            
+            //console.log(request.body);
+            account.numbAppoint -= 1;
+            //account.numbInitial += 1;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.json({account: account});
+            })
+        })
+    });
+    
+router.route('/appointments/initial/:id')
+    .put(function(request, response){
+        UserAccount.findById(request.params.id, function(error, account){
+            if(error){
+                response.send({error: error});
+                return
+            }
+            if(account == null) {
+                response.send({success: true, message: 'couldnt find user', userID: request.params.id});
+                return;
+            }
+            
+            //console.log(request.body);
+            
+            account.numbInitial -= 1;
+            account.save(function(err){
+                if(err){
+                    response.send({error: err});
+                    return;
+                }
+                
+                response.json({account: account});
+            })
+        })
+    });
+    
+    
+    
+    
+    
+    
 
 router.route('/getdates/:id')
 

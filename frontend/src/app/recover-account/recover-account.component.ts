@@ -22,7 +22,7 @@ export class RecoverAccountComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    //this component should have a hashed passed in the url
+    //this component should have a hash passed in the url
     this.userID = this.route.snapshot.paramMap.get("id");
   }
 
@@ -37,7 +37,6 @@ export class RecoverAccountComponent implements OnInit {
 
   ResetPassword(password: string, repeatPassword: string, tempPassword: string) {
     var cannotContinue = false;
-    console.log('hello');
     if(!tempPassword) {
       var tempPasswordBox = document.getElementById('inputTempPassword').style.borderColor = 'red';
       cannotContinue = true;
@@ -56,7 +55,6 @@ export class RecoverAccountComponent implements OnInit {
     }
 
     if(password != repeatPassword && !cannotContinue) {
-      console.log('passwords dont match');
       this.passwordsDontMatch = true;
       return;
     }
@@ -67,11 +65,9 @@ export class RecoverAccountComponent implements OnInit {
 
     this.patientService.GetSalt(this.userID).subscribe(data => {
       var retObj: any = data;
-      console.log(retObj)
       if(retObj.success == true){
         this.patientService.ChangePassword(this.userID, password, tempPassword, retObj.salt).subscribe(data => {
           var retObj: any = data;
-          console.log("returned", data);
           if(retObj.success) {
             this.router.navigate(['../login']);           
           }

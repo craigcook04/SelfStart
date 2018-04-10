@@ -4,7 +4,7 @@ import { PatientService } from '../patient.service';
 import { Router } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { PageEvent } from '@angular/material';
-
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-assign-plan',
@@ -32,7 +32,8 @@ export class AssignPlanComponent implements OnInit {
 
   constructor( private rehabPlanService: RehabPlansService,
                private router: Router,
-               private patientService: PatientService) { }
+               private patientService: PatientService,
+               private emailService: EmailService) { }
 
   ngOnInit() {
     this.rehabPlanService.getPlans().subscribe(data =>{
@@ -48,7 +49,6 @@ export class AssignPlanComponent implements OnInit {
     this.patientService.SearchPatientRehab(this.currPlan._id, filterValue, this.offset * this.pageSize, this.pageSize).subscribe(data =>{
       if(data != []){
         this.clientList = [];
-        console.log(data);
         var obj: any = data;
         this.length = obj.total;
         obj.docs.forEach(element => {
@@ -61,7 +61,6 @@ export class AssignPlanComponent implements OnInit {
     })
   }
   SetOffset( searchValue: string, event: PageEvent){
-    console.log(event);
     this.offset = event.pageIndex;
     this.pageSize = event.pageSize;
 
@@ -85,7 +84,6 @@ export class AssignPlanComponent implements OnInit {
     
         this.rehabPlanService.SearchPlans(filterValue, this.offset * this.pageSize).subscribe(data =>{
           if(data != []){
-            console.log(data);
             this.rehabPlans = [];
             var obj: any = data;
             this.length2 = obj.total;
@@ -99,7 +97,6 @@ export class AssignPlanComponent implements OnInit {
 
     this.rehabPlanService.SearchPlans(searchValue, this.offset * this.pageSize).subscribe(data =>{
       if(data != []){
-        console.log(data);
         this.rehabPlans = [];
         var obj: any = data;
         this.length2 = obj.total;
@@ -111,7 +108,6 @@ export class AssignPlanComponent implements OnInit {
   //assign which plan is to be displayed in the card and get its corresponding information
   assignCurrentPlan(plan: any){
     this.currPlan = plan;
-    console.log(this.currPlan);
     this.patientService.GetPatientsUnderPlan(plan._id).subscribe(data =>{
       this.clients = [];
       var obj: any = data;
@@ -120,7 +116,6 @@ export class AssignPlanComponent implements OnInit {
     this.patientService.GetPatientsNotUnderPlan(this.currPlan._id, this.pageSize).subscribe(data =>{
       this.clientList = [];
       let obj: any = data;
-      console.log(data);
       obj.docs.forEach(element => {
         if(element.rehabPlan !== this.currPlan._id){
           this.clientList.push(createClient(element));
@@ -133,13 +128,11 @@ export class AssignPlanComponent implements OnInit {
 
   assignPatientPlan(patient: any, plan: any){
     var obj: any;
-    console.log(patient, plan);
     this.patientService.AssignPlan(patient, plan).subscribe(data =>{
       obj = data;
       this.patientService.GetPatientsNotUnderPlan(this.currPlan._id, this.pageSize).subscribe(data =>{
         this.clientList = [];
         let obj: any = data;
-        console.log(data);
         obj.docs.forEach(element => {
           if(element.rehabPlan !== this.currPlan._id){
             this.clientList.push(createClient(element));
@@ -149,6 +142,10 @@ export class AssignPlanComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.clientList);
       })
       this.clients.push(obj.patient);
+
+      this.emailService.EmailClientAboutNewRehabPlan(obj.patient.givenName + " " + obj.patient.familyName, plan.name, obj.patient.email).subscribe(data => {
+        
+      })
     })
   }
 
@@ -161,7 +158,6 @@ export class AssignPlanComponent implements OnInit {
       this.patientService.GetPatientsNotUnderPlan(this.currPlan._id, this.pageSize).subscribe(data =>{
         this.clientList = [];
         let obj: any = data;
-        console.log(data);
         obj.docs.forEach(element => {
           if(element.rehabPlan !== this.currPlan._id){
             this.clientList.push(createClient(element));

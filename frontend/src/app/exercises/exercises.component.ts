@@ -68,7 +68,6 @@ export class ExercisesComponent implements OnInit {
       // data comes back as exercise (singular!!!!!)
       var obj : any = data;
       this.exercises = obj.docs;
-
       this.length = data.total;
     })
     this.physioService.GetPhysioByUserID().subscribe(data =>{

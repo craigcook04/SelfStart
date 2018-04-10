@@ -108,6 +108,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { PhysioHomeService } from './physio-home.service';
 import { TimeOffComponent } from './time-off/time-off.component';
 import { ResourcesComponent } from './resources/resources.component';
+import { AuthService } from './interceptors/auth.service'
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -189,6 +191,7 @@ import { ResourcesComponent } from './resources/resources.component';
     MatExpansionModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatSliderModule,
     MatTabsModule,
     MatProgressBarModule,
     MatSelectModule,
@@ -213,7 +216,8 @@ import { ResourcesComponent } from './resources/resources.component';
     AdminAuthGuard,
     PaymentService,
     RolesService,
-    PhysioHomeService],
+    PhysioHomeService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthService, multi: true}],
   bootstrap: [AppComponent],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
