@@ -62,7 +62,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
     this.cells = new Array(37); //Create 37 time slots
     this.dateSelected = moment().startOf('week').format('LL') + " - " + moment().endOf('week').format('LL'); //set the range for the current week initially with the current week
     this.weekToFill = moment().toDate();
-    console.log(this.weekToFill);
+    //console.log(this.weekToFill);
     this.weeklyBookings = [];
     this.refreshCalendar(); //populate calendar
     this.counterTO = 0;
@@ -98,7 +98,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
         if (this.currentType == "normal"){
           if(this.currentlyFilled[i] == ("slot"+day+indx) || this.currentlyFilled[i] == ("slot"+day+(indx+1)) || this.currentlyFilled[i] == ("slot"+day+(indx+2)) || this.currentlyFilled[i] == ("slot"+day+(indx+3))){
             this.notTaken = false; //gets set if date is already booked
-            console.log(this.currentlyFilled[i]);
+            //console.log(this.currentlyFilled[i]);
             break;
           }
         }else if (this.currentType == "initial"){
@@ -189,13 +189,13 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
       }
       
   }else if(this.isSelected){ //this will have to change the current selection to a new one
-      console.log("Booking time must be changed");
+      //console.log("Booking time must be changed");
       //make sure the date they chose isnt already booked
         for(var i = 0; i<this.currentlyFilled.length; i++){
         if (this.currentType == "normal"){
           if(this.currentlyFilled[i] == ("slot"+day+indx) || this.currentlyFilled[i] == ("slot"+day+(indx+1)) || this.currentlyFilled[i] == ("slot"+day+(indx+2)) || this.currentlyFilled[i] == ("slot"+day+(indx+3))){
             this.notTaken = false; //gets set if date is already booked
-            console.log(this.currentlyFilled[i]);
+            //console.log(this.currentlyFilled[i]);
             break;
           }
         }else if (this.currentType == "initial"){
@@ -378,7 +378,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
           //console.log(currentDate);
           //console.log("K = " + k);
           var dayNumber = currentDate.day();
-          console.log("day num: " + dayNumber);
+          //console.log("day num: " + dayNumber);
           //console.log(dayNumber);
           var dayStart =  moment().add(this.currentWeek, 'weeks').startOf('week').add(dayNumber, 'days').startOf('day').add(8.5, 'hours'); //get start of selected day
           //console.log(dayStart);
@@ -462,7 +462,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             }else if(this.weeklyBookings[k].type == "timeoff"){ //for booked off time slot
               
               var startTO = moment(new Date(this.weeklyBookings[k].date), 'YYYY-MM-DDTHH:mm:ss.SSSSZ').toISOString();
-              console.log("start TO: " + startTO);
+              //console.log("start TO: " + startTO);
               var endTO = moment(new Date(this.weeklyBookings[k].endDate), 'YYYY-MM-DDTHH:mm:ss.SSSSZ').toISOString();
               var beginningOfWeek = new Date();
               var forBOW = moment(beginningOfWeek,'YYYY-MM-DDTHH:mm:ss.SSSSZ').add(this.currentWeek, 'weeks').startOf('week').startOf('day').add(8.5, 'hours');
@@ -477,20 +477,20 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
               while(moment(startTO).add(dayRange, 'days').isBefore(moment(endTO))){
                 dayRange = dayRange + 1;
               }
-              console.log("THIS BOOKING SPANS: " + dayRange); 
+              //console.log("THIS BOOKING SPANS: " + dayRange); 
 
               var test = moment(forBOW);
 
               while(moment(test).isBefore(moment(startTO))){
                 test = moment(test).add((upToCount*15), 'minutes');
-                console.log("test" + test);
-                console.log(upToCount);
+                //console.log("test" + test);
+                //console.log(upToCount);
                 upToCount = upToCount + 1;
               }
 
 
               //this.startCount = (this.startCount - ((dayRange-1)*unusedNight));
-              console.log("SLOTS BEFORE GREY: " + upToCount);
+              //console.log("SLOTS BEFORE GREY: " + upToCount);
               
               var test2 = moment(startTO);
 
@@ -501,7 +501,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
               }
 
 
-              console.log("SLOTS RESERVED FOR GREY TIME OFF: " + bookedTO)
+              //console.log("SLOTS RESERVED FOR GREY TIME OFF: " + bookedTO)
              
 
               if(moment(startTO).isBefore(moment(forBOW))){
@@ -553,29 +553,6 @@ export class AppointmentsComponent implements OnInit, AfterViewInit {
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
             if(!(this.isStart) && (this.currentWeek == this.selectedWeek)){
               //this is for setting the currently selected
               if(this.currentType == "normal"){
