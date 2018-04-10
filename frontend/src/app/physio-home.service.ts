@@ -5,6 +5,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class PhysioHomeService {
 
   constructor(private http: HttpClient) { }
+    emailAddress: string;
+    clientName: string;
+    deleteDate: Date;
     
     GetPhysio(id: string) {
       return this.http.get('api/physiotherapist/' + id);
@@ -12,15 +15,23 @@ export class PhysioHomeService {
     GetAppointments(today: string) {
       return this.http.get('api/appointment/day/' + today);
     }
-    GetClientName(userid: string) {
-      //return this.http.put('api/patient/getclient/' + userid);
+    NormalAppt(userid: string) {
+      var body = {}
+      return this.http.put('api/userAccount/appointments/normal/' + userid, body);
     }
-    UpdateAppointment(id: string){
+    InitialAppt(userid: string) {
+      var body = {}
+      return this.http.put('api/userAccount/appointments/initial/' + userid, body);
+    }
+    DeleteAppointment() {
+      return this.http.delete('api/appointment/' + this.deleteDate);
+    }
+    SendEmail() {
       var body = {
+        toEmail: this.emailAddress,
+        name: this.clientName,
+        date: this.deleteDate
       }
-      //return this.http.put('api/appointment/' + id, body);
-    }
-    DeleteAppointment(id: string){
-      //return this.http.delete('api/appointment/' + id);
+      return this.http.post('api/email/appointment', body);
     }
 }
