@@ -71,12 +71,9 @@ export class UserAccountsComponent implements OnInit {
     this.content = false;
     this.ascendingOrd = true;
     this.patientService.GetAllPatients().subscribe(data => {
-      console.log(data);
       this.length = data.total;
       this.clients = Object.assign([], data.docs);
-      console.log('hello');
       
-      // console.log(this.patients);
     });
      this.patientService.GetGenders().subscribe(data => {
        
@@ -103,7 +100,6 @@ export class UserAccountsComponent implements OnInit {
     else{
       this.activated = client;
     }
-    console.log(this.activated);
     
   }
   showPhysio(therapist: any){
@@ -114,7 +110,6 @@ export class UserAccountsComponent implements OnInit {
     else{
       this.activated = therapist;
     }
-    console.log(this.activated);
     
   }
     
@@ -130,7 +125,6 @@ export class UserAccountsComponent implements OnInit {
     var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
     this.cannotContinue = false;
-    console.log(phoneNumber, newAddress)
     if(badFormatWithNumbers.test(firstName) || !firstName) {
       var firstnameBox = document.getElementById('inputFirstName1').style.borderColor = 'red';    
       this.invalidFirstname = true;
@@ -151,7 +145,6 @@ export class UserAccountsComponent implements OnInit {
 
     if(!newAddress) {
       var newAddressBox = document.getElementById('inputAddress1').style.borderColor = 'red';
-      console.log(newAddress);
       this.invalidAddress = true;
       this.cannotContinue = true;
     }
@@ -180,12 +173,10 @@ export class UserAccountsComponent implements OnInit {
 
     this.showSuccess = true;
     this.patientService.UpdatePatient(ID, firstName, lastName, patientID, email, DOB, postalCode, phoneNumber, others, newCountry, newProvince, newCity, newGender, newAddress).subscribe(data => {
-      console.log(data);
       //reload the list of patients
       this.patientService.GetAllPatients().subscribe(data => {
         this.length = data.total;
         this.clients = Object.assign([], data.docs);
-        console.log(data);
       });
 
       if(data.success) {
@@ -212,7 +203,6 @@ export class UserAccountsComponent implements OnInit {
     var emailFormat =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     var validPhoneNumber = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
     this.cannotContinue = false;
-    //console.log(phoneNumber, newAddress)
     if(badFormatWithNumbers.test(firstName) || !firstName) {
       var firstnameBox = document.getElementById('inputFirstName2').style.borderColor = 'red';    
       this.invalidFirstname = true;
@@ -249,13 +239,11 @@ export class UserAccountsComponent implements OnInit {
 
     this.showSuccess = true;
     this.physiotherapistService.updatePhysio(firstName, lastName, email, ID, dateHired, dateFinished, _id).subscribe (data =>{
-      console.log(data);
       var retObj: any = data;
       //reload the list of patients
       this.physiotherapistService.getTherapists().subscribe(data => {
         this.length1 = data.total;
         this.therapists = Object.assign([], data.docs);
-        console.log(data);
       });
       var closebtn: any= document.getElementById('closeBtn1');
       if(retObj.success) {
@@ -276,7 +264,6 @@ export class UserAccountsComponent implements OnInit {
   }
 
   deletePatient(ID: string) {
-    console.log(ID);
     this.patientService.DeletePatient(ID).subscribe(data => {
       var retObj: any = data;
       if(retObj.success){
@@ -287,10 +274,8 @@ export class UserAccountsComponent implements OnInit {
         this.activated = null;
         //acc.activeIds = []; //close all accordian panels
         this.patientService.GetAllPatients().subscribe(data => {
-          console.log(data);
           this.length = data.total;
           this.clients = Object.assign([], data.docs)
-          console.log(this.clients);
         });
       }
       else { 
@@ -372,7 +357,6 @@ export class UserAccountsComponent implements OnInit {
     }
 
     var DOB = yearDOB + '/' + monthDOB + '/' + dayDOB;
-    console.log(DOB);
     if(!DOB) {
       var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'red';
       var DOBBox2 = document.getElementById('inputmonthDOB').style.borderColor = 'red';
@@ -434,11 +418,9 @@ export class UserAccountsComponent implements OnInit {
 
     this.newClientService.CreateClientFromAdmin(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
 
-      console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
         this.newClientService.SendToVerification(retObj.patient._id, email, firstName, lastName).subscribe(data => {
-          console.log(data);
           document.body.style.cursor = 'default';
           
           var closebtn: any= document.getElementById('closeBtn0');
@@ -454,10 +436,8 @@ export class UserAccountsComponent implements OnInit {
         //this.invalidUsername = true;
       }
       this.patientService.GetAllPatients().subscribe(data => {
-          console.log(data);
           this.length = data.total;
           this.clients = Object.assign([], data.docs)
-          console.log(this.clients);
         });
     
       
@@ -544,7 +524,6 @@ export class UserAccountsComponent implements OnInit {
     }
 
     var DOB = yearDOB + '/' + monthDOB + '/' + dayDOB;
-    console.log(DOB);
     if(!DOB) {
       var DOBBox = document.getElementById('inputyearDOB').style.borderColor = 'red';
       var DOBBox2 = document.getElementById('inputmonthDOB').style.borderColor = 'red';
@@ -553,7 +532,6 @@ export class UserAccountsComponent implements OnInit {
       this.cannotContinue = true;
     }
     var dateHired = yearHired + '/' + monthHired + '/' + dayHired;
-    console.log(dateHired);
     if(!dateHired) {
       var DOBBox = document.getElementById('inputYearHired').style.borderColor = 'red';
       var DOBBox2 = document.getElementById('inputMonthHired').style.borderColor = 'red';
@@ -562,7 +540,6 @@ export class UserAccountsComponent implements OnInit {
       this.cannotContinue = true;
     }
     var dateFinished = yearFinished + '/' + monthFinished + '/' + dayFinished;
-    console.log(DOB);
     if(!dateFinished) {
       var DOBBox = document.getElementById('inputYearFinished').style.borderColor = 'red';
       var DOBBox2 = document.getElementById('inputMonthFinished').style.borderColor = 'red';
@@ -603,7 +580,6 @@ export class UserAccountsComponent implements OnInit {
 
     //this.newClientService.CreateClient(username, encryptedPassword, lastName, firstName, email, DOB, gender, postalCode, phone, others, country, province, city, address, salt).subscribe(data => {
     this.physiotherapistService.createPhysiobyAdmin(firstName, lastName, email, dateHired, dateFinished, username, encryptedPassword, salt ).subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       if(retObj.success == true) {
         
@@ -662,7 +638,6 @@ export class UserAccountsComponent implements OnInit {
      this.patientService.GetProvinces(countryId).subscribe(data => {
       var retObj: any = data;
       this.provinces = Object.assign([], retObj.province);
-      console.log(data);
       this.GetCities(retObj.province[0]._id);
     })
   }
@@ -678,7 +653,6 @@ export class UserAccountsComponent implements OnInit {
     })
   }
   deletePhysio1(id: any){
-    console.log("in delete!")
     this.physiotherapistService.deletePhysioTherapist(id).subscribe(data =>{
       var retObj: any = data;
        this.physiotherapistService.getTherapists().subscribe(data => {
@@ -696,7 +670,6 @@ export class UserAccountsComponent implements OnInit {
   }
    HideMessage() {
     //hide all messages, if there are any
-    console.log('hide messages');
     this.showSuccess = false;
     this.showFailure = false;
     this.showDeleteSuccess = false;
@@ -705,18 +678,14 @@ export class UserAccountsComponent implements OnInit {
   }
    SwitchPageEvent(pageEvent: any, searchString: string, searchArea: string) {
     this.offset = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchPatients(searchString, searchArea);
   }
    SwitchPageEventPhysio(pageEvent: any, searchString: string, searchArea: string) {
     this.physioOffset = pageEvent.pageIndex * pageEvent.pageSize;
-    console.log('hello im switching');
     this.searchPhysio(searchString, searchArea);
   }
 
    searchPatients(searchString: string, searchArea: string) {
-     console.log(searchString);
-     console.log(searchArea);
     var ascvsdesc = 'asc';
     if(this.ascendingOrd == true) {
       ascvsdesc = 'asc';
@@ -748,10 +717,7 @@ export class UserAccountsComponent implements OnInit {
     else {
       ascvsdesc = 'desc';
     }
-    console.log(searchString, searchArea);
-     // }
     this.physiotherapistService.SearchPhysio(searchString, searchArea, this.physioOffset, ascvsdesc).subscribe(data => {
-      console.log(data);
       if(data != []) {
         var retObj : any = data;
         this.length1 = retObj.total;
@@ -787,7 +753,6 @@ export class UserAccountsComponent implements OnInit {
     //this.ascendingOrd = true;
     
     this.patientService.GetAllPatients().subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.length = retObj.total;
       this.clients = Object.assign([], data.docs);
@@ -804,7 +769,6 @@ export class UserAccountsComponent implements OnInit {
     //this.ascendingOrd = true;
     
     this.physiotherapistService.getTherapists().subscribe(data => {
-      console.log(data);
       var retObj: any = data;
       this.length1 = retObj.total;
       this.therapists = Object.assign([], data.docs);
@@ -832,7 +796,6 @@ export class UserAccountsComponent implements OnInit {
   }
   SendEmail(toEmail: String, emailSubject: String, emailBody: String) { 
     this.emailService.SendEmail(toEmail, emailSubject, emailBody).subscribe(data => {
-        console.log(data);
         var retObj: any = data;
         if(retObj.success == true) {
           this.emailSuccess = true;
