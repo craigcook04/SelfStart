@@ -67,7 +67,6 @@ router.route('/')
             <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
             <h4>Hello ${fullName}, let us be the first to welcome you to Self Start. <br> We are happy that we can help with your treatment</h4>
             <h4>Thank you for registering for Self Start! <br> <br>You are just one click away from being able to use the site and getting started </h4>
-            <h4> Please <a href="${url}" >click here</a> to verify your account! </h4>
               <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
         </body>
         `;
@@ -97,6 +96,42 @@ router.route('/')
         });
     });
     
+    router.route('/appointment')
+    .post(function(request, response){
+        var options = {  
+            weekday: "long", year: "numeric", month: "short",  
+            day: "numeric", hour: "2-digit", minute: "2-digit"  
+        }; 
+        var mydate = new Date(request.body.date).toLocaleTimeString("en-us", options)
+        var body = `<body style="background: whitesmoke; text-align: center">
+                    <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Self Start</h1>
+                    <h4>Hello ${request.body.name},</h4>
+                    <h4>Your appointment on
+                    ${mydate}
+                    has been cancelled by your Self Start specialist.
+                    Please contact them for more details or try re-booking your appointment for another time.</h4>
+                    <h4>We apologize for the inconvience.</h4>
+                    <br>
+                    <h4>Have a nice day!</h4>
+                    <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
+                    </body>
+                    `;
+        var mailOptions = {
+            to: request.body.toEmail,
+            subject: 'Self Start - Cancelled Appointment',
+            html: body
+        };
+        
+        smtpTransport.sendMail(mailOptions, function(error, resp) {
+            if(error) {
+                console.log(error);
+                response.send(error);
+                return;
+            }
+            response.send({success: true, message: "Sent Mail!"});
+        });
+    });
+
 router.route('/:accessCode')
     .get(function(request, response) {
         console.log(request.params.accessCode);
@@ -116,7 +151,6 @@ router.route('/:accessCode')
                         <body style="background: whitesmoke; text-align: center">
                             <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
                             <h4>Hello, you are already verified in our Self Start records! </h4>
-                            <h4> Please disregard this message and <a href="" >click here</a> to return home. </h4>
                               <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
                         </body>
                     `;
@@ -128,7 +162,6 @@ router.route('/:accessCode')
                         <body style="background: whitesmoke; text-align: center">
                             <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
                             <h4>Hello, you are already verified in our Self Start records! </h4>
-                            <h4> Please disregard this message and <a href="" >click here</a> to return home. </h4>
                               <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
                         </body>
                     `;
@@ -172,7 +205,6 @@ router.route('/:accessCode')
                   <h1 style="color: #0275d8; font-family: Helvetica, Arial;">Welcome to Self Start! </h1>
                   <h4>Congratulations, you have verified your email account! <br> We are excited to learn more about you.</h4>
                   <h4>You're all done! <br> <br>You may now able to enjoy the many features of the site! </h4>
-                  <h4> Please <a href="" >click here</a> to return home. </h4>
                     <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" style="margin: 1rem;">
                 </body>
                 `;

@@ -6,6 +6,7 @@ var router = express.Router();
 var Appointment = require('../models/appointment');
 let Account = require('../models/userAccount');
 var moment = require('moment');
+var UserAccount = require('../models/userAccount');
 moment().format();
 // var Session = require('../models/session');
 

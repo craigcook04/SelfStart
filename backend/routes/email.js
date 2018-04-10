@@ -64,7 +64,7 @@ router.route('/')
             response.send({success: true, message: "Sent Mail!"});
         });
     });
-
+    
 router.route('/appointment')
     .post(function(request, response){
         var options = {  
@@ -100,7 +100,7 @@ router.route('/appointment')
             response.send({success: true, message: "Sent Mail!"});
         });
     });
-
+    
 router.route('/forgotten')
     .post(function(request, response) {
        UserAccount.findOne({userAccountName: request.body.username}, function(err, useraccount) {
@@ -345,7 +345,6 @@ router.route('/rehabplan/notify')
                     <p>Hello ${request.body.name}!</p>
                     <p>You have recently been assigned the exercise menu: ${request.body.rehabPlanName}</p>
                     <p>Please sign in to your account on Self Start to view the new exercise menu</p>
-                    <p><a href="${url}">Click here</a> to return home to Self Start </p>
                     <p>Have a nice day! </p>
                     <br>
                     <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" />
@@ -387,7 +386,6 @@ router.route('/assessmenttest/notify/:plan_id')
                     <p>Hello ${patients[i].givenName} ${patients[i].familyName}!</p>
                     <p>You have recently been assigned a new Assessment Test: ${request.body.assessmenttest}</p>
                     <p>Please sign in to your account on Self Start to complete the new assessment test</p>
-                    <p><a href="${url}">Click here</a> to return home to Self Start </p>
                     <p>Have a nice day! </p>
                     <br>
                     <img src="http://marcottephysio.com/wp-content/uploads/2017/03/growing-in-cement_940x434.jpg" />
