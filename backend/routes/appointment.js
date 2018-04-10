@@ -227,10 +227,14 @@ router.route('/day/:current_day')
 
 router.route('/week/:current_week')
 
-    .get(function (request, response) {
+    .get(function (request, response) { //or if the start date is less than and the end date is greater than
         console.log(request.params.current_week);
-        Appointment.find({$and: [{"date": {$gte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('week').toDate()}}, 
-        {"date": {$lte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('week').toDate()}}]}, function (error, appointment) {
+        Appointment.find({ $or: [{$and: [{"date": {$gte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('week').toDate()}}, 
+        {"date": {$lte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('week').toDate()}}]}, {$and: [{"date": {$lte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('week').toDate()}}, 
+        {"endDate": {$gte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('week').toDate()}}]}, {$and: [{"endDate": {$gte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').startOf('week').toDate()}}, 
+        {"endDate": {$lte: moment(request.params.current_week, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').endOf('week').toDate()}}]}]}, 
+         function (error, appointment) {
+        
             if (error) {
                response.send({error: error});
             }
