@@ -59,11 +59,9 @@ export class AppointmentsService {
   
   setType(type: string){
     this.newType = type;
-    //console.log(this.newType); - ALSO DEFINED HERE
   }
   
   getType(){
-    //console.log(this.newType);
     return this.newType;
   }
   

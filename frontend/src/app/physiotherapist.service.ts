@@ -62,9 +62,7 @@ export class PhysiotherapistService {
 
   updatePhysio(givenName1: string, familyName1: string, email1: string, ID1: string, dateHired1: string, dateFinished1: string, _id1: string){
       //var string1 = therapist._id;
-      //console.log(string1);
       var url = '/api/physiotherapist/' + _id1;
-      console.log(url);
       var body = {
           ID: ID1,
           familyName: familyName1,

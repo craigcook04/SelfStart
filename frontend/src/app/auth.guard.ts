@@ -26,9 +26,7 @@ export class AuthGuard implements CanActivate {
           this.cookieService.set('session', session, 1/24);
           this.cookieService.set('role', role, 1/24);
 
-          console.log("COOKIES: ",this.cookieService.get('ID'),
-          this.cookieService.get('session'),
-          this.cookieService.get('role'))
+          
         }
       })
       //render the component if the session token is valid and the session is given to a user

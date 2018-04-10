@@ -176,7 +176,6 @@ export class PatientService {
 
   GetPatient() {
     var userID = this.cookieService.get('ID');
-    console.log(userID);
     var url = '/api/patient/getclient/' + userID;
 
     return this.http.get(url);
