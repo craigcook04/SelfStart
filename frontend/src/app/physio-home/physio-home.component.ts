@@ -54,10 +54,15 @@ export class PhysioHomeComponent implements OnInit {
       var obj: any = data;
       this.physio = obj.physio;
 
-      this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
-        let obj: any = data;
-        this.numbPatients = obj.total;
-      })
+      // this.patientService.getPhysioPatients(this.physio._id).subscribe(data =>{
+      //   let obj: any = data;
+      //   this.numbPatients = obj.total;
+      // })
+
+      this.patientService.GetAllPatients().subscribe(data => {
+        var retObj: any = data;
+        this.numbPatients = retObj.total;
+      });
 
       this.testService.GetOldestTests().subscribe(data => {
         let obj: any = data;
