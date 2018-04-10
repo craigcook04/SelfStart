@@ -215,12 +215,14 @@
                                         <button type="button" class="btn btn-success btn-sm"
                                         (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                                             <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
-                                            <fa name="upload"></fa>
+                                            <!--<fa name="upload"></fa>-->
+                                            Upload
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm"
                                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                                             <!--<span class="glyphicon glyphicon-trash"></span> Remove all-->
-                                            <fa name="trash"></fa>
+                                            <!--<fa name="trash"></fa>-->
+                                            Delete
                                         </button>
                                 </div>
                             </td>

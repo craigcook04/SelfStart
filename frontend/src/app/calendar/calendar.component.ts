@@ -79,6 +79,8 @@ export class CalendarComponent implements OnInit {
   apptDate: any;
   apptType: any;
   apptReason: any;
+  dUser: any;
+  dType: any;
   
   colors: any = {
     red: {
@@ -208,7 +210,7 @@ export class CalendarComponent implements OnInit {
 
         this.patientService.GetPatientInfo(temp.meta.appointment.userID).subscribe(data =>{
           let obj: any = data;
-          temp.title = obj.patient.givenName + " " + obj.patient.familyName + " | " + temp.start.getHours() + ":" + temp.start.getMinutes();
+          temp.title = obj.patient.givenName + " " + obj.patient.familyName /*+ " | " + temp.start.getHours() + ":" + temp.start.getMinutes()*/;
         })
 
         this.events.push(temp);
@@ -256,35 +258,27 @@ export class CalendarComponent implements OnInit {
     }*/
     
     deleteEvent(action: string, event: CalendarEvent) {
-      //console.log(event);
-      if(event.meta.appointment.type == "normal"){
-              this.physioHomeService.NormalAppt(event.meta.appointment.userID);
-            }else if (event.meta.appointment.type == "initial"){
-              this.physioHomeService.InitialAppt(event.meta.appointment.userID);
-            }
+      this.dUser = event.meta.appointment.userID;
+      this.dType = event.meta.appointment.type;
+      this.patientService.GetPatientInfo(event.meta.appointment.userID).subscribe(data =>{
+        let obj: any = data;
+        this.physioHomeService.emailAddress = obj.patient.email;
+        this.physioHomeService.clientName = obj.patient.givenName;
+      })
       this.physioHomeService.deleteDate = event.start;
       this.modalService.open(this.deleteModal, { size: 'lg' });
     }
     
      eventClicked(event: CalendarEvent<{ appointment: any }>): void {
-      //console.log(event);
-      //this.modalData = { event, action };
-      //this.newClientName = 
-      // this.myDate = 
-      // this.newReason = 
-      // this.newTypethis.events
-      
       this.patientService.GetPatientInfo(event.meta.appointment.userID).subscribe(data =>{
         let obj: any = data;
         this.apptName = obj.patient.givenName + " " + obj.patient.familyName;
         })
+        
       this.apptDate = event.meta.appointment.date;
       this.apptType = event.meta.appointment.type;
       this.apptReason = event.meta.appointment.reason;
-      
-      //this.physioHomeService.findDate = event.start;
-      //this.physioHomeService.FindAppointment().subscribe(data => {
-      //});
+
       this.modalService.open(this.modalContent, { size: 'lg' });
     }
     
@@ -299,7 +293,15 @@ export class CalendarComponent implements OnInit {
     }*/
     
     deleteAppt() {
+      if(this.dType == "normal"){
+              this.physioHomeService.NormalAppt(this.dUser);
+            }else if (this.dType == "initial"){
+              this.physioHomeService.InitialAppt(this.dUser);
+            }
       this.physioHomeService.DeleteAppointment().subscribe(data => {
+        //console.log(data);
+      });
+      this.physioHomeService.SendEmail().subscribe(data => {
         //console.log(data);
       });
     }

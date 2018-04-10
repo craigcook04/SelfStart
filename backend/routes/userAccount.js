@@ -409,8 +409,8 @@ router.route('/appointments/normal/:id')
                 return;
             }
             
-            console.log(request.body);
-            account.numbAppoint += 1;
+            //console.log(request.body);
+            account.numbAppoint -= 1;
             //account.numbInitial += 1;
             account.save(function(err){
                 if(err){
@@ -435,9 +435,9 @@ router.route('/appointments/initial/:id')
                 return;
             }
             
-            console.log(request.body);
+            //console.log(request.body);
             
-            account.numbInitial += 1;
+            account.numbInitial -= 1;
             account.save(function(err){
                 if(err){
                     response.send({error: err});
