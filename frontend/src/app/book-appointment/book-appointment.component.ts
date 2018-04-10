@@ -72,7 +72,7 @@ export class BookAppointmentComponent implements OnInit {
     this.apptService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
       let obj: any = data;
       if(data != []){
-        this.upcomingAppoint = obj.appointments[0];
+        this.upcomingAppoint = obj.appointments[0]; //took s off appointments
       }
     })
     
