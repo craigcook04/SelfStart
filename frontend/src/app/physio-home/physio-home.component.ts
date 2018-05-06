@@ -81,12 +81,17 @@ export class PhysioHomeComponent implements OnInit {
 
       this.physioHomeService.GetAppointments(this.format).subscribe(data =>{
         var retObj: any = data;
-        let length;
+        let temp: any = [];
+        retObj.rehabPlan.assessmentTests.forEach(element =>{
+          if(element.completed === false){
+            temp.push(element);
+          }
+        })
         if(retObj.appointments.length > 5){
-          this.appointments = retObj.appointments.splice(0, 5);
+          this.appointments = temp.appointments.splice(0, 5);
         }
         else{
-          this.appointments = retObj.appointments;
+          this.appointments = temp.appointments;
         }
       })
     })

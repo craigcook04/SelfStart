@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { UserAccountsService } from '../user-accounts.service';
 import { AppointmentsService } from '../appointments.service';
 import { ImageService } from '../image.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-client-home',
@@ -60,7 +61,15 @@ export class ClientHomeComponent implements OnInit {
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
       this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
         let obj: any = data;
-        this.appointments = obj.appointments;
+        let now = moment(new Date()).toISOString();
+        console.log(now);
+        this.appointments = [];
+        obj.appointments.forEach(element =>{
+          if(element.date > now){
+            console.log(element.date);
+            this.appointments.push(element);
+          }
+        })
       })
     })
   }

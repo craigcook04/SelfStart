@@ -14,7 +14,7 @@ import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
 
 
-const URL = "/api/image/bookappointment";
+const URL = "/api/image/";
 const now = new Date();
 declare let paypal: any;
 
