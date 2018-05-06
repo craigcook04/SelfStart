@@ -71,7 +71,6 @@ export class ClientHomeComponent implements OnInit {
         console.log('here');
         
       })
-<<<<<<< HEAD
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
       this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
         let obj: any = data;
@@ -85,11 +84,6 @@ export class ClientHomeComponent implements OnInit {
           }
         })
       })
-=======
-      
-      
-      
->>>>>>> 5d564251f8e2bfa730aba534f9c60dfbf2527f4b
     })
   }
 
