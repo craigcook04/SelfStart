@@ -87,25 +87,25 @@ router.route('/')
             })
     })
     
-router.route('/:appointment_date')
+// router.route('/:appointment_date')
 
-    .get(function (request, response) {
-        Appointment.find({"date": request.params.appointment_date}, function (error, appointment) {
-            if (error) {
-                response.send(error);
-            }
+//     .get(function (request, response) {
+//         Appointment.find({"date": request.params.appointment_date}, function (error, appointment) {
+//             if (error) {
+//                 response.send(error);
+//             }
             
-            response.json({appointment: appointment});
-        });
-    })
+//             response.json({appointment: appointment});
+//         });
+//     })
 
-    .delete(function (request, response) {
-        Appointment.remove({"date": request.params.appointment_date}, function (error, deleted) {
-                if (!error) {
-                    response.json({appointment: deleted});
-                }
-            });
-    });
+//     .delete(function (request, response) {
+//         Appointment.remove({"date": request.params.appointment_date}, function (error, deleted) {
+//                 if (!error) {
+//                     response.json({appointment: deleted});
+//                 }
+//             });
+//     });
 
 //fetching a specific appointment. The options are to retrieve the appointment, update the appointment or delete the appointment
 
@@ -160,7 +160,8 @@ router.route('/:appointment_id')
 
 router.route('/client/appointments/:id')
     .get(function(request, response) {
-        Appointment.find({'userID': request.params.id}, function(err, appointments) {
+        console.log(' i got here');
+        Appointment.find({'userID': request.params.id}).sort({date: 1}).exec(function(err, appointments) {
             if(err) {
                 response.send(err);
                 return;

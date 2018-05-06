@@ -14,7 +14,11 @@ import { PatientService } from '../patient.service';
 import { AssessmentTestService } from '../assessment-test.service';
 
 
+<<<<<<< HEAD
 const URL = "/api/image/";
+=======
+const URL = "/api/image";
+>>>>>>> 5d564251f8e2bfa730aba534f9c60dfbf2527f4b
 const now = new Date();
 declare let paypal: any;
 
@@ -65,6 +69,7 @@ export class BookAppointmentComponent implements OnInit {
     
     this.patientService.GetPatient().subscribe(data =>{
       var temp: any = data;
+      console.log(temp)
       this.client = this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       //console.log(data);
       console.log("Client ID: " + temp.client._id);
@@ -137,9 +142,29 @@ export class BookAppointmentComponent implements OnInit {
   }
 
   saveAppointment(reason, other){
-    this.apptService.AddAppointment(this.cookieService.get('ID'), reason, other).subscribe(data => {
-      
-    })
+    var fileNames = [];
+   for(var i = 0; i < this.uploader.queue.length; i++){
+     fileNames[i] = this.uploader.queue[i].file.name;
+   }
+
+   this.apptService.AddAppointment(this.cookieService.get('ID'), reason, other).subscribe(data => {
+     console.log(data);
+     if(this.uploader.queue.length > 0){
+       fileNames.forEach(element => {
+         console.log(element);
+         this.imageService.LinkAppointment(data.appointment._id, element).subscribe(data =>{
+         })
+       })
+     }
+     this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
+       var obj: any = data;
+       obj = obj.patient;
+       this.client = obj;
+       this.appointmentsLeft = this.client.account.numbAppoint;
+       this.initialsLeft = this.client.account.numbInitial;
+     })
+     // open success modal here
+   })
   }
 
   getTimeOfDay(): string{

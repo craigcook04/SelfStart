@@ -39,6 +39,17 @@ export class ClientHomeComponent implements OnInit {
 
   ngOnInit() {
     this.timeOfDay = this.getTimeOfDay();
+    this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
+       let obj: any = data;
+       let now = moment(new Date()).toISOString();
+       this.appointments = [];
+       obj.appointments.forEach(element =>{
+         if(element.date > now){
+           this.appointments.push(element);
+         }
+       })
+     })
+    console.log(this.cookieService.get('ID'));
     //this.cookieService.set('stupidID', "5ab0007926bba10fad373817");
     this.patientService.GetPatientInfo(this.cookieService.get('ID')).subscribe(data =>{
       var obj: any = data;
@@ -57,7 +68,10 @@ export class ClientHomeComponent implements OnInit {
           }
         })
         this.currTest = this.allTests[0];
+        console.log('here');
+        
       })
+<<<<<<< HEAD
       //this.accountService.GetInfoDates(this.cookieService.get('ID'))
       this.appointmentService.GetAppointmentsByPatientID(this.cookieService.get('ID')).subscribe(data =>{
         let obj: any = data;
@@ -71,6 +85,11 @@ export class ClientHomeComponent implements OnInit {
           }
         })
       })
+=======
+      
+      
+      
+>>>>>>> 5d564251f8e2bfa730aba534f9c60dfbf2527f4b
     })
   }
 

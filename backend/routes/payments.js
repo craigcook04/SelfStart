@@ -21,7 +21,7 @@ router.use(function(req, res, next){
       else{
           //the user has a valid session token
           next();
-      }
+      }0
   });
 });
 
